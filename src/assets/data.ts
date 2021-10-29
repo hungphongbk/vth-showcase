@@ -1,6 +1,6 @@
 import demoData from './data.json';
 
-type DataItem = {
+export type DataItem = {
     id: number;
     title: string;
     author: string;

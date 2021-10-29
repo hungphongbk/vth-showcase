@@ -9,4 +9,7 @@ module.exports = withTM({
         };
         return config;
     },
+    images: {
+        domains: ['picsum.photos'],
+    },
 });

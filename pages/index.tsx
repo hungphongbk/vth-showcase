@@ -1,33 +1,51 @@
-import type {GetStaticProps, InferGetStaticPropsType, NextPage} from 'next'
-import {Container, Grid, Stack} from "@mui/material";
-import demoData, {DataItem} from "../src/assets/data";
-import PostCard from "../src/components/PostCard";
-import {useCallback, useState} from "react";
-import Masonry from "@mui/lab/Masonry";
+import type { InferGetStaticPropsType } from "next";
+import { Box, Container, ImageList } from "@mui/material";
+import demoData from "../src/assets/data";
+import { useState } from "react";
+import { AnimatePresence, LayoutGroup } from "framer-motion";
+import ProductItem from "../src/components/ProductItem";
+import ProductDetailed from "../src/components/ProductDetailed";
 
-function Home({posts}: InferGetStaticPropsType<typeof getStaticProps>) {
-    const [selected, setSelected] = useState(0);
-    const doSelect = useCallback((id: number) => {
-        if (selected > 0) setSelected(0)
-        else setSelected(id);
-    }, [selected])
-    return (
-        <Container sx={{mt: 2}}>
-            <Masonry columns={2} spacing={1} style={{width: 'calc(100% + 8px)'}}>
-                {posts.map(post =>
-                    <div key={post.id}>
-                        <PostCard post={post} isSelected={selected === post.id}
-                                  onClick={() => doSelect(post.id)}/>
-                    </div>
-                )}
-            </Masonry>
-        </Container>
-    )
+function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const [selected, setSelected] = useState(-1);
+  return (
+    <Container sx={{ mt: 2 }}>
+      <LayoutGroup>
+        <ImageList variant="masonry" cols={2} gap={8}>
+          {posts.map((item) => (
+            <ProductItem
+              key={item.id}
+              item={item}
+              onClick={() => setSelected(item.id)}
+            />
+          ))}
+        </ImageList>
+
+        <AnimatePresence>
+          {selected >= 0 && (
+            <Box
+              sx={{
+                position: "fixed",
+                zIndex: 9,
+                top: 0,
+                left: 0,
+                padding: 1,
+              }}
+            >
+              <ProductDetailed
+                item={posts.find((i) => i.id === selected)!}
+                onClick={() => setSelected(-1)}
+              />
+            </Box>
+          )}
+        </AnimatePresence>
+      </LayoutGroup>
+    </Container>
+  );
 }
 
-export default Home
+export default Home;
 
 export const getStaticProps = async () => {
-
-    return Promise.resolve({props: {posts: demoData}})
-}
+  return Promise.resolve({ props: { posts: demoData } });
+};

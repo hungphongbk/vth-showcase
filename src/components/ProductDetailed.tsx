@@ -11,9 +11,9 @@ export default function ProductDetailed({
   const controls = useAnimation();
 
   const handleDragEnd = (event: any, info: PanInfo) => {
-    const offset = info.offset.x;
-    const velocity = info.velocity.x;
-    if (Math.abs(offset) > 10) {
+    const offset = info.offset.y;
+    const velocity = info.velocity.y;
+    if (offset > 100) {
       onClick?.(event);
     } else {
       controls.start({ y: 0, opacity: 1, transition: { duration: 0.5 } });

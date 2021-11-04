@@ -1,8 +1,9 @@
-import { ImageListItem } from "@mui/material";
+import { Divider, ImageListItem } from "@mui/material";
 import { motion } from "framer-motion";
 import { HTMLProps } from "react";
-import { MotionTypo, ProductInfo } from "./commons";
+import { MotionBox, MotionTypo, ProductInfo } from "./commons";
 import { DataItem } from "../assets/data";
+import UserIcon from "../assets/icons/UserIcon";
 
 const MotionImageListItem = motion(ImageListItem);
 
@@ -24,9 +25,25 @@ export default function ProductItem({
     >
       <img src={item.image} alt={item.title} />
       <ProductInfo>
-        <MotionTypo variant="h6" layoutId={`${item.id}/title`}>
+        <MotionTypo
+          variant="h6"
+          layoutId={`${item.id}/title`}
+          sx={{ textTransform: "uppercase", fontWeight: 600 }}
+        >
           {item.title}
         </MotionTypo>
+        <Divider sx={{ mt: 0.5, mb: 0.5 }} />
+        <MotionBox
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "auto 1fr",
+            gridGap: 1,
+            "& .MuiTypography-root": { lineHeight: 1.17 },
+          }}
+        >
+          <UserIcon sx={{ width: 16, height: 16, mr: 1 }} />
+          <MotionTypo>{item.author}</MotionTypo>
+        </MotionBox>
       </ProductInfo>
     </MotionImageListItem>
   );

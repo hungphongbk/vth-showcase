@@ -1,8 +1,9 @@
 import { PanInfo, useAnimation } from "framer-motion";
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import { HTMLProps } from "react";
 import { MotionBox, MotionTypo, ProductInfo } from "./commons";
 import { DataItem } from "../assets/data";
+import UserIcon from "../assets/icons/UserIcon";
 
 export default function ProductDetailed({
   item,
@@ -51,6 +52,17 @@ export default function ProductDetailed({
             <MotionTypo variant="h5" layoutId={`${item.id}/title`}>
               {item.title}
             </MotionTypo>
+            <Divider sx={{ mt: 0.5, mb: 0.5 }} />
+            <MotionBox
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "auto 1fr",
+                gridGap: 1,
+              }}
+            >
+              <UserIcon />
+              <MotionTypo>{item.author}</MotionTypo>
+            </MotionBox>
           </ProductInfo>
         </Box>
       </MotionBox>

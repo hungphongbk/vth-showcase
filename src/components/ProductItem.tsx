@@ -15,7 +15,12 @@ export default function ProductItem({
       key={item.id}
       layoutId={item.id as unknown as string}
       onClick={onClick}
-      sx={{ borderRadius: 8, overflow: "hidden", cursor: "pointer" }}
+      sx={{
+        borderRadius: 3,
+        overflow: "hidden",
+        cursor: "pointer",
+        mb: "0 !important",
+      }}
     >
       <img src={item.image} alt={item.title} />
       <ProductInfo>

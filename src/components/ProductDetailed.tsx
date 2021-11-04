@@ -27,7 +27,7 @@ export default function ProductDetailed({
         layoutId={item.id as unknown as string}
         sx={{
           position: "relative",
-          borderRadius: 8,
+          borderRadius: 3,
           overflow: "hidden",
           cursor: "pointer",
           width: "100%",

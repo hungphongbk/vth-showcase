@@ -9,7 +9,7 @@ import ProductDetailed from "../src/components/ProductDetailed";
 function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [selected, setSelected] = useState(-1);
   return (
-    <Container sx={{ mt: 2 }}>
+    <Container sx={{ mt: 2, pl: 1, pr: 1 }}>
       <LayoutGroup>
         <ImageList variant="masonry" cols={2} gap={8}>
           {posts.map((item) => (

@@ -20,7 +20,7 @@ declare module "@mui/material/styles" {
 const theme = createTheme({
   typography: {
     fontFamily: "Montserrat, Arial",
-    fontSize: 12,
+    fontSize: 10,
   },
   palette: {
     primary: {

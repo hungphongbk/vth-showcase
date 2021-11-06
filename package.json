@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "download:mock": "curl \"https://api.mockaroo.com/api/20cc56c0?count=20&key=3b78e0e0\" > \"src/assets/data.json\"\n"
   },
   "dependencies": {
     "@emotion/react": "^11.5.0",

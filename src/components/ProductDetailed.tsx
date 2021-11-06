@@ -1,9 +1,10 @@
 import { PanInfo, useAnimation } from "framer-motion";
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { HTMLProps } from "react";
 import { MotionBox, MotionTypo, ProductInfo } from "./commons";
 import { DataItem } from "../assets/data";
 import UserIcon from "../assets/icons/UserIcon";
+import CollapseDetail from "./CollapseDetail";
 
 export default function ProductDetailed({
   item,
@@ -60,10 +61,16 @@ export default function ProductDetailed({
                 gridGap: 1,
               }}
             >
-              <UserIcon />
+              <UserIcon sx={{ width: 16, height: 16, mr: 1 }} />
               <MotionTypo>{item.author}</MotionTypo>
             </MotionBox>
           </ProductInfo>
+        </Box>
+        <Box sx={{ p: 2, backgroundColor: "white" }}>
+          <Typography sx={{ fontSize: 15, mb: 1 }}>
+            Thương hiệu: <strong>{item.brand}</strong>
+          </Typography>
+          <CollapseDetail>{item.description}</CollapseDetail>
         </Box>
       </MotionBox>
       <MotionBox

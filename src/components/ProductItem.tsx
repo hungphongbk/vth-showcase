@@ -4,6 +4,7 @@ import { HTMLProps } from "react";
 import { MotionBox, MotionTypo, ProductInfo } from "./commons";
 import { DataItem } from "../assets/data";
 import UserIcon from "../assets/icons/UserIcon";
+import StatusBadge from "./StatusBadge";
 
 const MotionImageListItem = motion(ImageListItem);
 
@@ -32,6 +33,7 @@ export default function ProductItem({
         >
           {item.title}
         </MotionTypo>
+        <StatusBadge status={item.status} />
         <Divider sx={{ mt: 0.5, mb: 0.5 }} />
         <MotionBox
           sx={{

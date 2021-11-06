@@ -14,4 +14,5 @@ export const ProductInfo = styled.div`
   flex-direction: column;
   background: linear-gradient(179.76deg, rgba(0, 0, 0, 0) 0.2%, #000000 99.8%);
   color: white;
+  align-items: start;
 `;

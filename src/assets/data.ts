@@ -5,6 +5,7 @@ export type DataItem = {
   title: string;
   brand: string;
   author: string;
+  status: string;
   image: string;
   description: string;
 };

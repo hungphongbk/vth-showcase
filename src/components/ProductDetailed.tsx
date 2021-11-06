@@ -5,6 +5,7 @@ import { MotionBox, MotionTypo, ProductInfo } from "./commons";
 import { DataItem } from "../assets/data";
 import UserIcon from "../assets/icons/UserIcon";
 import CollapseDetail from "./CollapseDetail";
+import StatusBadge from "./StatusBadge";
 
 export default function ProductDetailed({
   item,
@@ -53,6 +54,7 @@ export default function ProductDetailed({
             <MotionTypo variant="h5" layoutId={`${item.id}/title`}>
               {item.title}
             </MotionTypo>
+            <StatusBadge status={item.status} outlined sx={{ mt: 1 }} />
             <Divider sx={{ mt: 0.5, mb: 0.5 }} />
             <MotionBox
               sx={{

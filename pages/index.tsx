@@ -29,7 +29,10 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
                 zIndex: 9,
                 top: 0,
                 left: 0,
+                bottom: 0,
+                right: 0,
                 padding: 1,
+                overflowY: "scroll",
               }}
             >
               <ProductDetailed

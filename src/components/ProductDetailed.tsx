@@ -78,7 +78,7 @@ export default function ProductDetailed({
           <Box
             sx={{
               p: 2,
-              backgroundColor: "white",
+              bgcolor: "white",
             }}
           >
             <Typography sx={{ fontSize: 15, mb: 1 }}>
@@ -113,7 +113,7 @@ export default function ProductDetailed({
           padding: 1,
           width: "100%",
           height: "100%",
-          backgroundColor: "#FFDE50",
+          bgcolor: "#FFDE50",
         }}
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}

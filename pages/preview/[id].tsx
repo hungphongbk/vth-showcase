@@ -35,7 +35,6 @@ export default function PreviewPage({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  console.log(context);
   // noinspection PointlessArithmeticExpressionJS
   return Promise.resolve({
     props: {

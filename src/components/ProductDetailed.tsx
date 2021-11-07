@@ -1,23 +1,33 @@
 import { Box, Divider, Typography } from "@mui/material";
-import { HTMLProps } from "react";
+import { HTMLProps, useCallback, useEffect, useState } from "react";
 import { MotionBox, MotionTypo, ProductInfo } from "./commons";
 import { DataItem } from "../assets/data";
 import UserIcon from "../assets/icons/UserIcon";
 import CollapseDetail from "./CollapseDetail";
 import StatusBadge from "./StatusBadge";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import ProductList from "./ProductList";
+import ProductList, { IdContextType } from "./ProductList";
+import { motion } from "framer-motion";
 
 export default function ProductDetailed({
   item,
   onClick,
   posts,
 }: { item: DataItem; posts: DataItem[] } & HTMLProps<HTMLElement>) {
+  const [context, setContext] = useState<IdContextType>("sub");
+
+  const onAnimateComplete = useCallback(() => setContext("main"), []);
+  useEffect(() => {
+    return () => {
+      setContext("sub");
+    };
+  }, []);
+
   // @ts-ignore
   return (
     <>
       <MotionBox
-        layoutId={item.id as unknown as string}
+        layoutId={`${item.id}`}
         sx={{
           position: "relative",
           overflowY: "scroll",
@@ -27,6 +37,7 @@ export default function ProductDetailed({
           zIndex: 11,
           padding: 1,
         }}
+        onLayoutAnimationComplete={onAnimateComplete}
       >
         <MotionBox
           data-testid={"go-back-button"}
@@ -56,9 +67,27 @@ export default function ProductDetailed({
               },
             }}
           >
-            <img src={item.image} alt={item.title} />
+            <MotionBox
+              layoutId={`${item.id}/thumb-wrapper`}
+              sx={{
+                "& img": {
+                  objectFit: "cover",
+                  width: "100%",
+                  height: "100%",
+                },
+              }}
+            >
+              <motion.img
+                layoutId={`${item.id}/thumb`}
+                src={item.image}
+                alt={item.title}
+              />
+            </MotionBox>
             <ProductInfo>
-              <MotionTypo variant="h5" layoutId={`${item.id}/item/title`}>
+              <MotionTypo
+                variant="h5"
+                sx={{ textTransform: "uppercase", fontWeight: 600 }}
+              >
                 {item.title}
               </MotionTypo>
               <StatusBadge status={item.status} outlined sx={{ mt: 1 }} />
@@ -98,7 +127,7 @@ export default function ProductDetailed({
           animate={{ display: "block", opacity: 1 }}
           exit={{ display: "none", opacity: 0 }}
         >
-          <ProductList posts={posts} />
+          <ProductList posts={posts} context={context} />
         </MotionBox>
       </MotionBox>
       {/*<div>*/}

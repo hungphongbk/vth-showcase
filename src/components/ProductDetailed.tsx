@@ -6,11 +6,13 @@ import UserIcon from "../assets/icons/UserIcon";
 import CollapseDetail from "./CollapseDetail";
 import StatusBadge from "./StatusBadge";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
+import ProductList from "./ProductList";
 
 export default function ProductDetailed({
   item,
   onClick,
-}: { item: DataItem } & HTMLProps<HTMLElement>) {
+  posts,
+}: { item: DataItem; posts: DataItem[] } & HTMLProps<HTMLElement>) {
   // @ts-ignore
   return (
     <>
@@ -23,8 +25,27 @@ export default function ProductDetailed({
           width: "100%",
           height: "100%",
           zIndex: 11,
+          padding: 1,
         }}
       >
+        <MotionBox
+          data-testid={"go-back-button"}
+          sx={{
+            position: "fixed",
+            top: 8,
+            left: 8,
+            p: 2,
+            zIndex: 99,
+            color: "white",
+          }}
+          onClick={onClick}
+        >
+          <ArrowBackIosRoundedIcon
+            sx={{
+              fontSize: 32,
+            }}
+          />
+        </MotionBox>
         <Box sx={{ borderRadius: 3, overflow: "hidden" }}>
           <Box
             sx={{
@@ -37,7 +58,7 @@ export default function ProductDetailed({
           >
             <img src={item.image} alt={item.title} />
             <ProductInfo>
-              <MotionTypo variant="h5" layoutId={`${item.id}/title`}>
+              <MotionTypo variant="h5" layoutId={`${item.id}/item/title`}>
                 {item.title}
               </MotionTypo>
               <StatusBadge status={item.status} outlined sx={{ mt: 1 }} />
@@ -53,23 +74,6 @@ export default function ProductDetailed({
                 <MotionTypo>{item.author}</MotionTypo>
               </MotionBox>
             </ProductInfo>
-            <Box
-              sx={{
-                position: "fixed",
-                top: 8,
-                left: 8,
-                p: 2,
-                zIndex: 99,
-                color: "white",
-              }}
-              onClick={onClick}
-            >
-              <ArrowBackIosRoundedIcon
-                sx={{
-                  fontSize: 32,
-                }}
-              />
-            </Box>
           </Box>
           <Box
             sx={{
@@ -83,8 +87,24 @@ export default function ProductDetailed({
             <CollapseDetail>{item.description}</CollapseDetail>
           </Box>
         </Box>
+        <Typography
+          component={"h3"}
+          variant={"h5"}
+          sx={{ my: 2, textAlign: "center", fontWeight: 700, fontSize: 20 }}
+        >
+          DỰ ÁN LIÊN QUAN
+        </Typography>
+        <MotionBox
+          animate={{ display: "block", opacity: 1 }}
+          exit={{ display: "none", opacity: 0 }}
+        >
+          <ProductList posts={posts} />
+        </MotionBox>
       </MotionBox>
+      {/*<div>*/}
+      {/*</div>*/}
       <MotionBox
+        data-testid={"backdrop"}
         sx={{
           position: "fixed",
           zIndex: 10,
@@ -95,7 +115,6 @@ export default function ProductDetailed({
           height: "100%",
           backgroundColor: "#FFDE50",
         }}
-        onClick={onClick}
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}
         exit={{ opacity: 0 }}

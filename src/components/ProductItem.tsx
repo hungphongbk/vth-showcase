@@ -28,7 +28,7 @@ export default function ProductItem({
       <ProductInfo>
         <MotionTypo
           variant="h6"
-          layoutId={`${item.id}/title`}
+          layoutId={`${item.id}/item/title`}
           sx={{ textTransform: "uppercase", fontWeight: 600 }}
         >
           {item.title}

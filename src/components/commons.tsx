@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
@@ -16,3 +16,10 @@ export const ProductInfo = styled.div`
   color: white;
   align-items: start;
 `;
+export const MotionCard = motion(styled(Card)`
+  &.MuiCard-root {
+    border-radius: 20px;
+    padding: 12px;
+    box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.1);
+  }
+`);

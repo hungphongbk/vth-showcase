@@ -9,6 +9,7 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import ProductList, { IdContextType } from "./ProductList";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
+import { CollapseCard } from "./index";
 
 export default function ProductDetailed({
   item,
@@ -41,6 +42,7 @@ export default function ProductDetailed({
           height: "100%",
           zIndex: 11,
           padding: 1,
+          fontSize: 13,
         }}
         onLayoutAnimationComplete={onAnimateComplete}
         initial={{ x: "100%", opacity: 0 }}
@@ -70,7 +72,7 @@ export default function ProductDetailed({
         )}
         <MotionBox
           layoutId={"info"}
-          sx={{ borderRadius: 3, overflow: "hidden" }}
+          sx={{ borderRadius: 5, overflow: "hidden" }}
         >
           <MotionBox
             sx={{
@@ -131,16 +133,46 @@ export default function ProductDetailed({
           </MotionBox>
           <MotionBox
             sx={{
-              p: 2,
+              p: 3,
               bgcolor: "white",
             }}
           >
-            <Typography sx={{ fontSize: 15, mb: 1 }}>
+            <Typography sx={{ mb: 1 }}>
               Thương hiệu: <strong>{item.brand}</strong>
             </Typography>
             <CollapseDetail>{item.description}</CollapseDetail>
           </MotionBox>
         </MotionBox>
+        {currentPage === "post" && (
+          <motion.div layoutId={"main content"}>
+            <CollapseCard
+              header={"tính năng nổi bật"}
+              sx={{ mt: 1 }}
+              defaultOpen
+            >
+              <Typography sx={{ fontSize: 13 }}>
+                <strong>TÍNH NĂNG 1</strong>
+              </Typography>
+              <Typography sx={{ fontSize: 13 }}>
+                Earth is the third planet from the Sun and the only astronomical
+                object known to harbor life. According to radiometric dating
+                estimation. Earth is the third planet from the Sun and the only
+                astronomical object known to harbor life. According to
+                radiometric dating estimation...
+              </Typography>
+            </CollapseCard>
+            <CollapseCard
+              header={"câu chuyện chưa kể"}
+              sx={{ mt: 1 }}
+              defaultOpen
+            >
+              <Typography sx={{ fontSize: 13 }}>
+                Kể về câu chuyện phía sau dự án của bạn, và những khó khăn bạn
+                phải trải qua để đưa sản phẩm đến với người tiêu dùng...
+              </Typography>
+            </CollapseCard>
+          </motion.div>
+        )}
         <MotionBox
           initial={{ display: "none", opacity: 0 }}
           animate={{ display: "block", opacity: 1 }}

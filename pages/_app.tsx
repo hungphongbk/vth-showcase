@@ -5,7 +5,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import theme from "../src/theme";
 import Header from "../src/components/Header";
-import { LayoutGroup } from "framer-motion";
+import { AnimatePresence, LayoutGroup } from "framer-motion";
 import { useScrollRestoration } from "../src/utils";
 import { useRouter } from "next/router";
 
@@ -28,7 +28,9 @@ export default function MyApp(props: AppProps) {
         <CssBaseline />
         <Header />
         <LayoutGroup>
-          <Component {...pageProps} />
+          <AnimatePresence exitBeforeEnter={false} initial={false}>
+            <Component {...pageProps} key={router.route} />
+          </AnimatePresence>
         </LayoutGroup>
       </ThemeProvider>
     </React.Fragment>

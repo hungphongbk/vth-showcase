@@ -23,7 +23,7 @@ export default function ProductItem({
   return (
     <MotionImageListItem
       key={item.id}
-      layoutId={getLayoutId()}
+      // layoutId={getLayoutId()}
       onClick={onClick}
       sx={{
         borderRadius: 3,
@@ -33,7 +33,7 @@ export default function ProductItem({
       }}
     >
       <MotionBox
-        layoutId={getLayoutId("/thumb-wrapper")}
+        // layoutId={getLayoutId("/thumb-wrapper")}
         sx={{
           flexGrow: 1,
           "& img": {
@@ -44,7 +44,7 @@ export default function ProductItem({
         }}
       >
         <motion.img
-          layoutId={getLayoutId("/thumb")}
+          // layoutId={getLayoutId("/thumb")}
           src={item.image}
           alt={item.title}
         />

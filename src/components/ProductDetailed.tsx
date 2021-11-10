@@ -27,7 +27,7 @@ export default function ProductDetailed({
   return (
     <>
       <MotionBox
-        layoutId={`${item.id}`}
+        // layoutId={`${item.id}`}
         sx={{
           position: "relative",
           overflowY: "scroll",
@@ -38,6 +38,10 @@ export default function ProductDetailed({
           padding: 1,
         }}
         onLayoutAnimationComplete={onAnimateComplete}
+        initial={{ x: "100%", opacity: 0 }}
+        animate={{ x: 0, opacity: "100%" }}
+        exit={{ x: 0, opacity: 0 }}
+        transition={{ duration: 0.35 }}
       >
         <MotionBox
           data-testid={"go-back-button"}
@@ -146,8 +150,8 @@ export default function ProductDetailed({
         }}
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.15 }}
+        exit={{ opacity: 0, x: "100%" }}
+        transition={{ duration: 0.25 }}
       />
     </>
   );

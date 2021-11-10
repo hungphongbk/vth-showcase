@@ -64,6 +64,7 @@ export default function FilterPanel(): JSX.Element {
       <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
         {["Nhiều nhất/Tuần", "Nhiều nhất/Tháng"].map((content) => (
           <FilterTag
+            key={content}
             sx={{
               bgcolor: content === selected ? "#FFDE50" : "#f1f1f1",
               fontWeight: content === selected ? 600 : 500,

@@ -27,6 +27,7 @@ export default function ProductItem({
 
   return (
     <MotionImageListItem
+      layout
       // @ts-ignore
       ref={itemRef}
       key={item.id}
@@ -38,6 +39,7 @@ export default function ProductItem({
         cursor: "pointer",
         mb: "0 !important",
       }}
+      transition={{ type: "spring", stiffness: 350, damping: 25 }}
     >
       <MotionBox
         // layoutId={getLayoutId("/thumb-wrapper")}

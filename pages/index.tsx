@@ -1,11 +1,18 @@
 import type { InferGetStaticPropsType } from "next";
-import { Box, Container } from "@mui/material";
+import {
+  Box,
+  Container,
+  ImageList,
+  ImageListItem,
+  LinearProgress,
+  Typography,
+} from "@mui/material";
 import ProductList from "../src/components/ProductList";
 import { AnimatePresence, motion } from "framer-motion";
 import TuneIcon from "@mui/icons-material/Tune";
 import React, { PropsWithChildren, useMemo, useState } from "react";
 import { SxProps } from "@mui/system";
-import { MotionBox } from "../src/components/commons";
+import { MotionBox, ProductInfoSecond } from "../src/components/commons";
 import FilterPanel from "../src/components/FilterPanel";
 import demoData from "src/assets/data";
 
@@ -37,9 +44,8 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [filter, setFilter] = useState<string | undefined>();
 
   const restPost = useMemo(() => {
-    const p = posts.slice(2);
-    if (!filter) return p;
-    return p.filter((i) => i.status === filter);
+    if (!filter) return posts;
+    return posts.filter((i) => i.status === filter);
   }, [filter, posts]);
 
   const changeFilter = (value: string) => {
@@ -56,7 +62,77 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
       animate={{ opacity: 1 }}
       exit={{}}
     >
-      <ProductList posts={posts.slice(0, 2)} variant={"standard"} />
+      <ImageList variant={"standard"} cols={2} gap={8}>
+        <ImageListItem
+          sx={{
+            borderRadius: 3,
+            overflow: "hidden",
+            cursor: "pointer",
+            mb: 2,
+            boxShadow: "4px 4px 16px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <Box
+            // layoutId={getLayoutId("/thumb-wrapper")}
+            sx={{
+              flexGrow: 1,
+              "& img": {
+                objectFit: "cover",
+                width: "100%",
+                height: "100%",
+              },
+            }}
+          >
+            <img
+              // layoutId={getLayoutId("/thumb")}
+              src={
+                "https://product.hstatic.net/1000069970/product/carpio22_fcc7132be79748e08ffabac9bd65aa4f_large.png"
+              }
+              alt={"ke co tay cong thai hoc"}
+            />
+          </Box>
+          <ProductInfoSecond>
+            <Box
+              sx={{
+                height: 35,
+                borderRadius: 17.5,
+                backgroundColor: "#FFDE50",
+                border: "3px solid white",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                mt: "-26px",
+              }}
+            >
+              <Typography
+                sx={{
+                  color: "black",
+                  fontWeight: 600,
+                  fontSize: 10,
+                  textAlign: "center",
+                  lineHeight: "11.74px",
+                }}
+                component={"div"}
+              >
+                Kê cổ tay công thái học Carpio 2.0 - DeltaHub
+              </Typography>
+            </Box>
+            <Typography sx={{ fontSize: 10, my: 0.5 }}>
+              Số lượng đã đặt: <strong>70/250</strong>
+            </Typography>
+            <Box sx={{ width: "100%", my: 0.5 }}>
+              <LinearProgress
+                variant="determinate"
+                value={7000 / 250}
+                sx={{ height: 8, borderRadius: 4.5 }}
+              />
+            </Box>
+            <Typography sx={{ fontSize: 10, my: 0.5 }}>
+              Dự kiến ra mắt: <strong>11/15/2021</strong>
+            </Typography>
+          </ProductInfoSecond>
+        </ImageListItem>
+      </ImageList>
       <Box sx={{ my: 1, maxWidth: "100%", overflowX: "scroll" }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Box

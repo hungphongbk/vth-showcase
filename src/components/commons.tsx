@@ -17,6 +17,13 @@ export const ProductInfo = styled.div`
   color: white;
   align-items: start;
 `;
+export const ProductInfoSecond = styled.div`
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  align-items: start;
+`;
 export const MotionCard = motion(styled(Card)`
   &.MuiCard-root {
     border-radius: 20px;

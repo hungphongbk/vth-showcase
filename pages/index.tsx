@@ -12,7 +12,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import TuneIcon from "@mui/icons-material/Tune";
 import React, { PropsWithChildren, useMemo, useState } from "react";
 import { SxProps } from "@mui/system";
-import { MotionBox, ProductInfoSecond } from "../src/components/commons";
+import {
+  MotionBox,
+  ProductInfoSecond,
+  ProductInfoThird,
+} from "../src/components/commons";
 import FilterPanel from "../src/components/FilterPanel";
 import demoData from "src/assets/data";
 
@@ -131,6 +135,34 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
               Dự kiến ra mắt: <strong>11/15/2021</strong>
             </Typography>
           </ProductInfoSecond>
+        </ImageListItem>
+        <ImageListItem
+          sx={{
+            borderRadius: 3,
+            overflow: "hidden",
+            cursor: "pointer",
+            mb: 2,
+            boxShadow: "4px 4px 16px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <Box
+            // layoutId={getLayoutId("/thumb-wrapper")}
+            sx={{
+              flexGrow: 1,
+              "& img": {
+                objectFit: "cover",
+                width: "100%",
+                height: "100%",
+              },
+            }}
+          >
+            <img
+              // layoutId={getLayoutId("/thumb")}
+              src={"https://i.imgur.com/CquWVVM.png"}
+              alt={"ke co tay cong thai hoc"}
+            />
+          </Box>
+          <ProductInfoThird></ProductInfoThird>
         </ImageListItem>
       </ImageList>
       <Box sx={{ my: 1, maxWidth: "100%", overflowX: "scroll" }}>

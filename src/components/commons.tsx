@@ -17,6 +17,13 @@ export const ProductInfo = styled.div`
   color: white;
   align-items: start;
 `;
+export const ProductInfoThird = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px;
+`;
 export const ProductInfoSecond = styled.div`
   padding: 8px;
   display: flex;

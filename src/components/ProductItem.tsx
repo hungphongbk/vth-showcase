@@ -1,10 +1,12 @@
 import { Divider, ImageListItem } from "@mui/material";
 import { motion } from "framer-motion";
-import { HTMLProps } from "react";
+import { HTMLProps, useEffect, useRef } from "react";
 import { MotionBox, MotionTypo, ProductInfo } from "./commons";
 import { DataItem } from "../assets/data";
 import UserIcon from "../assets/icons/UserIcon";
 import StatusBadge from "./StatusBadge";
+import { useInViewport } from "react-in-viewport";
+import { useRouter } from "next/router";
 
 const MotionImageListItem = motion(ImageListItem);
 
@@ -12,6 +14,15 @@ export default function ProductItem({
   item,
   onClick,
 }: { item: DataItem } & HTMLProps<HTMLElement>) {
+  const itemRef = useRef<HTMLLIElement>(),
+    router = useRouter();
+  const { inViewport } = useInViewport(itemRef),
+    preloaded = useRef<Promise<any>>();
+
+  useEffect(() => {
+    if (inViewport && !preloaded.current)
+      preloaded.current = router.prefetch(`/preview/${item.id}`);
+  }, [inViewport, item.id, router]);
   return (
     <MotionImageListItem
       key={item.id}

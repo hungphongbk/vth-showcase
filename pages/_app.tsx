@@ -6,6 +6,7 @@ import Head from "next/head";
 import theme from "../src/theme";
 import Header from "../src/components/Header";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
+import "intersection-observer";
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps, router } = props;

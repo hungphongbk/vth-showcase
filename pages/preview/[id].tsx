@@ -11,8 +11,9 @@ export default function PreviewPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
   useEffect(() => {
+    // noinspection JSIgnoredPromiseFromCall
     router.prefetch("/");
-  }, []);
+  }, [router]);
   return (
     <Box
       sx={{
@@ -27,7 +28,7 @@ export default function PreviewPage({
     >
       <ProductDetailed
         item={post}
-        onClick={() => router.push("/")}
+        onClick={() => router.back()}
         posts={posts}
       />
     </Box>

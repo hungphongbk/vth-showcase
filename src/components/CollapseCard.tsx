@@ -2,6 +2,7 @@ import React, { PropsWithChildren, ReactNode, useState } from "react";
 import { MotionCard } from "./commons";
 import { Box, CardContent, CardHeader, Collapse } from "@mui/material";
 import { SxProps } from "@mui/system";
+import ToggleCollapseCardIcon from "../assets/icons/ToggleCollapseCardIcon";
 
 type CollapseCardProps = PropsWithChildren<{
   header: ReactNode;
@@ -39,6 +40,14 @@ export default function CollapseCard({
             }}
           >
             {header}
+            <ToggleCollapseCardIcon
+              sx={{
+                width: 24,
+                height: 24,
+                mr: 0.6,
+                transform: `scaleY(${open ? 1 : -1})`,
+              }}
+            />
           </Box>
         }
       />

@@ -7,6 +7,7 @@ import { PropsWithChildren, useState } from "react";
 import { SxProps } from "@mui/system";
 import { MotionBox } from "../src/components/commons";
 import FilterPanel from "../src/components/FIlterPanel";
+import demoData from "src/assets/data";
 
 const MotionContainer = motion(Container);
 

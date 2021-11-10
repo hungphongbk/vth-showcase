@@ -35,4 +35,9 @@ export const StyledTimeline = styled(Timeline)`
     padding-left: 0;
     padding-right: 0;
   }
+  .MuiTimelineConnector-root {
+    background-color: unset;
+    width: 0;
+    border-left: 2px dashed #d5d5d5;
+  }
 `;

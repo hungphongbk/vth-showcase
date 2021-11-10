@@ -16,7 +16,7 @@ export default function ProductList(props: {
   const router = useRouter();
   return (
     <LayoutIdContext.Provider value={props.context ?? "main"}>
-      <ImageList variant={props.variant ?? "standard"} cols={2} gap={8}>
+      <ImageList variant={props.variant ?? "masonry"} cols={2} gap={8}>
         {props.posts.map((item) => (
           <ProductItem
             key={item.id}

@@ -1,8 +1,12 @@
 import { Box } from "@mui/material";
 import Image from "next/image";
 import logo from "../assets/logo.png";
+import Link from "./Link";
+import { useRouter } from "next/router";
 
 export default function Header(): JSX.Element {
+  const router = useRouter();
+  const currentPage = /^\/preview/.test(router.pathname) ? "preview" : "post";
   return (
     <Box
       sx={{
@@ -15,7 +19,7 @@ export default function Header(): JSX.Element {
         alignItems: "center",
         background: "white",
         boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.11)",
-        zIndex: 1,
+        zIndex: currentPage === "preview" ? 1 : 12,
       }}
     >
       <Box sx={{ gridColumn: 1 }}></Box>
@@ -25,6 +29,8 @@ export default function Header(): JSX.Element {
           width: "28.8vw",
           height: (theme) => theme.variables.appBarHeight,
         }}
+        component={Link}
+        href={"/"}
       >
         <Image src={logo} alt={"logo"} objectFit={"contain"} />
       </Box>

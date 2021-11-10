@@ -18,7 +18,7 @@ export default function PostDetailedPage({
     <Box sx={{ bgcolor: "#f0f0f0" }}>
       <ProductDetailed
         item={post}
-        onClick={() => router.back()}
+        onClick={() => router.push("/")}
         posts={posts}
       />
     </Box>

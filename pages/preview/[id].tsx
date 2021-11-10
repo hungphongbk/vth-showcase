@@ -52,6 +52,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export async function getStaticPaths() {
   return {
     paths: demoData.map(({ id }) => `/preview/${id}`),
-    fallback: true,
+    fallback: false,
   };
 }

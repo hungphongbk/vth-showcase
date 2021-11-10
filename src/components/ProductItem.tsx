@@ -21,7 +21,6 @@ export default function ProductItem({
 
   useEffect(() => {
     if (inViewport && !prefetched.current) {
-      console.log(prefetched);
       prefetched.current = router.prefetch(`/preview/${item.id}`);
     }
   }, [inViewport, item.id, router]);

@@ -1,5 +1,5 @@
 import { Box, Divider, Typography } from "@mui/material";
-import { HTMLProps, useCallback, useEffect, useState } from "react";
+import { HTMLProps, useCallback, useEffect, useRef, useState } from "react";
 import { MotionBox, MotionTypo, ProductInfo, StyledTimeline } from "./commons";
 import { DataItem } from "../assets/data";
 import UserIcon from "../assets/icons/UserIcon";
@@ -23,20 +23,44 @@ export default function ProductDetailed({
 }: { item: DataItem; posts: DataItem[] } & HTMLProps<HTMLElement>) {
   const router = useRouter();
   const currentPage = /^\/preview/.test(router.pathname) ? "preview" : "post";
+  const wrapper = useRef<HTMLElement>(),
+    scrollHandler = useRef<any>();
 
   const [context, setContext] = useState<IdContextType>("sub");
 
   const onAnimateComplete = useCallback(() => setContext("main"), []);
+
+  const routeChangeStart = useCallback(
+      (url) => {
+        if (
+          (currentPage === "preview" && /^\/preview/.test(url)) ||
+          (currentPage === "post" && /^\/post/.test(url))
+        )
+          scrollHandler.current = () =>
+            wrapper.current?.scrollTo({ top: 0, behavior: "smooth" });
+      },
+      [currentPage]
+    ),
+    routeChangeEnd = useCallback(() => {
+      scrollHandler.current?.();
+    }, []);
+
   useEffect(() => {
+    router.events.on("routeChangeStart", routeChangeStart);
+    router.events.on("routeChangeComplete", routeChangeEnd);
     return () => {
       setContext("sub");
+      router.events.off("routeChangeStart", routeChangeStart);
+      router.events.off("routeChangeComplete", routeChangeEnd);
     };
-  }, []);
+  }, [routeChangeEnd, routeChangeStart, router.events]);
 
   // @ts-ignore
   return (
     <>
       <MotionBox
+        //@ts-ignore
+        ref={wrapper}
         layoutId={"detail"}
         layout
         sx={{

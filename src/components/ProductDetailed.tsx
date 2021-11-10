@@ -1,6 +1,6 @@
-import { Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { HTMLProps, useCallback, useEffect, useState } from "react";
-import { MotionBox, MotionTypo, ProductInfo } from "./commons";
+import { MotionBox, MotionTypo, ProductInfo, StyledTimeline } from "./commons";
 import { DataItem } from "../assets/data";
 import UserIcon from "../assets/icons/UserIcon";
 import CollapseDetail from "./CollapseDetail";
@@ -10,6 +10,11 @@ import ProductList, { IdContextType } from "./ProductList";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { CollapseCard } from "./index";
+import TimelineItem from "@mui/lab/TimelineItem";
+import TimelineSeparator from "@mui/lab/TimelineSeparator";
+import TimelineConnector from "@mui/lab/TimelineConnector";
+import TimelineContent from "@mui/lab/TimelineContent";
+import TimelineDot from "@mui/lab/TimelineDot";
 
 export default function ProductDetailed({
   item,
@@ -170,6 +175,72 @@ export default function ProductDetailed({
                 Kể về câu chuyện phía sau dự án của bạn, và những khó khăn bạn
                 phải trải qua để đưa sản phẩm đến với người tiêu dùng...
               </Typography>
+            </CollapseCard>
+            <CollapseCard header={"cập nhật dự án"} sx={{ mt: 1 }} defaultOpen>
+              <StyledTimeline sx={{ px: 0 }}>
+                <TimelineItem>
+                  <TimelineSeparator>
+                    <TimelineDot />
+                    <TimelineConnector />
+                  </TimelineSeparator>
+                  <TimelineContent>
+                    <Box>
+                      <Box>
+                        <Typography sx={{ fontWeight: 600 }}>
+                          08:25 PM | Thứ Sáu, ngày 15/10/2021
+                        </Typography>
+                      </Box>
+                      <Typography>
+                        Earth is the third planet from the Sun and the only
+                        astronomical object known to harbor life. According to
+                        radiometric dating estimation.
+                      </Typography>
+                    </Box>
+                  </TimelineContent>
+                </TimelineItem>
+                <TimelineItem>
+                  <TimelineSeparator>
+                    <TimelineDot />
+                    <TimelineConnector />
+                  </TimelineSeparator>
+                  <TimelineContent>
+                    <Box>
+                      <Box>
+                        <Typography sx={{ fontWeight: 600 }}>
+                          12:46 AM | Thứ Hai, ngày 18/10/2021
+                        </Typography>
+                      </Box>
+                      <Typography>
+                        Earth is the third planet from the Sun and the only
+                        astronomical object known to harbor life. According to
+                        radiometric dating estimation. Earth is the third planet
+                        from the Sun and the only astronomical object...
+                      </Typography>
+                    </Box>
+                  </TimelineContent>
+                </TimelineItem>
+                <TimelineItem>
+                  <TimelineSeparator>
+                    <TimelineDot sx={{ bgcolor: "#0FD07F" }} />
+                    <TimelineConnector />
+                  </TimelineSeparator>
+                  <TimelineContent>
+                    <Box>
+                      <Box>
+                        <Typography sx={{ fontWeight: 600 }}>
+                          09:45 AM | Thứ Năm, ngày 21/10/2021
+                        </Typography>
+                      </Box>
+                      <Typography>
+                        Earth is the third planet from the Sun and the only
+                        astronomical object known to harbor life. According to
+                        radiometric dating estimation. Earth is the third planet
+                        from the Sun and the only astronomical object...
+                      </Typography>
+                    </Box>
+                  </TimelineContent>
+                </TimelineItem>
+              </StyledTimeline>
             </CollapseCard>
           </motion.div>
         )}

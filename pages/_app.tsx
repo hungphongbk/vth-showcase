@@ -6,13 +6,9 @@ import Head from "next/head";
 import theme from "../src/theme";
 import Header from "../src/components/Header";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
-import { useScrollRestoration } from "../src/utils";
-import { useRouter } from "next/router";
 
 export default function MyApp(props: AppProps) {
-  const { Component, pageProps } = props;
-  const router = useRouter();
-  useScrollRestoration(router);
+  const { Component, pageProps, router } = props;
 
   return (
     <React.Fragment>

@@ -41,7 +41,7 @@ export default function ProductDetailed({
         initial={{ x: "100%", opacity: 0 }}
         animate={{ x: 0, opacity: "100%" }}
         exit={{ x: 0, opacity: 0 }}
-        transition={{ duration: 0.35 }}
+        transition={{ duration: 0.55 }}
       >
         <MotionBox
           data-testid={"go-back-button"}
@@ -72,7 +72,7 @@ export default function ProductDetailed({
             }}
           >
             <MotionBox
-              layoutId={`${item.id}/thumb-wrapper`}
+              // layoutId={`${item.id}/thumb-wrapper`}
               sx={{
                 "& img": {
                   objectFit: "cover",
@@ -82,7 +82,7 @@ export default function ProductDetailed({
               }}
             >
               <motion.img
-                layoutId={`${item.id}/thumb`}
+                // layoutId={`${item.id}/thumb`}
                 src={item.image}
                 alt={item.title}
               />
@@ -148,10 +148,10 @@ export default function ProductDetailed({
           height: "100%",
           bgcolor: "#FFDE50",
         }}
-        animate={{ opacity: 1 }}
-        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, x: 0 }}
+        initial={{ opacity: 0, x: 0 }}
         exit={{ opacity: 0, x: "100%" }}
-        transition={{ duration: 0.25 }}
+        transition={{ duration: 0.35 }}
       />
     </>
   );

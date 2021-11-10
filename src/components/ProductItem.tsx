@@ -1,11 +1,10 @@
 import { Divider, ImageListItem } from "@mui/material";
 import { motion } from "framer-motion";
-import { HTMLProps, useCallback, useContext } from "react";
+import { HTMLProps } from "react";
 import { MotionBox, MotionTypo, ProductInfo } from "./commons";
 import { DataItem } from "../assets/data";
 import UserIcon from "../assets/icons/UserIcon";
 import StatusBadge from "./StatusBadge";
-import { LayoutIdContext } from "./ProductList";
 
 const MotionImageListItem = motion(ImageListItem);
 
@@ -13,13 +12,6 @@ export default function ProductItem({
   item,
   onClick,
 }: { item: DataItem } & HTMLProps<HTMLElement>) {
-  const context = useContext(LayoutIdContext);
-  const getLayoutId = useCallback(
-    (suffix: string = "") => {
-      return `${item.id}${context === "sub" ? "/sub" : ""}${suffix}`;
-    },
-    [context, item.id]
-  );
   return (
     <MotionImageListItem
       key={item.id}

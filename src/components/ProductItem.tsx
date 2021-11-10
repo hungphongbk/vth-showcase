@@ -14,17 +14,22 @@ export default function ProductItem({
   item,
   onClick,
 }: { item: DataItem } & HTMLProps<HTMLElement>) {
-  const itemRef = useRef<HTMLLIElement>(),
+  const itemRef = useRef<HTMLElement>(),
     router = useRouter();
   const { inViewport } = useInViewport(itemRef),
-    preloaded = useRef<Promise<any>>();
+    prefetched = useRef<Promise<any>>();
 
   useEffect(() => {
-    if (inViewport && !preloaded.current)
-      preloaded.current = router.prefetch(`/preview/${item.id}`);
+    if (inViewport && !prefetched.current) {
+      console.log(prefetched);
+      prefetched.current = router.prefetch(`/preview/${item.id}`);
+    }
   }, [inViewport, item.id, router]);
+
   return (
     <MotionImageListItem
+      // @ts-ignore
+      ref={itemRef}
       key={item.id}
       // layoutId={getLayoutId()}
       onClick={onClick}

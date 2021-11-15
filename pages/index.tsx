@@ -73,7 +73,7 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
           textTransform: "uppercase",
         }}
       >
-        Dự án đang chuẩn bị "rời bệ phóng"
+        Dự án đang chuẩn bị &quot;rời bệ phóng&quot;
       </Typography>
       <ImageList variant={"standard"} cols={2} gap={8}>
         {range(0, 2).map((index) => (

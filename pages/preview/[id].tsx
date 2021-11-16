@@ -46,7 +46,7 @@ export default function PreviewPage({
           padding: 1,
           width: "100%",
           height: "100%",
-          bgcolor: "#FFDE50",
+          bgcolor: "yellow.main",
         }}
         animate={{ opacity: 1, x: 0 }}
         initial={{ opacity: 0, x: 0 }}

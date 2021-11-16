@@ -8,6 +8,24 @@ declare module "@mui/material/styles" {
     };
   }
 
+  interface PaletteOptions {
+    red: {
+      main: string;
+      light?: string;
+      dark?: string;
+    };
+    green: {
+      main: string;
+      light?: string;
+      dark?: string;
+    };
+    yellow: {
+      main: string;
+      light?: string;
+      dark?: string;
+    };
+  }
+
   // allow configuration using `createTheme`
   interface ThemeOptions {
     variables: {
@@ -24,13 +42,22 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#556cd6",
+      main: "#FFDE50",
     },
     secondary: {
       main: "#19857b",
     },
     error: {
       main: red.A400,
+    },
+    red: {
+      main: "#FF0000",
+    },
+    green: {
+      main: "#0FD07F",
+    },
+    yellow: {
+      main: "#FFDE50",
     },
   },
   variables: {

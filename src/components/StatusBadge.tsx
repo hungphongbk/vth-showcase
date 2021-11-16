@@ -11,16 +11,16 @@ export default function StatusBadge(props: {
   const outlined = props.outlined ?? false,
     color: any = (
       {
-        idea: "red",
-        showcase: "#FFDE50",
-        "coming soon": "#0FD07F",
+        idea: "red.main",
+        showcase: "yellow.main",
+        "coming soon": "green.main",
       } as Record<string, string>
     )[props.status];
 
   return (
     <Box
       sx={{
-        color: color,
+        color,
         ...(outlined && {
           py: 0.5,
           px: 1.2,

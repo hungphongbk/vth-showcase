@@ -68,7 +68,7 @@ export default function FilterPanel(): JSX.Element {
           <FilterTag
             key={content}
             sx={{
-              bgcolor: content === selected ? "#FFDE50" : "#f1f1f1",
+              bgcolor: content === selected ? "yellow.main" : "#f1f1f1",
               fontWeight: content === selected ? 600 : 500,
             }}
             onClick={() => setSelected(content)}
@@ -125,7 +125,7 @@ export default function FilterPanel(): JSX.Element {
             <FilterTag
               key={content}
               sx={{
-                bgcolor: s2[content] === true ? "#FFDE50" : "#f1f1f1",
+                bgcolor: s2[content] === true ? "yellow.main" : "#f1f1f1",
                 fontWeight: s2[content] === true ? 600 : 500,
               }}
               onClick={() =>

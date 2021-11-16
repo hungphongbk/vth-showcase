@@ -245,7 +245,7 @@ export default function ProductDetailed({
                 </TimelineItem>
                 <TimelineItem>
                   <TimelineSeparator>
-                    <TimelineDot sx={{ bgcolor: "#0FD07F" }} />
+                    <TimelineDot sx={{ bgcolor: "green.main" }} />
                     <TimelineConnector />
                   </TimelineSeparator>
                   <TimelineContent>

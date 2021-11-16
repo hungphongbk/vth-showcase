@@ -53,7 +53,7 @@ export default function PostDetailedPage({
           sx={{
             width: 66,
             height: 66,
-            bgcolor: "#FFDE50",
+            bgcolor: "yellow.main",
             border: "8px solid white",
             ml: "-33px",
             mt: "-22px",

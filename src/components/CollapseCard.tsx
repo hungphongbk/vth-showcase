@@ -28,7 +28,7 @@ export default function CollapseCard({
             sx={{
               height: 32,
               borderRadius: "25px",
-              bgcolor: "#FFDE50",
+              bgcolor: "yellow.main",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",

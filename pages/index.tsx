@@ -111,7 +111,7 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
                 sx={{
                   height: 35,
                   borderRadius: 17.5,
-                  backgroundColor: "#FFDE50",
+                  bgcolor: "yellow.main",
                   border: "3px solid white",
                   display: "flex",
                   justifyContent: "center",
@@ -149,7 +149,7 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
               width: 28,
               height: 28,
               borderRadius: "50%",
-              bgcolor: "#FFDE50",
+              bgcolor: "yellow.main",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -161,7 +161,7 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
           <FilterTag
             sx={
               filter === "coming soon"
-                ? { bgcolor: "#FFDE50", color: "black" }
+                ? { bgcolor: "yellow.main", color: "black" }
                 : { bgcolor: "#d5d5d5", color: "white" }
             }
             onClick={() => changeFilter("coming soon")}
@@ -171,7 +171,7 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
           <FilterTag
             sx={
               filter === "showcase"
-                ? { bgcolor: "#FFDE50", color: "black" }
+                ? { bgcolor: "yellow.main", color: "black" }
                 : { bgcolor: "#d5d5d5", color: "white" }
             }
             onClick={() => changeFilter("showcase")}
@@ -181,7 +181,7 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
           <FilterTag
             sx={
               filter === "idea"
-                ? { bgcolor: "#FFDE50", color: "black" }
+                ? { bgcolor: "yellow.main", color: "black" }
                 : { bgcolor: "#d5d5d5", color: "white" }
             }
             onClick={() => changeFilter("idea")}

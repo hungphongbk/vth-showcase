@@ -23,7 +23,7 @@ const Switch = styled((props: SwitchProps) => (
       transform: `translateX(${WIDTH - HEIGHT}px)`,
       color: "#fff",
       "& + .MuiSwitch-track": {
-        backgroundColor: "#FFDE50",
+        backgroundColor: "yellow.main",
         opacity: 1,
         border: 0,
       },
@@ -32,7 +32,7 @@ const Switch = styled((props: SwitchProps) => (
       },
     },
     "&.Mui-focusVisible .MuiSwitch-thumb": {
-      color: "#FFDE50",
+      color: "yellow.main",
       border: "6px solid #fff",
     },
     "&.Mui-disabled .MuiSwitch-thumb": {

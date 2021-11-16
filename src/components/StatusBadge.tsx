@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { toCapitalize } from "../utils/string";
 import { SxProps } from "@mui/system";
+import { usingContextualColor } from "../utils/colors";
 
 export default function StatusBadge(props: {
   status: string;
@@ -9,13 +10,7 @@ export default function StatusBadge(props: {
   sx?: SxProps;
 }): JSX.Element {
   const outlined = props.outlined ?? false,
-    color: any = (
-      {
-        idea: "red.main",
-        showcase: "yellow.main",
-        "coming soon": "green.main",
-      } as Record<string, string>
-    )[props.status];
+    color = usingContextualColor(props.status);
 
   return (
     <Box

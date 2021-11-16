@@ -1,4 +1,4 @@
-import { Divider, ImageListItem } from "@mui/material";
+import { Box, Divider, IconButton, ImageListItem } from "@mui/material";
 import { motion } from "framer-motion";
 import { HTMLProps, useEffect, useRef } from "react";
 import { MotionBox, MotionTypo, ProductInfo } from "./commons";
@@ -7,8 +7,21 @@ import UserIcon from "../assets/icons/UserIcon";
 import StatusBadge from "./StatusBadge";
 import { useInViewport } from "react-in-viewport";
 import { useRouter } from "next/router";
+import InboxIcon from "@mui/icons-material/Inbox";
+import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
+import { SystemStyleObject } from "@mui/system";
+import { usingContextualColor } from "../utils/colors";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const MotionImageListItem = motion(ImageListItem);
+
+const sxIcon: SystemStyleObject = { width: 16, height: 16, mr: 1 },
+  sxDetailLine: SystemStyleObject = {
+    display: "grid",
+    gridTemplateColumns: "auto 1fr",
+    gridGap: 1,
+    "& .MuiTypography-root": { lineHeight: 1.5 },
+  };
 
 export default function ProductItem({
   item,
@@ -17,7 +30,8 @@ export default function ProductItem({
   const itemRef = useRef<HTMLElement>(),
     router = useRouter();
   const { inViewport } = useInViewport(itemRef),
-    prefetched = useRef<Promise<any>>();
+    prefetched = useRef<Promise<any>>(),
+    color = usingContextualColor(item.status);
 
   useEffect(() => {
     if (inViewport && !prefetched.current) {
@@ -71,13 +85,36 @@ export default function ProductItem({
         <MotionBox
           sx={{
             display: "grid",
-            gridTemplateColumns: "auto 1fr",
-            gridGap: 1,
-            "& .MuiTypography-root": { lineHeight: 1.5 },
+            gridTemplateAreas: '"user user" "count next" "date next"',
+            gridTemplateColumns: "1fr auto",
+            gridRowGap: 4,
+            width: "100%",
           }}
         >
-          <UserIcon sx={{ width: 16, height: 16, mr: 1 }} />
-          <MotionTypo>{item.author}</MotionTypo>
+          <Box sx={[sxDetailLine, { gridArea: "user" }]}>
+            <UserIcon sx={sxIcon} />
+            <MotionTypo>{item.author}</MotionTypo>
+          </Box>
+          <Box sx={[sxDetailLine, { gridArea: "count" }]}>
+            <InboxIcon sx={sxIcon} />
+            <MotionTypo>1000 pcs</MotionTypo>
+          </Box>
+          <Box sx={[sxDetailLine, { gridArea: "date" }]}>
+            <AccessTimeFilledIcon sx={sxIcon} />
+            <MotionTypo>24/12/2021</MotionTypo>
+          </Box>
+          <IconButton
+            sx={{
+              bgcolor: color,
+              color: "white",
+              gridArea: "next",
+              height: 26,
+              width: 26,
+              alignSelf: "end",
+            }}
+          >
+            <ArrowForwardIcon />
+          </IconButton>
         </MotionBox>
       </ProductInfo>
     </MotionImageListItem>

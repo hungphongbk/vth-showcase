@@ -41,7 +41,6 @@ export default function ProductItem({
 
   return (
     <MotionImageListItem
-      layout
       // @ts-ignore
       ref={itemRef}
       key={item.id}

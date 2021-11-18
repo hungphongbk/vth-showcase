@@ -16,6 +16,7 @@ import FilterPanel from "../src/components/FilterPanel";
 import demoData from "src/assets/data";
 import { range } from "lodash";
 import { VthCountdown } from "../src/components";
+import Banner from "../src/components/Banner";
 
 const MotionContainer = motion(Container);
 
@@ -63,6 +64,7 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
       animate={{ opacity: 1 }}
       exit={{}}
     >
+      <Banner sx={{ mt: -2, mx: -1 }} />
       <Typography
         sx={{
           fontSize: 15,

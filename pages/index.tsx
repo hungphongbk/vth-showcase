@@ -13,9 +13,10 @@ import React, { PropsWithChildren, useMemo, useState } from "react";
 import { SxProps } from "@mui/system";
 import { MotionBox, ProductInfoSecond } from "../src/components/commons";
 import FilterPanel from "../src/components/FilterPanel";
-import demoData from "src/assets/data";
 import { range } from "lodash";
 import { VthCountdown } from "../src/components";
+import { apolloClient, queryShowcases } from "../src/api";
+import { ShowcaseModel, ShowcasesQuery } from "../src/types/graphql";
 
 const MotionContainer = motion(Container);
 
@@ -221,5 +222,10 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
 export default Home;
 
 export const getStaticProps = async () => {
-  return Promise.resolve({ props: { posts: demoData } });
+  const { data } = await apolloClient.query<ShowcasesQuery>({
+    query: queryShowcases,
+  });
+  return Promise.resolve({
+    props: { posts: data.showcases as unknown as Array<ShowcaseModel> },
+  });
 };

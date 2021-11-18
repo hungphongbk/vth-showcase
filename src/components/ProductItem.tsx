@@ -2,7 +2,6 @@ import { Box, Divider, IconButton, ImageListItem } from "@mui/material";
 import { motion } from "framer-motion";
 import { HTMLProps, useEffect, useRef } from "react";
 import { MotionBox, MotionTypo, ProductInfo } from "./commons";
-import { DataItem } from "../assets/data";
 import UserIcon from "../assets/icons/UserIcon";
 import StatusBadge from "./StatusBadge";
 import { useInViewport } from "react-in-viewport";
@@ -12,6 +11,7 @@ import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import { SystemStyleObject } from "@mui/system";
 import { usingContextualColor } from "../utils/colors";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { ShowcaseModel } from "../types/graphql";
 
 const MotionImageListItem = motion(ImageListItem);
 
@@ -26,7 +26,7 @@ const sxIcon: SystemStyleObject = { width: 16, height: 16, mr: 1 },
 export default function ProductItem({
   item,
   onClick,
-}: { item: DataItem } & HTMLProps<HTMLElement>) {
+}: { item: ShowcaseModel } & HTMLProps<HTMLElement>) {
   const itemRef = useRef<HTMLElement>(),
     router = useRouter();
   const { inViewport } = useInViewport(itemRef),
@@ -68,8 +68,8 @@ export default function ProductItem({
       >
         <motion.img
           // layoutId={getLayoutId("/thumb")}
-          src={item.image}
-          alt={item.title}
+          src={item.image.path}
+          alt={item.image.path}
         />
       </MotionBox>
       {/*<img src={item.image} alt={item.title} />*/}
@@ -78,7 +78,7 @@ export default function ProductItem({
           variant="h6"
           sx={{ textTransform: "uppercase", fontWeight: 600 }}
         >
-          {item.title}
+          {item.name}
         </MotionTypo>
         <StatusBadge status={item.status} />
         <Divider sx={{ mt: 0.5, mb: 0.5 }} />

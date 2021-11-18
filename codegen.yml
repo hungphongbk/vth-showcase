@@ -1,0 +1,24 @@
+overwrite: true
+schema: http://localhost:3001/graphql
+documents: ./src/**/*.graphql
+generates:
+  ./src/api/introspection.json:
+    plugins:
+      - fragment-matcher
+    config:
+      module: commonjs
+  ./src/types/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+    config:
+      avoidOptionals: true
+      dedupeFragments: false
+      declarationKind: interface
+      disableDescriptions: true
+      flattenGeneratedTypes: false
+      preResolveTypes: true
+      skipTypename: true
+    hooks:
+      afterAllFileWrite:
+        - prettier --write

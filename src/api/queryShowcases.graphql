@@ -1,0 +1,11 @@
+query Showcases {
+  showcases {
+    id
+    name
+    author
+    status
+    image{
+      path
+    }
+  }
+}

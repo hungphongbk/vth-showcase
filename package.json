@@ -7,9 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "download:mock": "curl \"https://api.mockaroo.com/api/20cc56c0?count=20&key=3b78e0e0\" > \"src/assets/data.json\"\n"
+    "download:mock": "curl \"https://api.mockaroo.com/api/20cc56c0?count=20&key=3b78e0e0\" > \"src/assets/data.json\"\n",
+    "graphql-codegen": "graphql-codegen --watch"
   },
   "dependencies": {
+    "@apollo/client": "^3.4.17",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@mui/icons-material": "^5.0.5",
@@ -18,6 +20,7 @@
     "@mui/styled-engine-sc": "^5.0.4",
     "@mui/system": "^5.1.0",
     "framer-motion": "^5.0.0",
+    "graphql": "^15.7.2",
     "husky": "^7.0.4",
     "intersection-observer": "^0.12.0",
     "lint-staged": "^11.2.6",
@@ -34,6 +37,11 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "1.21.7",
+    "@graphql-codegen/fragment-matcher": "^2.0.1",
+    "@graphql-codegen/typescript": "1.23.0",
+    "@graphql-codegen/typescript-operations": "^2.2.0",
+    "@types/graphql": "^14.5.0",
     "@types/lodash": "^4.14.176",
     "@types/node": "16.11.6",
     "@types/react": "17.0.33",
@@ -41,6 +49,7 @@
     "babel-plugin-styled-components": "^1.13.3",
     "eslint": "7.32.0",
     "eslint-config-next": "12.0.1",
+    "graphql-tag": "^2.12.6",
     "typescript": "4.4.4"
   },
   "husky": {

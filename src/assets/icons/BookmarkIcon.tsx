@@ -1,0 +1,39 @@
+import React from "react";
+import { SvgIcon, SvgIconProps } from "@mui/material";
+
+export default function BookmarkIcon(props: SvgIconProps): JSX.Element {
+  return (
+    <SvgIcon viewBox="0 0 104 104" {...props}>
+      <image
+        width="104"
+        height="104"
+        x="0"
+        y="0"
+        href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGgAAABoCAQAAAC3FX0qAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
+AAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAAAmJLR0QA/4ePzL8AAAAJcEhZ
+cwAALEsAACxLAaU9lqkAAAAHdElNRQflCxIODDX3BSixAAAEF0lEQVR42u3czW8TRxzG8W8QReWl
+kMQGamJCmyIFlYISWYq4tBekquceeqrg1P8ACamvSXANQqmgOSAuHHiRUFUBIUBoI0QLCFTeS1sq
+2qpUiAQhMI2NRNUEkuWCTWyv7fXM7Pq3aJ69xLMzu/PJOuPZWSs4FG/AUnYzjiN4yzLIYlx2uBXB
+j3XvsJftB7feNzgUp6GNvwlH4s5ocdEMl2pN9e6n57xaWjSj9qPIjgVJjwVJjwVJjwVJjwVJjwVJ
+jwVJz8xAzjLGMLNYQ+zFAJ3nPTJAnAN0+X0y/99yT1hHBoARPvL9bAGAvuXP/M+/8E3YQU/oLXi9
+Jeygw9woeP0zB8MMmmRTSdlW/gsv6BDXSsrO831YQVNscy3vYyqcoCHOuZafYyiMIIetZff14NRw
+JCGgAc6U3XeZ4bCBHPor7k35dY1MzuUekeY+v3GDK9wu+vwpzmkSLGQFCV4nRoy5UkB3GOU6v3Od
+f3hAuobx6yo8e+M10EQrUVbRSRttmnNylwdeCc+PnLppNPWbzWcOn3g+f8LbEzyvoAPGMbkMqoN0
+BoVTvoE0jqwDivoGeqk+oA942RdOROdGUAfUzoAPg0Ije2jTaK81yjmcYo5RTpQTNZzd8KAA8A5n
+ecUYZzEHWat3CP2pTwcnaDHCWcIAb+sexMRcrosjLNU+SpxjrNHvjJnJaSeDtGodoZVjdJjoiqnZ
+dgdHWabcOsoZVpvpiLnbh1UMKZIWcU3z+voCgjfZq9TuOEvMdcLsDd64Uqu0yS6YBd1SanVTLuii
+Uqtf5YIuKLW6LRf0h1IrtesaAOiW4qr1Xe7JBP2l3PInmSD1r96OyARVGhIq31Rfkgm6Uqa8gXc5
+yUneL9vyqsFeaN6xPt+mmO16ggTf5esMl7nfma/4VXTD63KF26hLR7s4ymRBrUkO0+lS84480MOi
+ZeW32M//rjXH2Ul7EeiBPJDDh/nuNbKLhxXrTrCdeL7+eolvOYfHbOA1ltNP1lP9cb5mJXGSZGSC
+gt98WMYSFwuSHguSHguSHguSHguSHguSHguSHguSHguSHgtSTMbsk9T6gjL08gar2RwIyudlrH/p
+mbagGKOf+/4uY/kJmuDTaZjnqD6PC5GiQO6YXCIkjVypgEAT9BCp+l6PkNJGBQDK8oUHTC7zSHFP
+LihLLwtrHpVaSCqjfARl+YoFykNtC8kyz5LqAkprYXKJkazyTCkQUJodBjCqKMOgNH0GMbk087nn
+0c8gKE2fwgDgNS1s9IQyBBojVcPQrI6q/jllADRGD82+Y3KJVUFpggonmsGhyk9oNUCV52b+o9wn
+tB5B8RLMx3XE5BLly5IrtcwbCC5Nw3QH+DdTLRE2T0Od9v5fNOdzhAwjfCYIk8s8UtzkEftY5Nb7
+p+BNRmLt2NBcAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIxLTExLTE4VDExOjEyOjUzKzAzOjAws9th
+OQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMS0xMS0xOFQxMToxMjo1MyswMzowMMKG2YUAAAAASUVO
+RK5CYII="
+      />
+    </SvgIcon>
+  );
+}

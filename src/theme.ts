@@ -58,6 +58,7 @@ const theme = createTheme({
     },
     yellow: {
       main: "#FFDE50",
+      light: "#FFF5CB",
     },
   },
   variables: {

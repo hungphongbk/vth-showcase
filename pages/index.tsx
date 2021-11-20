@@ -15,6 +15,7 @@ import { MotionBox, ProductInfoSecond } from "../src/components/commons";
 import FilterPanel from "../src/components/FilterPanel";
 import { range } from "lodash";
 import { VthCountdown } from "../src/components";
+import Banner from "../src/components/Banner";
 import { apolloClient, queryShowcases } from "../src/api";
 import { ShowcaseModel, ShowcasesQuery } from "../src/types/graphql";
 
@@ -51,10 +52,7 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
   }, [filter, posts]);
 
   const changeFilter = (value: string) => {
-    if (value !== filter) {
-      setFilter(undefined);
-      setTimeout(() => setFilter(value), 200);
-    } else setFilter(undefined);
+    setFilter(value);
   };
 
   return (
@@ -64,6 +62,7 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
       animate={{ opacity: 1 }}
       exit={{}}
     >
+      <Banner sx={{ mt: -2, mx: -1 }} />
       <Typography
         sx={{
           fontSize: 15,
@@ -191,7 +190,17 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
           </FilterTag>
         </Box>
       </Box>
-      <ProductList posts={restPost} variant={"standard"} />
+      <AnimatePresence>
+        <motion.div
+          key={filter ?? "none"}
+          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.15 }}
+        >
+          <ProductList posts={restPost} variant={"standard"} />
+        </motion.div>
+      </AnimatePresence>
       <Box sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 99 }}>
         <AnimatePresence>
           {openFilter && (

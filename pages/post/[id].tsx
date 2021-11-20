@@ -113,7 +113,7 @@ export async function getStaticPaths() {
     query: queryShowcases,
   });
   return {
-    paths: data.showcases.map(({ id }) => `/preview/${id}`),
+    paths: data.showcases.map(({ id }) => `/post/${id}`),
     fallback: false,
   };
 }

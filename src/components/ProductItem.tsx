@@ -1,6 +1,6 @@
 import { Box, Divider, IconButton, ImageListItem } from "@mui/material";
 import { motion } from "framer-motion";
-import { HTMLProps, useEffect, useRef } from "react";
+import { HTMLProps, useCallback, useEffect, useRef, useState } from "react";
 import { MotionBox, MotionTypo, ProductInfo } from "./commons";
 import UserIcon from "../assets/icons/UserIcon";
 import StatusBadge from "./StatusBadge";
@@ -33,6 +33,20 @@ export default function ProductItem({
     prefetched = useRef<Promise<any>>(),
     color = usingContextualColor(item.status);
 
+  const [clicked, setClicked] = useState(false);
+  const getLayoutId = useCallback(
+    (name: string = "") => {
+      if (!clicked) return undefined;
+      return `detail-${name}`;
+    },
+    [clicked]
+  );
+
+  const handleClick = (e: any) => {
+    setClicked(true);
+    onClick?.(e);
+  };
+
   useEffect(() => {
     if (inViewport && !prefetched.current) {
       prefetched.current = router.prefetch(`/preview/${item.id}`);
@@ -44,8 +58,8 @@ export default function ProductItem({
       // @ts-ignore
       ref={itemRef}
       key={item.id}
-      // layoutId={getLayoutId()}
-      onClick={onClick}
+      layoutId={getLayoutId()}
+      onClick={handleClick}
       sx={{
         borderRadius: 3,
         overflow: "hidden",
@@ -71,6 +85,7 @@ export default function ProductItem({
         }}
       >
         <motion.img
+          layoutId={getLayoutId("image")}
           // layoutId={getLayoutId("/thumb")}
           src={item.image.path}
           alt={item.image.path}

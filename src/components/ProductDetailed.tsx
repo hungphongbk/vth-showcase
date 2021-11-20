@@ -1,11 +1,16 @@
 import { Box, Divider, Typography } from "@mui/material";
-import { HTMLProps, useCallback, useEffect, useRef, useState } from "react";
-import { MotionBox, MotionTypo, ProductInfo, StyledTimeline } from "./commons";
+import { HTMLProps, useCallback, useEffect, useRef } from "react";
+import {
+  MotionBox,
+  MotionTypo,
+  ProductInfoDetailed,
+  StyledTimeline,
+} from "./commons";
 import UserIcon from "../assets/icons/UserIcon";
 import CollapseDetail from "./CollapseDetail";
 import StatusBadge from "./StatusBadge";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import ProductList, { IdContextType } from "./ProductList";
+import ProductList from "./ProductList";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { CollapseCard } from "./index";
@@ -16,25 +21,28 @@ import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import { ShowcaseModel } from "../types/graphql";
 
+const testPreview = (str: string) => /^\/preview/.test(str),
+  testPost = (str: string) => /^\/post/.test(str);
+
 export default function ProductDetailed({
   item,
   onClick,
   posts,
 }: { item: ShowcaseModel; posts: ShowcaseModel[] } & HTMLProps<HTMLElement>) {
   const router = useRouter();
-  const currentPage = /^\/preview/.test(router.pathname) ? "preview" : "post";
+  const currentPage = testPreview(router.pathname)
+    ? "preview"
+    : testPost(router.pathname)
+    ? "post"
+    : undefined;
   const wrapper = useRef<HTMLElement>(),
     scrollHandler = useRef<any>();
-
-  const [context, setContext] = useState<IdContextType>("sub");
-
-  const onAnimateComplete = useCallback(() => setContext("main"), []);
 
   const routeChangeStart = useCallback(
       (url) => {
         if (
-          (currentPage === "preview" && /^\/preview/.test(url)) ||
-          (currentPage === "post" && /^\/post/.test(url))
+          (currentPage === "preview" && testPreview(url)) ||
+          (currentPage === "post" && testPost(url))
         )
           scrollHandler.current = () =>
             wrapper.current?.scrollTo({ top: 0, behavior: "smooth" });
@@ -49,7 +57,6 @@ export default function ProductDetailed({
     router.events.on("routeChangeStart", routeChangeStart);
     router.events.on("routeChangeComplete", routeChangeEnd);
     return () => {
-      setContext("sub");
       router.events.off("routeChangeStart", routeChangeStart);
       router.events.off("routeChangeComplete", routeChangeEnd);
     };
@@ -61,7 +68,7 @@ export default function ProductDetailed({
       <MotionBox
         //@ts-ignore
         ref={wrapper}
-        layoutId={"detail"}
+        layoutId={"detail-"}
         layout
         sx={{
           position: "relative",
@@ -73,10 +80,9 @@ export default function ProductDetailed({
           padding: 1,
           fontSize: 13,
         }}
-        onLayoutAnimationComplete={onAnimateComplete}
-        initial={{ x: "100%", opacity: 0 }}
-        animate={{ x: 0, opacity: "100%" }}
-        exit={{ x: 0, opacity: 0 }}
+        // initial={{ x: "100%", opacity: 0 }}
+        // animate={{ x: 0, opacity: "100%" }}
+        // exit={{ x: 0, opacity: 0 }}
         transition={{ duration: 0.4 }}
       >
         {currentPage === "preview" && (
@@ -114,7 +120,6 @@ export default function ProductDetailed({
           >
             <MotionBox
               // layoutId={`${item.id}/thumb-wrapper`}
-              layoutId={"image"}
               sx={{
                 "& img": {
                   objectFit: "cover",
@@ -124,13 +129,14 @@ export default function ProductDetailed({
               }}
             >
               <motion.img
+                layoutId={"detail-image"}
                 // layoutId={`${item.id}/thumb`}
                 src={item.image.path}
                 alt={item.image.path}
               />
             </MotionBox>
             <motion.div>
-              <ProductInfo
+              <ProductInfoDetailed
                 onClick={() =>
                   currentPage === "preview" && router.push(`/post/${item.id}`)
                 }
@@ -157,7 +163,7 @@ export default function ProductDetailed({
                   <UserIcon sx={{ width: 16, height: 16, mr: 1 }} />
                   <MotionTypo>{item.author}</MotionTypo>
                 </MotionBox>
-              </ProductInfo>
+              </ProductInfoDetailed>
             </motion.div>
           </MotionBox>
           <MotionBox
@@ -269,9 +275,10 @@ export default function ProductDetailed({
           </motion.div>
         )}
         <MotionBox
-          initial={{ display: "none", opacity: 0 }}
-          animate={{ display: "block", opacity: 1 }}
-          exit={{ display: "none", opacity: 0 }}
+          layoutId={"detail-relateds"}
+          // initial={{ opacity: 0 }}
+          // animate={{ opacity: 1 }}
+          // exit={{ opacity: 0 }}
         >
           <Typography
             component={"h3"}
@@ -280,7 +287,7 @@ export default function ProductDetailed({
           >
             DỰ ÁN LIÊN QUAN
           </Typography>
-          <ProductList posts={posts} context={context} />
+          <ProductList posts={posts} />
         </MotionBox>
       </MotionBox>
     </>

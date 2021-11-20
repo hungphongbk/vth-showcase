@@ -5,7 +5,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import theme from "../src/theme";
 import Header from "../src/components/Header";
-import { AnimatePresence, LayoutGroup } from "framer-motion";
+import { LayoutGroup } from "framer-motion";
 import "intersection-observer";
 
 export default function MyApp(props: AppProps) {
@@ -25,9 +25,9 @@ export default function MyApp(props: AppProps) {
         <CssBaseline />
         <Header />
         <LayoutGroup>
-          <AnimatePresence exitBeforeEnter={false} initial={false}>
-            <Component {...pageProps} key={router.route} />
-          </AnimatePresence>
+          {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
+          <Component {...pageProps} key={router.route} />
+          {/*</AnimatePresence>*/}
         </LayoutGroup>
       </ThemeProvider>
     </React.Fragment>

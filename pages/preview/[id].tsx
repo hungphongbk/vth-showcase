@@ -57,9 +57,9 @@ export default function PreviewPage({
           height: "100%",
           bgcolor: "yellow.main",
         }}
-        animate={{ opacity: 1, x: 0 }}
-        initial={{ opacity: 0, x: 0 }}
-        exit={{ opacity: 0, x: "100%" }}
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+        exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
       />
     </Box>

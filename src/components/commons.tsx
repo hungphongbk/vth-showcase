@@ -5,8 +5,7 @@ import { Timeline } from "@mui/lab";
 
 export const MotionBox = motion(Box);
 export const MotionTypo = motion(Typography);
-export const ProductInfo = styled.div`
-  padding: 64px 8px 8px;
+export const ProductInfoBase = styled.div`
   display: flex;
   flex-direction: column;
   background: linear-gradient(179.76deg, rgba(0, 0, 0, 0) 0.2%, #000000 99.8%);
@@ -14,6 +13,16 @@ export const ProductInfo = styled.div`
   align-items: start;
   flex-grow: 1;
   justify-content: end;
+`;
+export const ProductInfo = styled(ProductInfoBase)`
+  padding: 64px 8px 8px;
+`;
+export const ProductInfoDetailed = styled(ProductInfoBase)`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px;
 `;
 export const ProductInfoThird = styled.div`
   position: absolute;

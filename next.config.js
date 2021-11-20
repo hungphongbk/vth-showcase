@@ -6,7 +6,6 @@ const withTM = require("next-transpile-modules")([
 module.exports = withTM({
   reactStrictMode: true,
   webpack: (config) => {
-    console.log("fuck");
     config.resolve.alias = {
       ...config.resolve.alias,
       "@mui/styled-engine": "@mui/styled-engine-sc",
@@ -24,4 +23,5 @@ module.exports = withTM({
   experimental: {
     scrollRestoration: true,
   },
+  staticPageGenerationTimeout: 300,
 });

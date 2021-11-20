@@ -1,0 +1,22 @@
+query ShowcasePreview($id: ID!) {
+  showcase(id: $id) {
+    id
+    name
+    author
+    status
+    image{
+      path
+    }
+    description
+    relatedShowcases {
+       id
+       name
+       author
+       status
+       image{
+         path
+       }
+       createdAt
+    }
+  }
+}

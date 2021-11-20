@@ -7,5 +7,6 @@ query Showcases {
     image{
       path
     }
+    createdAt
   }
 }

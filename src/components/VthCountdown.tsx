@@ -39,7 +39,7 @@ const AnimateNumber = (props: {
           <motion.div
             style={{ gridColumn: 1 }}
             layout
-            key={first}
+            key={`first-${first}`}
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 5 }}
@@ -49,7 +49,7 @@ const AnimateNumber = (props: {
           <motion.div
             style={{ gridColumn: 2 }}
             layout
-            key={second}
+            key={`second-${second}`}
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 5 }}

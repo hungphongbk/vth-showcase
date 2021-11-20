@@ -57,7 +57,12 @@ export default function ProductItem({
       <MotionBox
         // layoutId={getLayoutId("/thumb-wrapper")}
         sx={{
-          flexGrow: 1,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: -1,
           "& img": {
             objectFit: "cover",
             width: "100%",

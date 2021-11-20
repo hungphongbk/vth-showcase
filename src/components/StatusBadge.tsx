@@ -1,8 +1,13 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { toCapitalize } from "../utils/string";
 import { SxProps } from "@mui/system";
 import { usingContextualColor } from "../utils/colors";
+
+const statusLabels = {
+  IDEA: "Idea",
+  SHOWCASE: "Showcase",
+  COMING: "Coming Soon",
+} as Record<string, string>;
 
 export default function StatusBadge(props: {
   status: string;
@@ -29,7 +34,7 @@ export default function StatusBadge(props: {
       }}
     >
       <Typography sx={{ fontWeight: 700, lineHeight: 1, fontSize: "inherit" }}>
-        {toCapitalize(props.status)}
+        {statusLabels[props.status]}
       </Typography>
     </Box>
   );

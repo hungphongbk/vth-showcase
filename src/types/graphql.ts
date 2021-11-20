@@ -21,7 +21,13 @@ export interface MediaModel {
 }
 
 export interface Query {
+  showcase: ShowcasePreviewDto;
   showcases: Array<ShowcaseModel>;
+}
+
+
+export interface QueryShowcaseArgs {
+  id: Scalars['ID'];
 }
 
 export interface ShowcaseModel {
@@ -35,13 +41,32 @@ export interface ShowcaseModel {
   updatedAt: Scalars['DateTime'];
 }
 
+export interface ShowcasePreviewDto {
+  author: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  image: MediaModel;
+  name: Scalars['String'];
+  relatedShowcases: Array<ShowcaseModel>;
+  status: ShowcaseStatus;
+  updatedAt: Scalars['DateTime'];
+}
+
 export enum ShowcaseStatus {
   Coming = 'COMING',
   Idea = 'IDEA',
   Showcase = 'SHOWCASE'
 }
 
+export type ShowcasePreviewQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type ShowcasePreviewQuery = { showcase: { id: string, name: string, author: string, status: ShowcaseStatus, description: string, image: { path: string }, relatedShowcases: Array<{ id: string, name: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } }> } };
+
 export type ShowcasesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ShowcasesQuery = { showcases: Array<{ id: string, name: string, author: string, status: ShowcaseStatus, image: { path: string } }> };
+export type ShowcasesQuery = { showcases: Array<{ id: string, name: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } }> };

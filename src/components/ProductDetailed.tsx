@@ -1,7 +1,6 @@
 import { Box, Divider, Typography } from "@mui/material";
 import { HTMLProps, useCallback, useEffect, useRef, useState } from "react";
 import { MotionBox, MotionTypo, ProductInfo, StyledTimeline } from "./commons";
-import { DataItem } from "../assets/data";
 import UserIcon from "../assets/icons/UserIcon";
 import CollapseDetail from "./CollapseDetail";
 import StatusBadge from "./StatusBadge";
@@ -15,12 +14,13 @@ import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
+import { ShowcaseModel } from "../types/graphql";
 
 export default function ProductDetailed({
   item,
   onClick,
   posts,
-}: { item: DataItem; posts: DataItem[] } & HTMLProps<HTMLElement>) {
+}: { item: ShowcaseModel; posts: ShowcaseModel[] } & HTMLProps<HTMLElement>) {
   const router = useRouter();
   const currentPage = /^\/preview/.test(router.pathname) ? "preview" : "post";
   const wrapper = useRef<HTMLElement>(),
@@ -125,8 +125,8 @@ export default function ProductDetailed({
             >
               <motion.img
                 // layoutId={`${item.id}/thumb`}
-                src={item.image}
-                alt={item.title}
+                src={item.image.path}
+                alt={item.image.path}
               />
             </MotionBox>
             <motion.div>
@@ -140,7 +140,7 @@ export default function ProductDetailed({
                   sx={{ textTransform: "uppercase", fontWeight: 600 }}
                   layoutId={"name"}
                 >
-                  {item.title}
+                  {item.name}
                 </MotionTypo>
                 <motion.div layoutId={"badge"}>
                   <StatusBadge status={item.status} outlined sx={{ mt: 1 }} />
@@ -167,7 +167,7 @@ export default function ProductDetailed({
             }}
           >
             <Typography sx={{ mb: 1 }}>
-              Thương hiệu: <strong>{item.brand}</strong>
+              Thương hiệu: <strong>XXX</strong>
             </Typography>
             <CollapseDetail>{item.description}</CollapseDetail>
           </MotionBox>

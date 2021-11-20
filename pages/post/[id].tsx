@@ -1,10 +1,19 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import demoData from "../../src/assets/data";
 import { Box, Button, IconButton } from "@mui/material";
 import ProductDetailed from "../../src/components/ProductDetailed";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import {
+  apolloClient,
+  queryShowcasePreview,
+  queryShowcases,
+} from "../../src/api";
+import {
+  ShowcasePreviewQuery,
+  ShowcasePreviewQueryVariables,
+  ShowcasesQuery,
+} from "../../src/types/graphql";
 
 export default function PostDetailedPage({
   post,
@@ -80,22 +89,31 @@ export default function PostDetailedPage({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  const { data } = await apolloClient.query<
+    ShowcasePreviewQuery,
+    ShowcasePreviewQueryVariables
+  >({
+    query: queryShowcasePreview,
+    variables: {
+      id: context.params!.id as string,
+    },
+  });
+
   // noinspection PointlessArithmeticExpressionJS
   return Promise.resolve({
     props: {
-      post: demoData.find(
-        (i) => i.id === (context.params!.id as unknown as number) * 1
-      )!,
-      posts: demoData.filter(
-        (i) => i.id !== (context.params!.id as unknown as number) * 1
-      ),
+      post: data.showcase,
+      posts: data.showcase.relatedShowcases,
     },
   });
 };
 
 export async function getStaticPaths() {
+  const { data } = await apolloClient.query<ShowcasesQuery>({
+    query: queryShowcases,
+  });
   return {
-    paths: demoData.map(({ id }) => `/post/${id}`),
+    paths: data.showcases.map(({ id }) => `/preview/${id}`),
     fallback: false,
   };
 }

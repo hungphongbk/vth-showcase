@@ -116,9 +116,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 // noinspection JSUnusedGlobalSymbols
 export async function getStaticPaths() {
   return {
-    paths: (await apiService.getAllShowcases()).map(
-      ({ slug }) => `/post/${slug}`
-    ),
+    paths: (await apiService.getAllSlugs()).map((slug) => `/post/${slug}`),
     fallback: false,
   };
 }

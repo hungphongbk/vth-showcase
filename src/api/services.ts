@@ -1,11 +1,22 @@
-import { apolloClient, queryShowcasePreview, queryShowcases } from "./index";
+import {
+  apolloClient,
+  queryShowcasePreview,
+  queryShowcases,
+  querySlugs,
+} from "./index";
 import {
   CursorPaging,
   ShowcasePreviewQuery,
   ShowcasePreviewQueryVariables,
   ShowcasesQuery,
   ShowcasesQueryVariables,
+  SlugsQuery,
 } from "../types/graphql";
+
+export const getAllSlugs = async () => {
+  const { data } = await apolloClient.query<SlugsQuery>({ query: querySlugs });
+  return data.slugs;
+};
 
 export const getAllShowcases = async (cursor?: any) => {
   // @ts-ignore
@@ -37,6 +48,6 @@ export const getShowcasePreview = async (slug: string) => {
 
   return {
     post: data.showcase,
-    posts: data.showcases.edges.map((edge) => edge.node),
+    posts: data.showcases.edges,
   };
 };

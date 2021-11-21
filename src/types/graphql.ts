@@ -233,6 +233,7 @@ export interface Query {
   media: MediaConnection;
   showcase: Showcase;
   showcases: ShowcaseConnection;
+  slugs: Array<Scalars['String']>;
 }
 
 
@@ -412,3 +413,8 @@ export type ShowcasesQueryVariables = Exact<{
 
 
 export type ShowcasesQuery = { showcases: { pageInfo: { hasNextPage: boolean | null, endCursor: any | null }, edges: Array<{ node: { id: string, name: string, slug: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
+
+export type SlugsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SlugsQuery = { slugs: Array<string> };

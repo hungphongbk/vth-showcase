@@ -406,7 +406,9 @@ export type ShowcasePreviewQueryVariables = Exact<{
 
 export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, author: string, status: ShowcaseStatus, description: string, image: { path: string } }, showcases: { edges: Array<{ node: { slug: string, name: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
 
-export type ShowcasesQueryVariables = Exact<{ [key: string]: never; }>;
+export type ShowcasesQueryVariables = Exact<{
+  paging: CursorPaging;
+}>;
 
 
-export type ShowcasesQuery = { showcases: { edges: Array<{ node: { id: string, name: string, slug: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
+export type ShowcasesQuery = { showcases: { pageInfo: { hasNextPage: boolean | null, endCursor: any | null }, edges: Array<{ node: { id: string, name: string, slug: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };

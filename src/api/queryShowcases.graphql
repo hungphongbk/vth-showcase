@@ -1,5 +1,9 @@
-query Showcases {
-  showcases {
+query Showcases($paging: CursorPaging!) {
+  showcases(paging: $paging)  {
+    pageInfo{
+      hasNextPage
+      endCursor
+    }
     edges {
       node {
         id

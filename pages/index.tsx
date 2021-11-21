@@ -17,7 +17,7 @@ import { range } from "lodash";
 import { VthCountdown } from "../src/components";
 import Banner from "../src/components/Banner";
 import { apiService } from "../src/api";
-import { Showcase } from "../src/types/graphql";
+import { ShowcaseEdge } from "../src/types/graphql";
 
 const MotionContainer = motion(Container);
 
@@ -42,13 +42,28 @@ const FilterTag = ({
   </Box>
 );
 
-function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
+function Home({
+  posts: _posts,
+  pageInfo: _pageInfo,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const [openFilter, setOpenFilter] = useState(false);
   const [filter, setFilter] = useState<string | undefined>();
 
+  const [posts, setPosts] = useState(() => _posts),
+    [pageInfo, setPageInfo] = useState(() => _pageInfo);
+
+  const loadMore = async () => {
+    if (!pageInfo.hasNextPage) return;
+    const data = await apiService.getAllShowcases(pageInfo.endCursor);
+    setPosts([...posts, ...data.edges]);
+    setPageInfo(data.pageInfo);
+  };
+
+  // useEffect(() => console.log(pageInfo), [pageInfo]);
+
   const restPost = useMemo(() => {
     if (!filter) return posts;
-    return posts.filter((i) => i.status === filter);
+    return posts.filter((i) => i.node.status === filter);
   }, [filter, posts]);
 
   const changeFilter = (value: string) => {
@@ -199,8 +214,9 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
           transition={{ duration: 0.15 }}
         >
           <ProductList
-            posts={restPost as unknown as Showcase[]}
+            posts={restPost as unknown as ShowcaseEdge[]}
             variant={"standard"}
+            onLoadMore={loadMore}
           />
         </motion.div>
       </AnimatePresence>
@@ -235,7 +251,8 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
 export default Home;
 
 export const getStaticProps = async () => {
+  const { edges, pageInfo } = await apiService.getAllShowcases();
   return Promise.resolve({
-    props: { posts: await apiService.getAllShowcases() },
+    props: { posts: edges, pageInfo },
   });
 };

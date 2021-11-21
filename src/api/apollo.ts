@@ -3,7 +3,7 @@ import introspection from "./introspection.json";
 
 const apolloClient = new ApolloClient({
   link: new HttpLink({
-    uri: `${process.env.NEXT_API_URL}/graphql`,
+    uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
   }),
   cache: new InMemoryCache(introspection),
   defaultOptions: {

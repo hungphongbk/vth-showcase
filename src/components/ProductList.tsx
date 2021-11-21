@@ -2,26 +2,30 @@ import React, { createContext } from "react";
 import ProductItem from "./ProductItem";
 import { ImageList, ImageListProps } from "@mui/material";
 import { useRouter } from "next/router";
-import { Showcase } from "../types/graphql";
+import { ShowcaseEdge } from "../types/graphql";
 
 export type IdContextType = "main" | "sub";
 
 export const LayoutIdContext = createContext<IdContextType>("main");
 
-export default function ProductList(props: {
-  posts: Showcase[];
+type ProductListProps = {
+  posts: ShowcaseEdge[];
   variant?: ImageListProps["variant"];
   context?: IdContextType;
-}): JSX.Element {
+  onLoadMore?: () => void | Promise<void>;
+};
+export default function ProductList(props: ProductListProps): JSX.Element {
   const router = useRouter();
   return (
     <LayoutIdContext.Provider value={props.context ?? "main"}>
       <ImageList variant={props.variant ?? "masonry"} cols={2} gap={8}>
-        {props.posts.map((item) => (
+        {props.posts.map((item, index) => (
           <ProductItem
-            key={item.slug}
-            item={item}
-            onClick={() => router.push(`/preview/${item.slug}`)}
+            key={item.node.slug}
+            item={item.node}
+            loadMorePoint={index === props.posts.length - 5}
+            onLoadMore={props.onLoadMore}
+            onClick={() => router.push(`/preview/${item.node.slug}`)}
           />
         ))}
       </ImageList>

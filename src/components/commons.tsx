@@ -1,21 +1,28 @@
 import { Box, Card, Typography } from "@mui/material";
 import { motion } from "framer-motion";
-import styled from "styled-components";
+import { css, styled } from "@mui/material/styles";
 import { Timeline } from "@mui/lab";
 
 export const MotionBox = motion(Box);
 export const MotionTypo = motion(Typography);
-export const ProductInfoBase = styled.div`
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(179.76deg, rgba(0, 0, 0, 0) 0.2%, #000000 99.8%);
-  color: white;
-  align-items: start;
-  flex-grow: 1;
-  justify-content: end;
-`;
+export const ProductInfoBase = styled(Box)(
+  () => css`
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(
+      179.76deg,
+      rgba(0, 0, 0, 0) 0.2%,
+      #000000 80%,
+      #000000 99.9%
+    );
+    color: white;
+    align-items: start;
+    flex-grow: 1;
+    justify-content: end;
+  `
+);
 export const ProductInfo = styled(ProductInfoBase)`
-  padding: 64px 8px 8px;
+  padding: 100px 8px 8px;
 `;
 export const ProductInfoDetailed = styled(ProductInfoBase)`
   position: absolute;
@@ -24,14 +31,7 @@ export const ProductInfoDetailed = styled(ProductInfoBase)`
   right: 0;
   padding: 8px;
 `;
-export const ProductInfoThird = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 8px;
-`;
-export const ProductInfoSecond = styled.div`
+export const ProductInfoSecond = styled("div")`
   padding: 8px;
   display: flex;
   flex-direction: column;

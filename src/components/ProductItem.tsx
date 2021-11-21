@@ -23,10 +23,20 @@ const sxIcon: SystemStyleObject = { width: 16, height: 16, mr: 1 },
     "& .MuiTypography-root": { lineHeight: 1.5 },
   };
 
+type ProductItemProps = {
+  item: Showcase;
+  // use this property to attach cursor point
+  // when item with this property has been in viewport, trigger load more
+  loadMorePoint?: boolean | undefined;
+  onLoadMore?: () => void | Promise<void>;
+} & HTMLProps<HTMLElement>;
+
 export default function ProductItem({
   item,
   onClick,
-}: { item: Showcase } & HTMLProps<HTMLElement>) {
+  loadMorePoint,
+  onLoadMore,
+}: ProductItemProps) {
   const itemRef = useRef<HTMLElement>(),
     router = useRouter();
   const { inViewport } = useInViewport(itemRef),
@@ -51,7 +61,10 @@ export default function ProductItem({
     if (inViewport && !prefetched.current) {
       prefetched.current = router.prefetch(`/preview/${item.slug}`);
     }
-  }, [inViewport, item.slug, router]);
+    if (inViewport && loadMorePoint === true) {
+      onLoadMore?.();
+    }
+  }, [inViewport, item.slug, loadMorePoint, onLoadMore, router]);
 
   return (
     <MotionImageListItem
@@ -75,7 +88,7 @@ export default function ProductItem({
           top: 0,
           left: 0,
           right: 0,
-          bottom: 0,
+          bottom: "20%",
           zIndex: -1,
           "& img": {
             objectFit: "cover",

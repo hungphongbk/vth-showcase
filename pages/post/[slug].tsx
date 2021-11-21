@@ -3,16 +3,7 @@ import { Box, Button, ButtonProps } from "@mui/material";
 import ProductDetailed from "../../src/components/ProductDetailed";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect } from "react";
-import {
-  apolloClient,
-  queryShowcasePreview,
-  queryShowcases,
-} from "../../src/api";
-import {
-  ShowcasePreviewQuery,
-  ShowcasePreviewQueryVariables,
-  ShowcasesQuery,
-} from "../../src/types/graphql";
+import { apiService } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
 
 const BottomButton = ({
@@ -114,31 +105,20 @@ export default function PostDetailedPage({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { data } = await apolloClient.query<
-    ShowcasePreviewQuery,
-    ShowcasePreviewQueryVariables
-  >({
-    query: queryShowcasePreview,
-    variables: {
-      id: context.params!.id as string,
-    },
-  });
-
   // noinspection PointlessArithmeticExpressionJS
   return Promise.resolve({
     props: {
-      post: data.showcase,
-      posts: data.showcase.relatedShowcases,
+      ...(await apiService.getShowcasePreview(context.params!.slug as string)),
     },
   });
 };
 
+// noinspection JSUnusedGlobalSymbols
 export async function getStaticPaths() {
-  const { data } = await apolloClient.query<ShowcasesQuery>({
-    query: queryShowcases,
-  });
   return {
-    paths: data.showcases.map(({ id }) => `/post/${id}`),
+    paths: (await apiService.getAllShowcases()).map(
+      ({ slug }) => `/post/${slug}`
+    ),
     fallback: false,
   };
 }

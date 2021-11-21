@@ -4,16 +4,7 @@ import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { MotionBox } from "../../src/components/commons";
-import {
-  apolloClient,
-  queryShowcasePreview,
-  queryShowcases,
-} from "../../src/api";
-import {
-  ShowcasePreviewQuery,
-  ShowcasePreviewQueryVariables,
-  ShowcasesQuery,
-} from "../../src/types/graphql";
+import { apiService } from "../../src/api";
 
 export default function PreviewPage({
   post,
@@ -25,9 +16,9 @@ export default function PreviewPage({
     router.prefetch("/");
     // noinspection JSIgnoredPromiseFromCall
     router
-      .prefetch(`/post/${post.id}`)
+      .prefetch(`/post/${post.slug}`)
       .then(() => console.log("prefetch post"));
-  }, [post.id, router]);
+  }, [post.slug, router]);
   return (
     <Box
       sx={{
@@ -67,31 +58,20 @@ export default function PreviewPage({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { data } = await apolloClient.query<
-    ShowcasePreviewQuery,
-    ShowcasePreviewQueryVariables
-  >({
-    query: queryShowcasePreview,
-    variables: {
-      id: context.params!.id as string,
-    },
-  });
-
   // noinspection PointlessArithmeticExpressionJS
   return Promise.resolve({
     props: {
-      post: data.showcase,
-      posts: data.showcase.relatedShowcases,
+      ...(await apiService.getShowcasePreview(context.params!.slug as string)),
     },
   });
 };
 
+// noinspection JSUnusedGlobalSymbols
 export async function getStaticPaths() {
-  const { data } = await apolloClient.query<ShowcasesQuery>({
-    query: queryShowcases,
-  });
   return {
-    paths: data.showcases.map(({ id }) => `/preview/${id}`),
+    paths: (await apiService.getAllShowcases()).map(
+      ({ slug }) => `/preview/${slug}`
+    ),
     fallback: false,
   };
 }

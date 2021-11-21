@@ -19,7 +19,7 @@ import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
-import { ShowcaseModel } from "../types/graphql";
+import { Showcase } from "../types/graphql";
 
 const testPreview = (str: string) => /^\/preview/.test(str),
   testPost = (str: string) => /^\/post/.test(str);
@@ -28,7 +28,7 @@ export default function ProductDetailed({
   item,
   onClick,
   posts,
-}: { item: ShowcaseModel; posts: ShowcaseModel[] } & HTMLProps<HTMLElement>) {
+}: { item: Showcase; posts: Showcase[] } & HTMLProps<HTMLElement>) {
   const router = useRouter();
   const currentPage = testPreview(router.pathname)
     ? "preview"
@@ -138,7 +138,7 @@ export default function ProductDetailed({
             <motion.div>
               <ProductInfoDetailed
                 onClick={() =>
-                  currentPage === "preview" && router.push(`/post/${item.id}`)
+                  currentPage === "preview" && router.push(`/post/${item.slug}`)
                 }
               >
                 <MotionTypo

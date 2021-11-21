@@ -1,22 +1,27 @@
-query ShowcasePreview($id: ID!) {
-  showcase(id: $id) {
-    id
+query ShowcasePreview($slug: String!) {
+  showcase(slug: $slug) {
+    slug
     name
     author
     status
-    image{
+    image {
       path
     }
     description
-    relatedShowcases {
-       id
-       name
-       author
-       status
-       image{
-         path
-       }
-       createdAt
+  }
+  showcases(filter: { slug: { neq: $slug } }) {
+    edges {
+      node {
+        slug
+        name
+        author
+        status
+        image {
+          path
+        }
+        createdAt
+      }
     }
   }
 }
+

@@ -2,14 +2,14 @@ import React, { createContext } from "react";
 import ProductItem from "./ProductItem";
 import { ImageList, ImageListProps } from "@mui/material";
 import { useRouter } from "next/router";
-import { ShowcaseModel } from "../types/graphql";
+import { Showcase } from "../types/graphql";
 
 export type IdContextType = "main" | "sub";
 
 export const LayoutIdContext = createContext<IdContextType>("main");
 
 export default function ProductList(props: {
-  posts: ShowcaseModel[];
+  posts: Showcase[];
   variant?: ImageListProps["variant"];
   context?: IdContextType;
 }): JSX.Element {
@@ -19,9 +19,9 @@ export default function ProductList(props: {
       <ImageList variant={props.variant ?? "masonry"} cols={2} gap={8}>
         {props.posts.map((item) => (
           <ProductItem
-            key={item.id}
+            key={item.slug}
             item={item}
-            onClick={() => router.push(`/preview/${item.id}`)}
+            onClick={() => router.push(`/preview/${item.slug}`)}
           />
         ))}
       </ImageList>

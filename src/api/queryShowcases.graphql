@@ -1,12 +1,17 @@
 query Showcases {
   showcases {
-    id
-    name
-    author
-    status
-    image{
-      path
+    edges {
+      node {
+        id
+        name
+        slug
+        author
+        status
+        image {
+          path
+        }
+        createdAt
+      }
     }
-    createdAt
   }
 }

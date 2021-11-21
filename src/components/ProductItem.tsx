@@ -11,7 +11,7 @@ import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import { SystemStyleObject } from "@mui/system";
 import { usingContextualColor } from "../utils/colors";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { ShowcaseModel } from "../types/graphql";
+import { Showcase } from "../types/graphql";
 
 const MotionImageListItem = motion(ImageListItem);
 
@@ -26,7 +26,7 @@ const sxIcon: SystemStyleObject = { width: 16, height: 16, mr: 1 },
 export default function ProductItem({
   item,
   onClick,
-}: { item: ShowcaseModel } & HTMLProps<HTMLElement>) {
+}: { item: Showcase } & HTMLProps<HTMLElement>) {
   const itemRef = useRef<HTMLElement>(),
     router = useRouter();
   const { inViewport } = useInViewport(itemRef),
@@ -49,15 +49,15 @@ export default function ProductItem({
 
   useEffect(() => {
     if (inViewport && !prefetched.current) {
-      prefetched.current = router.prefetch(`/preview/${item.id}`);
+      prefetched.current = router.prefetch(`/preview/${item.slug}`);
     }
-  }, [inViewport, item.id, router]);
+  }, [inViewport, item.slug, router]);
 
   return (
     <MotionImageListItem
       // @ts-ignore
       ref={itemRef}
-      key={item.id}
+      key={item.slug}
       layoutId={getLayoutId()}
       onClick={handleClick}
       sx={{

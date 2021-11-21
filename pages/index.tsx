@@ -16,8 +16,8 @@ import FilterPanel from "../src/components/FilterPanel";
 import { range } from "lodash";
 import { VthCountdown } from "../src/components";
 import Banner from "../src/components/Banner";
-import { apolloClient, queryShowcases } from "../src/api";
-import { ShowcaseModel, ShowcasesQuery } from "../src/types/graphql";
+import { apiService } from "../src/api";
+import { Showcase } from "../src/types/graphql";
 
 const MotionContainer = motion(Container);
 
@@ -198,7 +198,10 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.15 }}
         >
-          <ProductList posts={restPost} variant={"standard"} />
+          <ProductList
+            posts={restPost as unknown as Showcase[]}
+            variant={"standard"}
+          />
         </motion.div>
       </AnimatePresence>
       <Box sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 99 }}>
@@ -228,13 +231,11 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
   );
 }
 
+// noinspection JSUnusedGlobalSymbols
 export default Home;
 
 export const getStaticProps = async () => {
-  const { data } = await apolloClient.query<ShowcasesQuery>({
-    query: queryShowcases,
-  });
   return Promise.resolve({
-    props: { posts: data.showcases as unknown as Array<ShowcaseModel> },
+    props: { posts: await apiService.getAllShowcases() },
   });
 };

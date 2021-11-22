@@ -89,6 +89,22 @@ const theme = createTheme({
   variables: {
     appBarHeight: 59,
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          boxShadow: "none",
+          borderTopLeftRadius: "500px",
+          borderTopRightRadius: "500px",
+          borderBottomLeftRadius: "500px",
+          borderBottomRightRadius: "500px",
+          textTransform: "capitalize",
+          fontWeight: 700,
+          fontSize: 13,
+        },
+      },
+    },
+  },
 });
 
 export default theme;

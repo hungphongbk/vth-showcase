@@ -2,6 +2,7 @@ import React from "react";
 import { css, styled } from "@mui/material/styles";
 import {
   Box,
+  Button,
   Dialog,
   DialogContent,
   FormControl,
@@ -81,10 +82,17 @@ export default function PreorderDialog(
         >
           Đăng ký đặt trước để nhận ngay gói giá Tiên Phong hấp dẫn
         </Typography>
-        <Stack direction={"column"} gap={1.5}>
+        <Stack direction={"column"} gap={1.5} alignItems={"center"}>
           <TextInput placeholder={"Họ tên"} />
           <TextInput placeholder={"Email"} />
           <TextInput placeholder={"Số điện thoại"} />
+          <Button
+            variant={"contained"}
+            color={"primary"}
+            onClick={props.onClose}
+          >
+            Đăng ký
+          </Button>
         </Stack>
       </DialogContent>
     </StyledDialog>

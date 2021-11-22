@@ -2,14 +2,15 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { Box, Button, ButtonProps } from "@mui/material";
 import ProductDetailed from "../../src/components/ProductDetailed";
 import { useRouter } from "next/router";
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { apiService } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
+import { PreorderDialog } from "../../src/components";
 
 const BottomButton = ({
     children,
     ...props
-  }: PropsWithChildren<Pick<ButtonProps, "startIcon">>) => (
+  }: PropsWithChildren<Pick<ButtonProps, "startIcon" | "onClick">>) => (
     <Button
       variant={"contained"}
       sx={{
@@ -63,6 +64,7 @@ export default function PostDetailedPage({
     // noinspection JSIgnoredPromiseFromCall
     router.prefetch("/");
   }, [router]);
+  const [open, setOpen] = useState(false);
   return (
     <Box sx={{ bgcolor: "#f0f0f0" }}>
       <ProductDetailed
@@ -98,8 +100,15 @@ export default function PostDetailedPage({
         >
           Hợp tác
         </BottomButton>
-        <BottomButton>Đăng ký đặt trước</BottomButton>
+        <BottomButton onClick={() => setOpen(true)}>
+          Đăng ký đặt trước
+        </BottomButton>
       </Box>
+      <PreorderDialog
+        open={open}
+        price={post.expectedSalePrice}
+        onClose={() => setOpen(false)}
+      />
     </Box>
   );
 }

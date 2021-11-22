@@ -24,6 +24,30 @@ declare module "@mui/material/styles" {
       light?: string;
       dark?: string;
     };
+    neutral: {
+      darkWhite: string;
+    };
+  }
+
+  interface Palette {
+    red: {
+      main: string;
+      light?: string;
+      dark?: string;
+    };
+    green: {
+      main: string;
+      light?: string;
+      dark?: string;
+    };
+    yellow: {
+      main: string;
+      light?: string;
+      dark?: string;
+    };
+    neutral: {
+      darkWhite: string;
+    };
   }
 
   // allow configuration using `createTheme`
@@ -60,6 +84,7 @@ const theme = createTheme({
       main: "#FFDE50",
       light: "#FFF5CB",
     },
+    neutral: { darkWhite: "#F3F3F3" },
   },
   variables: {
     appBarHeight: 59,

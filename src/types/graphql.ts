@@ -37,6 +37,7 @@ export interface CreateShowcase {
   author: Maybe<Scalars['String']>;
   createdAt: Maybe<Scalars['DateTime']>;
   description: Maybe<Scalars['String']>;
+  expectedSaleAt: Maybe<Scalars['DateTime']>;
   id: Maybe<Scalars['ID']>;
   name: Maybe<Scalars['String']>;
   slug: Maybe<Scalars['String']>;
@@ -49,6 +50,26 @@ export interface CursorPaging {
   before: Maybe<Scalars['ConnectionCursor']>;
   first: Maybe<Scalars['Int']>;
   last: Maybe<Scalars['Int']>;
+}
+
+export interface DateFieldComparison {
+  between: Maybe<DateFieldComparisonBetween>;
+  eq: Maybe<Scalars['DateTime']>;
+  gt: Maybe<Scalars['DateTime']>;
+  gte: Maybe<Scalars['DateTime']>;
+  in: Maybe<Array<Scalars['DateTime']>>;
+  is: Maybe<Scalars['Boolean']>;
+  isNot: Maybe<Scalars['Boolean']>;
+  lt: Maybe<Scalars['DateTime']>;
+  lte: Maybe<Scalars['DateTime']>;
+  neq: Maybe<Scalars['DateTime']>;
+  notBetween: Maybe<DateFieldComparisonBetween>;
+  notIn: Maybe<Array<Scalars['DateTime']>>;
+}
+
+export interface DateFieldComparisonBetween {
+  lower: Scalars['DateTime'];
+  upper: Scalars['DateTime'];
 }
 
 
@@ -269,6 +290,8 @@ export interface Showcase {
   author: Scalars['String'];
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
+  expectedSaleAt: Maybe<Scalars['DateTime']>;
+  expectedSalePrice: ShowcasePriceDto;
   id: Scalars['ID'];
   image: Media;
   name: Scalars['String'];
@@ -278,7 +301,10 @@ export interface Showcase {
 }
 
 export interface ShowcaseAggregateGroupBy {
+  expectedSaleAt: Maybe<Scalars['DateTime']>;
   slug: Maybe<Scalars['String']>;
+  status: Maybe<ShowcaseStatus>;
+  updatedAt: Maybe<Scalars['DateTime']>;
 }
 
 export interface ShowcaseConnection {
@@ -287,13 +313,17 @@ export interface ShowcaseConnection {
 }
 
 export interface ShowcaseCountAggregate {
+  expectedSaleAt: Maybe<Scalars['Int']>;
   slug: Maybe<Scalars['Int']>;
+  status: Maybe<Scalars['Int']>;
+  updatedAt: Maybe<Scalars['Int']>;
 }
 
 export interface ShowcaseDeleteResponse {
   author: Maybe<Scalars['String']>;
   createdAt: Maybe<Scalars['DateTime']>;
   description: Maybe<Scalars['String']>;
+  expectedSaleAt: Maybe<Scalars['DateTime']>;
   id: Maybe<Scalars['ID']>;
   name: Maybe<Scalars['String']>;
   slug: Maybe<Scalars['String']>;
@@ -308,16 +338,32 @@ export interface ShowcaseEdge {
 
 export interface ShowcaseFilter {
   and: Maybe<Array<ShowcaseFilter>>;
+  expectedSaleAt: Maybe<DateFieldComparison>;
   or: Maybe<Array<ShowcaseFilter>>;
   slug: Maybe<StringFieldComparison>;
+  status: Maybe<ShowcaseStatusFilterComparison>;
+  updatedAt: Maybe<DateFieldComparison>;
 }
 
 export interface ShowcaseMaxAggregate {
+  expectedSaleAt: Maybe<Scalars['DateTime']>;
   slug: Maybe<Scalars['String']>;
+  status: Maybe<ShowcaseStatus>;
+  updatedAt: Maybe<Scalars['DateTime']>;
 }
 
 export interface ShowcaseMinAggregate {
+  expectedSaleAt: Maybe<Scalars['DateTime']>;
   slug: Maybe<Scalars['String']>;
+  status: Maybe<ShowcaseStatus>;
+  updatedAt: Maybe<Scalars['DateTime']>;
+}
+
+export interface ShowcasePriceDto {
+  pioneer: Scalars['Float'];
+  preorder: Scalars['Float'];
+  promo: Scalars['Float'];
+  regular: Scalars['Float'];
 }
 
 export interface ShowcaseSort {
@@ -327,13 +373,33 @@ export interface ShowcaseSort {
 }
 
 export enum ShowcaseSortFields {
-  Slug = 'slug'
+  ExpectedSaleAt = 'expectedSaleAt',
+  Slug = 'slug',
+  Status = 'status',
+  UpdatedAt = 'updatedAt'
 }
 
 export enum ShowcaseStatus {
   Coming = 'COMING',
   Idea = 'IDEA',
   Showcase = 'SHOWCASE'
+}
+
+export interface ShowcaseStatusFilterComparison {
+  eq: Maybe<ShowcaseStatus>;
+  gt: Maybe<ShowcaseStatus>;
+  gte: Maybe<ShowcaseStatus>;
+  iLike: Maybe<ShowcaseStatus>;
+  in: Maybe<Array<ShowcaseStatus>>;
+  is: Maybe<Scalars['Boolean']>;
+  isNot: Maybe<Scalars['Boolean']>;
+  like: Maybe<ShowcaseStatus>;
+  lt: Maybe<ShowcaseStatus>;
+  lte: Maybe<ShowcaseStatus>;
+  neq: Maybe<ShowcaseStatus>;
+  notILike: Maybe<ShowcaseStatus>;
+  notIn: Maybe<Array<ShowcaseStatus>>;
+  notLike: Maybe<ShowcaseStatus>;
 }
 
 export enum SortDirection {
@@ -393,6 +459,7 @@ export interface UpdateShowcase {
   author: Maybe<Scalars['String']>;
   createdAt: Maybe<Scalars['DateTime']>;
   description: Maybe<Scalars['String']>;
+  expectedSaleAt: Maybe<Scalars['DateTime']>;
   id: Maybe<Scalars['ID']>;
   name: Maybe<Scalars['String']>;
   slug: Maybe<Scalars['String']>;
@@ -405,7 +472,7 @@ export type ShowcasePreviewQueryVariables = Exact<{
 }>;
 
 
-export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, author: string, status: ShowcaseStatus, description: string, image: { path: string } }, showcases: { edges: Array<{ node: { slug: string, name: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
+export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, author: string, status: ShowcaseStatus, description: string, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } }, showcases: { edges: Array<{ node: { slug: string, name: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
 
 export type ShowcasesQueryVariables = Exact<{
   paging: CursorPaging;

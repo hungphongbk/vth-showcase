@@ -180,32 +180,6 @@ export default function ProductDetailed({
         </MotionBox>
         {currentPage === "post" && (
           <motion.div layoutId={"main content"}>
-            <CollapseCard
-              header={"tính năng nổi bật"}
-              sx={{ mt: 1 }}
-              defaultOpen
-            >
-              <Typography sx={{ fontSize: 13 }}>
-                <strong>TÍNH NĂNG 1</strong>
-              </Typography>
-              <Typography sx={{ fontSize: 13 }}>
-                Earth is the third planet from the Sun and the only astronomical
-                object known to harbor life. According to radiometric dating
-                estimation. Earth is the third planet from the Sun and the only
-                astronomical object known to harbor life. According to
-                radiometric dating estimation...
-              </Typography>
-            </CollapseCard>
-            <CollapseCard
-              header={"câu chuyện chưa kể"}
-              sx={{ mt: 1 }}
-              defaultOpen
-            >
-              <Typography sx={{ fontSize: 13 }}>
-                Kể về câu chuyện phía sau dự án của bạn, và những khó khăn bạn
-                phải trải qua để đưa sản phẩm đến với người tiêu dùng...
-              </Typography>
-            </CollapseCard>
             <CollapseCard header={"cập nhật dự án"} sx={{ mt: 1 }} defaultOpen>
               <StyledTimeline sx={{ px: 0 }}>
                 <TimelineItem>
@@ -271,6 +245,32 @@ export default function ProductDetailed({
                   </TimelineContent>
                 </TimelineItem>
               </StyledTimeline>
+            </CollapseCard>
+            <CollapseCard
+              header={"tính năng nổi bật"}
+              sx={{ mt: 1 }}
+              defaultOpen
+            >
+              <Typography sx={{ fontSize: 13 }}>
+                <strong>TÍNH NĂNG 1</strong>
+              </Typography>
+              <Typography sx={{ fontSize: 13 }}>
+                Earth is the third planet from the Sun and the only astronomical
+                object known to harbor life. According to radiometric dating
+                estimation. Earth is the third planet from the Sun and the only
+                astronomical object known to harbor life. According to
+                radiometric dating estimation...
+              </Typography>
+            </CollapseCard>
+            <CollapseCard
+              header={"câu chuyện chưa kể"}
+              sx={{ mt: 1 }}
+              defaultOpen
+            >
+              <Typography sx={{ fontSize: 13 }}>
+                Kể về câu chuyện phía sau dự án của bạn, và những khó khăn bạn
+                phải trải qua để đưa sản phẩm đến với người tiêu dùng...
+              </Typography>
             </CollapseCard>
           </motion.div>
         )}

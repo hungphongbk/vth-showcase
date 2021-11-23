@@ -6,6 +6,7 @@ import { PropsWithChildren, useEffect, useState } from "react";
 import { apiService } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
 import { PreorderDialog } from "../../src/components";
+import BookmarkIcon from "../../src/assets/icons/BookmarkIcon";
 
 const BottomButton = ({
     children,
@@ -23,9 +24,9 @@ const BottomButton = ({
         lineHeight: 15,
         boxShadow: "none",
         flex: "auto",
-        height: 30,
-        borderRadius: "15px",
-        mt: "-22px",
+        height: 35,
+        borderRadius: "17.5px",
+        mt: "-24px",
         position: "relative",
       }}
       {...props}
@@ -36,16 +37,16 @@ const BottomButton = ({
   IconWrapper = (props: PropsWithChildren<unknown>) => (
     <Box
       sx={{
-        height: "20px",
-        width: "20px",
-        borderRadius: "10px",
+        height: "22px",
+        width: "22px",
+        borderRadius: "11px",
         bgcolor: "yellow.light",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         position: "absolute",
-        top: 2,
-        left: 2,
+        top: 3.25,
+        left: 3.5,
         "& > svg": {
           display: "block",
         },
@@ -83,7 +84,7 @@ export default function PostDetailedPage({
           gap: 1,
           p: 1,
           px: 3,
-          height: 30,
+          height: 35,
           zIndex: 12,
           bgcolor: "white",
           boxShadow: "0px -4px 30px rgba(0, 0, 0, 0.15)",
@@ -94,13 +95,22 @@ export default function PostDetailedPage({
         <BottomButton
           startIcon={
             <IconWrapper>
-              <HopTacIcon />
+              <HopTacIcon
+                sx={{ color: "yellow.main", transform: "translateX(1px)" }}
+              />
             </IconWrapper>
           }
         >
           Hợp tác
         </BottomButton>
-        <BottomButton onClick={() => setOpen(true)}>
+        <BottomButton
+          onClick={() => setOpen(true)}
+          startIcon={
+            <IconWrapper>
+              <BookmarkIcon sx={{ color: "yellow.main", width: 10 }} />
+            </IconWrapper>
+          }
+        >
           Đăng ký đặt trước
         </BottomButton>
       </Box>

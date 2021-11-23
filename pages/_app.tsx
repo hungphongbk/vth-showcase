@@ -14,11 +14,14 @@ export default function MyApp(props: AppProps) {
   return (
     <React.Fragment>
       <Head>
-        <title>Next App</title>
-        <link href="/favicon.ico" rel="icon" />
+        <title>Dự án showcase sản phẩm mới tại Vaithuhay</title>
         <meta
           content="minimum-scale=1, initial-scale=1, width=device-width"
           name="viewport"
+        />
+        <meta
+          name="Description"
+          content="Chuyên trang giới thiệu sản phẩm mới showcase, chạy pre-order campaign & phát triển dự án gọi vốn sản phẩm do người Việt tạo nên"
         />
       </Head>
       <ThemeProvider theme={theme}>

@@ -1,12 +1,14 @@
-import { Box } from "@mui/material";
+import { Box, NoSsr } from "@mui/material";
 import Image from "next/image";
 import logo from "../assets/logo.png";
 import Link from "./Link";
 import { useRouter } from "next/router";
+import MenuDrawer from "./MenuDrawer";
 
 export default function Header(): JSX.Element {
   const router = useRouter();
   const currentPage = /^\/preview/.test(router.pathname) ? "preview" : "post";
+
   return (
     <Box
       sx={{
@@ -22,7 +24,20 @@ export default function Header(): JSX.Element {
         zIndex: currentPage === "preview" ? 1 : 12,
       }}
     >
-      <Box sx={{ gridColumn: 1 }}></Box>
+      <Box sx={{ gridColumn: 1 }}>
+        <Box
+          sx={{
+            height: "100%",
+            px: 1.5,
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <NoSsr>
+            <MenuDrawer />
+          </NoSsr>
+        </Box>
+      </Box>
       <Box
         sx={{
           gridColumn: 2,

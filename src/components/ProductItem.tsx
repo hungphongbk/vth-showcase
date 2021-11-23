@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import InboxIcon from "@mui/icons-material/Inbox";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import { SystemStyleObject } from "@mui/system";
-import { usingContextualColor } from "../utils/colors";
+import { usingShowcaseStatusColor } from "../utils/colors";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Showcase } from "../types/graphql";
 
@@ -41,7 +41,7 @@ export default function ProductItem({
     router = useRouter();
   const { inViewport } = useInViewport(itemRef),
     prefetched = useRef<Promise<any>>(),
-    color = usingContextualColor(item.status);
+    color = usingShowcaseStatusColor(item.status);
 
   const [clicked, setClicked] = useState(false);
   const getLayoutId = useCallback(

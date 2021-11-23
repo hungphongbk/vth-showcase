@@ -9,52 +9,76 @@ import {
 import ProductList from "../src/components/ProductList";
 import { AnimatePresence, motion } from "framer-motion";
 import TuneIcon from "@mui/icons-material/Tune";
-import React, { PropsWithChildren, useMemo, useState } from "react";
-import { SxProps } from "@mui/system";
+import React, { useEffect, useMemo, useState } from "react";
 import { MotionBox, ProductInfoSecond } from "../src/components/commons";
 import FilterPanel from "../src/components/FilterPanel";
 import { range } from "lodash";
 import { VthCountdown } from "../src/components";
 import Banner from "../src/components/Banner";
 import { apiService } from "../src/api";
-import { ShowcaseEdge } from "../src/types/graphql";
+import {
+  Maybe,
+  ShowcaseEdge,
+  ShowcaseFilter,
+  ShowcaseStatus,
+} from "../src/types/graphql";
+import SimpleFilter from "../src/components/indexPage/SimpleFilter";
 
 const MotionContainer = motion(Container);
-
-const FilterTag = ({
-  sx,
-  children,
-  ...others
-}: PropsWithChildren<{ sx?: SxProps; [key: string]: any }>) => (
-  <Box
-    sx={{
-      height: 27,
-      px: 2,
-      borderRadius: "13.5px",
-      display: "flex",
-      alignItems: "center",
-      fontWeight: 600,
-      ...sx,
-    }}
-    {...others}
-  >
-    {children}
-  </Box>
-);
 
 function Home({
   posts: _posts,
   pageInfo: _pageInfo,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [openFilter, setOpenFilter] = useState(false);
-  const [filter, setFilter] = useState<string | undefined>();
+  const [statusFilter, setStatusFilter] = useState<
+      ShowcaseStatus | undefined
+    >(),
+    [statusFiltered, setStatusFiltered] = useState<
+      ShowcaseStatus | undefined
+    >();
+
+  const [calculatedFilter, setCalculatedFilter] = useState<
+    Maybe<ShowcaseFilter> | undefined
+  >(undefined);
+
+  /**
+   * Calculate final filter
+   */
+  useEffect(() => {
+    if (
+      typeof statusFilter === "undefined" &&
+      typeof calculatedFilter !== "undefined"
+    )
+      setCalculatedFilter(null);
+    if (typeof statusFilter !== "undefined") {
+      // @ts-ignore
+      setCalculatedFilter({ status: { eq: statusFilter } });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statusFilter]);
+
+  /**
+   * Trigger reload API
+   */
+  useEffect(() => {
+    apiService.getAllShowcases(calculatedFilter ?? null).then((data) => {
+      setStatusFiltered(statusFilter);
+      setPosts(data.edges);
+      setPageInfo(data.pageInfo);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [calculatedFilter]);
 
   const [posts, setPosts] = useState(() => _posts),
     [pageInfo, setPageInfo] = useState(() => _pageInfo);
 
   const loadMore = async () => {
     if (!pageInfo.hasNextPage) return;
-    const data = await apiService.getAllShowcases(pageInfo.endCursor);
+    const data = await apiService.getAllShowcases(
+      calculatedFilter ?? null,
+      pageInfo.endCursor
+    );
     setPosts([...posts, ...data.edges]);
     setPageInfo(data.pageInfo);
   };
@@ -62,13 +86,9 @@ function Home({
   // useEffect(() => console.log(pageInfo), [pageInfo]);
 
   const restPost = useMemo(() => {
-    if (!filter) return posts;
-    return posts.filter((i) => i.node.status === filter);
-  }, [filter, posts]);
-
-  const changeFilter = (value: string) => {
-    setFilter(value);
-  };
+    if (!statusFilter) return posts;
+    return posts.filter((i) => i.node.status === statusFilter);
+  }, [statusFilter, posts]);
 
   return (
     <MotionContainer
@@ -157,8 +177,15 @@ function Home({
           </ImageListItem>
         ))}
       </ImageList>
-      <Box sx={{ my: 1, maxWidth: "100%", overflowX: "scroll" }}>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <Box
+        sx={{
+          my: 0.5,
+          maxWidth: "100%",
+          overflowX: "scroll",
+          overflowY: "visible",
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, py: 0.5 }}>
           <Box
             sx={{
               width: 28,
@@ -173,41 +200,15 @@ function Home({
           >
             <TuneIcon sx={{ width: 16, height: 16 }} />
           </Box>
-          <FilterTag
-            sx={
-              filter === "coming soon"
-                ? { bgcolor: "yellow.main", color: "black" }
-                : { bgcolor: "#d5d5d5", color: "white" }
-            }
-            onClick={() => changeFilter("coming soon")}
-          >
-            Coming Soon
-          </FilterTag>
-          <FilterTag
-            sx={
-              filter === "showcase"
-                ? { bgcolor: "yellow.main", color: "black" }
-                : { bgcolor: "#d5d5d5", color: "white" }
-            }
-            onClick={() => changeFilter("showcase")}
-          >
-            Showcase
-          </FilterTag>
-          <FilterTag
-            sx={
-              filter === "idea"
-                ? { bgcolor: "yellow.main", color: "black" }
-                : { bgcolor: "#d5d5d5", color: "white" }
-            }
-            onClick={() => changeFilter("idea")}
-          >
-            Idea
-          </FilterTag>
+          <SimpleFilter
+            filter={statusFilter}
+            onFilterChange={setStatusFilter}
+          />
         </Box>
       </Box>
       <AnimatePresence>
         <motion.div
-          key={filter ?? "none"}
+          key={statusFiltered ?? "none"}
           animate={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 20 }}
           exit={{ opacity: 0, y: 20 }}

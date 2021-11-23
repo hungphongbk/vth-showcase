@@ -6,6 +6,8 @@ import {
 } from "./index";
 import {
   CursorPaging,
+  Maybe,
+  ShowcaseFilter,
   ShowcasePreviewQuery,
   ShowcasePreviewQueryVariables,
   ShowcasesQuery,
@@ -18,7 +20,15 @@ export const getAllSlugs = async () => {
   return data.slugs;
 };
 
-export const getAllShowcases = async (cursor?: any) => {
+/**
+ * Using at home page
+ * @param filter
+ * @param cursor
+ */
+export const getAllShowcases = async (
+  filter: Maybe<ShowcaseFilter> = null,
+  cursor?: any
+) => {
   // @ts-ignore
   const paging: CursorPaging = {
     first: 20,
@@ -30,7 +40,7 @@ export const getAllShowcases = async (cursor?: any) => {
     ShowcasesQueryVariables
   >({
     query: queryShowcases,
-    variables: { paging },
+    variables: { paging, filter },
   });
   return data.showcases;
 };

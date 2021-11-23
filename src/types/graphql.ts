@@ -37,6 +37,7 @@ export interface CreateShowcase {
   author: Maybe<Scalars['String']>;
   createdAt: Maybe<Scalars['DateTime']>;
   description: Maybe<Scalars['String']>;
+  expectedQuantity: Maybe<Scalars['Float']>;
   expectedSaleAt: Maybe<Scalars['DateTime']>;
   id: Maybe<Scalars['ID']>;
   name: Maybe<Scalars['String']>;
@@ -290,6 +291,7 @@ export interface Showcase {
   author: Scalars['String'];
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
+  expectedQuantity: Scalars['Float'];
   expectedSaleAt: Maybe<Scalars['DateTime']>;
   expectedSalePrice: ShowcasePriceDto;
   id: Scalars['ID'];
@@ -323,6 +325,7 @@ export interface ShowcaseDeleteResponse {
   author: Maybe<Scalars['String']>;
   createdAt: Maybe<Scalars['DateTime']>;
   description: Maybe<Scalars['String']>;
+  expectedQuantity: Maybe<Scalars['Float']>;
   expectedSaleAt: Maybe<Scalars['DateTime']>;
   id: Maybe<Scalars['ID']>;
   name: Maybe<Scalars['String']>;
@@ -459,6 +462,7 @@ export interface UpdateShowcase {
   author: Maybe<Scalars['String']>;
   createdAt: Maybe<Scalars['DateTime']>;
   description: Maybe<Scalars['String']>;
+  expectedQuantity: Maybe<Scalars['Float']>;
   expectedSaleAt: Maybe<Scalars['DateTime']>;
   id: Maybe<Scalars['ID']>;
   name: Maybe<Scalars['String']>;
@@ -475,6 +479,7 @@ export type ShowcasePreviewQueryVariables = Exact<{
 export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, author: string, status: ShowcaseStatus, description: string, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } }, showcases: { edges: Array<{ node: { slug: string, name: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
 
 export type ShowcasesQueryVariables = Exact<{
+  filter: Maybe<ShowcaseFilter>;
   paging: CursorPaging;
 }>;
 

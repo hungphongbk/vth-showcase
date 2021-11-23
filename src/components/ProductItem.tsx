@@ -1,4 +1,4 @@
-import { Box, Divider, IconButton, ImageListItem } from "@mui/material";
+import { Box, IconButton, ImageListItem } from "@mui/material";
 import { motion } from "framer-motion";
 import { HTMLProps, useCallback, useEffect, useRef, useState } from "react";
 import { MotionBox, MotionTypo, ProductInfo } from "./commons";
@@ -108,14 +108,19 @@ export default function ProductItem({
       <ProductInfo>
         <MotionTypo
           variant="h6"
-          sx={{ textTransform: "uppercase", fontWeight: 600 }}
+          sx={{
+            textTransform: "uppercase",
+            fontWeight: 600,
+            fontSize: "0.773rem",
+            mb: 0.4,
+          }}
         >
           {item.name}
         </MotionTypo>
         <StatusBadge status={item.status} />
-        <Divider sx={{ mt: 0.5, mb: 0.5 }} />
         <MotionBox
           sx={{
+            mt: 0.5,
             display: "grid",
             gridTemplateAreas: '"user user" "count next" "date next"',
             gridTemplateColumns: "1fr auto",

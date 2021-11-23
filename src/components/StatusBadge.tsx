@@ -1,7 +1,11 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
-import { usingContextualColor } from "../utils/colors";
+import {
+  usingShowcaseStatusColor,
+  usingShowcaseStatusLabel,
+} from "../utils/colors";
+import { ShowcaseStatus } from "../types/graphql";
 
 const statusLabels = {
   IDEA: "Idea",
@@ -10,12 +14,12 @@ const statusLabels = {
 } as Record<string, string>;
 
 export default function StatusBadge(props: {
-  status: string;
+  status: ShowcaseStatus;
   outlined?: boolean;
   sx?: SxProps;
 }): JSX.Element {
   const outlined = props.outlined ?? false,
-    color = usingContextualColor(props.status);
+    color = usingShowcaseStatusColor(props.status);
 
   return (
     <Box
@@ -34,7 +38,7 @@ export default function StatusBadge(props: {
       }}
     >
       <Typography sx={{ fontWeight: 700, lineHeight: 1, fontSize: "inherit" }}>
-        {statusLabels[props.status]}
+        {usingShowcaseStatusLabel(props.status)}
       </Typography>
     </Box>
   );

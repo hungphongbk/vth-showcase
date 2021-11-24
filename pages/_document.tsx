@@ -47,6 +47,10 @@ export default class MyDocument extends Document {
           <meta name="msapplication-TileColor" content="#da532c" />
           {/* PWA primary color */}
           <meta content={theme.palette.primary.main} name="theme-color" />
+          <meta
+            content="minimum-scale=1, initial-scale=1, width=device-width"
+            name="viewport"
+          />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"

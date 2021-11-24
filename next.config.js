@@ -24,4 +24,13 @@ module.exports = withTM({
     scrollRestoration: true,
   },
   staticPageGenerationTimeout: 300,
+  async redirects() {
+    return [
+      {
+        source: "/manage/create-post",
+        destination: "/manage/create-post/step1",
+        permanent: true,
+      },
+    ];
+  },
 });

@@ -11,6 +11,7 @@ import { SystemStyleObject } from "@mui/system";
 import { usingShowcaseStatusColor } from "../utils/colors";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Showcase } from "../types/graphql";
+import Image from "next/image";
 
 const MotionImageListItem = motion(ImageListItem);
 
@@ -89,18 +90,19 @@ export default function ShowcaseItem({
           right: 0,
           bottom: "30%",
           zIndex: -1,
-          "& img": {
-            objectFit: "cover",
-            width: "100%",
-            height: "100%",
-          },
+          // "& img": {
+          //   objectFit: "cover",
+          //   width: "100%",
+          //   height: "100%",
+          // },
         }}
       >
-        <motion.img
-          layoutId={getLayoutId("image")}
+        <Image
           // layoutId={getLayoutId("/thumb")}
           src={item.image.path}
           alt={item.image.path}
+          layout={"fill"}
+          objectFit={"cover"}
         />
       </MotionBox>
       {/*<img src={item.image} alt={item.title} />*/}

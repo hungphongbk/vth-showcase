@@ -1,11 +1,19 @@
-import React, { useState } from "react";
-import { Box, MenuItem, Select, Stack, Typography } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  MenuItem,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { StyledInputLabel, TextInput } from "../TextInput";
 import { fullWidth } from "../../utils/predefinedSx";
 import { css, styled } from "@mui/material/styles";
 import StatusBadge from "../StatusBadge";
 import { ShowcaseStatus } from "../../types/graphql";
+import { useRouter } from "next/router";
 
 const StyledSelect = styled(Select)(
   ({ theme }) => css`
@@ -29,6 +37,32 @@ export default function FirstStep(): JSX.Element {
 
   const [mucTieu, setMucTieu] = useState("");
   const [tinhTrang, setTinhTrang] = useState("");
+
+  const router = useRouter();
+
+  const setStatus = useCallback(
+    (status: ShowcaseStatus) =>
+      dispatch({
+        type: "update",
+        payload: { status },
+      }),
+    [dispatch]
+  );
+
+  useEffect(() => {
+    // noinspection JSIgnoredPromiseFromCall
+    router.prefetch("/manage/create-post/step2");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (mucTieu.length > 0 && tinhTrang.length > 0) {
+      if (mucTieu === "kinh-doanh" && tinhTrang === "san-sang")
+        setStatus(ShowcaseStatus.Coming);
+      if (tinhTrang === "hang-mau") setStatus(ShowcaseStatus.Showcase);
+      else setStatus(ShowcaseStatus.Idea);
+    }
+  }, [mucTieu, setStatus, tinhTrang]);
 
   return (
     <>
@@ -89,14 +123,27 @@ export default function FirstStep(): JSX.Element {
               }}
             />
           </Stack>
-          <Box sx={{ display: "grid", gridTemplateColumns: "1fr auto" }}>
-            <Typography>Dự án của bạn thuộc vào nhóm</Typography>
-            <StatusBadge
-              status={ShowcaseStatus.Coming}
-              filled
-              noIcon
-              sx={{ fontSize: 13 }}
-            />
+          {showcase.status && (
+            <Box sx={{ display: "grid", gridTemplateColumns: "1fr auto" }}>
+              <Typography>Dự án của bạn thuộc vào nhóm</Typography>
+              <StatusBadge
+                status={showcase.status}
+                filled
+                noIcon
+                sx={{ fontSize: 13 }}
+              />
+            </Box>
+          )}
+          <Box sx={{ px: "15%" }}>
+            <Button
+              variant={"contained"}
+              color={"primary"}
+              fullWidth
+              disabled={!showcase.status}
+              onClick={() => router.push("/manage/create-post/step2")}
+            >
+              Bước tiếp theo
+            </Button>
           </Box>
         </Stack>
       </Box>

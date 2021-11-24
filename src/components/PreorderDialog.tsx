@@ -5,14 +5,12 @@ import {
   Button,
   Dialog,
   DialogContent,
-  FormControl,
-  OutlinedInput,
-  OutlinedInputProps,
   Stack,
   Typography,
 } from "@mui/material";
 import { ShowcasePriceDto } from "../types/graphql";
 import { vndCurrency } from "../utils/string";
+import { TextInput } from "./TextInput";
 
 const StyledDialog = styled(Dialog)(
   (theme) => css`
@@ -24,26 +22,6 @@ const StyledDialog = styled(Dialog)(
       overflow-y: visible;
     }
   `
-);
-
-const StyledOutlinedInput = styled(OutlinedInput)(
-  ({ theme }) => css`
-    .MuiOutlinedInput-notchedOutline {
-      border: none;
-    }
-    &.MuiOutlinedInput-root {
-      background: ${theme.palette.neutral.darkWhite};
-      height: 30px;
-      border-radius: 15px;
-    }
-  `
-);
-const TextInput = (
-  props: Pick<OutlinedInputProps, "name" | "value" | "onChange" | "placeholder">
-): JSX.Element => (
-  <FormControl sx={{ width: "100%" }}>
-    <StyledOutlinedInput {...props} />
-  </FormControl>
 );
 
 type PreorderDialogProps = {

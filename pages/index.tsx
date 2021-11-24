@@ -23,6 +23,7 @@ import {
   ShowcaseStatus,
 } from "../src/types/graphql";
 import SimpleFilter from "../src/components/indexPage/SimpleFilter";
+import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 
 const MotionContainer = motion(Container);
 
@@ -227,11 +228,7 @@ function Home({
             <>
               <MotionBox
                 sx={{
-                  position: "fixed",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
+                  ...sxFullSizeFixed,
                   bgcolor: "rgba(0,0,0,.65)",
                 }}
                 initial={{ opacity: 0 }}

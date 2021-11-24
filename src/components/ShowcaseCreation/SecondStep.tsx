@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { Box } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { useRouter } from "next/router";
+import { ShowcaseStatus } from "../../types/graphql";
+import SecondStepShowcase from "./SecondStepShowcase";
 
 export default function SecondStep(): JSX.Element {
   const { showcase, dispatch } = useShowcaseCreation();
@@ -19,5 +21,13 @@ export default function SecondStep(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <Box />;
+  return (
+    <Box sx={{ p: 1 }}>
+      {showcase.status ===
+      ShowcaseStatus.Coming ? /* TODO */ null : typeof showcase.status !==
+        "undefined" ? (
+        <SecondStepShowcase />
+      ) : null}
+    </Box>
+  );
 }

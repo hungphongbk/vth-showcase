@@ -18,7 +18,12 @@ module.exports = withTM({
     return config;
   },
   images: {
-    domains: ["picsum.photos"],
+    domains: [
+      "localhost",
+      "showcase-dev.vaithuhay.com",
+      "showcase.vaithuhay.com",
+      "i.imgur.com",
+    ],
   },
   experimental: {
     scrollRestoration: true,

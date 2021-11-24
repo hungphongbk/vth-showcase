@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { styled } from "@mui/material/styles";
 import { uniqueId } from "lodash";
-import AspectRatio from "./AspectRatio";
+import AspectRatio, { RatioProps } from "./AspectRatio";
 import { Box } from "@mui/material";
 import { sxFlexCenter, sxFullSize } from "../utils/predefinedSx";
 
@@ -26,7 +26,7 @@ interface UploadEvent<T = Element> extends SyntheticEvent<T> {
     };
 }
 type UploadEventHandler<T = Element> = EventHandler<UploadEvent<T>>;
-type ImageUploaderProps = {
+type ImageUploaderProps = Pick<RatioProps, "ratio"> & {
   name?: string | undefined;
   value?: File;
   onChange?: UploadEventHandler;
@@ -38,6 +38,7 @@ export default function ImageUploader({
   value,
   onChange,
   children,
+  ratio = undefined,
 }: PropsWithChildren<ImageUploaderProps>): JSX.Element {
   const id = uniqueId("file-upload-");
 
@@ -66,6 +67,7 @@ export default function ImageUploader({
   return (
     <AspectRatio
       sx={{ border: 1, borderStyle: "dashed", borderColor: "divider" }}
+      ratio={ratio}
     >
       {!value ? (
         <StyledLabel htmlFor={id}>

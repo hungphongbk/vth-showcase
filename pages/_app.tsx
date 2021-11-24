@@ -9,6 +9,10 @@ import { LayoutGroup } from "framer-motion";
 import "intersection-observer";
 import { DefaultSeo } from "next-seo";
 import { NextPage } from "next";
+import { Box } from "@mui/material";
+import { sxFullSizeFixed } from "../src/utils/predefinedSx";
+import Image from "next/image";
+import Head from "next/head";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -24,7 +28,13 @@ export default function MyApp(props: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <React.Fragment>
+    <>
+      <Head>
+        <meta
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+          name="viewport"
+        />
+      </Head>
       <DefaultSeo
         {...(process.env.NEXT_PUBLIC_SEO_OFF_INDEX === "true"
           ? {
@@ -40,7 +50,7 @@ export default function MyApp(props: AppPropsWithLayout) {
         openGraph={{
           type: "website",
           locale: "vi_VN",
-          url: "https://www.url.ie/",
+          url: "https://showcase.vaithuhay.com/",
           site_name: "Showcase Vài Thứ Hay",
           title: "Dự án showcase sản phẩm mới tại Vaithuhay",
         }}
@@ -49,11 +59,19 @@ export default function MyApp(props: AppPropsWithLayout) {
         <CssBaseline />
         <Header />
         <LayoutGroup>
+          <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
+            <Image
+              src={"/background.png"}
+              layout="fill"
+              objectFit="cover"
+              quality={70}
+            />
+          </Box>
           {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
           {getLayout(<Component {...pageProps} key={router.route} />)}
           {/*</AnimatePresence>*/}
         </LayoutGroup>
       </ThemeProvider>
-    </React.Fragment>
+    </>
   );
 }

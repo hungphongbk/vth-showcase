@@ -2,7 +2,6 @@ import { Box, IconButton, ImageListItem } from "@mui/material";
 import { motion } from "framer-motion";
 import { HTMLProps, useCallback, useEffect, useRef, useState } from "react";
 import { MotionBox, MotionTypo, ProductInfo } from "./commons";
-import UserIcon from "../assets/icons/UserIcon";
 import StatusBadge from "./StatusBadge";
 import { useInViewport } from "react-in-viewport";
 import { useRouter } from "next/router";
@@ -31,7 +30,7 @@ type ProductItemProps = {
   onLoadMore?: () => void | Promise<void>;
 } & HTMLProps<HTMLElement>;
 
-export default function ProductItem({
+export default function ShowcaseItem({
   item,
   onClick,
   loadMorePoint,
@@ -88,7 +87,7 @@ export default function ProductItem({
           top: 0,
           left: 0,
           right: 0,
-          bottom: "20%",
+          bottom: "30%",
           zIndex: -1,
           "& img": {
             objectFit: "cover",
@@ -111,7 +110,7 @@ export default function ProductItem({
           sx={{
             textTransform: "uppercase",
             fontWeight: 600,
-            fontSize: "0.773rem",
+            fontSize: "0.75rem",
             mb: 0.4,
           }}
         >
@@ -120,18 +119,14 @@ export default function ProductItem({
         <StatusBadge status={item.status} />
         <MotionBox
           sx={{
-            mt: 0.5,
+            mt: 1,
             display: "grid",
-            gridTemplateAreas: '"user user" "count next" "date next"',
+            gridTemplateAreas: '"count next" "date next"',
             gridTemplateColumns: "1fr auto",
             gridRowGap: 4,
             width: "100%",
           }}
         >
-          <Box sx={[sxDetailLine, { gridArea: "user" }]}>
-            <UserIcon sx={sxIcon} />
-            <MotionTypo>{item.author}</MotionTypo>
-          </Box>
           <Box sx={[sxDetailLine, { gridArea: "count" }]}>
             <InboxIcon sx={sxIcon} />
             <MotionTypo>1000 pcs</MotionTypo>

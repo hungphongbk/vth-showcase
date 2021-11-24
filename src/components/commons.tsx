@@ -11,8 +11,8 @@ export const ProductInfoBase = styled(Box)(
     flex-direction: column;
     background: linear-gradient(
       179.76deg,
-      rgba(0, 0, 0, 0) 0.2%,
-      #000000 80%,
+      rgba(0, 0, 0, 0) 25%,
+      #000000 70%,
       #000000 99.9%
     );
     color: white;
@@ -22,7 +22,7 @@ export const ProductInfoBase = styled(Box)(
   `
 );
 export const ProductInfo = styled(ProductInfoBase)`
-  padding: 100px 8px 8px;
+  padding: 120px 8px 8px;
 `;
 export const ProductInfoDetailed = styled(ProductInfoBase)`
   position: absolute;

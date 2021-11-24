@@ -1,5 +1,5 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import ProductDetailed from "../../src/components/ProductDetailed";
+import ShowcaseDetailed from "../../src/components/ShowcaseDetailed";
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -31,7 +31,7 @@ export default function PreviewPage({
         overflowY: "scroll",
       }}
     >
-      <ProductDetailed
+      <ShowcaseDetailed
         item={post}
         onClick={() => router.back()}
         posts={posts}

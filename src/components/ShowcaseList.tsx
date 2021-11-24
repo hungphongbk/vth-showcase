@@ -1,5 +1,5 @@
 import React, { createContext } from "react";
-import ProductItem from "./ProductItem";
+import ShowcaseItem from "./ShowcaseItem";
 import { ImageList, ImageListProps } from "@mui/material";
 import { useRouter } from "next/router";
 import { ShowcaseEdge } from "../types/graphql";
@@ -14,13 +14,13 @@ type ProductListProps = {
   context?: IdContextType;
   onLoadMore?: () => void | Promise<void>;
 };
-export default function ProductList(props: ProductListProps): JSX.Element {
+export default function ShowcaseList(props: ProductListProps): JSX.Element {
   const router = useRouter();
   return (
     <LayoutIdContext.Provider value={props.context ?? "main"}>
       <ImageList variant={props.variant ?? "masonry"} cols={2} gap={8}>
         {props.posts.map((item, index) => (
-          <ProductItem
+          <ShowcaseItem
             key={item.node.slug}
             item={item.node}
             loadMorePoint={index === props.posts.length - 5}

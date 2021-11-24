@@ -10,7 +10,7 @@ import UserIcon from "../assets/icons/UserIcon";
 import CollapseDetail from "./CollapseDetail";
 import StatusBadge from "./StatusBadge";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import ProductList from "./ProductList";
+import ShowcaseList from "./ShowcaseList";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { CollapseCard } from "./index";
@@ -24,7 +24,7 @@ import { Showcase, ShowcaseEdge } from "../types/graphql";
 const testPreview = (str: string) => /^\/preview/.test(str),
   testPost = (str: string) => /^\/post/.test(str);
 
-export default function ProductDetailed({
+export default function ShowcaseDetailed({
   item,
   onClick,
   posts,
@@ -287,7 +287,7 @@ export default function ProductDetailed({
           >
             DỰ ÁN LIÊN QUAN
           </Typography>
-          <ProductList posts={posts} />
+          <ShowcaseList posts={posts} />
         </MotionBox>
       </MotionBox>
     </>

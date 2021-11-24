@@ -6,7 +6,7 @@ import {
   ImageListItem,
   Typography,
 } from "@mui/material";
-import ProductList from "../src/components/ProductList";
+import ShowcaseList from "../src/components/ShowcaseList";
 import { AnimatePresence, motion } from "framer-motion";
 import TuneIcon from "@mui/icons-material/Tune";
 import React, { useEffect, useMemo, useState } from "react";
@@ -214,7 +214,7 @@ function Home({
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.15 }}
         >
-          <ProductList
+          <ShowcaseList
             posts={restPost as unknown as ShowcaseEdge[]}
             variant={"standard"}
             onLoadMore={loadMore}

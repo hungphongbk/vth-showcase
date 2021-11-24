@@ -1,6 +1,6 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { Box, Button, ButtonProps } from "@mui/material";
-import ProductDetailed from "../../src/components/ProductDetailed";
+import ShowcaseDetailed from "../../src/components/ShowcaseDetailed";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { apiService } from "../../src/api";
@@ -68,7 +68,7 @@ export default function PostDetailedPage({
   const [open, setOpen] = useState(false);
   return (
     <Box sx={{ bgcolor: "#f0f0f0" }}>
-      <ProductDetailed
+      <ShowcaseDetailed
         item={post}
         onClick={() => router.push("/")}
         posts={posts}

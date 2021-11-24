@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ReactElement, ReactNode } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import type { AppProps } from "next/app";
@@ -7,9 +8,20 @@ import Header from "../src/components/Header";
 import { LayoutGroup } from "framer-motion";
 import "intersection-observer";
 import { DefaultSeo } from "next-seo";
+import { NextPage } from "next";
 
-export default function MyApp(props: AppProps) {
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+export default function MyApp(props: AppPropsWithLayout) {
   const { Component, pageProps, router } = props;
+
+  const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
     <React.Fragment>
@@ -38,7 +50,7 @@ export default function MyApp(props: AppProps) {
         <Header />
         <LayoutGroup>
           {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
-          <Component {...pageProps} key={router.route} />
+          {getLayout(<Component {...pageProps} key={router.route} />)}
           {/*</AnimatePresence>*/}
         </LayoutGroup>
       </ThemeProvider>

@@ -65,6 +65,7 @@ const theme = createTheme({
     fontSize: 10,
   },
   palette: {
+    divider: "#ABABAB",
     primary: {
       main: "#FFDE50",
     },

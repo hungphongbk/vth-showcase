@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import { Showcase } from "../types/graphql";
 import produce from "immer";
+import { Theme, ThemeProvider } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 
 type AnAction = { type: "update"; payload: Partial<Showcase> };
 const ShowcaseCreationContext = createContext<
@@ -31,9 +33,25 @@ export default function ShowcaseCreationLayout({
 }: PropsWithChildren<unknown>): JSX.Element {
   const [showcase, dispatch] = useReducer(reducer, {});
   return (
-    <ShowcaseCreationContext.Provider value={{ showcase, dispatch }}>
-      {children}
-    </ShowcaseCreationContext.Provider>
+    <ThemeProvider
+      theme={(theme: Theme) => {
+        // console.log(theme.typography);
+        return createTheme({
+          ...theme,
+          typography: {
+            ...theme.typography,
+            body1: {
+              ...theme.typography.body1,
+              fontSize: "0.8125rem",
+            },
+          },
+        });
+      }}
+    >
+      <ShowcaseCreationContext.Provider value={{ showcase, dispatch }}>
+        {children}
+      </ShowcaseCreationContext.Provider>
+    </ThemeProvider>
   );
 }
 

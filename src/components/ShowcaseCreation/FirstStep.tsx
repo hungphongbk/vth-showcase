@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { StyledInputLabel, TextInput } from "../TextInput";
-import { fullWidth } from "../../utils/predefinedSx";
+import { sxFullWidth } from "../../utils/predefinedSx";
 import { css, styled } from "@mui/material/styles";
 import StatusBadge from "../StatusBadge";
 import { ShowcaseStatus } from "../../types/graphql";
@@ -79,7 +79,7 @@ export default function FirstStep(): JSX.Element {
       </Box>
       <Box sx={{ mt: 1, p: 1 }}>
         <Stack direction={"column"} gap={2}>
-          <Box sx={fullWidth}>
+          <Box sx={sxFullWidth}>
             <StyledInputLabel>Mục tiêu dự án của bạn là gì?</StyledInputLabel>
             <StyledSelect
               labelId="demo-simple-select-label"
@@ -96,7 +96,7 @@ export default function FirstStep(): JSX.Element {
             </StyledSelect>
           </Box>
           <Stack direction={"column"} gap={1.2}>
-            <Box sx={fullWidth}>
+            <Box sx={sxFullWidth}>
               <StyledInputLabel>Tình trạng của dự án?</StyledInputLabel>
               <StyledSelect
                 labelId="demo-simple-select-label-2"

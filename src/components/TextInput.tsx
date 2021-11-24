@@ -27,7 +27,7 @@ export const StyledInputLabel = styled((props: InputLabelProps) => (
   position: unset;
   transform: unset;
   margin-bottom: 6px;
-  font-weight: 500;
+  font-weight: 600;
   color: black;
 `;
 

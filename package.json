@@ -8,7 +8,8 @@
     "start": "next start -p 4000",
     "lint": "next lint",
     "download:mock": "curl \"https://api.mockaroo.com/api/20cc56c0?count=20&key=3b78e0e0\" > \"src/assets/data.json\"\n",
-    "graphql-codegen": "graphql-codegen --watch"
+    "graphql-codegen": "graphql-codegen --watch",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@apollo/client": "^3.4.17",
@@ -58,7 +59,8 @@
     "eslint": "7.32.0",
     "eslint-config-next": "12.0.1",
     "graphql-tag": "^2.12.6",
-    "typescript": "4.4.4"
+    "typescript": "4.4.4",
+    "husky": "^7.0.0"
   },
   "husky": {
     "hooks": {

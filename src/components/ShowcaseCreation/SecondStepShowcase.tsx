@@ -8,6 +8,7 @@ import FormInput from "../FormInput";
 import PlusIcon from "../../assets/icons/PlusIcon";
 import { CollapseCard } from "../index";
 import HighlightFeature from "./HighlightFeature";
+import { EnhancedMultilineTextField, EnhancedTextField } from "./styled";
 
 type ShowcaseForm = Showcase & {
   image: File;
@@ -40,14 +41,18 @@ export default function SecondStepShowcase(): JSX.Element {
           <FormInput
             name={"name"}
             control={control}
+            component={EnhancedTextField}
             variant={"standard"}
-            label={"Tên dự án"}
+            placeholder={"Tên dự án"}
+            placeholderColor={"#222"}
           />
           <FormInput
             name={"description"}
             control={control}
+            component={EnhancedTextField}
             variant={"standard"}
-            label={"Chú thích sản phẩm"}
+            placeholder={"Chú thích sản phẩm"}
+            placeholderColor={"#222"}
           />
         </Stack>
         <Box
@@ -64,28 +69,29 @@ export default function SecondStepShowcase(): JSX.Element {
               name={"brand"}
               control={control}
               variant={"standard"}
-              label={"Thương hiệu"}
+              placeholder={"Thương hiệu"}
+              component={EnhancedTextField}
             />
             <FormInput
               name={"brandDesc"}
               control={control}
-              variant={"standard"}
-              label={"Mô tả thương hiệu"}
-              multiline
-              rows={4}
+              placeholder={"Mô tả thương hiệu"}
+              component={EnhancedMultilineTextField}
             />
 
             <FormInput
               name={"expectedQuantity"}
               control={control}
               variant={"standard"}
-              label={"Thương hiệu"}
+              placeholder={"Số lượng mục tiêu"}
+              component={EnhancedTextField}
             />
             <FormInput
               name={"expectedReleaseDate"}
               control={control}
               variant={"standard"}
-              label={"Ngày ra mắt dự kiến"}
+              placeholder={"Ngày ra mắt dự kiến"}
+              component={EnhancedTextField}
             />
           </Stack>
         </Box>

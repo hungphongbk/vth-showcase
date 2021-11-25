@@ -25,7 +25,10 @@ declare module "@mui/material/styles" {
       dark?: string;
     };
     neutral: {
+      lightGrey: string;
+      darkGrey: string;
       darkWhite: string;
+      black: string;
     };
   }
 
@@ -46,7 +49,10 @@ declare module "@mui/material/styles" {
       dark?: string;
     };
     neutral: {
+      lightGrey: string;
+      darkGrey: string;
       darkWhite: string;
+      black: string;
     };
   }
 
@@ -85,7 +91,12 @@ const theme = createTheme({
       main: "#FFDE50",
       light: "#FFF5CB",
     },
-    neutral: { darkWhite: "#F3F3F3" },
+    neutral: {
+      darkWhite: "#F3F3F3",
+      black: "#000",
+      lightGrey: "#D5D5D5",
+      darkGrey: "#ABABAB",
+    },
   },
   variables: {
     appBarHeight: 59,

@@ -7,6 +7,7 @@ import { StyledDialog } from "../commons";
 import { useForm } from "react-hook-form";
 import FormInput from "../FormInput";
 import ImageUploader from "../ImageUploader";
+import { EnhancedMultilineTextField, EnhancedTextField } from "./styled";
 
 export default function HighlightFeature(): JSX.Element {
   const [open, setOpen] = useState(false),
@@ -35,16 +36,16 @@ export default function HighlightFeature(): JSX.Element {
               name={"name"}
               control={control}
               variant={"standard"}
-              label={"Tính năng"}
+              placeholder={"Tính năng"}
+              component={EnhancedTextField}
             />
 
             <FormInput
               name={"description"}
               control={control}
               variant={"standard"}
-              label={"Mô tả tính năng"}
-              multiline
-              rows={4}
+              placeholder={"Mô tả tính năng"}
+              component={EnhancedMultilineTextField}
             />
 
             <FormInput

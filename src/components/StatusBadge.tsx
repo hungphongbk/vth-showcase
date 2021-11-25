@@ -15,6 +15,7 @@ const sxSmall: SxProps = {},
 export default function StatusBadge(props: {
   status: ShowcaseStatus;
   outlined?: boolean;
+  large?: boolean;
   filled?: boolean;
   noIcon?: boolean;
   sx?: SxProps;
@@ -22,7 +23,8 @@ export default function StatusBadge(props: {
   const outlined = props.outlined ?? false,
     color = usingShowcaseStatusColor(props.status),
     noIcon = props.noIcon ?? false,
-    filled = props.filled ?? false;
+    filled = props.filled ?? false,
+    large = props.large ?? false;
 
   return (
     // @ts-ignore
@@ -43,13 +45,17 @@ export default function StatusBadge(props: {
           gap: 0.75,
           alignItems: "center",
           ...(outlined && {
+            borderStyle: "solid",
+            borderWidth: "1px",
+            borderRadius: "13px",
+            py: 0.45,
+            px: 1,
+          }),
+          ...(large && {
             py: 0.5,
             px: 1.2,
             pb: 0.65,
-            borderStyle: "solid",
-            borderWidth: "1px",
             fontSize: 15,
-            borderRadius: "13px",
           }),
           ...props.sx,
         },

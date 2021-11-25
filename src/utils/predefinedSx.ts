@@ -27,3 +27,6 @@ export const sxFlexCenter = {
   alignItems: "center",
   justifyContent: "center",
 } as const;
+
+export const sxSize = (width: any, height: any = width) =>
+  ({ width, height } as const);

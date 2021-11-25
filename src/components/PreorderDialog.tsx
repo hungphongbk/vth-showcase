@@ -1,18 +1,28 @@
 import React from "react";
 import { Box, Button, DialogContent, Stack, Typography } from "@mui/material";
-import { ShowcasePriceDto } from "../types/graphql";
+import { Showcase } from "../types/graphql";
 import { vndCurrency } from "../utils/string";
 import { TextInput } from "./TextInput";
 import { StyledDialog } from "./commons";
+import { useAppDispatch } from "../store";
+import { addShowcaseToCart } from "../store/cart/reducer";
 
 type PreorderDialogProps = {
   open: boolean;
-  price: ShowcasePriceDto;
+  showcase: Showcase;
   onClose: () => void;
 };
 export default function PreorderDialog(
   props: PreorderDialogProps
 ): JSX.Element {
+  const dispatch = useAppDispatch();
+  const price = props.showcase.expectedSalePrice;
+
+  const handlePreorder = () => {
+    dispatch(addShowcaseToCart(props.showcase));
+    props.onClose();
+  };
+
   return (
     <StyledDialog open={props.open} onClose={props.onClose}>
       <DialogContent>
@@ -30,10 +40,10 @@ export default function PreorderDialog(
           }}
         >
           <Typography sx={{ fontSize: 13 }}>
-            Giá bán dự kiến: <strong>{vndCurrency(props.price.regular)}</strong>
+            Giá bán dự kiến: <strong>{vndCurrency(price.regular)}</strong>
           </Typography>
           <Typography sx={{ fontSize: 15 }}>
-            Giá Tiên Phong: <strong>{vndCurrency(props.price.pioneer)}</strong>
+            Giá Tiên Phong: <strong>{vndCurrency(price.pioneer)}</strong>
           </Typography>
         </Box>
         <Typography
@@ -48,7 +58,7 @@ export default function PreorderDialog(
           <Button
             variant={"contained"}
             color={"primary"}
-            onClick={props.onClose}
+            onClick={handlePreorder}
           >
             Đăng ký
           </Button>

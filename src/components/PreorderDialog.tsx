@@ -1,28 +1,9 @@
 import React from "react";
-import { css, styled } from "@mui/material/styles";
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, DialogContent, Stack, Typography } from "@mui/material";
 import { ShowcasePriceDto } from "../types/graphql";
 import { vndCurrency } from "../utils/string";
 import { TextInput } from "./TextInput";
-
-const StyledDialog = styled(Dialog)(
-  (theme) => css`
-    .MuiDialog-paper {
-      border-radius: 25px;
-      overflow-y: visible;
-    }
-    .MuiDialogContent-root {
-      overflow-y: visible;
-    }
-  `
-);
+import { StyledDialog } from "./commons";
 
 type PreorderDialogProps = {
   open: boolean;
@@ -33,7 +14,7 @@ export default function PreorderDialog(
   props: PreorderDialogProps
 ): JSX.Element {
   return (
-    <StyledDialog open={props.open} fullWidth onClose={props.onClose}>
+    <StyledDialog open={props.open} onClose={props.onClose}>
       <DialogContent>
         <Box
           sx={{

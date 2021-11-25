@@ -1,7 +1,8 @@
-import { Box, Card, Typography } from "@mui/material";
+import { Box, Card, Dialog, DialogProps, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import { css, styled } from "@mui/material/styles";
 import { Timeline } from "@mui/lab";
+import React from "react";
 
 export const MotionBox = motion(Box);
 export const MotionTypo = motion(Typography);
@@ -62,3 +63,17 @@ export const StyledTimeline = styled(Timeline)`
     border-left: 2px dashed #d5d5d5;
   }
 `;
+
+export const StyledDialog = styled((props: Omit<DialogProps, "fullWidth">) => (
+  <Dialog {...props} fullWidth />
+))(
+  (theme) => css`
+    .MuiDialog-paper {
+      border-radius: 25px;
+      overflow-y: visible;
+    }
+    .MuiDialogContent-root {
+      overflow-y: visible;
+    }
+  `
+);

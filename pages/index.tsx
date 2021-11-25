@@ -25,8 +25,6 @@ import {
 import SimpleFilter from "../src/components/indexPage/SimpleFilter";
 import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 
-const MotionContainer = motion(Container);
-
 function Home({
   posts: _posts,
   pageInfo: _pageInfo,
@@ -51,7 +49,7 @@ function Home({
       typeof statusFilter === "undefined" &&
       typeof calculatedFilter !== "undefined"
     )
-      setCalculatedFilter(null);
+      setCalculatedFilter(undefined);
     if (typeof statusFilter !== "undefined") {
       // @ts-ignore
       setCalculatedFilter({ status: { eq: statusFilter } });
@@ -63,7 +61,7 @@ function Home({
    * Trigger reload API
    */
   useEffect(() => {
-    apiService.getAllShowcases(calculatedFilter ?? null).then((data) => {
+    apiService.getAllShowcases(calculatedFilter).then((data) => {
       setStatusFiltered(statusFilter);
       setPosts(data.edges);
       setPageInfo(data.pageInfo);
@@ -77,7 +75,7 @@ function Home({
   const loadMore = async () => {
     if (!pageInfo.hasNextPage) return;
     const data = await apiService.getAllShowcases(
-      calculatedFilter ?? null,
+      calculatedFilter,
       pageInfo.endCursor
     );
     setPosts([...posts, ...data.edges]);
@@ -92,12 +90,7 @@ function Home({
   }, [statusFilter, posts]);
 
   return (
-    <MotionContainer
-      sx={{ mt: 2, pl: 1, pr: 1 }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{}}
-    >
+    <Container sx={{ mt: 2, pl: 1, pr: 1 }}>
       <Banner sx={{ mt: -2, mx: -1 }} />
       <Typography
         sx={{
@@ -241,7 +234,7 @@ function Home({
           )}
         </AnimatePresence>
       </Box>
-    </MotionContainer>
+    </Container>
   );
 }
 

@@ -1,4 +1,4 @@
-export type Maybe<T> = T | null;
+export type Maybe<T> = T | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -289,6 +289,7 @@ export interface SetImageOnShowcaseInput {
 
 export interface Showcase {
   author: Scalars['String'];
+  brand: ShowcaseBrand;
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   expectedQuantity: Scalars['Float'];
@@ -307,6 +308,11 @@ export interface ShowcaseAggregateGroupBy {
   slug: Maybe<Scalars['String']>;
   status: Maybe<ShowcaseStatus>;
   updatedAt: Maybe<Scalars['DateTime']>;
+}
+
+export interface ShowcaseBrand {
+  description: Scalars['String'];
+  name: Scalars['String'];
 }
 
 export interface ShowcaseConnection {

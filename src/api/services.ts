@@ -26,7 +26,7 @@ export const getAllSlugs = async () => {
  * @param cursor
  */
 export const getAllShowcases = async (
-  filter: Maybe<ShowcaseFilter> = null,
+  filter: Maybe<ShowcaseFilter> = undefined,
   cursor?: any
 ) => {
   // @ts-ignore

@@ -82,8 +82,6 @@ function Home({
     setPageInfo(data.pageInfo);
   };
 
-  // useEffect(() => console.log(pageInfo), [pageInfo]);
-
   const restPost = useMemo(() => {
     if (!statusFilter) return posts;
     return posts.filter((i) => i.node.status === statusFilter);

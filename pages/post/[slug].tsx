@@ -5,8 +5,13 @@ import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { apiService } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
-import { PreorderDialog } from "../../src/components";
 import BookmarkIcon from "../../src/assets/icons/BookmarkIcon";
+import dynamic from "next/dynamic";
+
+const PreorderDialog = dynamic(
+  () => import("../../src/components/PreorderDialog"),
+  { ssr: false }
+);
 
 const BottomButton = ({
     children,
@@ -116,7 +121,7 @@ export default function PostDetailedPage({
       </Box>
       <PreorderDialog
         open={open}
-        price={post.expectedSalePrice}
+        showcase={post}
         onClose={() => setOpen(false)}
       />
     </Box>

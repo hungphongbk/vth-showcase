@@ -149,7 +149,12 @@ export default function ShowcaseDetailed({
                   {item.name}
                 </MotionTypo>
                 <motion.div layoutId={"badge"}>
-                  <StatusBadge status={item.status} outlined sx={{ mt: 1 }} />
+                  <StatusBadge
+                    status={item.status}
+                    outlined
+                    sx={{ mt: 1 }}
+                    large
+                  />
                 </motion.div>
                 <Divider sx={{ mt: 0.5, mb: 0.5 }} />
                 <MotionBox

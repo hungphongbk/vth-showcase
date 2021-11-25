@@ -14,6 +14,10 @@ import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import Image from "next/image";
 import Head from "next/head";
 import { AuthProvider } from "../src/components/system/auth";
+import store from "../src/store";
+import { persistStore } from "redux-persist";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -27,6 +31,8 @@ export default function MyApp(props: AppPropsWithLayout) {
   const { Component, pageProps, router } = props;
 
   const getLayout = Component.getLayout ?? ((page) => page);
+
+  const persistor = persistStore(store);
 
   return (
     <>
@@ -56,25 +62,31 @@ export default function MyApp(props: AppPropsWithLayout) {
           title: "Dự án showcase sản phẩm mới tại Vaithuhay",
         }}
       />
-      <AuthProvider>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Header />
-          <LayoutGroup>
-            <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
-              <Image
-                src={"/background.png"}
-                layout="fill"
-                objectFit="cover"
-                quality={70}
-              />
-            </Box>
-            {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
-            {getLayout(<Component {...pageProps} key={router.route} />)}
-            {/*</AnimatePresence>*/}
-          </LayoutGroup>
-        </ThemeProvider>
-      </AuthProvider>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          {() => (
+            <AuthProvider>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Header />
+                <LayoutGroup>
+                  <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
+                    <Image
+                      src={"/background.png"}
+                      layout="fill"
+                      objectFit="cover"
+                      quality={70}
+                    />
+                  </Box>
+                  {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
+                  {getLayout(<Component {...pageProps} key={router.route} />)}
+                  {/*</AnimatePresence>*/}
+                </LayoutGroup>
+              </ThemeProvider>
+            </AuthProvider>
+          )}
+        </PersistGate>
+      </Provider>
     </>
   );
 }

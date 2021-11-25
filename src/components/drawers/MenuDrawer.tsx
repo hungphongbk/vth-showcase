@@ -1,15 +1,15 @@
 import React, { useMemo, useState } from "react";
 import { Button, Portal, Stack } from "@mui/material";
-import MenuBarIcon from "../assets/icons/MenuBarIcon";
+import MenuBarIcon from "../../assets/icons/MenuBarIcon";
 import { AnimatePresence, motion } from "framer-motion";
-import useWindowDimensions from "../utils/hooks";
-import { MotionBox } from "./commons";
-import { sxFullSize } from "../utils/predefinedSx";
-import GoogleColoredIcon from "../assets/icons/GoogleColoredIcon";
-import { signInWithGoogle } from "../service/auth";
-import { useAuthContext } from "./system/auth";
+import useWindowDimensions from "../../utils/hooks";
+import { MotionBox } from "../commons";
+import { sxFullSize } from "../../utils/predefinedSx";
+import GoogleColoredIcon from "../../assets/icons/GoogleColoredIcon";
+import { signInWithGoogle } from "../../service/auth";
+import { useAuthContext } from "../system/auth";
 import { signOut } from "@firebase/auth";
-import { auth } from "../service/firebase";
+import { auth } from "../../service/firebase";
 
 const MENU_BTN_WIDTH = 59,
   MENU_BTN_HEIGHT = 32,

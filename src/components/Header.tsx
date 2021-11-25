@@ -3,9 +3,7 @@ import Image from "next/image";
 import logo from "../assets/logo.png";
 import Link from "./Link";
 import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
-
-const MenuDrawer = dynamic(() => import("./MenuDrawer"), { ssr: false });
+import { CartDrawer, MenuDrawer } from "./drawers";
 
 export default function Header(): JSX.Element {
   const router = useRouter();
@@ -51,7 +49,11 @@ export default function Header(): JSX.Element {
       >
         <Image src={logo} alt={"logo"} objectFit={"contain"} />
       </Box>
-      <Box sx={{ gridColumn: 3 }}></Box>
+      <Box sx={{ gridColumn: 3, justifySelf: "end" }}>
+        <NoSsr>
+          <CartDrawer />
+        </NoSsr>
+      </Box>
     </Box>
   );
 }

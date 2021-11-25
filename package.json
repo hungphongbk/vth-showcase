@@ -22,6 +22,7 @@
     "currency.js": "^2.0.4",
     "firebase": "^9.5.0",
     "firebase-admin": "^10.0.0",
+    "firebase-auth": "^0.1.2",
     "framer-motion": "^5.0.0",
     "graphql": "^15.7.2",
     "husky": "^7.0.4",

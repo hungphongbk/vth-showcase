@@ -1,9 +1,15 @@
 import React, { useMemo, useState } from "react";
-import { Portal, SwipeableDrawerProps } from "@mui/material";
+import { Button, Portal, Stack } from "@mui/material";
 import MenuBarIcon from "../assets/icons/MenuBarIcon";
 import { AnimatePresence, motion } from "framer-motion";
 import useWindowDimensions from "../utils/hooks";
 import { MotionBox } from "./commons";
+import { sxFullSize } from "../utils/predefinedSx";
+import GoogleColoredIcon from "../assets/icons/GoogleColoredIcon";
+import { signInWithGoogle } from "../service/auth";
+import { useAuthContext } from "./system/auth";
+import { signOut } from "@firebase/auth";
+import { auth } from "../service/firebase";
 
 const MENU_BTN_WIDTH = 59,
   MENU_BTN_HEIGHT = 32,
@@ -14,14 +20,11 @@ const MENU_BTN_WIDTH = 59,
 
 const MotionMenuBarIcon = motion(MenuBarIcon);
 
-type MenuDrawerProps = Pick<
-  SwipeableDrawerProps,
-  "open" | "onClose" | "onOpen"
->;
 export default function MenuDrawer(): JSX.Element {
   const [open, setOpenMenu] = useState(false);
 
   const { width: windowWidth, height: windowHeight } = useWindowDimensions();
+  const { user, logout } = useAuthContext();
 
   const scaleFactor = useMemo(() => {
     return (
@@ -62,7 +65,7 @@ export default function MenuDrawer(): JSX.Element {
                 height: "100vh",
                 zIndex: 13,
               }}
-              // transition={{ delay: 0.5 }}
+              transition={{ duration: 0.35, ease: "circOut" }}
             >
               <MotionBox
                 style={{
@@ -81,7 +84,6 @@ export default function MenuDrawer(): JSX.Element {
                 initial={{ scale: 0 }}
                 animate={{ scale: scaleFactor }}
                 exit={{ scale: 0 }}
-                transition={{ duration: 0.35, ease: "circOut" }}
               />
               <MotionMenuBarIcon
                 key={"menu-button"}
@@ -94,6 +96,35 @@ export default function MenuDrawer(): JSX.Element {
                 }}
                 onClick={doCloseMenu}
               />
+              <MotionBox
+                sx={[sxFullSize, { pt: 10 }]}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <Stack direction={"column"} alignItems={"center"}>
+                  {user ? (
+                    <Button
+                      variant={"contained"}
+                      sx={{ bgcolor: "white !important" }}
+                      onClick={() => {
+                        signOut(auth).then(logout);
+                      }}
+                    >
+                      Logout
+                    </Button>
+                  ) : (
+                    <Button
+                      variant={"contained"}
+                      startIcon={<GoogleColoredIcon />}
+                      sx={{ bgcolor: "white !important" }}
+                      onClick={signInWithGoogle}
+                    >
+                      Login with Google
+                    </Button>
+                  )}
+                </Stack>
+              </MotionBox>
             </MotionBox>
           )}
         </AnimatePresence>

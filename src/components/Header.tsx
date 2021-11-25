@@ -3,7 +3,9 @@ import Image from "next/image";
 import logo from "../assets/logo.png";
 import Link from "./Link";
 import { useRouter } from "next/router";
-import MenuDrawer from "./MenuDrawer";
+import dynamic from "next/dynamic";
+
+const MenuDrawer = dynamic(() => import("./MenuDrawer"), { ssr: false });
 
 export default function Header(): JSX.Element {
   const router = useRouter();

@@ -13,6 +13,7 @@ import { Box } from "@mui/material";
 import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import Image from "next/image";
 import Head from "next/head";
+import { AuthProvider } from "../src/components/system/auth";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -55,23 +56,25 @@ export default function MyApp(props: AppPropsWithLayout) {
           title: "Dự án showcase sản phẩm mới tại Vaithuhay",
         }}
       />
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Header />
-        <LayoutGroup>
-          <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
-            <Image
-              src={"/background.png"}
-              layout="fill"
-              objectFit="cover"
-              quality={70}
-            />
-          </Box>
-          {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
-          {getLayout(<Component {...pageProps} key={router.route} />)}
-          {/*</AnimatePresence>*/}
-        </LayoutGroup>
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Header />
+          <LayoutGroup>
+            <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
+              <Image
+                src={"/background.png"}
+                layout="fill"
+                objectFit="cover"
+                quality={70}
+              />
+            </Box>
+            {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
+            {getLayout(<Component {...pageProps} key={router.route} />)}
+            {/*</AnimatePresence>*/}
+          </LayoutGroup>
+        </ThemeProvider>
+      </AuthProvider>
     </>
   );
 }

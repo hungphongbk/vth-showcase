@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import ShowcaseList from "../src/components/ShowcaseList";
 import { AnimatePresence, motion } from "framer-motion";
-import TuneIcon from "@mui/icons-material/Tune";
 import React, { useEffect, useMemo, useState } from "react";
 import { MotionBox, ProductInfoSecond } from "../src/components/commons";
 import FilterPanel from "../src/components/FilterPanel";
@@ -24,6 +23,7 @@ import {
 } from "../src/types/graphql";
 import SimpleFilter from "../src/components/indexPage/SimpleFilter";
 import { sxFullSizeFixed } from "../src/utils/predefinedSx";
+import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
 
 function Home({
   posts: _posts,
@@ -81,8 +81,6 @@ function Home({
     setPosts([...posts, ...data.edges]);
     setPageInfo(data.pageInfo);
   };
-
-  // useEffect(() => console.log(pageInfo), [pageInfo]);
 
   const restPost = useMemo(() => {
     if (!statusFilter) return posts;
@@ -173,17 +171,19 @@ function Home({
       </ImageList>
       <Box
         sx={{
-          my: 0.5,
+          my: 0.7,
           maxWidth: "100%",
           overflowX: "scroll",
           overflowY: "visible",
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1, py: 0.5 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, py: 0.7 }}>
           <Box
             sx={{
-              width: 28,
-              height: 28,
+              width: 38,
+              height: 38,
+              mt: "-5px",
+              mb: "-5px",
               borderRadius: "50%",
               bgcolor: "yellow.main",
               display: "flex",
@@ -192,7 +192,7 @@ function Home({
             }}
             onClick={() => setOpenFilter(true)}
           >
-            <TuneIcon sx={{ width: 16, height: 16 }} />
+            <FilterTuneIcon sx={{ width: 20, height: 20 }} />
           </Box>
           <SimpleFilter
             filter={statusFilter}

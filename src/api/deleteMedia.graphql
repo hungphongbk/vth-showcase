@@ -1,0 +1,5 @@
+mutation deleteMedia($id: ID!) {
+  deleteOneMedia(input: { id: $id }) {
+    id
+  }
+}

@@ -1,0 +1,8 @@
+mutation createMedia($input: CreateMedia!){
+  createOneMedia(input: {media: $input }){
+    id
+    filename
+    mimetype
+    path
+  }
+}

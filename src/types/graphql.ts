@@ -477,6 +477,20 @@ export interface UpdateShowcase {
   updatedAt: Maybe<Scalars['DateTime']>;
 }
 
+export type CreateMediaMutationVariables = Exact<{
+  input: CreateMedia;
+}>;
+
+
+export type CreateMediaMutation = { createOneMedia: { id: string, filename: string, mimetype: string, path: string } };
+
+export type DeleteMediaMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteMediaMutation = { deleteOneMedia: { id: string | null } };
+
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;

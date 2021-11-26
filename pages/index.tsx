@@ -10,7 +10,6 @@ import ShowcaseList from "../src/components/ShowcaseList";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 import { MotionBox, ProductInfoSecond } from "../src/components/commons";
-import FilterPanel from "../src/components/FilterPanel";
 import { range } from "lodash";
 import { VthCountdown } from "../src/components";
 import Banner from "../src/components/Banner";
@@ -24,6 +23,11 @@ import {
 import SimpleFilter from "../src/components/indexPage/SimpleFilter";
 import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
+import dynamic from "next/dynamic";
+
+const FilterPanel = dynamic(() => import("../src/components/FilterPanel"), {
+  ssr: false,
+});
 
 function Home({
   posts: _posts,

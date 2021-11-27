@@ -1,15 +1,21 @@
 import {
   apolloClient,
+  mutationCreateShowcase,
   mutationDeleteMedia,
   queryShowcasePreview,
   queryShowcases,
   querySlugs,
 } from "../api";
 import {
+  CreateShowcaseMutation,
+  CreateShowcaseMutationVariables,
   CursorPaging,
   DeleteMediaMutation,
   DeleteMediaMutationVariables,
   Maybe,
+  Showcase,
+  ShowcaseCreateInputDto,
+  ShowcaseEdge,
   ShowcaseFilter,
   ShowcasePreviewQuery,
   ShowcasePreviewQueryVariables,
@@ -60,8 +66,8 @@ export const getShowcasePreview = async (slug: string) => {
   });
 
   return {
-    post: data.showcase,
-    posts: data.showcases.edges,
+    post: data.showcase as Showcase,
+    posts: data.showcases.edges as ShowcaseEdge[],
   };
 };
 
@@ -69,5 +75,17 @@ export const deleteMedia = async (id: string): Promise<void> => {
   await apolloClient.mutate<DeleteMediaMutation, DeleteMediaMutationVariables>({
     mutation: mutationDeleteMedia,
     variables: { id },
+  });
+};
+
+export const createShowcase = async (
+  form: ShowcaseCreateInputDto
+): Promise<void> => {
+  await apolloClient.mutate<
+    CreateShowcaseMutation,
+    CreateShowcaseMutationVariables
+  >({
+    mutation: mutationCreateShowcase,
+    variables: { input: form },
   });
 };

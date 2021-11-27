@@ -43,7 +43,10 @@ const SaveButtonBox = styled(Box)`
   padding: 8px;
 `;
 
-export default function CreationBottomBar(props: unknown): JSX.Element {
+export default function CreationBottomBar(props: {
+  onSave: () => void | Promise<void>;
+  isSaving?: boolean;
+}): JSX.Element {
   return (
     <SaveBarBox>
       <div>
@@ -51,7 +54,6 @@ export default function CreationBottomBar(props: unknown): JSX.Element {
         <SaveButtonBox>
           <LoadingButton
             variant={"contained"}
-            loading={false}
             color={"primary"}
             sx={{
               borderRadius: "50%",
@@ -61,6 +63,8 @@ export default function CreationBottomBar(props: unknown): JSX.Element {
               boxShadow: "inset 0px -4px 6px rgba(0, 0, 0, 0.1)",
             }}
             loadingIndicator={<CircularProgress color="inherit" size={24} />}
+            loading={props.isSaving ?? false}
+            onClick={() => props.onSave()}
           >
             <Typography sx={{ fontWeight: 600, fontSize: 15 }}>LƯU</Typography>
           </LoadingButton>

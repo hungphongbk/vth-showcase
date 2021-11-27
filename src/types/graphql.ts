@@ -447,7 +447,7 @@ export interface Showcase {
   description: Scalars['String'];
   expectedQuantity: Scalars['Float'];
   expectedSaleAt: Maybe<Scalars['DateTime']>;
-  expectedSalePrice: ShowcasePrice;
+  expectedSalePrice: Maybe<ShowcasePrice>;
   highlightFeatures: Array<ShowcaseHighlightFeature>;
   id: Scalars['ID'];
   image: MediaDto;
@@ -500,7 +500,7 @@ export interface ShowcaseCreateInputDto {
   description: Scalars['String'];
   expectedQuantity: Scalars['Float'];
   expectedSaleAt: Maybe<Scalars['DateTime']>;
-  expectedSalePrice: ShowcasePriceInput;
+  expectedSalePrice: Maybe<ShowcasePriceInput>;
   highlightFeatures: Maybe<Array<ShowcaseHfCreateInputDto>>;
   id: Maybe<Scalars['String']>;
   image: MediaInput;
@@ -804,6 +804,13 @@ export type CreateMediaMutationVariables = Exact<{
 
 export type CreateMediaMutation = { createOneMediaDto: { id: string, filename: string, mimetype: string, path: string } };
 
+export type CreateShowcaseMutationVariables = Exact<{
+  input: ShowcaseCreateInputDto;
+}>;
+
+
+export type CreateShowcaseMutation = { createOneShowcase: { id: string } };
+
 export type DeleteMediaMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -816,7 +823,7 @@ export type ShowcasePreviewQueryVariables = Exact<{
 }>;
 
 
-export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, author: string, status: ShowcaseStatus, description: string, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } }, showcases: { edges: Array<{ node: { slug: string, name: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
+export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, author: string, status: ShowcaseStatus, description: string, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
 
 export type ShowcasesQueryVariables = Exact<{
   filter: Maybe<ShowcaseFilter>;

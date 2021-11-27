@@ -25,18 +25,12 @@ export default function HighlightFeatures({
   return (
     <Stack direction={"column"} alignItems={"stretch"} gap={1}>
       {fields.map((field, index) => (
-        <div key={field.cid}>
-          {
-            // @ts-ignore
-            field.name === "" ? (
-              <FormInput
-                name={`highlightFeatures.${index}`}
-                control={control}
-                component={HighlightFeature}
-              />
-            ) : null
-          }
-        </div>
+        <FormInput
+          key={field.cid}
+          name={`highlightFeatures.${index}`}
+          control={control}
+          component={HighlightFeature}
+        />
       ))}
     </Stack>
   );

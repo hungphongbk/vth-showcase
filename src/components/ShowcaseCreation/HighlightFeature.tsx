@@ -1,6 +1,10 @@
 import React, { EventHandler, SyntheticEvent, useState } from "react";
 import AspectRatio from "../AspectRatio";
-import { sxFlexCenter, sxFullSize } from "../../utils/predefinedSx";
+import {
+  sxFlexCenter,
+  sxFullSize,
+  sxFullSizeAbsolute,
+} from "../../utils/predefinedSx";
 import { Box, Button, DialogContent, Stack, Typography } from "@mui/material";
 import PlusIcon from "../../assets/icons/PlusIcon";
 import { StyledDialog } from "../commons";
@@ -30,8 +34,10 @@ export default function HighlightFeature({
 }: HighlightFeatureProps): JSX.Element {
   const [open, setOpen] = useState(false),
     // TODO type highlight dto here
-    form = useForm(),
-    { control, handleSubmit } = form;
+    form = useForm({
+      defaultValues: value ?? {},
+    }),
+    { control, handleSubmit, reset } = form;
 
   const handleChange = async (values: any, event: any) => {
     if (onChange) {
@@ -50,24 +56,69 @@ export default function HighlightFeature({
         },
       });
       onChange(clonedEvent);
+      setOpen(false);
     }
   };
 
   return (
     <>
-      <AspectRatio
-        ratio={"307/160"}
-        sx={{ border: 1, borderStyle: "dashed", borderColor: "divider" }}
-      >
-        <Box sx={[sxFullSize, sxFlexCenter]} onClick={() => setOpen(true)}>
-          <Stack direction={"column"} alignItems={"center"}>
-            <PlusIcon sx={{ color: "black", height: 26, width: 26, mb: 0.5 }} />
-            <Typography sx={{ fontSize: 15, fontWeight: 600 }}>
-              Thêm tính năng
-            </Typography>
-          </Stack>
-        </Box>
-      </AspectRatio>
+      {value && value.image ? (
+        <>
+          <AspectRatio
+            ratio={"307/160"}
+            sx={{ borderRadius: 4, overflow: "hidden" }}
+          >
+            <Box
+              sx={[
+                sxFullSize,
+                sxFlexCenter,
+                {
+                  position: "relative",
+                  "& img": {
+                    ...sxFullSizeAbsolute,
+                    ...sxFullSize,
+                    objectFit: "cover",
+                  },
+                },
+              ]}
+            >
+              <img src={value.image.path} alt={`feature ${value.name}`} />
+              <Button
+                variant={"outlined"}
+                sx={{
+                  borderColor: "white",
+                  color: "white",
+                  bgcolor: "rgba(0 0 0 /60%)",
+                }}
+                onClick={() => setOpen(true)}
+              >
+                CHỈNH SỬA
+              </Button>
+            </Box>
+          </AspectRatio>
+          <Typography
+            sx={{ fontSize: 15, fontWeight: 600, textTransform: "uppercase" }}
+          >
+            {value.name}
+          </Typography>
+        </>
+      ) : (
+        <AspectRatio
+          ratio={"307/160"}
+          sx={{ border: 1, borderStyle: "dashed", borderColor: "divider" }}
+        >
+          <Box sx={[sxFullSize, sxFlexCenter]} onClick={() => setOpen(true)}>
+            <Stack direction={"column"} alignItems={"center"}>
+              <PlusIcon
+                sx={{ color: "black", height: 26, width: 26, mb: 0.5 }}
+              />
+              <Typography sx={{ fontSize: 15, fontWeight: 600 }}>
+                Thêm tính năng
+              </Typography>
+            </Stack>
+          </Box>
+        </AspectRatio>
+      )}
       <StyledDialog open={open} onClose={() => setOpen(false)}>
         <DialogContent>
           <Stack direction={"column"} gap={2}>
@@ -104,7 +155,11 @@ export default function HighlightFeature({
                 <Typography>Tối đa 1MB</Typography>
               </Stack>
             </FormInput>
-            <Button variant={"contained"} color={"primary"}>
+            <Button
+              variant={"contained"}
+              color={"primary"}
+              onClick={handleSubmit(handleChange)}
+            >
               Lưu
             </Button>
           </Stack>

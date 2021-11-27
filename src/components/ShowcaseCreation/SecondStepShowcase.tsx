@@ -11,21 +11,28 @@ import { EnhancedMultilineTextField, EnhancedTextField } from "./styled";
 import CreationBottomBar from "./CreationBottomBar";
 import HighlightFeatures from "./HighlightFeatures";
 import { DevTool } from "@hookform/devtools";
+import { apiService } from "../../api";
 
 type ShowcaseForm = Showcase & {
   image: MediaInput;
-  brand: string;
-  brandDesc: string;
-
-  expectedReleaseDate: string;
 };
 
 export default function SecondStepShowcase(): JSX.Element {
   const { showcase, dispatch } = useShowcaseCreation(),
     form = useForm<ShowcaseForm>({
-      defaultValues: { ...(showcase as unknown as ShowcaseForm) },
+      defaultValues: {
+        ...(showcase as unknown as ShowcaseForm),
+        author: "test",
+      },
     }),
-    { control } = form;
+    { control, handleSubmit, formState } = form;
+
+  const onSave = async (values: ShowcaseForm) => {
+    //pre process values
+    values.expectedQuantity = values.expectedQuantity * 1;
+    await apiService.createShowcase(values);
+  };
+
   return (
     <>
       <Box sx={{ pb: 10 }}>
@@ -71,14 +78,14 @@ export default function SecondStepShowcase(): JSX.Element {
           >
             <Stack direction={"column"} gap={1}>
               <FormInput
-                name={"brand"}
+                name={"brand.name"}
                 control={control}
                 variant={"standard"}
                 placeholder={"Thương hiệu"}
                 component={EnhancedTextField}
               />
               <FormInput
-                name={"brandDesc"}
+                name={"brand.description"}
                 control={control}
                 placeholder={"Mô tả thương hiệu"}
                 component={EnhancedMultilineTextField}
@@ -90,9 +97,10 @@ export default function SecondStepShowcase(): JSX.Element {
                 variant={"standard"}
                 placeholder={"Số lượng mục tiêu"}
                 component={EnhancedTextField}
+                type={"number"}
               />
               <FormInput
-                name={"expectedReleaseDate"}
+                name={"expectedSaleAt"}
                 control={control}
                 variant={"standard"}
                 placeholder={"Ngày ra mắt dự kiến"}
@@ -106,7 +114,10 @@ export default function SecondStepShowcase(): JSX.Element {
         </Stack>
       </Box>
       {process.env.NODE_ENV === "development" && <DevTool control={control} />}
-      <CreationBottomBar />
+      <CreationBottomBar
+        onSave={handleSubmit(onSave)}
+        isSaving={formState.isSubmitting}
+      />
     </>
   );
 }

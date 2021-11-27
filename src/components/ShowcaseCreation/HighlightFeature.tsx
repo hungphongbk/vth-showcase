@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { EventHandler, SyntheticEvent, useState } from "react";
 import AspectRatio from "../AspectRatio";
 import { sxFlexCenter, sxFullSize } from "../../utils/predefinedSx";
 import { Box, Button, DialogContent, Stack, Typography } from "@mui/material";
@@ -8,12 +8,51 @@ import { useForm } from "react-hook-form";
 import FormInput from "../FormInput";
 import ImageUploader from "../ImageUploader";
 import { EnhancedMultilineTextField, EnhancedTextField } from "./styled";
+import { ShowcaseHighlightFeature } from "../../types/graphql";
 
-export default function HighlightFeature(): JSX.Element {
+interface Change<T = Element> extends SyntheticEvent<T> {
+  target: EventTarget &
+    Omit<T, "value"> & {
+      value: ShowcaseHighlightFeature;
+    };
+}
+type ChangeEventHandler<T = Element> = EventHandler<Change<T>>;
+
+type HighlightFeatureProps = {
+  name: string;
+  value: ShowcaseHighlightFeature;
+  onChange: ChangeEventHandler;
+};
+export default function HighlightFeature({
+  name,
+  value,
+  onChange,
+}: HighlightFeatureProps): JSX.Element {
   const [open, setOpen] = useState(false),
     // TODO type highlight dto here
     form = useForm(),
-    { control } = form;
+    { control, handleSubmit } = form;
+
+  const handleChange = async (values: any, event: any) => {
+    if (onChange) {
+      const nativeEvent = event.nativeEvent || event;
+      // @ts-ignore
+      const clonedEvent = new nativeEvent.constructor(
+        nativeEvent.type,
+        nativeEvent
+      );
+
+      Object.defineProperty(clonedEvent, "target", {
+        writable: true,
+        value: {
+          value: values,
+          name,
+        },
+      });
+      onChange(clonedEvent);
+    }
+  };
+
   return (
     <>
       <AspectRatio

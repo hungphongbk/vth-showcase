@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Control, useFieldArray } from "react-hook-form";
-import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
+import { uniqueId } from "lodash";
+import FormInput from "../FormInput";
+import HighlightFeature from "./HighlightFeature";
 
 type HighlightFeaturesProps = {
   control: Control<any>;
@@ -8,7 +11,33 @@ type HighlightFeaturesProps = {
 export default function HighlightFeatures({
   control,
 }: HighlightFeaturesProps): JSX.Element {
-  const fields = useFieldArray({ control, name: "highlightFeatures" });
+  const { fields, append } = useFieldArray<any, any, "cid">({
+    control,
+    keyName: "cid",
+    name: "highlightFeatures",
+  });
 
-  return <Box></Box>;
+  useEffect(() => {
+    append({ cid: uniqueId(), name: "", description: "" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <Stack direction={"column"} alignItems={"stretch"} gap={1}>
+      {fields.map((field, index) => (
+        <div key={field.cid}>
+          {
+            // @ts-ignore
+            field.name === "" ? (
+              <FormInput
+                name={`highlightFeatures.${index}`}
+                control={control}
+                component={HighlightFeature}
+              />
+            ) : null
+          }
+        </div>
+      ))}
+    </Stack>
+  );
 }

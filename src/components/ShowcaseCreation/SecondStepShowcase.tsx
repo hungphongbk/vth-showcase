@@ -3,16 +3,17 @@ import { Box, Stack, Typography } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import ImageUploader from "../ImageUploader";
 import { useForm } from "react-hook-form";
-import { Showcase } from "../../types/graphql";
+import { MediaInput, Showcase } from "../../types/graphql";
 import FormInput from "../FormInput";
 import PlusIcon from "../../assets/icons/PlusIcon";
 import { CollapseCard } from "../index";
-import HighlightFeature from "./HighlightFeature";
 import { EnhancedMultilineTextField, EnhancedTextField } from "./styled";
 import CreationBottomBar from "./CreationBottomBar";
+import HighlightFeatures from "./HighlightFeatures";
+import { DevTool } from "@hookform/devtools";
 
 type ShowcaseForm = Showcase & {
-  image: File;
+  image: MediaInput;
   brand: string;
   brandDesc: string;
 
@@ -100,10 +101,11 @@ export default function SecondStepShowcase(): JSX.Element {
             </Stack>
           </Box>
           <CollapseCard header={"Tính năng nổi bật"} defaultOpen>
-            <HighlightFeature />
+            <HighlightFeatures control={control} />
           </CollapseCard>
         </Stack>
       </Box>
+      {process.env.NODE_ENV === "development" && <DevTool control={control} />}
       <CreationBottomBar />
     </>
   );

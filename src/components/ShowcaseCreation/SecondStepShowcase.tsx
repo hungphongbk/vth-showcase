@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import ImageUploader from "../ImageUploader";
 import { useForm } from "react-hook-form";
@@ -13,12 +13,15 @@ import HighlightFeatures from "./data/HighlightFeatures";
 import { DevTool } from "@hookform/devtools";
 import { apiService } from "../../api";
 import ImageListUploader from "./data/ImageListUploader";
+import { useSnackbar } from "notistack";
+import { useRouter } from "next/router";
 
 type ShowcaseForm = Showcase & {
   image: MediaInput;
 };
 
 export default function SecondStepShowcase(): JSX.Element {
+  const router = useRouter();
   const { showcase, dispatch } = useShowcaseCreation(),
     form = useForm<ShowcaseForm>({
       defaultValues: {
@@ -28,10 +31,34 @@ export default function SecondStepShowcase(): JSX.Element {
     }),
     { control, handleSubmit, formState } = form;
 
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const onSave = async (values: ShowcaseForm) => {
     //pre process values
     values.expectedQuantity = values.expectedQuantity * 1;
-    await apiService.createShowcase(values);
+    try {
+      const { name, slug } = await apiService.createShowcase(values);
+      await router.prefetch(`/post/${slug}`);
+      enqueueSnackbar(
+        <>
+          Showcase <strong>{name}</strong> được tạo thành công!
+        </>,
+        {
+          variant: "success",
+          action: (key) => (
+            <Button
+              variant={"contained"}
+              onClick={async () => {
+                await router.push(`/post/${slug}`);
+                closeSnackbar(key);
+              }}
+            >
+              Xem
+            </Button>
+          ),
+        }
+      );
+    } catch (e) {}
   };
 
   return (

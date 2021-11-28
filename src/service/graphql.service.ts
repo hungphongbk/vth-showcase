@@ -80,12 +80,13 @@ export const deleteMedia = async (id: string): Promise<void> => {
 
 export const createShowcase = async (
   form: ShowcaseCreateInputDto
-): Promise<void> => {
-  await apolloClient.mutate<
+): Promise<CreateShowcaseMutation["createOneShowcase"]> => {
+  const { data } = await apolloClient.mutate<
     CreateShowcaseMutation,
     CreateShowcaseMutationVariables
   >({
     mutation: mutationCreateShowcase,
     variables: { input: form },
   });
+  return data!.createOneShowcase;
 };

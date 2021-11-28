@@ -18,6 +18,7 @@ import store from "../src/store";
 import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { SnackbarProvider } from "notistack";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -65,25 +66,27 @@ export default function MyApp(props: AppPropsWithLayout) {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           {() => (
-            <AuthProvider>
-              <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <Header />
-                <LayoutGroup>
-                  <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
-                    <Image
-                      src={"/background.png"}
-                      layout="fill"
-                      objectFit="cover"
-                      quality={70}
-                    />
-                  </Box>
-                  {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
-                  {getLayout(<Component {...pageProps} key={router.route} />)}
-                  {/*</AnimatePresence>*/}
-                </LayoutGroup>
-              </ThemeProvider>
-            </AuthProvider>
+            <SnackbarProvider maxSnack={3}>
+              <AuthProvider>
+                <ThemeProvider theme={theme}>
+                  <CssBaseline />
+                  <Header />
+                  <LayoutGroup>
+                    <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
+                      <Image
+                        src={"/background.png"}
+                        layout="fill"
+                        objectFit="cover"
+                        quality={70}
+                      />
+                    </Box>
+                    {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
+                    {getLayout(<Component {...pageProps} key={router.route} />)}
+                    {/*</AnimatePresence>*/}
+                  </LayoutGroup>
+                </ThemeProvider>
+              </AuthProvider>
+            </SnackbarProvider>
           )}
         </PersistGate>
       </Provider>

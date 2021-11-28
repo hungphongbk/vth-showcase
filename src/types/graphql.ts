@@ -1036,7 +1036,7 @@ export type CreateShowcaseMutationVariables = Exact<{
 }>;
 
 
-export type CreateShowcaseMutation = { createOneShowcase: { id: string } };
+export type CreateShowcaseMutation = { createOneShowcase: { name: string, slug: string } };
 
 export type DeleteMediaMutationVariables = Exact<{
   id: Scalars['ID'];

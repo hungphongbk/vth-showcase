@@ -64,6 +64,7 @@ export default function ImageUploader({
         writable: true,
         value: {
           value: {
+            ...(value ?? {}),
             mimetype,
             filename,
             path,
@@ -81,7 +82,7 @@ export default function ImageUploader({
       sx={{ border: 1, borderStyle: "dashed", borderColor: "divider" }}
       ratio={ratio}
     >
-      {!value ? (
+      {!value || !value.path ? (
         <StyledLabel htmlFor={id}>
           <UploadInput
             accept={"image/*"}

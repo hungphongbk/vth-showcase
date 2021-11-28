@@ -244,5 +244,6 @@ export const getStaticProps = async () => {
   const { edges, pageInfo } = await apiService.getAllShowcases();
   return Promise.resolve({
     props: { posts: edges, pageInfo },
+    revalidate: 60,
   });
 };

@@ -146,6 +146,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       ...(await apiService.getShowcasePreview(context.params!.slug as string)),
     },
+    revalidate: 60,
   });
 };
 
@@ -153,6 +154,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export async function getStaticPaths() {
   return {
     paths: (await apiService.getAllSlugs()).map((slug) => `/post/${slug}`),
-    fallback: false,
+    fallback: "blocking",
   };
 }

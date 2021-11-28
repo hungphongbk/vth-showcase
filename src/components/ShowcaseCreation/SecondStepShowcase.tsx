@@ -9,9 +9,10 @@ import PlusIcon from "../../assets/icons/PlusIcon";
 import { CollapseCard } from "../index";
 import { EnhancedMultilineTextField, EnhancedTextField } from "./styled";
 import CreationBottomBar from "./CreationBottomBar";
-import HighlightFeatures from "./HighlightFeatures";
+import HighlightFeatures from "./data/HighlightFeatures";
 import { DevTool } from "@hookform/devtools";
 import { apiService } from "../../api";
+import ImageListUploader from "./data/ImageListUploader";
 
 type ShowcaseForm = Showcase & {
   image: MediaInput;
@@ -111,7 +112,13 @@ export default function SecondStepShowcase(): JSX.Element {
           <CollapseCard header={"Tính năng nổi bật"} defaultOpen>
             <HighlightFeatures control={control} />
           </CollapseCard>
-          <CollapseCard header={"video / hình ảnh"} defaultOpen></CollapseCard>
+          <CollapseCard
+            header={"video / hình ảnh"}
+            defaultOpen
+            disableCardStyle
+          >
+            <ImageListUploader control={control} />
+          </CollapseCard>
         </Stack>
       </Box>
       {process.env.NODE_ENV === "development" && <DevTool control={control} />}

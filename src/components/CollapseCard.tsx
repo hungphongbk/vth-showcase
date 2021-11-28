@@ -8,6 +8,7 @@ type CollapseCardProps = PropsWithChildren<{
   header: ReactNode;
   sx?: SxProps;
   defaultOpen?: boolean;
+  disableCardStyle?: boolean;
 }>;
 
 export default function CollapseCard({
@@ -15,11 +16,29 @@ export default function CollapseCard({
   children,
   sx,
   defaultOpen = false,
+  disableCardStyle = false,
 }: CollapseCardProps): JSX.Element {
   const [open, setOpen] = useState(() => defaultOpen);
 
   return (
-    <MotionCard sx={{ ...sx }}>
+    <MotionCard
+      sx={[
+        // @ts-ignore
+        sx,
+        disableCardStyle
+          ? {
+              "&.MuiCard-root": {
+                bgcolor: "transparent",
+                boxShadow: "none",
+              },
+              "& .MuiCardContent-root": {
+                p: 0,
+                mx: -1,
+              },
+            }
+          : {},
+      ]}
+    >
       <CardHeader
         onClick={() => setOpen(!open)}
         disableTypography

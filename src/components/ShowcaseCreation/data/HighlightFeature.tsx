@@ -1,18 +1,18 @@
 import React, { EventHandler, SyntheticEvent, useState } from "react";
-import AspectRatio from "../AspectRatio";
+import AspectRatio from "../../AspectRatio";
 import {
   sxFlexCenter,
   sxFullSize,
   sxFullSizeAbsolute,
-} from "../../utils/predefinedSx";
+} from "../../../utils/predefinedSx";
 import { Box, Button, DialogContent, Stack, Typography } from "@mui/material";
-import PlusIcon from "../../assets/icons/PlusIcon";
-import { StyledDialog } from "../commons";
+import PlusIcon from "../../../assets/icons/PlusIcon";
+import { StyledDialog } from "../../commons";
 import { useForm } from "react-hook-form";
-import FormInput from "../FormInput";
-import ImageUploader from "../ImageUploader";
-import { EnhancedMultilineTextField, EnhancedTextField } from "./styled";
-import { ShowcaseHighlightFeature } from "../../types/graphql";
+import FormInput from "../../FormInput";
+import ImageUploader from "../../ImageUploader";
+import { EnhancedMultilineTextField, EnhancedTextField } from "../styled";
+import { ShowcaseHighlightFeature } from "../../../types/graphql";
 
 interface Change<T = Element> extends SyntheticEvent<T> {
   target: EventTarget &

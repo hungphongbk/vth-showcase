@@ -59,12 +59,12 @@ export default function PreviewPage({
 
 export const getStaticProps: GetStaticProps = async (context) => {
   // noinspection PointlessArithmeticExpressionJS
-  return Promise.resolve({
+  return {
     props: {
       ...(await apiService.getShowcasePreview(context.params!.slug as string)),
     },
     revalidate: 60,
-  });
+  };
 };
 
 // noinspection JSUnusedGlobalSymbols

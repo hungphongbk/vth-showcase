@@ -103,6 +103,7 @@ export default function ShowcaseItem({
           alt={item.image.path}
           layout={"fill"}
           objectFit={"cover"}
+          sizes={"50vw"}
         />
       </MotionBox>
       {/*<img src={item.image} alt={item.title} />*/}

@@ -23,6 +23,7 @@ module.exports = withTM({
       "showcase-dev.vaithuhay.com",
       "showcase.vaithuhay.com",
       "i.imgur.com",
+      "product.hstatic.net",
     ],
   },
   experimental: {

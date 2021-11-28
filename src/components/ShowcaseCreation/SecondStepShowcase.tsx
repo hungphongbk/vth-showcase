@@ -111,6 +111,7 @@ export default function SecondStepShowcase(): JSX.Element {
           <CollapseCard header={"Tính năng nổi bật"} defaultOpen>
             <HighlightFeatures control={control} />
           </CollapseCard>
+          <CollapseCard header={"video / hình ảnh"} defaultOpen></CollapseCard>
         </Stack>
       </Box>
       {process.env.NODE_ENV === "development" && <DevTool control={control} />}

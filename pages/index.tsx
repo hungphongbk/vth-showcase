@@ -11,7 +11,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 import { MotionBox, ProductInfoSecond } from "../src/components/commons";
 import { range } from "lodash";
-import { VthCountdown } from "../src/components";
+import { AspectRatio, VthCountdown } from "../src/components";
 import Banner from "../src/components/Banner";
 import { apiService } from "../src/api";
 import {
@@ -24,6 +24,7 @@ import SimpleFilter from "../src/components/indexPage/SimpleFilter";
 import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 
 const FilterPanel = dynamic(() => import("../src/components/FilterPanel"), {
   ssr: false,
@@ -118,25 +119,19 @@ function Home({
               boxShadow: "4px 4px 16px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <Box
-              // layoutId={getLayoutId("/thumb-wrapper")}
-              sx={{
-                flexGrow: 1,
-                "& img": {
-                  objectFit: "cover",
-                  width: "100%",
-                  height: "100%",
-                },
-              }}
-            >
-              <img
-                // layoutId={getLayoutId("/thumb")}
-                src={
-                  "https://product.hstatic.net/1000069970/product/carpio22_fcc7132be79748e08ffabac9bd65aa4f_large.png"
-                }
-                alt={"ke co tay cong thai hoc"}
-              />
-            </Box>
+            <AspectRatio>
+              <Box sx={{ zIndex: -1 }}>
+                <Image
+                  src={
+                    "https://product.hstatic.net/1000069970/product/carpio22_fcc7132be79748e08ffabac9bd65aa4f_large.png"
+                  }
+                  alt={"ke co tay cong thai hoc"}
+                  layout={"fill"}
+                  objectFit={"cover"}
+                  sizes={"50vw"}
+                />
+              </Box>
+            </AspectRatio>
             <ProductInfoSecond>
               <Box
                 sx={{

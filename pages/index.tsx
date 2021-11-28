@@ -1,4 +1,4 @@
-import type { InferGetStaticPropsType } from "next";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import {
   Box,
   Container,
@@ -89,7 +89,7 @@ function Home({
 
   const restPost = useMemo(() => {
     if (!statusFilter) return posts;
-    return posts.filter((i) => i.node.status === statusFilter);
+    return posts.filter((i: any) => i.node.status === statusFilter);
   }, [statusFilter, posts]);
 
   return (
@@ -240,9 +240,10 @@ function Home({
 // noinspection JSUnusedGlobalSymbols
 export default Home;
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const { edges, pageInfo } = await apiService.getAllShowcases();
-  return Promise.resolve({
+  return {
     props: { posts: edges, pageInfo },
-  });
+    revalidate: 60,
+  };
 };

@@ -1,4 +1,4 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetStaticProps } from "next";
 import { Box, Button, ButtonProps } from "@mui/material";
 import ShowcaseDetailed from "../../src/components/ShowcaseDetailed";
 import { useRouter } from "next/router";
@@ -7,6 +7,9 @@ import { apiService } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
 import BookmarkIcon from "../../src/assets/icons/BookmarkIcon";
 import dynamic from "next/dynamic";
+import { ShowcaseStatus } from "../../src/types/graphql";
+import { getShowcasePreview } from "../../src/service/graphql.service";
+import { ReturnPromiseType } from "../../src/types/util.type";
 
 const PreorderDialog = dynamic(
   () => import("../../src/components/PreorderDialog"),
@@ -16,7 +19,9 @@ const PreorderDialog = dynamic(
 const BottomButton = ({
     children,
     ...props
-  }: PropsWithChildren<Pick<ButtonProps, "startIcon" | "onClick">>) => (
+  }: PropsWithChildren<
+    Pick<ButtonProps, "startIcon" | "onClick" | "disabled">
+  >) => (
     <Button
       variant={"contained"}
       sx={{
@@ -46,6 +51,10 @@ const BottomButton = ({
         width: "22px",
         borderRadius: "11px",
         bgcolor: "yellow.light",
+        "& .Mui-disabled &": {
+          bgcolor: "#f3f3f3",
+          "& > svg": { color: "rgba(0,0,0,0.26)" },
+        },
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -64,7 +73,7 @@ const BottomButton = ({
 export default function PostDetailedPage({
   post,
   posts,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+}: ReturnPromiseType<typeof getShowcasePreview>) {
   const router = useRouter();
   useEffect(() => {
     // noinspection JSIgnoredPromiseFromCall
@@ -115,32 +124,36 @@ export default function PostDetailedPage({
               <BookmarkIcon sx={{ color: "yellow.main", width: 10 }} />
             </IconWrapper>
           }
+          disabled={post.status !== ShowcaseStatus.Coming}
         >
           Đăng ký đặt trước
         </BottomButton>
       </Box>
-      <PreorderDialog
-        open={open}
-        showcase={post}
-        onClose={() => setOpen(false)}
-      />
+      {post.status === ShowcaseStatus.Coming && (
+        <PreorderDialog
+          open={open}
+          showcase={post}
+          onClose={() => setOpen(false)}
+        />
+      )}
     </Box>
   );
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
   // noinspection PointlessArithmeticExpressionJS
-  return Promise.resolve({
+  return {
     props: {
       ...(await apiService.getShowcasePreview(context.params!.slug as string)),
     },
-  });
+    revalidate: 60,
+  };
 };
 
 // noinspection JSUnusedGlobalSymbols
 export async function getStaticPaths() {
   return {
     paths: (await apiService.getAllSlugs()).map((slug) => `/post/${slug}`),
-    fallback: false,
+    fallback: "blocking",
   };
 }

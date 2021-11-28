@@ -28,6 +28,7 @@ module.exports = withTM({
   },
   experimental: {
     scrollRestoration: true,
+    styledComponent: true,
   },
   staticPageGenerationTimeout: 300,
   async redirects() {

@@ -1,5 +1,5 @@
 mutation deleteMedia($id: ID!) {
-  deleteOneMedia(input: { id: $id }) {
+  deleteOneMediaDto(input: { id: $id }) {
     id
   }
 }

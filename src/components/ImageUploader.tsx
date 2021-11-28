@@ -10,8 +10,8 @@ import { uniqueId } from "lodash";
 import AspectRatio, { RatioProps } from "./AspectRatio";
 import { Box, CircularProgress } from "@mui/material";
 import { sxFlexCenter, sxFullSize } from "../utils/predefinedSx";
-import { Media } from "../types/graphql";
-import { apiService } from "../api";
+import { MediaDto } from "../types/graphql";
+import { UploadService } from "../service";
 
 const StyledLabel = styled("label")`
   width: 100%;
@@ -30,7 +30,7 @@ interface UploadEvent<T = Element> extends SyntheticEvent<T> {
 type UploadEventHandler<T = Element> = EventHandler<UploadEvent<T>>;
 type ImageUploaderProps = Pick<RatioProps, "ratio"> & {
   name?: string | undefined;
-  value?: Media;
+  value?: MediaDto;
   onChange?: UploadEventHandler;
   required?: boolean;
 };
@@ -55,14 +55,20 @@ export default function ImageUploader({
       );
 
       setUploading(true);
-      if (typeof value !== "undefined" && value !== null && value.id) {
-        await apiService.deleteMedia(value.id);
-      }
+      const file = event.target.files![0]!,
+        mimetype = file.type,
+        filename = file.name,
+        path = await UploadService.upload(file);
 
       Object.defineProperty(clonedEvent, "target", {
         writable: true,
         value: {
-          value: await apiService.createMedia(event.target.files![0]!),
+          value: {
+            ...(value ?? {}),
+            mimetype,
+            filename,
+            path,
+          },
           name,
         },
       });
@@ -76,7 +82,7 @@ export default function ImageUploader({
       sx={{ border: 1, borderStyle: "dashed", borderColor: "divider" }}
       ratio={ratio}
     >
-      {!value ? (
+      {!value || !value.path ? (
         <StyledLabel htmlFor={id}>
           <UploadInput
             accept={"image/*"}

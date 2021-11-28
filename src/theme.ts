@@ -113,6 +113,10 @@ const theme = createTheme({
           textTransform: "capitalize",
           fontWeight: 700,
           fontSize: 13,
+          "&.Mui-disabled": {
+            backgroundColor: "#e3e3e3",
+            borderColor: "#d3d3d3",
+          },
         },
       },
     },

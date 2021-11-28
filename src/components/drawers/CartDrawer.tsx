@@ -117,7 +117,7 @@ export default function CartDrawer(): JSX.Element {
                               Giá dự kiến:{" "}
                               <strong>
                                 {vndCurrency(
-                                  showcase.expectedSalePrice.regular
+                                  showcase.expectedSalePrice!.regular
                                 )}
                               </strong>
                             </Typography>
@@ -125,7 +125,7 @@ export default function CartDrawer(): JSX.Element {
                               Giá tiên phong:{" "}
                               <strong>
                                 {vndCurrency(
-                                  showcase.expectedSalePrice.pioneer
+                                  showcase.expectedSalePrice!.pioneer
                                 )}
                               </strong>
                             </Typography>

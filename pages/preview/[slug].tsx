@@ -59,17 +59,18 @@ export default function PreviewPage({
 
 export const getStaticProps: GetStaticProps = async (context) => {
   // noinspection PointlessArithmeticExpressionJS
-  return Promise.resolve({
+  return {
     props: {
       ...(await apiService.getShowcasePreview(context.params!.slug as string)),
     },
-  });
+    revalidate: 60,
+  };
 };
 
 // noinspection JSUnusedGlobalSymbols
 export async function getStaticPaths() {
   return {
     paths: (await apiService.getAllSlugs()).map((slug) => `/preview/${slug}`),
-    fallback: false,
+    fallback: "blocking",
   };
 }

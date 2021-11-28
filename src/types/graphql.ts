@@ -13,37 +13,56 @@ export interface Scalars {
   DateTime: any;
 }
 
-
-export interface CreateManyMediaInput {
-  media: Array<CreateMedia>;
+export interface AddHighlightFeaturesToShowcaseInput {
+  id: Scalars['String'];
+  relationIds: Array<Scalars['ID']>;
 }
 
-export interface CreateMedia {
-  filename: Maybe<Scalars['String']>;
-  id: Maybe<Scalars['ID']>;
-  mimetype: Maybe<Scalars['String']>;
-  path: Maybe<Scalars['String']>;
+export interface AddImageListsToShowcaseInput {
+  id: Scalars['String'];
+  relationIds: Array<Scalars['ID']>;
 }
 
-export interface CreateOneMediaInput {
-  media: CreateMedia;
+export interface AddImagesToImageListInput {
+  id: Scalars['ID'];
+  relationIds: Array<Scalars['ID']>;
+}
+
+
+export interface CreateImageListInputDto {
+  images: Maybe<Array<MediaInput>>;
+}
+
+export interface CreateManyImageListsInput {
+  imageLists: Array<CreateImageListInputDto>;
+}
+
+export interface CreateManyMediaDtosInput {
+  mediaDtos: Array<MediaInput>;
+}
+
+export interface CreateManyShowcaseHighlightFeaturesInput {
+  showcaseHighlightFeatures: Array<ShowcaseHfCreateInputDto>;
+}
+
+export interface CreateManyShowcasesInput {
+  showcases: Array<ShowcaseCreateInputDto>;
+}
+
+export interface CreateOneImageListInput {
+  imageList: CreateImageListInputDto;
+}
+
+export interface CreateOneMediaDtoInput {
+  mediaDto: MediaInput;
+}
+
+export interface CreateOneShowcaseHighlightFeatureInput {
+  showcaseHighlightFeature: ShowcaseHfCreateInputDto;
 }
 
 export interface CreateOneShowcaseInput {
-  showcase: CreateShowcase;
-}
-
-export interface CreateShowcase {
-  author: Maybe<Scalars['String']>;
-  createdAt: Maybe<Scalars['DateTime']>;
-  description: Maybe<Scalars['String']>;
-  expectedQuantity: Maybe<Scalars['Float']>;
-  expectedSaleAt: Maybe<Scalars['DateTime']>;
-  id: Maybe<Scalars['ID']>;
-  name: Maybe<Scalars['String']>;
-  slug: Maybe<Scalars['String']>;
-  status: Maybe<ShowcaseStatus>;
-  updatedAt: Maybe<Scalars['DateTime']>;
+  showcase: ShowcaseCreateInputDto;
 }
 
 export interface CursorPaging {
@@ -74,15 +93,35 @@ export interface DateFieldComparisonBetween {
 }
 
 
-export interface DeleteManyMediaInput {
-  filter: MediaDeleteFilter;
+export interface DeleteManyImageListsInput {
+  filter: ImageListDeleteFilter;
+}
+
+export interface DeleteManyMediaDtosInput {
+  filter: MediaDtoDeleteFilter;
 }
 
 export interface DeleteManyResponse {
   deletedCount: Scalars['Int'];
 }
 
-export interface DeleteOneMediaInput {
+export interface DeleteManyShowcaseHighlightFeaturesInput {
+  filter: ShowcaseHighlightFeatureDeleteFilter;
+}
+
+export interface DeleteManyShowcasesInput {
+  filter: ShowcaseDeleteFilter;
+}
+
+export interface DeleteOneImageListInput {
+  id: Scalars['ID'];
+}
+
+export interface DeleteOneMediaDtoInput {
+  id: Scalars['ID'];
+}
+
+export interface DeleteOneShowcaseHighlightFeatureInput {
   id: Scalars['ID'];
 }
 
@@ -107,96 +146,246 @@ export interface IdFilterComparison {
   notLike: Maybe<Scalars['ID']>;
 }
 
-export interface Media {
+export interface IdInterface {
+  id: Scalars['ID'];
+}
+
+export interface ImageList extends IdInterface {
+  id: Scalars['ID'];
+  images: Array<MediaDto>;
+}
+
+
+export interface ImageListImagesArgs {
+  filter?: Maybe<MediaDtoFilter>;
+  sorting?: Maybe<Array<MediaDtoSort>>;
+}
+
+export interface ImageListAggregateGroupBy {
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface ImageListConnection {
+  edges: Array<ImageListEdge>;
+  pageInfo: PageInfo;
+}
+
+export interface ImageListCountAggregate {
+  id: Maybe<Scalars['Int']>;
+}
+
+export interface ImageListDeleteFilter {
+  and: Maybe<Array<ImageListDeleteFilter>>;
+  id: Maybe<IdFilterComparison>;
+  or: Maybe<Array<ImageListDeleteFilter>>;
+}
+
+export interface ImageListDeleteResponse {
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface ImageListEdge {
+  cursor: Scalars['ConnectionCursor'];
+  node: ImageList;
+}
+
+export interface ImageListFilter {
+  and: Maybe<Array<ImageListFilter>>;
+  id: Maybe<IdFilterComparison>;
+  or: Maybe<Array<ImageListFilter>>;
+}
+
+export interface ImageListMaxAggregate {
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface ImageListMinAggregate {
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface ImageListSort {
+  direction: SortDirection;
+  field: ImageListSortFields;
+  nulls: Maybe<SortNulls>;
+}
+
+export enum ImageListSortFields {
+  Id = 'id'
+}
+
+export interface ImageListUpdateFilter {
+  and: Maybe<Array<ImageListUpdateFilter>>;
+  id: Maybe<IdFilterComparison>;
+  or: Maybe<Array<ImageListUpdateFilter>>;
+}
+
+export interface MediaDto extends IdInterface {
   filename: Scalars['String'];
   id: Scalars['ID'];
   mimetype: Scalars['String'];
   path: Scalars['String'];
+  type: Scalars['String'];
 }
 
-export interface MediaAggregateGroupBy {
+export interface MediaDtoAggregateGroupBy {
+  filename: Maybe<Scalars['String']>;
   id: Maybe<Scalars['ID']>;
 }
 
-export interface MediaConnection {
-  edges: Array<MediaEdge>;
+export interface MediaDtoConnection {
+  edges: Array<MediaDtoEdge>;
   pageInfo: PageInfo;
 }
 
-export interface MediaCountAggregate {
+export interface MediaDtoCountAggregate {
+  filename: Maybe<Scalars['Int']>;
   id: Maybe<Scalars['Int']>;
 }
 
-export interface MediaDeleteFilter {
-  and: Maybe<Array<MediaDeleteFilter>>;
+export interface MediaDtoDeleteFilter {
+  and: Maybe<Array<MediaDtoDeleteFilter>>;
+  filename: Maybe<StringFieldComparison>;
   id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<MediaDeleteFilter>>;
+  or: Maybe<Array<MediaDtoDeleteFilter>>;
 }
 
-export interface MediaDeleteResponse {
+export interface MediaDtoDeleteResponse {
   filename: Maybe<Scalars['String']>;
   id: Maybe<Scalars['ID']>;
   mimetype: Maybe<Scalars['String']>;
   path: Maybe<Scalars['String']>;
+  type: Maybe<Scalars['String']>;
 }
 
-export interface MediaEdge {
+export interface MediaDtoEdge {
   cursor: Scalars['ConnectionCursor'];
-  node: Media;
+  node: MediaDto;
 }
 
-export interface MediaFilter {
-  and: Maybe<Array<MediaFilter>>;
+export interface MediaDtoFilter {
+  and: Maybe<Array<MediaDtoFilter>>;
+  filename: Maybe<StringFieldComparison>;
   id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<MediaFilter>>;
+  or: Maybe<Array<MediaDtoFilter>>;
 }
 
-export interface MediaMaxAggregate {
+export interface MediaDtoMaxAggregate {
+  filename: Maybe<Scalars['String']>;
   id: Maybe<Scalars['ID']>;
 }
 
-export interface MediaMinAggregate {
+export interface MediaDtoMinAggregate {
+  filename: Maybe<Scalars['String']>;
   id: Maybe<Scalars['ID']>;
 }
 
-export interface MediaSort {
+export interface MediaDtoSort {
   direction: SortDirection;
-  field: MediaSortFields;
+  field: MediaDtoSortFields;
   nulls: Maybe<SortNulls>;
 }
 
-export enum MediaSortFields {
+export enum MediaDtoSortFields {
+  Filename = 'filename',
   Id = 'id'
 }
 
-export interface MediaUpdateFilter {
-  and: Maybe<Array<MediaUpdateFilter>>;
+export interface MediaDtoUpdateFilter {
+  and: Maybe<Array<MediaDtoUpdateFilter>>;
+  filename: Maybe<StringFieldComparison>;
   id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<MediaUpdateFilter>>;
+  or: Maybe<Array<MediaDtoUpdateFilter>>;
+}
+
+export interface MediaInput {
+  filename: Scalars['String'];
+  mimetype: Scalars['String'];
+  path: Scalars['String'];
 }
 
 export interface Mutation {
-  createManyMedia: Array<Media>;
-  createOneMedia: Media;
+  addHighlightFeaturesToShowcase: Showcase;
+  addImageListsToShowcase: Showcase;
+  addImagesToImageList: ImageList;
+  createManyImageLists: Array<ImageList>;
+  createManyMediaDtos: Array<MediaDto>;
+  createManyShowcaseHighlightFeatures: Array<ShowcaseHighlightFeature>;
+  createManyShowcases: Array<Showcase>;
+  createOneImageList: ImageList;
+  createOneMediaDto: MediaDto;
   createOneShowcase: Showcase;
-  deleteManyMedia: DeleteManyResponse;
-  deleteOneMedia: MediaDeleteResponse;
+  createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
+  deleteManyImageLists: DeleteManyResponse;
+  deleteManyMediaDtos: DeleteManyResponse;
+  deleteManyShowcaseHighlightFeatures: DeleteManyResponse;
+  deleteManyShowcases: DeleteManyResponse;
+  deleteOneImageList: ImageListDeleteResponse;
+  deleteOneMediaDto: MediaDtoDeleteResponse;
   deleteOneShowcase: ShowcaseDeleteResponse;
+  deleteOneShowcaseHighlightFeature: ShowcaseHighlightFeatureDeleteResponse;
+  removeHighlightFeaturesFromShowcase: Showcase;
   removeImageFromShowcase: Showcase;
+  removeImageFromShowcaseHighlightFeature: ShowcaseHighlightFeature;
+  removeImageListsFromShowcase: Showcase;
+  removeImagesFromImageList: ImageList;
+  setHighlightFeaturesOnShowcase: Showcase;
+  setImageListsOnShowcase: Showcase;
   setImageOnShowcase: Showcase;
-  updateManyMedia: UpdateManyResponse;
-  updateOneMedia: Media;
+  setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
+  setImagesOnImageList: ImageList;
+  updateManyImageLists: UpdateManyResponse;
+  updateManyMediaDtos: UpdateManyResponse;
+  updateManyShowcaseHighlightFeatures: UpdateManyResponse;
+  updateManyShowcases: UpdateManyResponse;
+  updateOneImageList: ImageList;
+  updateOneMediaDto: MediaDto;
   updateOneShowcase: Showcase;
+  updateOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
 }
 
 
-export interface MutationCreateManyMediaArgs {
-  input: CreateManyMediaInput;
+export interface MutationAddHighlightFeaturesToShowcaseArgs {
+  input: AddHighlightFeaturesToShowcaseInput;
 }
 
 
-export interface MutationCreateOneMediaArgs {
-  input: CreateOneMediaInput;
+export interface MutationAddImageListsToShowcaseArgs {
+  input: AddImageListsToShowcaseInput;
+}
+
+
+export interface MutationAddImagesToImageListArgs {
+  input: AddImagesToImageListInput;
+}
+
+
+export interface MutationCreateManyImageListsArgs {
+  input: CreateManyImageListsInput;
+}
+
+
+export interface MutationCreateManyMediaDtosArgs {
+  input: CreateManyMediaDtosInput;
+}
+
+
+export interface MutationCreateManyShowcaseHighlightFeaturesArgs {
+  input: CreateManyShowcaseHighlightFeaturesInput;
+}
+
+
+export interface MutationCreateManyShowcasesArgs {
+  input: CreateManyShowcasesInput;
+}
+
+
+export interface MutationCreateOneImageListArgs {
+  input: CreateOneImageListInput;
+}
+
+
+export interface MutationCreateOneMediaDtoArgs {
+  input: CreateOneMediaDtoInput;
 }
 
 
@@ -205,13 +394,38 @@ export interface MutationCreateOneShowcaseArgs {
 }
 
 
-export interface MutationDeleteManyMediaArgs {
-  input: DeleteManyMediaInput;
+export interface MutationCreateOneShowcaseHighlightFeatureArgs {
+  input: CreateOneShowcaseHighlightFeatureInput;
 }
 
 
-export interface MutationDeleteOneMediaArgs {
-  input: DeleteOneMediaInput;
+export interface MutationDeleteManyImageListsArgs {
+  input: DeleteManyImageListsInput;
+}
+
+
+export interface MutationDeleteManyMediaDtosArgs {
+  input: DeleteManyMediaDtosInput;
+}
+
+
+export interface MutationDeleteManyShowcaseHighlightFeaturesArgs {
+  input: DeleteManyShowcaseHighlightFeaturesInput;
+}
+
+
+export interface MutationDeleteManyShowcasesArgs {
+  input: DeleteManyShowcasesInput;
+}
+
+
+export interface MutationDeleteOneImageListArgs {
+  input: DeleteOneImageListInput;
+}
+
+
+export interface MutationDeleteOneMediaDtoArgs {
+  input: DeleteOneMediaDtoInput;
 }
 
 
@@ -220,8 +434,43 @@ export interface MutationDeleteOneShowcaseArgs {
 }
 
 
+export interface MutationDeleteOneShowcaseHighlightFeatureArgs {
+  input: DeleteOneShowcaseHighlightFeatureInput;
+}
+
+
+export interface MutationRemoveHighlightFeaturesFromShowcaseArgs {
+  input: RemoveHighlightFeaturesFromShowcaseInput;
+}
+
+
 export interface MutationRemoveImageFromShowcaseArgs {
   input: RemoveImageFromShowcaseInput;
+}
+
+
+export interface MutationRemoveImageFromShowcaseHighlightFeatureArgs {
+  input: RemoveImageFromShowcaseHighlightFeatureInput;
+}
+
+
+export interface MutationRemoveImageListsFromShowcaseArgs {
+  input: RemoveImageListsFromShowcaseInput;
+}
+
+
+export interface MutationRemoveImagesFromImageListArgs {
+  input: RemoveImagesFromImageListInput;
+}
+
+
+export interface MutationSetHighlightFeaturesOnShowcaseArgs {
+  input: SetHighlightFeaturesOnShowcaseInput;
+}
+
+
+export interface MutationSetImageListsOnShowcaseArgs {
+  input: SetImageListsOnShowcaseInput;
 }
 
 
@@ -230,18 +479,53 @@ export interface MutationSetImageOnShowcaseArgs {
 }
 
 
-export interface MutationUpdateManyMediaArgs {
-  input: UpdateManyMediaInput;
+export interface MutationSetImageOnShowcaseHighlightFeatureArgs {
+  input: SetImageOnShowcaseHighlightFeatureInput;
 }
 
 
-export interface MutationUpdateOneMediaArgs {
-  input: UpdateOneMediaInput;
+export interface MutationSetImagesOnImageListArgs {
+  input: SetImagesOnImageListInput;
+}
+
+
+export interface MutationUpdateManyImageListsArgs {
+  input: UpdateManyImageListsInput;
+}
+
+
+export interface MutationUpdateManyMediaDtosArgs {
+  input: UpdateManyMediaDtosInput;
+}
+
+
+export interface MutationUpdateManyShowcaseHighlightFeaturesArgs {
+  input: UpdateManyShowcaseHighlightFeaturesInput;
+}
+
+
+export interface MutationUpdateManyShowcasesArgs {
+  input: UpdateManyShowcasesInput;
+}
+
+
+export interface MutationUpdateOneImageListArgs {
+  input: UpdateOneImageListInput;
+}
+
+
+export interface MutationUpdateOneMediaDtoArgs {
+  input: UpdateOneMediaDtoInput;
 }
 
 
 export interface MutationUpdateOneShowcaseArgs {
   input: UpdateOneShowcaseInput;
+}
+
+
+export interface MutationUpdateOneShowcaseHighlightFeatureArgs {
+  input: UpdateOneShowcaseHighlightFeatureInput;
 }
 
 export interface PageInfo {
@@ -252,22 +536,56 @@ export interface PageInfo {
 }
 
 export interface Query {
-  media: MediaConnection;
+  imageList: Maybe<ImageList>;
+  imageLists: ImageListConnection;
+  mediaDto: Maybe<MediaDto>;
+  mediaDtos: MediaDtoConnection;
   showcase: Showcase;
+  showcaseHighlightFeature: Maybe<ShowcaseHighlightFeature>;
+  showcaseHighlightFeatures: ShowcaseHighlightFeatureConnection;
   showcases: ShowcaseConnection;
   slugs: Array<Scalars['String']>;
 }
 
 
-export interface QueryMediaArgs {
-  filter?: Maybe<MediaFilter>;
+export interface QueryImageListArgs {
+  id: Scalars['ID'];
+}
+
+
+export interface QueryImageListsArgs {
+  filter?: Maybe<ImageListFilter>;
   paging?: Maybe<CursorPaging>;
-  sorting?: Maybe<Array<MediaSort>>;
+  sorting?: Maybe<Array<ImageListSort>>;
+}
+
+
+export interface QueryMediaDtoArgs {
+  id: Scalars['ID'];
+}
+
+
+export interface QueryMediaDtosArgs {
+  filter?: Maybe<MediaDtoFilter>;
+  paging?: Maybe<CursorPaging>;
+  sorting?: Maybe<Array<MediaDtoSort>>;
 }
 
 
 export interface QueryShowcaseArgs {
   slug: Scalars['String'];
+}
+
+
+export interface QueryShowcaseHighlightFeatureArgs {
+  id: Scalars['ID'];
+}
+
+
+export interface QueryShowcaseHighlightFeaturesArgs {
+  filter?: Maybe<ShowcaseHighlightFeatureFilter>;
+  paging?: Maybe<CursorPaging>;
+  sorting?: Maybe<Array<ShowcaseHighlightFeatureSort>>;
 }
 
 
@@ -277,14 +595,54 @@ export interface QueryShowcasesArgs {
   sorting?: Maybe<Array<ShowcaseSort>>;
 }
 
+export interface RemoveHighlightFeaturesFromShowcaseInput {
+  id: Scalars['String'];
+  relationIds: Array<Scalars['ID']>;
+}
+
+export interface RemoveImageFromShowcaseHighlightFeatureInput {
+  id: Scalars['ID'];
+  relationId: Scalars['ID'];
+}
+
 export interface RemoveImageFromShowcaseInput {
   id: Scalars['String'];
+  relationId: Scalars['ID'];
+}
+
+export interface RemoveImageListsFromShowcaseInput {
+  id: Scalars['String'];
+  relationIds: Array<Scalars['ID']>;
+}
+
+export interface RemoveImagesFromImageListInput {
+  id: Scalars['ID'];
+  relationIds: Array<Scalars['ID']>;
+}
+
+export interface SetHighlightFeaturesOnShowcaseInput {
+  id: Scalars['String'];
+  relationIds: Array<Scalars['ID']>;
+}
+
+export interface SetImageListsOnShowcaseInput {
+  id: Scalars['String'];
+  relationIds: Array<Scalars['ID']>;
+}
+
+export interface SetImageOnShowcaseHighlightFeatureInput {
+  id: Scalars['ID'];
   relationId: Scalars['ID'];
 }
 
 export interface SetImageOnShowcaseInput {
   id: Scalars['String'];
   relationId: Scalars['ID'];
+}
+
+export interface SetImagesOnImageListInput {
+  id: Scalars['ID'];
+  relationIds: Array<Scalars['ID']>;
 }
 
 export interface Showcase {
@@ -294,23 +652,43 @@ export interface Showcase {
   description: Scalars['String'];
   expectedQuantity: Scalars['Float'];
   expectedSaleAt: Maybe<Scalars['DateTime']>;
-  expectedSalePrice: ShowcasePriceDto;
+  expectedSalePrice: Maybe<ShowcasePrice>;
+  highlightFeatures: Array<ShowcaseHighlightFeature>;
   id: Scalars['ID'];
-  image: Media;
+  image: MediaDto;
+  imageLists: Array<ImageList>;
   name: Scalars['String'];
   slug: Scalars['String'];
   status: ShowcaseStatus;
   updatedAt: Scalars['DateTime'];
 }
 
+
+export interface ShowcaseHighlightFeaturesArgs {
+  filter?: Maybe<ShowcaseHighlightFeatureFilter>;
+  sorting?: Maybe<Array<ShowcaseHighlightFeatureSort>>;
+}
+
+
+export interface ShowcaseImageListsArgs {
+  filter?: Maybe<ImageListFilter>;
+  sorting?: Maybe<Array<ImageListSort>>;
+}
+
 export interface ShowcaseAggregateGroupBy {
   expectedSaleAt: Maybe<Scalars['DateTime']>;
+  name: Maybe<Scalars['String']>;
   slug: Maybe<Scalars['String']>;
   status: Maybe<ShowcaseStatus>;
   updatedAt: Maybe<Scalars['DateTime']>;
 }
 
 export interface ShowcaseBrand {
+  description: Scalars['String'];
+  name: Scalars['String'];
+}
+
+export interface ShowcaseBrandInput {
   description: Scalars['String'];
   name: Scalars['String'];
 }
@@ -322,17 +700,45 @@ export interface ShowcaseConnection {
 
 export interface ShowcaseCountAggregate {
   expectedSaleAt: Maybe<Scalars['Int']>;
+  name: Maybe<Scalars['Int']>;
   slug: Maybe<Scalars['Int']>;
   status: Maybe<Scalars['Int']>;
   updatedAt: Maybe<Scalars['Int']>;
 }
 
+export interface ShowcaseCreateInputDto {
+  author: Scalars['String'];
+  brand: ShowcaseBrandInput;
+  description: Scalars['String'];
+  expectedQuantity: Scalars['Float'];
+  expectedSaleAt: Maybe<Scalars['DateTime']>;
+  expectedSalePrice: Maybe<ShowcasePriceInput>;
+  highlightFeatures: Maybe<Array<ShowcaseHfCreateInputDto>>;
+  id: Maybe<Scalars['String']>;
+  image: MediaInput;
+  imageLists: Maybe<Array<CreateImageListInputDto>>;
+  name: Scalars['String'];
+  status: ShowcaseStatus;
+}
+
+export interface ShowcaseDeleteFilter {
+  and: Maybe<Array<ShowcaseDeleteFilter>>;
+  expectedSaleAt: Maybe<DateFieldComparison>;
+  name: Maybe<StringFieldComparison>;
+  or: Maybe<Array<ShowcaseDeleteFilter>>;
+  slug: Maybe<StringFieldComparison>;
+  status: Maybe<ShowcaseStatusFilterComparison>;
+  updatedAt: Maybe<DateFieldComparison>;
+}
+
 export interface ShowcaseDeleteResponse {
   author: Maybe<Scalars['String']>;
+  brand: Maybe<ShowcaseBrand>;
   createdAt: Maybe<Scalars['DateTime']>;
   description: Maybe<Scalars['String']>;
   expectedQuantity: Maybe<Scalars['Float']>;
   expectedSaleAt: Maybe<Scalars['DateTime']>;
+  expectedSalePrice: Maybe<ShowcasePrice>;
   id: Maybe<Scalars['ID']>;
   name: Maybe<Scalars['String']>;
   slug: Maybe<Scalars['String']>;
@@ -348,14 +754,98 @@ export interface ShowcaseEdge {
 export interface ShowcaseFilter {
   and: Maybe<Array<ShowcaseFilter>>;
   expectedSaleAt: Maybe<DateFieldComparison>;
+  name: Maybe<StringFieldComparison>;
   or: Maybe<Array<ShowcaseFilter>>;
   slug: Maybe<StringFieldComparison>;
   status: Maybe<ShowcaseStatusFilterComparison>;
   updatedAt: Maybe<DateFieldComparison>;
 }
 
+export interface ShowcaseHfCreateInputDto {
+  description: Scalars['String'];
+  id: Maybe<Scalars['String']>;
+  image: MediaInput;
+  name: Scalars['String'];
+}
+
+export interface ShowcaseHighlightFeature {
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  image: MediaDto;
+  name: Scalars['String'];
+}
+
+export interface ShowcaseHighlightFeatureAggregateGroupBy {
+  id: Maybe<Scalars['ID']>;
+  name: Maybe<Scalars['String']>;
+}
+
+export interface ShowcaseHighlightFeatureConnection {
+  edges: Array<ShowcaseHighlightFeatureEdge>;
+  pageInfo: PageInfo;
+}
+
+export interface ShowcaseHighlightFeatureCountAggregate {
+  id: Maybe<Scalars['Int']>;
+  name: Maybe<Scalars['Int']>;
+}
+
+export interface ShowcaseHighlightFeatureDeleteFilter {
+  and: Maybe<Array<ShowcaseHighlightFeatureDeleteFilter>>;
+  id: Maybe<IdFilterComparison>;
+  name: Maybe<StringFieldComparison>;
+  or: Maybe<Array<ShowcaseHighlightFeatureDeleteFilter>>;
+}
+
+export interface ShowcaseHighlightFeatureDeleteResponse {
+  description: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['ID']>;
+  name: Maybe<Scalars['String']>;
+}
+
+export interface ShowcaseHighlightFeatureEdge {
+  cursor: Scalars['ConnectionCursor'];
+  node: ShowcaseHighlightFeature;
+}
+
+export interface ShowcaseHighlightFeatureFilter {
+  and: Maybe<Array<ShowcaseHighlightFeatureFilter>>;
+  id: Maybe<IdFilterComparison>;
+  name: Maybe<StringFieldComparison>;
+  or: Maybe<Array<ShowcaseHighlightFeatureFilter>>;
+}
+
+export interface ShowcaseHighlightFeatureMaxAggregate {
+  id: Maybe<Scalars['ID']>;
+  name: Maybe<Scalars['String']>;
+}
+
+export interface ShowcaseHighlightFeatureMinAggregate {
+  id: Maybe<Scalars['ID']>;
+  name: Maybe<Scalars['String']>;
+}
+
+export interface ShowcaseHighlightFeatureSort {
+  direction: SortDirection;
+  field: ShowcaseHighlightFeatureSortFields;
+  nulls: Maybe<SortNulls>;
+}
+
+export enum ShowcaseHighlightFeatureSortFields {
+  Id = 'id',
+  Name = 'name'
+}
+
+export interface ShowcaseHighlightFeatureUpdateFilter {
+  and: Maybe<Array<ShowcaseHighlightFeatureUpdateFilter>>;
+  id: Maybe<IdFilterComparison>;
+  name: Maybe<StringFieldComparison>;
+  or: Maybe<Array<ShowcaseHighlightFeatureUpdateFilter>>;
+}
+
 export interface ShowcaseMaxAggregate {
   expectedSaleAt: Maybe<Scalars['DateTime']>;
+  name: Maybe<Scalars['String']>;
   slug: Maybe<Scalars['String']>;
   status: Maybe<ShowcaseStatus>;
   updatedAt: Maybe<Scalars['DateTime']>;
@@ -363,12 +853,20 @@ export interface ShowcaseMaxAggregate {
 
 export interface ShowcaseMinAggregate {
   expectedSaleAt: Maybe<Scalars['DateTime']>;
+  name: Maybe<Scalars['String']>;
   slug: Maybe<Scalars['String']>;
   status: Maybe<ShowcaseStatus>;
   updatedAt: Maybe<Scalars['DateTime']>;
 }
 
-export interface ShowcasePriceDto {
+export interface ShowcasePrice {
+  pioneer: Scalars['Float'];
+  preorder: Scalars['Float'];
+  promo: Scalars['Float'];
+  regular: Scalars['Float'];
+}
+
+export interface ShowcasePriceInput {
   pioneer: Scalars['Float'];
   preorder: Scalars['Float'];
   promo: Scalars['Float'];
@@ -383,6 +881,7 @@ export interface ShowcaseSort {
 
 export enum ShowcaseSortFields {
   ExpectedSaleAt = 'expectedSaleAt',
+  Name = 'name',
   Slug = 'slug',
   Status = 'status',
   UpdatedAt = 'updatedAt'
@@ -409,6 +908,16 @@ export interface ShowcaseStatusFilterComparison {
   notILike: Maybe<ShowcaseStatus>;
   notIn: Maybe<Array<ShowcaseStatus>>;
   notLike: Maybe<ShowcaseStatus>;
+}
+
+export interface ShowcaseUpdateFilter {
+  and: Maybe<Array<ShowcaseUpdateFilter>>;
+  expectedSaleAt: Maybe<DateFieldComparison>;
+  name: Maybe<StringFieldComparison>;
+  or: Maybe<Array<ShowcaseUpdateFilter>>;
+  slug: Maybe<StringFieldComparison>;
+  status: Maybe<ShowcaseStatusFilterComparison>;
+  updatedAt: Maybe<DateFieldComparison>;
 }
 
 export enum SortDirection {
@@ -438,25 +947,55 @@ export interface StringFieldComparison {
   notLike: Maybe<Scalars['String']>;
 }
 
-export interface UpdateManyMediaInput {
-  filter: MediaUpdateFilter;
-  update: UpdateMedia;
+export interface UpdateImageList {
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface UpdateManyImageListsInput {
+  filter: ImageListUpdateFilter;
+  update: UpdateImageList;
+}
+
+export interface UpdateManyMediaDtosInput {
+  filter: MediaDtoUpdateFilter;
+  update: UpdateMediaDto;
 }
 
 export interface UpdateManyResponse {
   updatedCount: Scalars['Int'];
 }
 
-export interface UpdateMedia {
+export interface UpdateManyShowcaseHighlightFeaturesInput {
+  filter: ShowcaseHighlightFeatureUpdateFilter;
+  update: UpdateShowcaseHighlightFeature;
+}
+
+export interface UpdateManyShowcasesInput {
+  filter: ShowcaseUpdateFilter;
+  update: UpdateShowcase;
+}
+
+export interface UpdateMediaDto {
   filename: Maybe<Scalars['String']>;
   id: Maybe<Scalars['ID']>;
   mimetype: Maybe<Scalars['String']>;
   path: Maybe<Scalars['String']>;
+  type: Maybe<Scalars['String']>;
 }
 
-export interface UpdateOneMediaInput {
+export interface UpdateOneImageListInput {
   id: Scalars['ID'];
-  update: UpdateMedia;
+  update: UpdateImageList;
+}
+
+export interface UpdateOneMediaDtoInput {
+  id: Scalars['ID'];
+  update: UpdateMediaDto;
+}
+
+export interface UpdateOneShowcaseHighlightFeatureInput {
+  id: Scalars['ID'];
+  update: UpdateShowcaseHighlightFeature;
 }
 
 export interface UpdateOneShowcaseInput {
@@ -466,10 +1005,12 @@ export interface UpdateOneShowcaseInput {
 
 export interface UpdateShowcase {
   author: Maybe<Scalars['String']>;
+  brand: Maybe<ShowcaseBrandInput>;
   createdAt: Maybe<Scalars['DateTime']>;
   description: Maybe<Scalars['String']>;
   expectedQuantity: Maybe<Scalars['Float']>;
   expectedSaleAt: Maybe<Scalars['DateTime']>;
+  expectedSalePrice: Maybe<ShowcasePriceInput>;
   id: Maybe<Scalars['ID']>;
   name: Maybe<Scalars['String']>;
   slug: Maybe<Scalars['String']>;
@@ -477,26 +1018,39 @@ export interface UpdateShowcase {
   updatedAt: Maybe<Scalars['DateTime']>;
 }
 
+export interface UpdateShowcaseHighlightFeature {
+  description: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['ID']>;
+  name: Maybe<Scalars['String']>;
+}
+
 export type CreateMediaMutationVariables = Exact<{
-  input: CreateMedia;
+  input: MediaInput;
 }>;
 
 
-export type CreateMediaMutation = { createOneMedia: { id: string, filename: string, mimetype: string, path: string } };
+export type CreateMediaMutation = { createOneMediaDto: { id: string, filename: string, mimetype: string, path: string } };
+
+export type CreateShowcaseMutationVariables = Exact<{
+  input: ShowcaseCreateInputDto;
+}>;
+
+
+export type CreateShowcaseMutation = { createOneShowcase: { id: string } };
 
 export type DeleteMediaMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type DeleteMediaMutation = { deleteOneMedia: { id: string | null } };
+export type DeleteMediaMutation = { deleteOneMediaDto: { id: string | null } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, author: string, status: ShowcaseStatus, description: string, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } }, showcases: { edges: Array<{ node: { slug: string, name: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
+export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, author: string, status: ShowcaseStatus, description: string, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
 
 export type ShowcasesQueryVariables = Exact<{
   filter: Maybe<ShowcaseFilter>;

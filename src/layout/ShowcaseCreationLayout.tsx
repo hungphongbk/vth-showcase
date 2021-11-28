@@ -5,20 +5,20 @@ import React, {
   useContext,
   useReducer,
 } from "react";
-import { Showcase } from "../types/graphql";
+import { ShowcaseCreateInputDto } from "../types/graphql";
 import produce from "immer";
 import { Theme, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 
-type AnAction = { type: "update"; payload: Partial<Showcase> };
+type AnAction = { type: "update"; payload: Partial<ShowcaseCreateInputDto> };
 const ShowcaseCreationContext = createContext<
   | {
-      showcase: Partial<Showcase>;
+      showcase: Partial<ShowcaseCreateInputDto>;
       dispatch: React.Dispatch<AnAction>;
     }
   | undefined
 >(undefined);
-const reducer = (state: Partial<Showcase>, action: AnAction) =>
+const reducer = (state: Partial<ShowcaseCreateInputDto>, action: AnAction) =>
   produce(state, (draft) => {
     switch (action.type) {
       case "update":

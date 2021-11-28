@@ -1,0 +1,5 @@
+mutation createShowcase($input: ShowcaseCreateInputDto!) {
+  createOneShowcase(input: { showcase: $input }) {
+    id
+  }
+}

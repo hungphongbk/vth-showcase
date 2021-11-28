@@ -9,3 +9,4 @@ export { default as querySlugs } from "./querySlugs.graphql";
 
 export { default as mutationCreateMedia } from "./createMedia.graphql";
 export { default as mutationDeleteMedia } from "./deleteMedia.graphql";
+export { default as mutationCreateShowcase } from "./createShowcase.graphql";

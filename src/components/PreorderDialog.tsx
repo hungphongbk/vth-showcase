@@ -40,10 +40,10 @@ export default function PreorderDialog(
           }}
         >
           <Typography sx={{ fontSize: 13 }}>
-            Giá bán dự kiến: <strong>{vndCurrency(price.regular)}</strong>
+            Giá bán dự kiến: <strong>{vndCurrency(price!.regular)}</strong>
           </Typography>
           <Typography sx={{ fontSize: 15 }}>
-            Giá Tiên Phong: <strong>{vndCurrency(price.pioneer)}</strong>
+            Giá Tiên Phong: <strong>{vndCurrency(price!.pioneer)}</strong>
           </Typography>
         </Box>
         <Typography

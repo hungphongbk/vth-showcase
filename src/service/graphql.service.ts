@@ -1,19 +1,21 @@
 import {
   apolloClient,
-  mutationCreateMedia,
+  mutationCreateShowcase,
   mutationDeleteMedia,
   queryShowcasePreview,
   queryShowcases,
   querySlugs,
 } from "../api";
 import {
-  CreateMediaMutation,
-  CreateMediaMutationVariables,
+  CreateShowcaseMutation,
+  CreateShowcaseMutationVariables,
   CursorPaging,
   DeleteMediaMutation,
   DeleteMediaMutationVariables,
   Maybe,
-  Media,
+  Showcase,
+  ShowcaseCreateInputDto,
+  ShowcaseEdge,
   ShowcaseFilter,
   ShowcasePreviewQuery,
   ShowcasePreviewQueryVariables,
@@ -21,7 +23,6 @@ import {
   ShowcasesQueryVariables,
   SlugsQuery,
 } from "../types/graphql";
-import { UploadService } from "./index";
 
 export const getAllSlugs = async () => {
   const { data } = await apolloClient.query<SlugsQuery>({ query: querySlugs });
@@ -65,32 +66,26 @@ export const getShowcasePreview = async (slug: string) => {
   });
 
   return {
-    post: data.showcase,
-    posts: data.showcases.edges,
+    post: data.showcase as Showcase,
+    posts: data.showcases.edges as ShowcaseEdge[],
   };
-};
-
-export const createMedia = async (file: File): Promise<Media> => {
-  const mimetype = file.type,
-    filename = file.name,
-    path = await UploadService.upload(file);
-
-  const { data } = await apolloClient.mutate<
-    CreateMediaMutation,
-    CreateMediaMutationVariables
-  >({
-    mutation: mutationCreateMedia,
-    variables: {
-      input: { id: undefined, mimetype, filename, path },
-    },
-  });
-
-  return data!.createOneMedia;
 };
 
 export const deleteMedia = async (id: string): Promise<void> => {
   await apolloClient.mutate<DeleteMediaMutation, DeleteMediaMutationVariables>({
     mutation: mutationDeleteMedia,
     variables: { id },
+  });
+};
+
+export const createShowcase = async (
+  form: ShowcaseCreateInputDto
+): Promise<void> => {
+  await apolloClient.mutate<
+    CreateShowcaseMutation,
+    CreateShowcaseMutationVariables
+  >({
+    mutation: mutationCreateShowcase,
+    variables: { input: form },
   });
 };

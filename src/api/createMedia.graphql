@@ -1,5 +1,5 @@
-mutation createMedia($input: CreateMedia!){
-  createOneMedia(input: {media: $input }){
+mutation createMedia($input: MediaInput!){
+  createOneMediaDto(input: {mediaDto: $input }){
     id
     filename
     mimetype

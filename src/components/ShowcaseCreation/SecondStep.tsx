@@ -14,10 +14,16 @@ export default function SecondStep(): JSX.Element {
    * just convenience for developmemt process
    */
   useEffect(() => {
-    if (!showcase.status) {
+    if (process.env.NODE_ENV === "development") {
+      dispatch({
+        type: "update",
+        payload: { status: ShowcaseStatus.Idea, imageLists: [{ images: [] }] },
+      });
+    } else if (!showcase.status) {
       // noinspection JSIgnoredPromiseFromCall
       router.replace("/manage/create-post/step1");
-    }
+    } else
+      dispatch({ type: "update", payload: { imageLists: [{ images: [] }] } });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

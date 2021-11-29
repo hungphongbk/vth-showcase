@@ -1,15 +1,12 @@
 import React, { useMemo, useState } from "react";
-import { Button, Portal, Stack } from "@mui/material";
+import { Portal } from "@mui/material";
 import MenuBarIcon from "../../assets/icons/MenuBarIcon";
 import { AnimatePresence, motion } from "framer-motion";
 import useWindowDimensions from "../../utils/hooks";
 import { MotionBox } from "../commons";
 import { sxFullSize } from "../../utils/predefinedSx";
-import GoogleColoredIcon from "../../assets/icons/GoogleColoredIcon";
-import { signInWithGoogle } from "../../service/auth";
-import { useAuthContext } from "../system/auth";
-import { signOut } from "@firebase/auth";
-import { auth } from "../../service/firebase";
+import MenuPanel from "./MenuPanel";
+import { useAppSelector } from "../../store";
 
 const MENU_BTN_WIDTH = 59,
   MENU_BTN_HEIGHT = 32,
@@ -21,10 +18,10 @@ const MENU_BTN_WIDTH = 59,
 const MotionMenuBarIcon = motion(MenuBarIcon);
 
 export default function MenuDrawer(): JSX.Element {
-  const [open, setOpenMenu] = useState(false);
+  const [open, setOpenMenu] = useState(false),
+    initialized = useAppSelector((state) => state.auth.initialized);
 
   const { width: windowWidth, height: windowHeight } = useWindowDimensions();
-  const { user, logout } = useAuthContext();
 
   const scaleFactor = useMemo(() => {
     return (
@@ -46,8 +43,9 @@ export default function MenuDrawer(): JSX.Element {
           sx={{
             width: MENU_BTN_WIDTH,
             height: MENU_BTN_HEIGHT,
+            opacity: initialized ? 1 : 0.5,
           }}
-          onClick={doOpenMenu}
+          onClick={() => initialized && doOpenMenu()}
         />
         // </motion.div>
       )}
@@ -102,28 +100,7 @@ export default function MenuDrawer(): JSX.Element {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
-                <Stack direction={"column"} alignItems={"center"}>
-                  {user ? (
-                    <Button
-                      variant={"contained"}
-                      sx={{ bgcolor: "white !important" }}
-                      onClick={() => {
-                        signOut(auth).then(logout);
-                      }}
-                    >
-                      Logout
-                    </Button>
-                  ) : (
-                    <Button
-                      variant={"contained"}
-                      startIcon={<GoogleColoredIcon />}
-                      sx={{ bgcolor: "white !important" }}
-                      onClick={signInWithGoogle}
-                    >
-                      Login with Google
-                    </Button>
-                  )}
-                </Stack>
+                <MenuPanel />
               </MotionBox>
             </MotionBox>
           )}

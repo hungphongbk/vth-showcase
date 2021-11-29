@@ -33,9 +33,7 @@ export default function Header(): JSX.Element {
             alignItems: "center",
           }}
         >
-          <NoSsr>
-            <MenuDrawer />
-          </NoSsr>
+          <MenuDrawer />
         </Box>
       </Box>
       <Box

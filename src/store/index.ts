@@ -15,15 +15,17 @@ import {
   REGISTER,
   REHYDRATE,
 } from "redux-persist";
+import { PersistConfig } from "redux-persist/es/types";
 
-const persistConfig = {
+const persistConfig: PersistConfig<any> = {
   timeout: 0,
   key: "root",
   storage: universalStorage,
+  blacklist: ["auth"],
 };
 
 const store = configureStore({
-  reducer: persistReducer(persistConfig, reducer),
+  reducer: persistReducer(persistConfig, reducer) as typeof reducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

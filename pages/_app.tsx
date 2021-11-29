@@ -13,12 +13,12 @@ import { Box } from "@mui/material";
 import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import Image from "next/image";
 import Head from "next/head";
-import { AuthProvider } from "../src/components/system/auth";
 import store from "../src/store";
 import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { SnackbarProvider } from "notistack";
+import AuthLoginHandler from "../src/components/system/AuthLoginHandler";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -66,8 +66,8 @@ export default function MyApp(props: AppPropsWithLayout) {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           {() => (
-            <SnackbarProvider maxSnack={3}>
-              <AuthProvider>
+            <>
+              <SnackbarProvider maxSnack={3}>
                 <ThemeProvider theme={theme}>
                   <CssBaseline />
                   <Header />
@@ -85,8 +85,9 @@ export default function MyApp(props: AppPropsWithLayout) {
                     {/*</AnimatePresence>*/}
                   </LayoutGroup>
                 </ThemeProvider>
-              </AuthProvider>
-            </SnackbarProvider>
+              </SnackbarProvider>
+              <AuthLoginHandler />
+            </>
           )}
         </PersistGate>
       </Provider>

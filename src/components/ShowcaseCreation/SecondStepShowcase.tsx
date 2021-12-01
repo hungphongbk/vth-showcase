@@ -3,7 +3,7 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import ImageUploader from "../ImageUploader";
 import { useForm } from "react-hook-form";
-import { MediaInput, Showcase } from "../../types/graphql";
+import { MediaInput, Showcase, User } from "../../types/graphql";
 import FormInput from "../FormInput";
 import PlusIcon from "../../assets/icons/PlusIcon";
 import { CollapseCard } from "../index";
@@ -16,7 +16,8 @@ import ImageListUploader from "./data/ImageListUploader";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
 
-type ShowcaseForm = Showcase & {
+type ShowcaseForm = Omit<Showcase, "author" | "image"> & {
+  author: Omit<User, "showcasePosts">;
   image: MediaInput;
 };
 
@@ -26,7 +27,6 @@ export default function SecondStepShowcase(): JSX.Element {
     form = useForm<ShowcaseForm>({
       defaultValues: {
         ...(showcase as unknown as ShowcaseForm),
-        author: "test",
       },
     }),
     { control, handleSubmit, formState } = form;

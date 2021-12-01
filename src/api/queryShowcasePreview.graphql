@@ -2,7 +2,9 @@ query ShowcasePreview($slug: String!) {
   showcase(slug: $slug) {
     slug
     name
-    author
+    author{
+      name
+    }
     status
     image {
       path
@@ -20,7 +22,6 @@ query ShowcasePreview($slug: String!) {
       node {
         slug
         name
-        author
         status
         image {
           path

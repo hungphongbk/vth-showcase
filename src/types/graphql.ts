@@ -11,6 +11,7 @@ export interface Scalars {
   Float: number;
   ConnectionCursor: any;
   DateTime: any;
+  JSONObject: any;
 }
 
 export interface AddHighlightFeaturesToShowcaseInput {
@@ -45,10 +46,6 @@ export interface CreateManyShowcaseHighlightFeaturesInput {
   showcaseHighlightFeatures: Array<ShowcaseHfCreateInputDto>;
 }
 
-export interface CreateManyShowcasesInput {
-  showcases: Array<ShowcaseCreateInputDto>;
-}
-
 export interface CreateOneImageListInput {
   imageList: CreateImageListInputDto;
 }
@@ -59,10 +56,6 @@ export interface CreateOneMediaDtoInput {
 
 export interface CreateOneShowcaseHighlightFeatureInput {
   showcaseHighlightFeature: ShowcaseHfCreateInputDto;
-}
-
-export interface CreateOneShowcaseInput {
-  showcase: ShowcaseCreateInputDto;
 }
 
 export interface CursorPaging {
@@ -123,10 +116,6 @@ export interface DeleteOneMediaDtoInput {
 
 export interface DeleteOneShowcaseHighlightFeatureInput {
   id: Scalars['ID'];
-}
-
-export interface DeleteOneShowcaseInput {
-  id: Scalars['String'];
 }
 
 export interface IdFilterComparison {
@@ -219,6 +208,7 @@ export interface ImageListUpdateFilter {
   or: Maybe<Array<ImageListUpdateFilter>>;
 }
 
+
 export interface MediaDto extends IdInterface {
   filename: Scalars['String'];
   id: Scalars['ID'];
@@ -310,9 +300,9 @@ export interface Mutation {
   createManyImageLists: Array<ImageList>;
   createManyMediaDtos: Array<MediaDto>;
   createManyShowcaseHighlightFeatures: Array<ShowcaseHighlightFeature>;
-  createManyShowcases: Array<Showcase>;
   createOneImageList: ImageList;
   createOneMediaDto: MediaDto;
+  createOneSetting: Scalars['Boolean'];
   createOneShowcase: Showcase;
   createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
   deleteManyImageLists: DeleteManyResponse;
@@ -321,13 +311,15 @@ export interface Mutation {
   deleteManyShowcases: DeleteManyResponse;
   deleteOneImageList: ImageListDeleteResponse;
   deleteOneMediaDto: MediaDtoDeleteResponse;
-  deleteOneShowcase: ShowcaseDeleteResponse;
+  deleteOneShowcase: Showcase;
   deleteOneShowcaseHighlightFeature: ShowcaseHighlightFeatureDeleteResponse;
+  removeAuthorFromShowcase: Showcase;
   removeHighlightFeaturesFromShowcase: Showcase;
   removeImageFromShowcase: Showcase;
   removeImageFromShowcaseHighlightFeature: ShowcaseHighlightFeature;
   removeImageListsFromShowcase: Showcase;
   removeImagesFromImageList: ImageList;
+  setAuthorOnShowcase: Showcase;
   setHighlightFeaturesOnShowcase: Showcase;
   setImageListsOnShowcase: Showcase;
   setImageOnShowcase: Showcase;
@@ -336,10 +328,9 @@ export interface Mutation {
   updateManyImageLists: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
   updateManyShowcaseHighlightFeatures: UpdateManyResponse;
-  updateManyShowcases: UpdateManyResponse;
   updateOneImageList: ImageList;
   updateOneMediaDto: MediaDto;
-  updateOneShowcase: Showcase;
+  updateOneSetting: Scalars['Boolean'];
   updateOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
 }
 
@@ -374,11 +365,6 @@ export interface MutationCreateManyShowcaseHighlightFeaturesArgs {
 }
 
 
-export interface MutationCreateManyShowcasesArgs {
-  input: CreateManyShowcasesInput;
-}
-
-
 export interface MutationCreateOneImageListArgs {
   input: CreateOneImageListInput;
 }
@@ -389,8 +375,13 @@ export interface MutationCreateOneMediaDtoArgs {
 }
 
 
+export interface MutationCreateOneSettingArgs {
+  input: SettingCreateDto;
+}
+
+
 export interface MutationCreateOneShowcaseArgs {
-  input: CreateOneShowcaseInput;
+  input: ShowcaseCreateInputDto;
 }
 
 
@@ -430,12 +421,17 @@ export interface MutationDeleteOneMediaDtoArgs {
 
 
 export interface MutationDeleteOneShowcaseArgs {
-  input: DeleteOneShowcaseInput;
+  slug: Scalars['String'];
 }
 
 
 export interface MutationDeleteOneShowcaseHighlightFeatureArgs {
   input: DeleteOneShowcaseHighlightFeatureInput;
+}
+
+
+export interface MutationRemoveAuthorFromShowcaseArgs {
+  input: RemoveAuthorFromShowcaseInput;
 }
 
 
@@ -461,6 +457,11 @@ export interface MutationRemoveImageListsFromShowcaseArgs {
 
 export interface MutationRemoveImagesFromImageListArgs {
   input: RemoveImagesFromImageListInput;
+}
+
+
+export interface MutationSetAuthorOnShowcaseArgs {
+  input: SetAuthorOnShowcaseInput;
 }
 
 
@@ -504,11 +505,6 @@ export interface MutationUpdateManyShowcaseHighlightFeaturesArgs {
 }
 
 
-export interface MutationUpdateManyShowcasesArgs {
-  input: UpdateManyShowcasesInput;
-}
-
-
 export interface MutationUpdateOneImageListArgs {
   input: UpdateOneImageListInput;
 }
@@ -519,8 +515,8 @@ export interface MutationUpdateOneMediaDtoArgs {
 }
 
 
-export interface MutationUpdateOneShowcaseArgs {
-  input: UpdateOneShowcaseInput;
+export interface MutationUpdateOneSettingArgs {
+  input: SettingCreateDto;
 }
 
 
@@ -535,11 +531,35 @@ export interface PageInfo {
   startCursor: Maybe<Scalars['ConnectionCursor']>;
 }
 
+export enum PublishStatus {
+  Draft = 'DRAFT',
+  Published = 'PUBLISHED'
+}
+
+export interface PublishStatusFilterComparison {
+  eq: Maybe<PublishStatus>;
+  gt: Maybe<PublishStatus>;
+  gte: Maybe<PublishStatus>;
+  iLike: Maybe<PublishStatus>;
+  in: Maybe<Array<PublishStatus>>;
+  is: Maybe<Scalars['Boolean']>;
+  isNot: Maybe<Scalars['Boolean']>;
+  like: Maybe<PublishStatus>;
+  lt: Maybe<PublishStatus>;
+  lte: Maybe<PublishStatus>;
+  neq: Maybe<PublishStatus>;
+  notILike: Maybe<PublishStatus>;
+  notIn: Maybe<Array<PublishStatus>>;
+  notLike: Maybe<PublishStatus>;
+}
+
 export interface Query {
   imageList: Maybe<ImageList>;
   imageLists: ImageListConnection;
   mediaDto: Maybe<MediaDto>;
   mediaDtos: MediaDtoConnection;
+  setting: Maybe<SettingDto>;
+  settings: Array<SettingDto>;
   showcase: Showcase;
   showcaseHighlightFeature: Maybe<ShowcaseHighlightFeature>;
   showcaseHighlightFeatures: ShowcaseHighlightFeatureConnection;
@@ -572,6 +592,16 @@ export interface QueryMediaDtosArgs {
 }
 
 
+export interface QuerySettingArgs {
+  key: Scalars['String'];
+}
+
+
+export interface QuerySettingsArgs {
+  keys: Array<Scalars['String']>;
+}
+
+
 export interface QueryShowcaseArgs {
   slug: Scalars['String'];
 }
@@ -593,6 +623,11 @@ export interface QueryShowcasesArgs {
   filter?: Maybe<ShowcaseFilter>;
   paging?: Maybe<CursorPaging>;
   sorting?: Maybe<Array<ShowcaseSort>>;
+}
+
+export interface RemoveAuthorFromShowcaseInput {
+  id: Scalars['String'];
+  relationId: Scalars['ID'];
 }
 
 export interface RemoveHighlightFeaturesFromShowcaseInput {
@@ -620,6 +655,11 @@ export interface RemoveImagesFromImageListInput {
   relationIds: Array<Scalars['ID']>;
 }
 
+export interface SetAuthorOnShowcaseInput {
+  id: Scalars['String'];
+  relationId: Scalars['ID'];
+}
+
 export interface SetHighlightFeaturesOnShowcaseInput {
   id: Scalars['String'];
   relationIds: Array<Scalars['ID']>;
@@ -645,8 +685,24 @@ export interface SetImagesOnImageListInput {
   relationIds: Array<Scalars['ID']>;
 }
 
+export interface SettingCreateDto {
+  key: Scalars['String'];
+  value: Scalars['JSONObject'];
+}
+
+export interface SettingDto {
+  id: Scalars['ID'];
+  key: Scalars['String'];
+  value: Scalars['JSONObject'];
+}
+
+export interface SettingDtoEdge {
+  cursor: Scalars['ConnectionCursor'];
+  node: SettingDto;
+}
+
 export interface Showcase {
-  author: Scalars['String'];
+  author: User;
   brand: ShowcaseBrand;
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
@@ -658,6 +714,7 @@ export interface Showcase {
   image: MediaDto;
   imageLists: Array<ImageList>;
   name: Scalars['String'];
+  publishStatus: PublishStatus;
   slug: Scalars['String'];
   status: ShowcaseStatus;
   updatedAt: Scalars['DateTime'];
@@ -678,6 +735,7 @@ export interface ShowcaseImageListsArgs {
 export interface ShowcaseAggregateGroupBy {
   expectedSaleAt: Maybe<Scalars['DateTime']>;
   name: Maybe<Scalars['String']>;
+  publishStatus: Maybe<PublishStatus>;
   slug: Maybe<Scalars['String']>;
   status: Maybe<ShowcaseStatus>;
   updatedAt: Maybe<Scalars['DateTime']>;
@@ -701,13 +759,13 @@ export interface ShowcaseConnection {
 export interface ShowcaseCountAggregate {
   expectedSaleAt: Maybe<Scalars['Int']>;
   name: Maybe<Scalars['Int']>;
+  publishStatus: Maybe<Scalars['Int']>;
   slug: Maybe<Scalars['Int']>;
   status: Maybe<Scalars['Int']>;
   updatedAt: Maybe<Scalars['Int']>;
 }
 
 export interface ShowcaseCreateInputDto {
-  author: Scalars['String'];
   brand: ShowcaseBrandInput;
   description: Scalars['String'];
   expectedQuantity: Scalars['Float'];
@@ -726,24 +784,10 @@ export interface ShowcaseDeleteFilter {
   expectedSaleAt: Maybe<DateFieldComparison>;
   name: Maybe<StringFieldComparison>;
   or: Maybe<Array<ShowcaseDeleteFilter>>;
+  publishStatus: Maybe<PublishStatusFilterComparison>;
   slug: Maybe<StringFieldComparison>;
   status: Maybe<ShowcaseStatusFilterComparison>;
   updatedAt: Maybe<DateFieldComparison>;
-}
-
-export interface ShowcaseDeleteResponse {
-  author: Maybe<Scalars['String']>;
-  brand: Maybe<ShowcaseBrand>;
-  createdAt: Maybe<Scalars['DateTime']>;
-  description: Maybe<Scalars['String']>;
-  expectedQuantity: Maybe<Scalars['Float']>;
-  expectedSaleAt: Maybe<Scalars['DateTime']>;
-  expectedSalePrice: Maybe<ShowcasePrice>;
-  id: Maybe<Scalars['ID']>;
-  name: Maybe<Scalars['String']>;
-  slug: Maybe<Scalars['String']>;
-  status: Maybe<ShowcaseStatus>;
-  updatedAt: Maybe<Scalars['DateTime']>;
 }
 
 export interface ShowcaseEdge {
@@ -756,6 +800,7 @@ export interface ShowcaseFilter {
   expectedSaleAt: Maybe<DateFieldComparison>;
   name: Maybe<StringFieldComparison>;
   or: Maybe<Array<ShowcaseFilter>>;
+  publishStatus: Maybe<PublishStatusFilterComparison>;
   slug: Maybe<StringFieldComparison>;
   status: Maybe<ShowcaseStatusFilterComparison>;
   updatedAt: Maybe<DateFieldComparison>;
@@ -846,6 +891,7 @@ export interface ShowcaseHighlightFeatureUpdateFilter {
 export interface ShowcaseMaxAggregate {
   expectedSaleAt: Maybe<Scalars['DateTime']>;
   name: Maybe<Scalars['String']>;
+  publishStatus: Maybe<PublishStatus>;
   slug: Maybe<Scalars['String']>;
   status: Maybe<ShowcaseStatus>;
   updatedAt: Maybe<Scalars['DateTime']>;
@@ -854,6 +900,7 @@ export interface ShowcaseMaxAggregate {
 export interface ShowcaseMinAggregate {
   expectedSaleAt: Maybe<Scalars['DateTime']>;
   name: Maybe<Scalars['String']>;
+  publishStatus: Maybe<PublishStatus>;
   slug: Maybe<Scalars['String']>;
   status: Maybe<ShowcaseStatus>;
   updatedAt: Maybe<Scalars['DateTime']>;
@@ -882,6 +929,7 @@ export interface ShowcaseSort {
 export enum ShowcaseSortFields {
   ExpectedSaleAt = 'expectedSaleAt',
   Name = 'name',
+  PublishStatus = 'publishStatus',
   Slug = 'slug',
   Status = 'status',
   UpdatedAt = 'updatedAt'
@@ -908,16 +956,6 @@ export interface ShowcaseStatusFilterComparison {
   notILike: Maybe<ShowcaseStatus>;
   notIn: Maybe<Array<ShowcaseStatus>>;
   notLike: Maybe<ShowcaseStatus>;
-}
-
-export interface ShowcaseUpdateFilter {
-  and: Maybe<Array<ShowcaseUpdateFilter>>;
-  expectedSaleAt: Maybe<DateFieldComparison>;
-  name: Maybe<StringFieldComparison>;
-  or: Maybe<Array<ShowcaseUpdateFilter>>;
-  slug: Maybe<StringFieldComparison>;
-  status: Maybe<ShowcaseStatusFilterComparison>;
-  updatedAt: Maybe<DateFieldComparison>;
 }
 
 export enum SortDirection {
@@ -970,11 +1008,6 @@ export interface UpdateManyShowcaseHighlightFeaturesInput {
   update: UpdateShowcaseHighlightFeature;
 }
 
-export interface UpdateManyShowcasesInput {
-  filter: ShowcaseUpdateFilter;
-  update: UpdateShowcase;
-}
-
 export interface UpdateMediaDto {
   filename: Maybe<Scalars['String']>;
   id: Maybe<Scalars['ID']>;
@@ -998,30 +1031,17 @@ export interface UpdateOneShowcaseHighlightFeatureInput {
   update: UpdateShowcaseHighlightFeature;
 }
 
-export interface UpdateOneShowcaseInput {
-  id: Scalars['String'];
-  update: UpdateShowcase;
-}
-
-export interface UpdateShowcase {
-  author: Maybe<Scalars['String']>;
-  brand: Maybe<ShowcaseBrandInput>;
-  createdAt: Maybe<Scalars['DateTime']>;
-  description: Maybe<Scalars['String']>;
-  expectedQuantity: Maybe<Scalars['Float']>;
-  expectedSaleAt: Maybe<Scalars['DateTime']>;
-  expectedSalePrice: Maybe<ShowcasePriceInput>;
-  id: Maybe<Scalars['ID']>;
-  name: Maybe<Scalars['String']>;
-  slug: Maybe<Scalars['String']>;
-  status: Maybe<ShowcaseStatus>;
-  updatedAt: Maybe<Scalars['DateTime']>;
-}
-
 export interface UpdateShowcaseHighlightFeature {
   description: Maybe<Scalars['String']>;
   id: Maybe<Scalars['ID']>;
   name: Maybe<Scalars['String']>;
+}
+
+export interface User {
+  email: Scalars['String'];
+  name: Scalars['String'];
+  showcasePosts: Array<Showcase>;
+  uid: Scalars['ID'];
 }
 
 export type CreateMediaMutationVariables = Exact<{
@@ -1050,7 +1070,7 @@ export type ShowcasePreviewQueryVariables = Exact<{
 }>;
 
 
-export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, author: string, status: ShowcaseStatus, description: string, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
+export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { name: string }, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
 
 export type ShowcasesQueryVariables = Exact<{
   filter: Maybe<ShowcaseFilter>;
@@ -1058,7 +1078,7 @@ export type ShowcasesQueryVariables = Exact<{
 }>;
 
 
-export type ShowcasesQuery = { showcases: { pageInfo: { hasNextPage: boolean | null, endCursor: any | null }, edges: Array<{ node: { id: string, name: string, slug: string, author: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
+export type ShowcasesQuery = { showcases: { pageInfo: { hasNextPage: boolean | null, endCursor: any | null }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, author: { name: string }, image: { path: string } } }> } };
 
 export type SlugsQueryVariables = Exact<{ [key: string]: never; }>;
 

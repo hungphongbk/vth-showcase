@@ -9,7 +9,6 @@ query Showcases($filter: ShowcaseFilter, $paging: CursorPaging!) {
         id
         name
         slug
-        author
         status
         image {
           path

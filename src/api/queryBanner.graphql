@@ -1,0 +1,5 @@
+query queryBanner {
+    banner: setting(key: "common:banner"){
+        value
+    }
+}

@@ -13,9 +13,10 @@ import { MotionBox, ProductInfoSecond } from "../src/components/commons";
 import { range } from "lodash";
 import { AspectRatio, VthCountdown } from "../src/components";
 import Banner from "../src/components/Banner";
-import { apiService } from "../src/api";
+import { apiService, apolloClient, queryBanner } from "../src/api";
 import {
   Maybe,
+  QueryBannerQuery,
   ShowcaseEdge,
   ShowcaseFilter,
   ShowcaseStatus,
@@ -33,6 +34,7 @@ const FilterPanel = dynamic(() => import("../src/components/FilterPanel"), {
 function Home({
   posts: _posts,
   pageInfo: _pageInfo,
+  banner,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [openFilter, setOpenFilter] = useState(false);
   const [statusFilter, setStatusFilter] = useState<
@@ -94,7 +96,7 @@ function Home({
 
   return (
     <Container sx={{ mt: 2, pl: 1, pr: 1 }}>
-      <Banner sx={{ mt: -2, mx: -1 }} />
+      <Banner sx={{ mt: -2, mx: -1 }} banner={banner} />
       <Typography
         sx={{
           fontSize: 15,
@@ -241,9 +243,17 @@ function Home({
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { edges, pageInfo } = await apiService.getAllShowcases();
+  const [
+    { edges, pageInfo },
+    {
+      data: { banner },
+    },
+  ] = await Promise.all([
+    apiService.getAllShowcases(),
+    apolloClient.query<QueryBannerQuery>({ query: queryBanner }),
+  ]);
   return {
-    props: { posts: edges, pageInfo },
+    props: { posts: edges, pageInfo, banner },
     revalidate: 60,
   };
 };

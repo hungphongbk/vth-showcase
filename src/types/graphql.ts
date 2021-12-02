@@ -1065,6 +1065,11 @@ export type DeleteMediaMutationVariables = Exact<{
 
 export type DeleteMediaMutation = { deleteOneMediaDto: { id: string | null } };
 
+export type QueryBannerQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type QueryBannerQuery = { banner: { value: any } | null };
+
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
@@ -1078,7 +1083,7 @@ export type ShowcasesQueryVariables = Exact<{
 }>;
 
 
-export type ShowcasesQuery = { showcases: { pageInfo: { hasNextPage: boolean | null, endCursor: any | null }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, author: { name: string }, image: { path: string } } }> } };
+export type ShowcasesQuery = { showcases: { pageInfo: { hasNextPage: boolean | null, endCursor: any | null }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
 
 export type SlugsQueryVariables = Exact<{ [key: string]: never; }>;
 

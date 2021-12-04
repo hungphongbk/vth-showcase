@@ -2,9 +2,8 @@ import React, { useEffect } from "react";
 import { Control, useFieldArray } from "react-hook-form";
 import { Stack, Typography } from "@mui/material";
 import { uniqueId } from "lodash";
-import ImageUploader from "../../ImageUploader";
 import PlusIcon from "../../../assets/icons/PlusIcon";
-import FormInput from "../../FormInput";
+import { FormInput, ImageUploader } from "@hungphongbk/vth-sdk";
 
 export default function ImageListUploader({
   control,

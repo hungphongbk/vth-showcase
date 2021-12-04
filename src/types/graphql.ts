@@ -29,6 +29,30 @@ export interface AddImagesToImageListInput {
   relationIds: Array<Scalars['ID']>;
 }
 
+export enum AuthRoleType {
+  Admin = 'ADMIN',
+  Investor = 'INVESTOR',
+  Superadmin = 'SUPERADMIN',
+  User = 'USER'
+}
+
+export interface AuthRoleTypeFilterComparison {
+  eq: Maybe<AuthRoleType>;
+  gt: Maybe<AuthRoleType>;
+  gte: Maybe<AuthRoleType>;
+  iLike: Maybe<AuthRoleType>;
+  in: Maybe<Array<AuthRoleType>>;
+  is: Maybe<Scalars['Boolean']>;
+  isNot: Maybe<Scalars['Boolean']>;
+  like: Maybe<AuthRoleType>;
+  lt: Maybe<AuthRoleType>;
+  lte: Maybe<AuthRoleType>;
+  neq: Maybe<AuthRoleType>;
+  notILike: Maybe<AuthRoleType>;
+  notIn: Maybe<Array<AuthRoleType>>;
+  notLike: Maybe<AuthRoleType>;
+}
+
 
 export interface CreateImageListInputDto {
   images: Maybe<Array<MediaInput>>;
@@ -46,6 +70,10 @@ export interface CreateManyShowcaseHighlightFeaturesInput {
   showcaseHighlightFeatures: Array<ShowcaseHfCreateInputDto>;
 }
 
+export interface CreateManyUsersInput {
+  users: Array<CreateUser>;
+}
+
 export interface CreateOneImageListInput {
   imageList: CreateImageListInputDto;
 }
@@ -56,6 +84,17 @@ export interface CreateOneMediaDtoInput {
 
 export interface CreateOneShowcaseHighlightFeatureInput {
   showcaseHighlightFeature: ShowcaseHfCreateInputDto;
+}
+
+export interface CreateOneUserInput {
+  user: CreateUser;
+}
+
+export interface CreateUser {
+  email: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
+  role: Maybe<AuthRoleType>;
+  uid: Maybe<Scalars['ID']>;
 }
 
 export interface CursorPaging {
@@ -106,6 +145,10 @@ export interface DeleteManyShowcasesInput {
   filter: ShowcaseDeleteFilter;
 }
 
+export interface DeleteManyUsersInput {
+  filter: UserDeleteFilter;
+}
+
 export interface DeleteOneImageListInput {
   id: Scalars['ID'];
 }
@@ -115,6 +158,10 @@ export interface DeleteOneMediaDtoInput {
 }
 
 export interface DeleteOneShowcaseHighlightFeatureInput {
+  id: Scalars['ID'];
+}
+
+export interface DeleteOneUserInput {
   id: Scalars['ID'];
 }
 
@@ -300,19 +347,23 @@ export interface Mutation {
   createManyImageLists: Array<ImageList>;
   createManyMediaDtos: Array<MediaDto>;
   createManyShowcaseHighlightFeatures: Array<ShowcaseHighlightFeature>;
+  createManyUsers: Array<User>;
   createOneImageList: ImageList;
   createOneMediaDto: MediaDto;
   createOneSetting: Scalars['Boolean'];
   createOneShowcase: Showcase;
   createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
+  createOneUser: User;
   deleteManyImageLists: DeleteManyResponse;
   deleteManyMediaDtos: DeleteManyResponse;
   deleteManyShowcaseHighlightFeatures: DeleteManyResponse;
   deleteManyShowcases: DeleteManyResponse;
+  deleteManyUsers: DeleteManyResponse;
   deleteOneImageList: ImageListDeleteResponse;
   deleteOneMediaDto: MediaDtoDeleteResponse;
-  deleteOneShowcase: Showcase;
+  deleteOneShowcase: Scalars['Boolean'];
   deleteOneShowcaseHighlightFeature: ShowcaseHighlightFeatureDeleteResponse;
+  deleteOneUser: UserDeleteResponse;
   removeAuthorFromShowcase: Showcase;
   removeHighlightFeaturesFromShowcase: Showcase;
   removeImageFromShowcase: Showcase;
@@ -328,10 +379,12 @@ export interface Mutation {
   updateManyImageLists: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
   updateManyShowcaseHighlightFeatures: UpdateManyResponse;
+  updateManyUsers: UpdateManyResponse;
   updateOneImageList: ImageList;
   updateOneMediaDto: MediaDto;
   updateOneSetting: Scalars['Boolean'];
   updateOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
+  updateOneUser: User;
 }
 
 
@@ -365,6 +418,11 @@ export interface MutationCreateManyShowcaseHighlightFeaturesArgs {
 }
 
 
+export interface MutationCreateManyUsersArgs {
+  input: CreateManyUsersInput;
+}
+
+
 export interface MutationCreateOneImageListArgs {
   input: CreateOneImageListInput;
 }
@@ -390,6 +448,11 @@ export interface MutationCreateOneShowcaseHighlightFeatureArgs {
 }
 
 
+export interface MutationCreateOneUserArgs {
+  input: CreateOneUserInput;
+}
+
+
 export interface MutationDeleteManyImageListsArgs {
   input: DeleteManyImageListsInput;
 }
@@ -410,6 +473,11 @@ export interface MutationDeleteManyShowcasesArgs {
 }
 
 
+export interface MutationDeleteManyUsersArgs {
+  input: DeleteManyUsersInput;
+}
+
+
 export interface MutationDeleteOneImageListArgs {
   input: DeleteOneImageListInput;
 }
@@ -427,6 +495,11 @@ export interface MutationDeleteOneShowcaseArgs {
 
 export interface MutationDeleteOneShowcaseHighlightFeatureArgs {
   input: DeleteOneShowcaseHighlightFeatureInput;
+}
+
+
+export interface MutationDeleteOneUserArgs {
+  input: DeleteOneUserInput;
 }
 
 
@@ -505,6 +578,11 @@ export interface MutationUpdateManyShowcaseHighlightFeaturesArgs {
 }
 
 
+export interface MutationUpdateManyUsersArgs {
+  input: UpdateManyUsersInput;
+}
+
+
 export interface MutationUpdateOneImageListArgs {
   input: UpdateOneImageListInput;
 }
@@ -522,6 +600,11 @@ export interface MutationUpdateOneSettingArgs {
 
 export interface MutationUpdateOneShowcaseHighlightFeatureArgs {
   input: UpdateOneShowcaseHighlightFeatureInput;
+}
+
+
+export interface MutationUpdateOneUserArgs {
+  input: UpdateOneUserInput;
 }
 
 export interface PageInfo {
@@ -565,6 +648,8 @@ export interface Query {
   showcaseHighlightFeatures: ShowcaseHighlightFeatureConnection;
   showcases: ShowcaseConnection;
   slugs: Array<Scalars['String']>;
+  user: Maybe<User>;
+  users: UserConnection;
 }
 
 
@@ -623,6 +708,18 @@ export interface QueryShowcasesArgs {
   filter?: Maybe<ShowcaseFilter>;
   paging?: Maybe<CursorPaging>;
   sorting?: Maybe<Array<ShowcaseSort>>;
+}
+
+
+export interface QueryUserArgs {
+  id: Scalars['ID'];
+}
+
+
+export interface QueryUsersArgs {
+  filter?: Maybe<UserFilter>;
+  paging?: Maybe<CursorPaging>;
+  sorting?: Maybe<Array<UserSort>>;
 }
 
 export interface RemoveAuthorFromShowcaseInput {
@@ -776,6 +873,7 @@ export interface ShowcaseCreateInputDto {
   image: MediaInput;
   imageLists: Maybe<Array<CreateImageListInputDto>>;
   name: Scalars['String'];
+  publishStatus: Maybe<PublishStatus>;
   status: ShowcaseStatus;
 }
 
@@ -1008,6 +1106,11 @@ export interface UpdateManyShowcaseHighlightFeaturesInput {
   update: UpdateShowcaseHighlightFeature;
 }
 
+export interface UpdateManyUsersInput {
+  filter: UserUpdateFilter;
+  update: UpdateUser;
+}
+
 export interface UpdateMediaDto {
   filename: Maybe<Scalars['String']>;
   id: Maybe<Scalars['ID']>;
@@ -1031,17 +1134,106 @@ export interface UpdateOneShowcaseHighlightFeatureInput {
   update: UpdateShowcaseHighlightFeature;
 }
 
+export interface UpdateOneUserInput {
+  id: Scalars['ID'];
+  update: UpdateUser;
+}
+
 export interface UpdateShowcaseHighlightFeature {
   description: Maybe<Scalars['String']>;
   id: Maybe<Scalars['ID']>;
   name: Maybe<Scalars['String']>;
 }
 
+export interface UpdateUser {
+  email: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
+  role: Maybe<AuthRoleType>;
+  uid: Maybe<Scalars['ID']>;
+}
+
 export interface User {
   email: Scalars['String'];
   name: Scalars['String'];
-  showcasePosts: Array<Showcase>;
+  role: AuthRoleType;
   uid: Scalars['ID'];
+}
+
+export interface UserAggregateGroupBy {
+  email: Maybe<Scalars['String']>;
+  role: Maybe<AuthRoleType>;
+  uid: Maybe<Scalars['ID']>;
+}
+
+export interface UserConnection {
+  edges: Array<UserEdge>;
+  pageInfo: PageInfo;
+}
+
+export interface UserCountAggregate {
+  email: Maybe<Scalars['Int']>;
+  role: Maybe<Scalars['Int']>;
+  uid: Maybe<Scalars['Int']>;
+}
+
+export interface UserDeleteFilter {
+  and: Maybe<Array<UserDeleteFilter>>;
+  email: Maybe<StringFieldComparison>;
+  or: Maybe<Array<UserDeleteFilter>>;
+  role: Maybe<AuthRoleTypeFilterComparison>;
+  uid: Maybe<IdFilterComparison>;
+}
+
+export interface UserDeleteResponse {
+  email: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
+  role: Maybe<AuthRoleType>;
+  uid: Maybe<Scalars['ID']>;
+}
+
+export interface UserEdge {
+  cursor: Scalars['ConnectionCursor'];
+  node: User;
+}
+
+export interface UserFilter {
+  and: Maybe<Array<UserFilter>>;
+  email: Maybe<StringFieldComparison>;
+  or: Maybe<Array<UserFilter>>;
+  role: Maybe<AuthRoleTypeFilterComparison>;
+  uid: Maybe<IdFilterComparison>;
+}
+
+export interface UserMaxAggregate {
+  email: Maybe<Scalars['String']>;
+  role: Maybe<AuthRoleType>;
+  uid: Maybe<Scalars['ID']>;
+}
+
+export interface UserMinAggregate {
+  email: Maybe<Scalars['String']>;
+  role: Maybe<AuthRoleType>;
+  uid: Maybe<Scalars['ID']>;
+}
+
+export interface UserSort {
+  direction: SortDirection;
+  field: UserSortFields;
+  nulls: Maybe<SortNulls>;
+}
+
+export enum UserSortFields {
+  Email = 'email',
+  Role = 'role',
+  Uid = 'uid'
+}
+
+export interface UserUpdateFilter {
+  and: Maybe<Array<UserUpdateFilter>>;
+  email: Maybe<StringFieldComparison>;
+  or: Maybe<Array<UserUpdateFilter>>;
+  role: Maybe<AuthRoleTypeFilterComparison>;
+  uid: Maybe<IdFilterComparison>;
 }
 
 export type CreateMediaMutationVariables = Exact<{

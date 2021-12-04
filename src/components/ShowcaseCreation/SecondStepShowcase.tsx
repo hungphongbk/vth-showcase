@@ -1,20 +1,23 @@
 import React from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
-import ImageUploader from "../ImageUploader";
 import { useForm } from "react-hook-form";
 import { MediaInput, Showcase, User } from "../../types/graphql";
-import FormInput from "../FormInput";
 import PlusIcon from "../../assets/icons/PlusIcon";
 import { CollapseCard } from "../index";
 import { EnhancedMultilineTextField, EnhancedTextField } from "./styled";
 import CreationBottomBar from "./CreationBottomBar";
-import HighlightFeatures from "./data/HighlightFeatures";
 import { DevTool } from "@hookform/devtools";
 import { apiService } from "../../api";
 import ImageListUploader from "./data/ImageListUploader";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
+import {
+  FormInput,
+  HighlightFeature,
+  ImageUploader,
+  ListEditor,
+} from "@hungphongbk/vth-sdk";
 
 type ShowcaseForm = Omit<Showcase, "author" | "image"> & {
   author: Omit<User, "showcasePosts">;
@@ -137,7 +140,17 @@ export default function SecondStepShowcase(): JSX.Element {
             </Stack>
           </Box>
           <CollapseCard header={"Tính năng nổi bật"} defaultOpen>
-            <HighlightFeatures control={control} />
+            <ListEditor
+              name={"highlightFeatures"}
+              control={control}
+              ItemComponent={(itemProps) => (
+                <HighlightFeature
+                  {...itemProps}
+                  DialogProps={{ maxWidth: "sm", fullWidth: true }}
+                />
+              )}
+              options={{ deletable: true }}
+            />
           </CollapseCard>
           <CollapseCard
             header={"video / hình ảnh"}

@@ -9,7 +9,7 @@ import { LayoutGroup } from "framer-motion";
 import "intersection-observer";
 import { DefaultSeo } from "next-seo";
 import { NextPage } from "next";
-import { Box } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import Image from "next/image";
 import Head from "next/head";
@@ -19,6 +19,9 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { SnackbarProvider } from "notistack";
 import AuthLoginHandler from "../src/components/system/AuthLoginHandler";
+import { StyledDialog } from "../src/components/commons";
+import { UploadService } from "../src/service";
+import { VthThemeProvider } from "@hungphongbk/vth-sdk";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -67,25 +70,40 @@ export default function MyApp(props: AppPropsWithLayout) {
         <PersistGate persistor={persistor}>
           {() => (
             <>
-              <SnackbarProvider maxSnack={3}>
-                <ThemeProvider theme={theme}>
-                  <CssBaseline />
-                  <Header />
-                  <LayoutGroup>
-                    <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
-                      <Image
-                        src={"/background.png"}
-                        layout="fill"
-                        objectFit="cover"
-                        quality={70}
-                      />
-                    </Box>
-                    {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
-                    {getLayout(<Component {...pageProps} key={router.route} />)}
-                    {/*</AnimatePresence>*/}
-                  </LayoutGroup>
-                </ThemeProvider>
-              </SnackbarProvider>
+              <VthThemeProvider
+                config={{
+                  components: {
+                    Dialog: StyledDialog,
+                    TextField: TextField,
+                    MultilineTextField: TextField,
+                  },
+                  services: {
+                    uploadService: UploadService.upload,
+                  },
+                }}
+              >
+                <SnackbarProvider maxSnack={3}>
+                  <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <Header />
+                    <LayoutGroup>
+                      <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
+                        <Image
+                          src={"/background.png"}
+                          layout="fill"
+                          objectFit="cover"
+                          quality={70}
+                        />
+                      </Box>
+                      {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
+                      {getLayout(
+                        <Component {...pageProps} key={router.route} />
+                      )}
+                      {/*</AnimatePresence>*/}
+                    </LayoutGroup>
+                  </ThemeProvider>
+                </SnackbarProvider>
+              </VthThemeProvider>
               <AuthLoginHandler />
             </>
           )}

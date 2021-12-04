@@ -55,3 +55,5 @@ export const getPersistAuth = () =>
   });
 
 export const signOut = () => _signOut(auth);
+
+export const currentUser = auth.currentUser;

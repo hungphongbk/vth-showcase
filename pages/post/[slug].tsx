@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 import { ShowcaseStatus } from "../../src/types/graphql";
 import { getShowcasePreview } from "../../src/service/graphql.service";
 import { ReturnPromiseType } from "../../src/types/util.type";
+import { InvestorInformation } from "../../src/components/PostPage";
 
 const PreorderDialog = dynamic(
   () => import("../../src/components/PreorderDialog"),
@@ -82,6 +83,7 @@ export default function PostDetailedPage({
   const [open, setOpen] = useState(false);
   return (
     <Box sx={{ bgcolor: "#f0f0f0" }}>
+      <InvestorInformation />
       <ShowcaseDetailed
         item={post}
         onClick={() => router.push("/")}

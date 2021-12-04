@@ -16,6 +16,7 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import { PersistConfig } from "redux-persist/es/types";
+import { afterSignInFirebase } from "./auth.reducer";
 
 const persistConfig: PersistConfig<any> = {
   timeout: 0,
@@ -29,7 +30,15 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        ignoredActions: [
+          FLUSH,
+          REHYDRATE,
+          PAUSE,
+          PERSIST,
+          PURGE,
+          REGISTER,
+          afterSignInFirebase.type,
+        ],
       },
     }),
 });

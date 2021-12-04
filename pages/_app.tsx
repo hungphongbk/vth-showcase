@@ -22,6 +22,7 @@ import AuthLoginHandler from "../src/components/system/AuthLoginHandler";
 import { StyledDialog } from "../src/components/commons";
 import { UploadService } from "../src/service";
 import { VthThemeProvider } from "@hungphongbk/vth-sdk";
+import CreatorAndInvestorActions from "../src/components/CreatorAndInvestorActions";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -99,7 +100,7 @@ export default function MyApp(props: AppPropsWithLayout) {
                       {getLayout(
                         <Component {...pageProps} key={router.route} />
                       )}
-                      {/*</AnimatePresence>*/}
+                      <CreatorAndInvestorActions />
                     </LayoutGroup>
                   </ThemeProvider>
                 </SnackbarProvider>

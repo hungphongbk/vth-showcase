@@ -1,4 +1,4 @@
-export { default as apolloClient } from "./apollo";
+export * from "./apollo";
 import * as apiService from "../service/graphql.service";
 
 export { apiService };

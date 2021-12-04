@@ -166,7 +166,7 @@ export default function ShowcaseDetailed({
                   }}
                 >
                   <UserIcon sx={{ width: 16, height: 16, mr: 1 }} />
-                  <MotionTypo>{item.author}</MotionTypo>
+                  <MotionTypo>{item.author.name}</MotionTypo>
                 </MotionBox>
               </ProductInfoDetailed>
             </motion.div>

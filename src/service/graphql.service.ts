@@ -26,7 +26,7 @@ import {
 
 export const getAllSlugs = async () => {
   const { data } = await apolloClient.query<SlugsQuery>({ query: querySlugs });
-  return data.slugs;
+  return data!.slugs;
 };
 
 /**

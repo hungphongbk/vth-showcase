@@ -17,6 +17,7 @@ import {
   HighlightFeature,
   ImageUploader,
   ListEditor,
+  SimpleTableRoot,
 } from "@hungphongbk/vth-sdk";
 
 type ShowcaseForm = Omit<Showcase, "author" | "image"> & {
@@ -24,7 +25,7 @@ type ShowcaseForm = Omit<Showcase, "author" | "image"> & {
   image: MediaInput;
 };
 
-export default function SecondStepShowcase(): JSX.Element {
+export default function SecondStepPreorder(): JSX.Element {
   const router = useRouter();
   const { showcase, dispatch } = useShowcaseCreation(),
     form = useForm<ShowcaseForm>({
@@ -155,6 +156,19 @@ export default function SecondStepShowcase(): JSX.Element {
             disableCardStyle
           >
             <ImageListUploader control={control} />
+          </CollapseCard>
+          <CollapseCard header={"giá bán dự kiến"} defaultOpen>
+            <SimpleTableRoot>
+              <table>
+                <tr>
+                  <td>
+                    <Typography sx={{ fontWeight: 600 }}>
+                      Giá niêm yết
+                    </Typography>
+                  </td>
+                </tr>
+              </table>
+            </SimpleTableRoot>
           </CollapseCard>
         </Stack>
       </Box>

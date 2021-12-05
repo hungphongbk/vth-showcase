@@ -59,7 +59,7 @@ export default function FirstStep(): JSX.Element {
     if (mucTieu.length > 0 && tinhTrang.length > 0) {
       if (mucTieu === "kinh-doanh" && tinhTrang === "san-sang")
         setStatus(ShowcaseStatus.Coming);
-      if (tinhTrang === "hang-mau") setStatus(ShowcaseStatus.Showcase);
+      else if (tinhTrang === "hang-mau") setStatus(ShowcaseStatus.Showcase);
       else setStatus(ShowcaseStatus.Idea);
     }
   }, [mucTieu, setStatus, tinhTrang]);

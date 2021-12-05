@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import DocumentIcon from "../assets/icons/DocumentIcon";
+import { useRouter } from "next/router";
 
 const ICON_SIZE = 30,
   ACTION_GUTTER = 4;
@@ -70,9 +71,16 @@ type CreatorAndInvestorActionsProps = {};
 export default function CreatorAndInvestorActions(
   props: CreatorAndInvestorActionsProps
 ): JSX.Element {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleUploadNew = async () => {
+    await router.push("/manage/create-post");
+    handleClose();
+  };
+
   return (
     <>
       <Backdrop open={open} sx={{ zIndex: 9 }} />
@@ -84,18 +92,18 @@ export default function CreatorAndInvestorActions(
         open={open}
       >
         <SpeedDialAction
-          key={"qlda"}
+          key={"htpt"}
           icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
-          tooltipTitle={"Quản lý dự án"}
+          tooltipTitle={"Hợp tác"}
           tooltipOpen
           onClick={handleClose}
         />
         <SpeedDialAction
-          key={"htpt"}
+          key={"qlda"}
           icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
-          tooltipTitle={"Hợp tác phát triển"}
+          tooltipTitle={"Đăng sản phẩm"}
           tooltipOpen
-          onClick={handleClose}
+          onClick={handleUploadNew}
         />
       </StyledSpeedDial>
     </>

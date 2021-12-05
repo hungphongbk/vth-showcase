@@ -58,6 +58,64 @@ type ImageListMinAggregate {
     id: ID
 }
 
+type InvestmentPackageDto {
+    benefitRate: Float!
+    count: Float!
+    displayName: String!
+    fundedRate: Float!
+    id: ID!
+}
+
+type InvestmentPackageDtoAggregateGroupBy {
+    displayName: String
+    id: ID
+}
+
+type InvestmentPackageDtoAvgAggregate {
+    id: Float
+}
+
+type InvestmentPackageDtoConnection {
+    "Array of edges."
+    edges: [InvestmentPackageDtoEdge!]!
+    "Paging information"
+    pageInfo: PageInfo!
+}
+
+type InvestmentPackageDtoCountAggregate {
+    displayName: Int
+    id: Int
+}
+
+type InvestmentPackageDtoDeleteResponse {
+    benefitRate: Float
+    count: Float
+    displayName: String
+    fundedRate: Float
+    id: ID
+}
+
+type InvestmentPackageDtoEdge {
+    "Cursor for this node."
+    cursor: ConnectionCursor!
+    "The node containing the InvestmentPackageDto"
+    node: InvestmentPackageDto!
+}
+
+type InvestmentPackageDtoMaxAggregate {
+    displayName: String
+    id: ID
+}
+
+type InvestmentPackageDtoMinAggregate {
+    displayName: String
+    id: ID
+}
+
+type InvestmentPackageDtoSumAggregate {
+    id: Float
+}
+
 type MediaDto implements IdInterface {
     filename: String!
     id: ID!
@@ -113,21 +171,29 @@ type Mutation {
     addImageListsToShowcase(input: AddImageListsToShowcaseInput!): Showcase!
     addImagesToImageList(input: AddImagesToImageListInput!): ImageList!
     createManyImageLists(input: CreateManyImageListsInput!): [ImageList!]!
+    createManyInvestmentPackageDtos(input: CreateManyInvestmentPackageDtosInput!): [InvestmentPackageDto!]!
     createManyMediaDtos(input: CreateManyMediaDtosInput!): [MediaDto!]!
     createManyShowcaseHighlightFeatures(input: CreateManyShowcaseHighlightFeaturesInput!): [ShowcaseHighlightFeature!]!
+    createManyUsers(input: CreateManyUsersInput!): [User!]!
     createOneImageList(input: CreateOneImageListInput!): ImageList!
+    createOneInvestmentPackageDto(input: CreateOneInvestmentPackageDtoInput!): InvestmentPackageDto!
     createOneMediaDto(input: CreateOneMediaDtoInput!): MediaDto!
     createOneSetting(input: SettingCreateDto!): Boolean!
     createOneShowcase(input: ShowcaseCreateInputDto!): Showcase!
     createOneShowcaseHighlightFeature(input: CreateOneShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
+    createOneUser(input: CreateOneUserInput!): User!
     deleteManyImageLists(input: DeleteManyImageListsInput!): DeleteManyResponse!
+    deleteManyInvestmentPackageDtos(input: DeleteManyInvestmentPackageDtosInput!): DeleteManyResponse!
     deleteManyMediaDtos(input: DeleteManyMediaDtosInput!): DeleteManyResponse!
     deleteManyShowcaseHighlightFeatures(input: DeleteManyShowcaseHighlightFeaturesInput!): DeleteManyResponse!
     deleteManyShowcases(input: DeleteManyShowcasesInput!): DeleteManyResponse!
+    deleteManyUsers(input: DeleteManyUsersInput!): DeleteManyResponse!
     deleteOneImageList(input: DeleteOneImageListInput!): ImageListDeleteResponse!
+    deleteOneInvestmentPackageDto(input: DeleteOneInvestmentPackageDtoInput!): InvestmentPackageDtoDeleteResponse!
     deleteOneMediaDto(input: DeleteOneMediaDtoInput!): MediaDtoDeleteResponse!
-    deleteOneShowcase(slug: String!): Showcase!
+    deleteOneShowcase(slug: String!): Boolean!
     deleteOneShowcaseHighlightFeature(input: DeleteOneShowcaseHighlightFeatureInput!): ShowcaseHighlightFeatureDeleteResponse!
+    deleteOneUser(input: DeleteOneUserInput!): UserDeleteResponse!
     removeAuthorFromShowcase(input: RemoveAuthorFromShowcaseInput!): Showcase!
     removeHighlightFeaturesFromShowcase(input: RemoveHighlightFeaturesFromShowcaseInput!): Showcase!
     removeImageFromShowcase(input: RemoveImageFromShowcaseInput!): Showcase!
@@ -141,12 +207,17 @@ type Mutation {
     setImageOnShowcaseHighlightFeature(input: SetImageOnShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
     setImagesOnImageList(input: SetImagesOnImageListInput!): ImageList!
     updateManyImageLists(input: UpdateManyImageListsInput!): UpdateManyResponse!
+    updateManyInvestmentPackageDtos(input: UpdateManyInvestmentPackageDtosInput!): UpdateManyResponse!
     updateManyMediaDtos(input: UpdateManyMediaDtosInput!): UpdateManyResponse!
     updateManyShowcaseHighlightFeatures(input: UpdateManyShowcaseHighlightFeaturesInput!): UpdateManyResponse!
+    updateManyUsers(input: UpdateManyUsersInput!): UpdateManyResponse!
     updateOneImageList(input: UpdateOneImageListInput!): ImageList!
+    updateOneInvestmentPackageDto(input: UpdateOneInvestmentPackageDtoInput!): InvestmentPackageDto!
     updateOneMediaDto(input: UpdateOneMediaDtoInput!): MediaDto!
     updateOneSetting(input: SettingCreateDto!): Boolean!
+    updateOneShowcase(input: ShowcaseCreateInputDto!, slug: String!): Boolean!
     updateOneShowcaseHighlightFeature(input: UpdateOneShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
+    updateOneUser(input: UpdateOneUserInput!): User!
 }
 
 type PageInfo {
@@ -173,6 +244,18 @@ type Query {
         "Specify to sort results."
         sorting: [ImageListSort!] = []
     ): ImageListConnection!
+    investmentPackageDto(
+        "The id of the record to find."
+        id: ID!
+    ): InvestmentPackageDto
+    investmentPackageDtos(
+        "Specify to filter the records returned."
+        filter: InvestmentPackageDtoFilter = {},
+        "Limit or page results."
+        paging: CursorPaging = {first : 10},
+        "Specify to sort results."
+        sorting: [InvestmentPackageDtoSort!] = []
+    ): InvestmentPackageDtoConnection!
     mediaDto(
         "The id of the record to find."
         id: ID!
@@ -209,6 +292,18 @@ type Query {
         sorting: [ShowcaseSort!] = []
     ): ShowcaseConnection!
     slugs: [String!]!
+    user(
+        "The id of the record to find."
+        id: ID!
+    ): User
+    users(
+        "Specify to filter the records returned."
+        filter: UserFilter = {},
+        "Limit or page results."
+        paging: CursorPaging = {first : 10},
+        "Specify to sort results."
+        sorting: [UserSort!] = []
+    ): UserConnection!
 }
 
 type SettingDto {
@@ -229,8 +324,9 @@ type Showcase {
     brand: ShowcaseBrand!
     createdAt: DateTime!
     description: String!
-    expectedQuantity: Float!
+    expectedQuantity: ShowcasePrice
     expectedSaleAt: DateTime
+    expectedSaleEndAt: DateTime
     expectedSalePrice: ShowcasePrice
     highlightFeatures(
         "Specify to filter the records returned."
@@ -246,6 +342,7 @@ type Showcase {
         "Specify to sort results."
         sorting: [ImageListSort!] = []
     ): [ImageList!]!
+    inventory: ShowcaseInventoryDto
     name: String!
     publishStatus: PublishStatus!
     slug: String!
@@ -255,6 +352,7 @@ type Showcase {
 
 type ShowcaseAggregateGroupBy {
     expectedSaleAt: DateTime
+    expectedSaleEndAt: DateTime
     name: String
     publishStatus: PublishStatus
     slug: String
@@ -276,6 +374,7 @@ type ShowcaseConnection {
 
 type ShowcaseCountAggregate {
     expectedSaleAt: Int
+    expectedSaleEndAt: Int
     name: Int
     publishStatus: Int
     slug: Int
@@ -337,8 +436,23 @@ type ShowcaseHighlightFeatureMinAggregate {
     name: String
 }
 
+"Thông tin về chi phí vận hành showcase"
+type ShowcaseInventoryDto {
+    "Tỉ lệ chi phí quảng cáo"
+    adCostRate: Float!
+    "Tỉ lệ giá vốn/giá bán sản phẩm"
+    capitalizationRate: Float!
+    "Tốc độ tăng trưởng kì vọng"
+    expectedGrowthRate: Float!
+    "Tỉ lệ chi phí vận hành"
+    operatingCostRate: Float!
+    "Vòng quay vốn an toàn tương ứng"
+    revolvingInterval: Float!
+}
+
 type ShowcaseMaxAggregate {
     expectedSaleAt: DateTime
+    expectedSaleEndAt: DateTime
     name: String
     publishStatus: PublishStatus
     slug: String
@@ -348,6 +462,7 @@ type ShowcaseMaxAggregate {
 
 type ShowcaseMinAggregate {
     expectedSaleAt: DateTime
+    expectedSaleEndAt: DateTime
     name: String
     publishStatus: PublishStatus
     slug: String
@@ -370,11 +485,68 @@ type UpdateManyResponse {
 type User {
     email: String!
     name: String!
-    showcasePosts: [Showcase!]!
+    role: AuthRoleType!
     uid: ID!
 }
 
+type UserAggregateGroupBy {
+    email: String
+    role: AuthRoleType
+    uid: ID
+}
+
+type UserConnection {
+    "Array of edges."
+    edges: [UserEdge!]!
+    "Paging information"
+    pageInfo: PageInfo!
+}
+
+type UserCountAggregate {
+    email: Int
+    role: Int
+    uid: Int
+}
+
+type UserDeleteResponse {
+    email: String
+    name: String
+    role: AuthRoleType
+    uid: ID
+}
+
+type UserEdge {
+    "Cursor for this node."
+    cursor: ConnectionCursor!
+    "The node containing the User"
+    node: User!
+}
+
+type UserMaxAggregate {
+    email: String
+    role: AuthRoleType
+    uid: ID
+}
+
+type UserMinAggregate {
+    email: String
+    role: AuthRoleType
+    uid: ID
+}
+
+enum AuthRoleType {
+    ADMIN
+    INVESTOR
+    SUPERADMIN
+    USER
+}
+
 enum ImageListSortFields {
+    id
+}
+
+enum InvestmentPackageDtoSortFields {
+    displayName
     id
 }
 
@@ -395,6 +567,7 @@ enum ShowcaseHighlightFeatureSortFields {
 
 enum ShowcaseSortFields {
     expectedSaleAt
+    expectedSaleEndAt
     name
     publishStatus
     slug
@@ -420,6 +593,12 @@ enum SortNulls {
     NULLS_LAST
 }
 
+enum UserSortFields {
+    email
+    role
+    uid
+}
+
 input AddHighlightFeaturesToShowcaseInput {
     "The id of the record."
     id: String!
@@ -441,13 +620,43 @@ input AddImagesToImageListInput {
     relationIds: [ID!]!
 }
 
+input AuthRoleTypeFilterComparison {
+    eq: AuthRoleType
+    gt: AuthRoleType
+    gte: AuthRoleType
+    iLike: AuthRoleType
+    in: [AuthRoleType!]
+    is: Boolean
+    isNot: Boolean
+    like: AuthRoleType
+    lt: AuthRoleType
+    lte: AuthRoleType
+    neq: AuthRoleType
+    notILike: AuthRoleType
+    notIn: [AuthRoleType!]
+    notLike: AuthRoleType
+}
+
 input CreateImageListInputDto {
     images: [MediaInput!]
+}
+
+input CreateInvestmentPackageDto {
+    benefitRate: Float
+    count: Float
+    displayName: String
+    fundedRate: Float
+    id: ID
 }
 
 input CreateManyImageListsInput {
     "Array of records to create"
     imageLists: [CreateImageListInputDto!]!
+}
+
+input CreateManyInvestmentPackageDtosInput {
+    "Array of records to create"
+    investmentPackageDtos: [CreateInvestmentPackageDto!]!
 }
 
 input CreateManyMediaDtosInput {
@@ -460,9 +669,19 @@ input CreateManyShowcaseHighlightFeaturesInput {
     showcaseHighlightFeatures: [ShowcaseHFCreateInputDto!]!
 }
 
+input CreateManyUsersInput {
+    "Array of records to create"
+    users: [CreateUser!]!
+}
+
 input CreateOneImageListInput {
     "The record to create"
     imageList: CreateImageListInputDto!
+}
+
+input CreateOneInvestmentPackageDtoInput {
+    "The record to create"
+    investmentPackageDto: CreateInvestmentPackageDto!
 }
 
 input CreateOneMediaDtoInput {
@@ -473,6 +692,18 @@ input CreateOneMediaDtoInput {
 input CreateOneShowcaseHighlightFeatureInput {
     "The record to create"
     showcaseHighlightFeature: ShowcaseHFCreateInputDto!
+}
+
+input CreateOneUserInput {
+    "The record to create"
+    user: CreateUser!
+}
+
+input CreateUser {
+    email: String
+    name: String
+    role: AuthRoleType
+    uid: ID
 }
 
 input CursorPaging {
@@ -511,6 +742,11 @@ input DeleteManyImageListsInput {
     filter: ImageListDeleteFilter!
 }
 
+input DeleteManyInvestmentPackageDtosInput {
+    "Filter to find records to delete"
+    filter: InvestmentPackageDtoDeleteFilter!
+}
+
 input DeleteManyMediaDtosInput {
     "Filter to find records to delete"
     filter: MediaDtoDeleteFilter!
@@ -526,7 +762,17 @@ input DeleteManyShowcasesInput {
     filter: ShowcaseDeleteFilter!
 }
 
+input DeleteManyUsersInput {
+    "Filter to find records to delete"
+    filter: UserDeleteFilter!
+}
+
 input DeleteOneImageListInput {
+    "The id of the record to delete."
+    id: ID!
+}
+
+input DeleteOneInvestmentPackageDtoInput {
     "The id of the record to delete."
     id: ID!
 }
@@ -537,6 +783,11 @@ input DeleteOneMediaDtoInput {
 }
 
 input DeleteOneShowcaseHighlightFeatureInput {
+    "The id of the record to delete."
+    id: ID!
+}
+
+input DeleteOneUserInput {
     "The id of the record to delete."
     id: ID!
 }
@@ -580,6 +831,33 @@ input ImageListUpdateFilter {
     and: [ImageListUpdateFilter!]
     id: IDFilterComparison
     or: [ImageListUpdateFilter!]
+}
+
+input InvestmentPackageDtoDeleteFilter {
+    and: [InvestmentPackageDtoDeleteFilter!]
+    displayName: StringFieldComparison
+    id: IDFilterComparison
+    or: [InvestmentPackageDtoDeleteFilter!]
+}
+
+input InvestmentPackageDtoFilter {
+    and: [InvestmentPackageDtoFilter!]
+    displayName: StringFieldComparison
+    id: IDFilterComparison
+    or: [InvestmentPackageDtoFilter!]
+}
+
+input InvestmentPackageDtoSort {
+    direction: SortDirection!
+    field: InvestmentPackageDtoSortFields!
+    nulls: SortNulls
+}
+
+input InvestmentPackageDtoUpdateFilter {
+    and: [InvestmentPackageDtoUpdateFilter!]
+    displayName: StringFieldComparison
+    id: IDFilterComparison
+    or: [InvestmentPackageDtoUpdateFilter!]
 }
 
 input MediaDtoDeleteFilter {
@@ -729,20 +1007,24 @@ input ShowcaseBrandInput {
 input ShowcaseCreateInputDto {
     brand: ShowcaseBrandInput!
     description: String!
-    expectedQuantity: Float!
+    expectedQuantity: ShowcasePriceInput
     expectedSaleAt: DateTime
+    expectedSaleEndAt: DateTime
     expectedSalePrice: ShowcasePriceInput
     highlightFeatures: [ShowcaseHFCreateInputDto!]
     id: String
     image: MediaInput!
     imageLists: [CreateImageListInputDto!]
+    inventory: ShowcaseInventoryDtoInput
     name: String!
+    publishStatus: PublishStatus
     status: ShowcaseStatus!
 }
 
 input ShowcaseDeleteFilter {
     and: [ShowcaseDeleteFilter!]
     expectedSaleAt: DateFieldComparison
+    expectedSaleEndAt: DateFieldComparison
     name: StringFieldComparison
     or: [ShowcaseDeleteFilter!]
     publishStatus: PublishStatusFilterComparison
@@ -754,6 +1036,7 @@ input ShowcaseDeleteFilter {
 input ShowcaseFilter {
     and: [ShowcaseFilter!]
     expectedSaleAt: DateFieldComparison
+    expectedSaleEndAt: DateFieldComparison
     name: StringFieldComparison
     or: [ShowcaseFilter!]
     publishStatus: PublishStatusFilterComparison
@@ -794,6 +1077,19 @@ input ShowcaseHighlightFeatureUpdateFilter {
     id: IDFilterComparison
     name: StringFieldComparison
     or: [ShowcaseHighlightFeatureUpdateFilter!]
+}
+
+input ShowcaseInventoryDtoInput {
+    "Tỉ lệ chi phí quảng cáo"
+    adCostRate: Float!
+    "Tỉ lệ giá vốn/giá bán sản phẩm"
+    capitalizationRate: Float!
+    "Tốc độ tăng trưởng kì vọng"
+    expectedGrowthRate: Float!
+    "Tỉ lệ chi phí vận hành"
+    operatingCostRate: Float!
+    "Vòng quay vốn an toàn tương ứng"
+    revolvingInterval: Float!
 }
 
 input ShowcasePriceInput {
@@ -847,11 +1143,26 @@ input UpdateImageList {
     id: ID
 }
 
+input UpdateInvestmentPackageDto {
+    benefitRate: Float
+    count: Float
+    displayName: String
+    fundedRate: Float
+    id: ID
+}
+
 input UpdateManyImageListsInput {
     "Filter used to find fields to update"
     filter: ImageListUpdateFilter!
     "The update to apply to all records found using the filter"
     update: UpdateImageList!
+}
+
+input UpdateManyInvestmentPackageDtosInput {
+    "Filter used to find fields to update"
+    filter: InvestmentPackageDtoUpdateFilter!
+    "The update to apply to all records found using the filter"
+    update: UpdateInvestmentPackageDto!
 }
 
 input UpdateManyMediaDtosInput {
@@ -866,6 +1177,13 @@ input UpdateManyShowcaseHighlightFeaturesInput {
     filter: ShowcaseHighlightFeatureUpdateFilter!
     "The update to apply to all records found using the filter"
     update: UpdateShowcaseHighlightFeature!
+}
+
+input UpdateManyUsersInput {
+    "Filter used to find fields to update"
+    filter: UserUpdateFilter!
+    "The update to apply to all records found using the filter"
+    update: UpdateUser!
 }
 
 input UpdateMediaDto {
@@ -883,6 +1201,13 @@ input UpdateOneImageListInput {
     update: UpdateImageList!
 }
 
+input UpdateOneInvestmentPackageDtoInput {
+    "The id of the record to update"
+    id: ID!
+    "The update to apply."
+    update: UpdateInvestmentPackageDto!
+}
+
 input UpdateOneMediaDtoInput {
     "The id of the record to update"
     id: ID!
@@ -897,10 +1222,54 @@ input UpdateOneShowcaseHighlightFeatureInput {
     update: UpdateShowcaseHighlightFeature!
 }
 
+input UpdateOneUserInput {
+    "The id of the record to update"
+    id: ID!
+    "The update to apply."
+    update: UpdateUser!
+}
+
 input UpdateShowcaseHighlightFeature {
     description: String
     id: ID
     name: String
+}
+
+input UpdateUser {
+    email: String
+    name: String
+    role: AuthRoleType
+    uid: ID
+}
+
+input UserDeleteFilter {
+    and: [UserDeleteFilter!]
+    email: StringFieldComparison
+    or: [UserDeleteFilter!]
+    role: AuthRoleTypeFilterComparison
+    uid: IDFilterComparison
+}
+
+input UserFilter {
+    and: [UserFilter!]
+    email: StringFieldComparison
+    or: [UserFilter!]
+    role: AuthRoleTypeFilterComparison
+    uid: IDFilterComparison
+}
+
+input UserSort {
+    direction: SortDirection!
+    field: UserSortFields!
+    nulls: SortNulls
+}
+
+input UserUpdateFilter {
+    and: [UserUpdateFilter!]
+    email: StringFieldComparison
+    or: [UserUpdateFilter!]
+    role: AuthRoleTypeFilterComparison
+    uid: IDFilterComparison
 }
 
 

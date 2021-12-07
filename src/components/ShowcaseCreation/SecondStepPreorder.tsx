@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { useForm } from "react-hook-form";
@@ -30,9 +30,36 @@ export default function SecondStepPreorder(): JSX.Element {
     form = useForm<ShowcaseForm>({
       defaultValues: {
         ...(showcase as unknown as ShowcaseForm),
+        inventory: {
+          capitalizationRate: 50,
+          adCostRate: 17,
+          operatingCostRate: 8,
+          revolvingInterval: 70,
+          expectedGrowthRate: 2,
+        },
       },
     }),
-    { control, handleSubmit, formState } = form;
+    { control, handleSubmit, formState, watch, setValue } = form;
+
+  const watchRegularQuantity = watch("expectedQuantity.regular", 0);
+
+  useEffect(() => {
+    if (watchRegularQuantity > 0) {
+      const pioneer = Math.round(watchRegularQuantity * 0.2),
+        promo = Math.round(watchRegularQuantity * 0.3),
+        preorder = watchRegularQuantity - (pioneer + promo);
+      setValue(
+        "expectedQuantity",
+        {
+          regular: watchRegularQuantity,
+          pioneer,
+          promo,
+          preorder,
+        },
+        { shouldDirty: true }
+      );
+    }
+  }, [setValue, watchRegularQuantity]);
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -95,6 +122,31 @@ export default function SecondStepPreorder(): JSX.Element {
               placeholder={"Chú thích sản phẩm"}
               placeholderColor={"#222"}
             />
+            <FormInput
+              name={"expectedSaleAt"}
+              control={control}
+              variant={"standard"}
+              placeholder={"Ngày ra mắt dự kiến"}
+              // placeholderColor={"#222"}
+              component={EnhancedTextField}
+            />
+            <FormInput
+              name={"expectedSaleEndAt"}
+              control={control}
+              variant={"standard"}
+              placeholder={"Ngày kết thúc dự kiến"}
+              // placeholderColor={"#222"}
+              component={EnhancedTextField}
+            />
+            <FormInput
+              name={"expectedQuantity.regular"}
+              control={control}
+              variant={"standard"}
+              placeholder={"Số lượng dự kiến"}
+              // placeholderColor={"#222"}
+              component={EnhancedTextField}
+              type={"number"}
+            />
           </Stack>
           <Box
             sx={{
@@ -127,13 +179,6 @@ export default function SecondStepPreorder(): JSX.Element {
               {/*  component={EnhancedTextField}*/}
               {/*  type={"number"}*/}
               {/*/>*/}
-              <FormInput
-                name={"expectedSaleAt"}
-                control={control}
-                variant={"standard"}
-                placeholder={"Ngày ra mắt dự kiến"}
-                component={EnhancedTextField}
-              />
             </Stack>
           </Box>
           <CollapseCard header={"Tính năng nổi bật"} defaultOpen>
@@ -151,7 +196,7 @@ export default function SecondStepPreorder(): JSX.Element {
           </CollapseCard>
           <CollapseCard header={"video / hình ảnh"} defaultOpen>
             <ListEditor
-              name={"imageList.0.images"}
+              name={"imageLists.0.images"}
               control={control}
               ItemComponent={(itemProps) => (
                 <ImageUploader {...itemProps}>
@@ -185,6 +230,7 @@ export default function SecondStepPreorder(): JSX.Element {
                       name={"expectedSalePrice.regular"}
                       control={control}
                       placeholder={"Nhập giá niêm yết"}
+                      type={"number"}
                     />
                   </td>
                 </tr>
@@ -200,6 +246,7 @@ export default function SecondStepPreorder(): JSX.Element {
                       name={"expectedSalePrice.pioneer"}
                       control={control}
                       placeholder={"Nhập giá"}
+                      type={"number"}
                     />
                   </td>
                   <td>
@@ -216,6 +263,7 @@ export default function SecondStepPreorder(): JSX.Element {
                       name={"expectedSalePrice.promo"}
                       control={control}
                       placeholder={"Nhập giá"}
+                      type={"number"}
                     />
                   </td>
                   <td>
@@ -234,6 +282,7 @@ export default function SecondStepPreorder(): JSX.Element {
                       name={"expectedSalePrice.preorder"}
                       control={control}
                       placeholder={"Nhập giá"}
+                      type={"number"}
                     />
                   </td>
                   <td>

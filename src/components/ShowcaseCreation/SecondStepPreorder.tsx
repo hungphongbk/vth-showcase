@@ -9,7 +9,6 @@ import { EnhancedMultilineTextField, EnhancedTextField } from "./styled";
 import CreationBottomBar from "./CreationBottomBar";
 import { DevTool } from "@hookform/devtools";
 import { apiService } from "../../api";
-import ImageListUploader from "./data/ImageListUploader";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
 import {
@@ -151,10 +150,28 @@ export default function SecondStepPreorder(): JSX.Element {
             />
           </CollapseCard>
           <CollapseCard header={"video / hình ảnh"} defaultOpen>
-            <ImageListUploader control={control} />
+            <ListEditor
+              name={"imageList.0.images"}
+              control={control}
+              ItemComponent={(itemProps) => (
+                <ImageUploader {...itemProps}>
+                  <Stack direction={"column"} alignItems={"center"}>
+                    <PlusIcon
+                      sx={{ color: "black", height: 26, width: 26, mb: 0.5 }}
+                    />
+                    <Typography sx={{ fontSize: 15, fontWeight: 600 }}>
+                      Thêm hình ảnh
+                    </Typography>
+                    <Typography>JPEG, JPG - 1300x630px</Typography>
+                    <Typography>Tối đa 1MB</Typography>
+                  </Stack>
+                </ImageUploader>
+              )}
+              options={{ deletable: true }}
+            />
           </CollapseCard>
           <CollapseCard header={"giá bán dự kiến"} defaultOpen>
-            <SimpleTableRoot rounded sx={{ whiteSpace: "nowrap" }}>
+            <SimpleTableRoot rounded sx={{ whiteSpace: "nowrap", mt: -2 }}>
               <table>
                 <tr>
                   <td>

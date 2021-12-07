@@ -23,6 +23,8 @@ import { StyledDialog } from "../src/components/commons";
 import { UploadService } from "../src/service";
 import { VthThemeProvider } from "@hungphongbk/vth-sdk";
 import CreatorAndInvestorActions from "../src/components/CreatorAndInvestorActions";
+import { LocalizationProvider } from "@mui/lab";
+import DateAdapter from "@mui/lab/AdapterDateFns";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -85,23 +87,25 @@ export default function MyApp(props: AppPropsWithLayout) {
               >
                 <ThemeProvider theme={theme}>
                   <SnackbarProvider maxSnack={3}>
-                    <CssBaseline />
-                    <Header />
-                    <LayoutGroup>
-                      <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
-                        <Image
-                          src={"/background.png"}
-                          layout="fill"
-                          objectFit="cover"
-                          quality={70}
-                        />
-                      </Box>
-                      {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
-                      {getLayout(
-                        <Component {...pageProps} key={router.route} />
-                      )}
-                      <CreatorAndInvestorActions />
-                    </LayoutGroup>
+                    <LocalizationProvider dateAdapter={DateAdapter}>
+                      <CssBaseline />
+                      <Header />
+                      <LayoutGroup>
+                        <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
+                          <Image
+                            src={"/background.png"}
+                            layout="fill"
+                            objectFit="cover"
+                            quality={70}
+                          />
+                        </Box>
+                        {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
+                        {getLayout(
+                          <Component {...pageProps} key={router.route} />
+                        )}
+                        <CreatorAndInvestorActions />
+                      </LayoutGroup>
+                    </LocalizationProvider>
                   </SnackbarProvider>
                 </ThemeProvider>
               </VthThemeProvider>

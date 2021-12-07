@@ -21,6 +21,7 @@ import {
   ListEditor,
   SimpleTableRoot,
 } from "@hungphongbk/vth-sdk";
+import { MobileDatePicker } from "@mui/lab";
 
 type ShowcaseForm = Omit<Showcase, "author" | "image"> & {
   author: Omit<User, "showcasePosts">;
@@ -108,18 +109,34 @@ export default function SecondStepPreorder(): JSX.Element {
             <FormInput
               name={"expectedSaleAt"}
               control={control}
-              variant={"standard"}
-              placeholder={"Ngày ra mắt dự kiến"}
               // placeholderColor={"#222"}
-              component={EnhancedTextField}
+              component={MobileDatePicker}
+              inputFormat="dd/MM/yyyy"
+              renderInput={(params: any) => (
+                <EnhancedTextField
+                  size={"small"}
+                  variant={"standard"}
+                  placeholder={"Ngày ra mắt dự kiến"}
+                  {...params}
+                />
+              )}
+              defaultValue={null}
             />
             <FormInput
               name={"expectedSaleEndAt"}
               control={control}
-              variant={"standard"}
-              placeholder={"Ngày kết thúc dự kiến"}
               // placeholderColor={"#222"}
-              component={EnhancedTextField}
+              component={MobileDatePicker}
+              inputFormat="dd/MM/yyyy"
+              renderInput={(params: any) => (
+                <EnhancedTextField
+                  size={"small"}
+                  variant={"standard"}
+                  placeholder={"Ngày kết thúc dự kiến"}
+                  {...params}
+                />
+              )}
+              defaultValue={null}
             />
             <FormInput
               name={"expectedQuantity.regular"}
@@ -177,27 +194,27 @@ export default function SecondStepPreorder(): JSX.Element {
               options={{ deletable: true }}
             />
           </CollapseCard>
-          <CollapseCard header={"video / hình ảnh"} defaultOpen>
-            <ListEditor
-              name={"imageLists.0.images"}
-              control={control}
-              ItemComponent={(itemProps) => (
-                <ImageUploader {...itemProps}>
-                  <Stack direction={"column"} alignItems={"center"}>
-                    <PlusIcon
-                      sx={{ color: "black", height: 26, width: 26, mb: 0.5 }}
-                    />
-                    <Typography sx={{ fontSize: 15, fontWeight: 600 }}>
-                      Thêm hình ảnh
-                    </Typography>
-                    <Typography>JPEG, JPG - 1300x630px</Typography>
-                    <Typography>Tối đa 1MB</Typography>
-                  </Stack>
-                </ImageUploader>
-              )}
-              options={{ deletable: true }}
-            />
-          </CollapseCard>
+          {/*<CollapseCard header={"video / hình ảnh"} defaultOpen>*/}
+          {/*  <ListEditor*/}
+          {/*    name={"imageLists.0.images"}*/}
+          {/*    control={control}*/}
+          {/*    ItemComponent={(itemProps) => (*/}
+          {/*      <ImageUploader {...itemProps}>*/}
+          {/*        <Stack direction={"column"} alignItems={"center"}>*/}
+          {/*          <PlusIcon*/}
+          {/*            sx={{ color: "black", height: 26, width: 26, mb: 0.5 }}*/}
+          {/*          />*/}
+          {/*          <Typography sx={{ fontSize: 15, fontWeight: 600 }}>*/}
+          {/*            Thêm hình ảnh*/}
+          {/*          </Typography>*/}
+          {/*          <Typography>JPEG, JPG - 1300x630px</Typography>*/}
+          {/*          <Typography>Tối đa 1MB</Typography>*/}
+          {/*        </Stack>*/}
+          {/*      </ImageUploader>*/}
+          {/*    )}*/}
+          {/*    options={{ deletable: true }}*/}
+          {/*  />*/}
+          {/*</CollapseCard>*/}
           <CollapseCard header={"giá bán dự kiến"} defaultOpen>
             <SimpleTableRoot rounded sx={{ whiteSpace: "nowrap", mt: -2 }}>
               <table>

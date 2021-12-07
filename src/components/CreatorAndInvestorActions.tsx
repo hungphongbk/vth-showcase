@@ -2,12 +2,14 @@ import { useState } from "react";
 import {
   Backdrop,
   css,
+  Fade,
   SpeedDial,
   SpeedDialAction,
   styled,
 } from "@mui/material";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import DocumentIcon from "../assets/icons/DocumentIcon";
+import { useRouter } from "next/router";
 
 const ICON_SIZE = 30,
   ACTION_GUTTER = 4;
@@ -70,34 +72,43 @@ type CreatorAndInvestorActionsProps = {};
 export default function CreatorAndInvestorActions(
   props: CreatorAndInvestorActionsProps
 ): JSX.Element {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleUploadNew = async () => {
+    await router.push("/manage/create-post");
+    handleClose();
+  };
+
   return (
     <>
       <Backdrop open={open} sx={{ zIndex: 9 }} />
-      <StyledSpeedDial
-        ariaLabel="creator and investor speed dial"
-        icon={<SpeedDialIcon />}
-        onClose={handleClose}
-        onOpen={handleOpen}
-        open={open}
-      >
-        <SpeedDialAction
-          key={"qlda"}
-          icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
-          tooltipTitle={"Quản lý dự án"}
-          tooltipOpen
-          onClick={handleClose}
-        />
-        <SpeedDialAction
-          key={"htpt"}
-          icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
-          tooltipTitle={"Hợp tác phát triển"}
-          tooltipOpen
-          onClick={handleClose}
-        />
-      </StyledSpeedDial>
+      <Fade in={!/\/manage\/create-post/.test(router.asPath)}>
+        <StyledSpeedDial
+          ariaLabel="creator and investor speed dial"
+          icon={<SpeedDialIcon />}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          open={open}
+        >
+          <SpeedDialAction
+            key={"htpt"}
+            icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
+            tooltipTitle={"Hợp tác"}
+            tooltipOpen
+            onClick={handleClose}
+          />
+          <SpeedDialAction
+            key={"qlda"}
+            icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
+            tooltipTitle={"Đăng sản phẩm"}
+            tooltipOpen
+            onClick={handleUploadNew}
+          />
+        </StyledSpeedDial>
+      </Fade>
     </>
   );
 }

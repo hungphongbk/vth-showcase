@@ -4,6 +4,7 @@ import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { useRouter } from "next/router";
 import { ShowcaseStatus } from "../../types/graphql";
 import SecondStepShowcase from "./SecondStepShowcase";
+import SecondStepPreorder from "./SecondStepPreorder";
 
 export default function SecondStep(): JSX.Element {
   const { showcase, dispatch } = useShowcaseCreation();
@@ -14,12 +15,7 @@ export default function SecondStep(): JSX.Element {
    * just convenience for developmemt process
    */
   useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      dispatch({
-        type: "update",
-        payload: { status: ShowcaseStatus.Idea, imageLists: [{ images: [] }] },
-      });
-    } else if (!showcase.status) {
+    if (!showcase.status) {
       // noinspection JSIgnoredPromiseFromCall
       router.replace("/manage/create-post/step1");
     } else
@@ -29,9 +25,9 @@ export default function SecondStep(): JSX.Element {
 
   return (
     <Box sx={{ p: 1 }}>
-      {showcase.status ===
-      ShowcaseStatus.Coming ? /* TODO */ null : typeof showcase.status !==
-        "undefined" ? (
+      {showcase.status === ShowcaseStatus.Coming ? (
+        <SecondStepPreorder />
+      ) : typeof showcase.status !== "undefined" ? (
         <SecondStepShowcase />
       ) : null}
     </Box>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { useForm } from "react-hook-form";
@@ -19,6 +19,7 @@ import {
   HighlightFeature,
   ImageUploader,
   ListEditor,
+  SimpleTableRoot,
 } from "@hungphongbk/vth-sdk";
 
 type ShowcaseForm = Omit<Showcase, "author" | "image"> & {
@@ -26,16 +27,43 @@ type ShowcaseForm = Omit<Showcase, "author" | "image"> & {
   image: MediaInput;
 };
 
-export default function SecondStepShowcase(): JSX.Element {
+export default function SecondStepPreorder(): JSX.Element {
   const router = useRouter();
   const { showcase, dispatch } = useShowcaseCreation(),
     callback = useShowcaseCreationSuccess(),
     form = useForm<ShowcaseForm>({
       defaultValues: {
         ...(showcase as unknown as ShowcaseForm),
+        inventory: {
+          capitalizationRate: 50,
+          adCostRate: 17,
+          operatingCostRate: 8,
+          revolvingInterval: 70,
+          expectedGrowthRate: 2,
+        },
       },
     }),
-    { control, handleSubmit, formState } = form;
+    { control, handleSubmit, formState, watch, setValue } = form;
+
+  const watchRegularQuantity = watch("expectedQuantity.regular", 0);
+
+  useEffect(() => {
+    if (watchRegularQuantity > 0) {
+      const pioneer = Math.round(watchRegularQuantity * 0.2),
+        promo = Math.round(watchRegularQuantity * 0.3),
+        preorder = watchRegularQuantity - (pioneer + promo);
+      setValue(
+        "expectedQuantity",
+        {
+          regular: watchRegularQuantity,
+          pioneer,
+          promo,
+          preorder,
+        },
+        { shouldDirty: true }
+      );
+    }
+  }, [setValue, watchRegularQuantity]);
 
   const onSave = async (values: ShowcaseForm) => {
     try {
@@ -77,6 +105,31 @@ export default function SecondStepShowcase(): JSX.Element {
               placeholder={"Chú thích sản phẩm"}
               placeholderColor={"#222"}
             />
+            <FormInput
+              name={"expectedSaleAt"}
+              control={control}
+              variant={"standard"}
+              placeholder={"Ngày ra mắt dự kiến"}
+              // placeholderColor={"#222"}
+              component={EnhancedTextField}
+            />
+            <FormInput
+              name={"expectedSaleEndAt"}
+              control={control}
+              variant={"standard"}
+              placeholder={"Ngày kết thúc dự kiến"}
+              // placeholderColor={"#222"}
+              component={EnhancedTextField}
+            />
+            <FormInput
+              name={"expectedQuantity.regular"}
+              control={control}
+              variant={"standard"}
+              placeholder={"Số lượng dự kiến"}
+              // placeholderColor={"#222"}
+              component={EnhancedTextField}
+              type={"number"}
+            />
           </Stack>
           <Box
             sx={{
@@ -109,13 +162,6 @@ export default function SecondStepShowcase(): JSX.Element {
               {/*  component={EnhancedTextField}*/}
               {/*  type={"number"}*/}
               {/*/>*/}
-              <FormInput
-                name={"expectedSaleAt"}
-                control={control}
-                variant={"standard"}
-                placeholder={"Ngày ra mắt dự kiến"}
-                component={EnhancedTextField}
-              />
             </Stack>
           </Box>
           <CollapseCard header={"Tính năng nổi bật"} defaultOpen>
@@ -133,7 +179,7 @@ export default function SecondStepShowcase(): JSX.Element {
           </CollapseCard>
           <CollapseCard header={"video / hình ảnh"} defaultOpen>
             <ListEditor
-              name={"imageList.0.images"}
+              name={"imageLists.0.images"}
               control={control}
               ItemComponent={(itemProps) => (
                 <ImageUploader {...itemProps}>
@@ -151,6 +197,83 @@ export default function SecondStepShowcase(): JSX.Element {
               )}
               options={{ deletable: true }}
             />
+          </CollapseCard>
+          <CollapseCard header={"giá bán dự kiến"} defaultOpen>
+            <SimpleTableRoot rounded sx={{ whiteSpace: "nowrap", mt: -2 }}>
+              <table>
+                <tr>
+                  <td>
+                    <Typography sx={{ fontWeight: 600 }}>
+                      Giá niêm yết
+                    </Typography>
+                  </td>
+                  <td colSpan={2}>
+                    <FormInput
+                      component={SimpleTableRoot.TextEditor}
+                      name={"expectedSalePrice.regular"}
+                      control={control}
+                      placeholder={"Nhập giá niêm yết"}
+                      type={"number"}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <Typography sx={{ fontWeight: 600 }}>
+                      Gói Tiên Phong
+                    </Typography>
+                  </td>
+                  <td>
+                    <FormInput
+                      component={SimpleTableRoot.TextEditor}
+                      name={"expectedSalePrice.pioneer"}
+                      control={control}
+                      placeholder={"Nhập giá"}
+                      type={"number"}
+                    />
+                  </td>
+                  <td>
+                    <Typography>%</Typography>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <Typography sx={{ fontWeight: 600 }}>Gói Ưu Đãi</Typography>
+                  </td>
+                  <td>
+                    <FormInput
+                      component={SimpleTableRoot.TextEditor}
+                      name={"expectedSalePrice.promo"}
+                      control={control}
+                      placeholder={"Nhập giá"}
+                      type={"number"}
+                    />
+                  </td>
+                  <td>
+                    <Typography>%</Typography>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <Typography sx={{ fontWeight: 600 }}>
+                      Gói Đặt Trước
+                    </Typography>
+                  </td>
+                  <td>
+                    <FormInput
+                      component={SimpleTableRoot.TextEditor}
+                      name={"expectedSalePrice.preorder"}
+                      control={control}
+                      placeholder={"Nhập giá"}
+                      type={"number"}
+                    />
+                  </td>
+                  <td>
+                    <Typography>%</Typography>
+                  </td>
+                </tr>
+              </table>
+            </SimpleTableRoot>
           </CollapseCard>
         </Stack>
       </Box>

@@ -1,6 +1,10 @@
 import { css, darken, styled } from "@mui/material/styles";
-import { TextField, TextFieldProps } from "@mui/material";
+import { Button, TextField, TextFieldProps, Typography } from "@mui/material";
 import "../../theme";
+import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
+import React, { useCallback } from "react";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export const EnhancedTextField = styled(TextField)<{
   placeholderColor?: string;
@@ -49,3 +53,38 @@ export const EnhancedMultilineTextField = styled((props: TextFieldProps) => (
     }
   `
 );
+
+export const useShowcaseCreationSuccess = () => {
+  const router = useRouter();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  return useCallback(
+    async ({ name, slug }: any) => {
+      await router.prefetch(`/post/${slug}`);
+      enqueueSnackbar(
+        <Typography>
+          Showcase&nbsp;<strong>{name}</strong>&nbsp;được tạo thành công!
+        </Typography>,
+        {
+          variant: "success",
+          action: (key) => (
+            <Button
+              variant={"text"}
+              onClick={async () => {
+                await router.push(`/post/${slug}`);
+                closeSnackbar(key);
+              }}
+              endIcon={<ArrowForwardIcon />}
+            >
+              Xem
+            </Button>
+          ),
+          async onClose(_, reason) {
+            if (reason === "timeout") await router.push(`/post/${slug}`);
+          },
+        }
+      );
+    },
+    [closeSnackbar, enqueueSnackbar, router]
+  );
+};

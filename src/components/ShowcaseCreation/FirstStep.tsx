@@ -14,6 +14,8 @@ import { css, styled } from "@mui/material/styles";
 import StatusBadge from "../StatusBadge";
 import { ShowcaseStatus } from "../../types/graphql";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const StyledSelect = styled(Select)(
   ({ theme }) => css`
@@ -49,17 +51,40 @@ export default function FirstStep(): JSX.Element {
     [dispatch]
   );
 
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     // noinspection JSIgnoredPromiseFromCall
     router.prefetch("/manage/create-post/step2");
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    enqueueSnackbar(
+      <Typography>
+        Showcase&nbsp;<strong>Dự án test tạo chơi cho vui</strong>&nbsp;được tạo
+        thành công!
+      </Typography>,
+      {
+        persist: true,
+        variant: "success",
+        action: (key) => (
+          <Button
+            variant={"text"}
+            onClick={async () => {
+              //
+            }}
+            endIcon={<ArrowForwardIcon />}
+          >
+            Xem
+          </Button>
+        ),
+      }
+    );
   }, []);
 
   useEffect(() => {
     if (mucTieu.length > 0 && tinhTrang.length > 0) {
       if (mucTieu === "kinh-doanh" && tinhTrang === "san-sang")
         setStatus(ShowcaseStatus.Coming);
-      if (tinhTrang === "hang-mau") setStatus(ShowcaseStatus.Showcase);
+      else if (tinhTrang === "hang-mau") setStatus(ShowcaseStatus.Showcase);
       else setStatus(ShowcaseStatus.Idea);
     }
   }, [mucTieu, setStatus, tinhTrang]);

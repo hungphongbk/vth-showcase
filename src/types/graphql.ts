@@ -58,8 +58,20 @@ export interface CreateImageListInputDto {
   images: Maybe<Array<MediaInput>>;
 }
 
+export interface CreateInvestmentPackageDto {
+  benefitRate: Maybe<Scalars['Float']>;
+  count: Maybe<Scalars['Float']>;
+  displayName: Maybe<Scalars['String']>;
+  fundedRate: Maybe<Scalars['Float']>;
+  id: Maybe<Scalars['ID']>;
+}
+
 export interface CreateManyImageListsInput {
   imageLists: Array<CreateImageListInputDto>;
+}
+
+export interface CreateManyInvestmentPackageDtosInput {
+  investmentPackageDtos: Array<CreateInvestmentPackageDto>;
 }
 
 export interface CreateManyMediaDtosInput {
@@ -76,6 +88,10 @@ export interface CreateManyUsersInput {
 
 export interface CreateOneImageListInput {
   imageList: CreateImageListInputDto;
+}
+
+export interface CreateOneInvestmentPackageDtoInput {
+  investmentPackageDto: CreateInvestmentPackageDto;
 }
 
 export interface CreateOneMediaDtoInput {
@@ -129,6 +145,10 @@ export interface DeleteManyImageListsInput {
   filter: ImageListDeleteFilter;
 }
 
+export interface DeleteManyInvestmentPackageDtosInput {
+  filter: InvestmentPackageDtoDeleteFilter;
+}
+
 export interface DeleteManyMediaDtosInput {
   filter: MediaDtoDeleteFilter;
 }
@@ -150,6 +170,10 @@ export interface DeleteManyUsersInput {
 }
 
 export interface DeleteOneImageListInput {
+  id: Scalars['ID'];
+}
+
+export interface DeleteOneInvestmentPackageDtoInput {
   id: Scalars['ID'];
 }
 
@@ -255,6 +279,92 @@ export interface ImageListUpdateFilter {
   or: Maybe<Array<ImageListUpdateFilter>>;
 }
 
+export interface InvestmentPackageDto {
+  benefitRate: Scalars['Float'];
+  count: Scalars['Float'];
+  displayName: Scalars['String'];
+  fundedRate: Scalars['Float'];
+  id: Scalars['ID'];
+}
+
+export interface InvestmentPackageDtoAggregateGroupBy {
+  displayName: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface InvestmentPackageDtoAvgAggregate {
+  id: Maybe<Scalars['Float']>;
+}
+
+export interface InvestmentPackageDtoConnection {
+  edges: Array<InvestmentPackageDtoEdge>;
+  pageInfo: PageInfo;
+}
+
+export interface InvestmentPackageDtoCountAggregate {
+  displayName: Maybe<Scalars['Int']>;
+  id: Maybe<Scalars['Int']>;
+}
+
+export interface InvestmentPackageDtoDeleteFilter {
+  and: Maybe<Array<InvestmentPackageDtoDeleteFilter>>;
+  displayName: Maybe<StringFieldComparison>;
+  id: Maybe<IdFilterComparison>;
+  or: Maybe<Array<InvestmentPackageDtoDeleteFilter>>;
+}
+
+export interface InvestmentPackageDtoDeleteResponse {
+  benefitRate: Maybe<Scalars['Float']>;
+  count: Maybe<Scalars['Float']>;
+  displayName: Maybe<Scalars['String']>;
+  fundedRate: Maybe<Scalars['Float']>;
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface InvestmentPackageDtoEdge {
+  cursor: Scalars['ConnectionCursor'];
+  node: InvestmentPackageDto;
+}
+
+export interface InvestmentPackageDtoFilter {
+  and: Maybe<Array<InvestmentPackageDtoFilter>>;
+  displayName: Maybe<StringFieldComparison>;
+  id: Maybe<IdFilterComparison>;
+  or: Maybe<Array<InvestmentPackageDtoFilter>>;
+}
+
+export interface InvestmentPackageDtoMaxAggregate {
+  displayName: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface InvestmentPackageDtoMinAggregate {
+  displayName: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface InvestmentPackageDtoSort {
+  direction: SortDirection;
+  field: InvestmentPackageDtoSortFields;
+  nulls: Maybe<SortNulls>;
+}
+
+export enum InvestmentPackageDtoSortFields {
+  DisplayName = 'displayName',
+  Id = 'id'
+}
+
+export interface InvestmentPackageDtoSumAggregate {
+  id: Maybe<Scalars['Float']>;
+}
+
+export interface InvestmentPackageDtoUpdateFilter {
+  and: Maybe<Array<InvestmentPackageDtoUpdateFilter>>;
+  displayName: Maybe<StringFieldComparison>;
+  id: Maybe<IdFilterComparison>;
+  or: Maybe<Array<InvestmentPackageDtoUpdateFilter>>;
+}
+
 
 export interface MediaDto extends IdInterface {
   filename: Scalars['String'];
@@ -345,21 +455,25 @@ export interface Mutation {
   addImageListsToShowcase: Showcase;
   addImagesToImageList: ImageList;
   createManyImageLists: Array<ImageList>;
+  createManyInvestmentPackageDtos: Array<InvestmentPackageDto>;
   createManyMediaDtos: Array<MediaDto>;
   createManyShowcaseHighlightFeatures: Array<ShowcaseHighlightFeature>;
   createManyUsers: Array<User>;
   createOneImageList: ImageList;
+  createOneInvestmentPackageDto: InvestmentPackageDto;
   createOneMediaDto: MediaDto;
   createOneSetting: Scalars['Boolean'];
   createOneShowcase: Showcase;
   createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
   createOneUser: User;
   deleteManyImageLists: DeleteManyResponse;
+  deleteManyInvestmentPackageDtos: DeleteManyResponse;
   deleteManyMediaDtos: DeleteManyResponse;
   deleteManyShowcaseHighlightFeatures: DeleteManyResponse;
   deleteManyShowcases: DeleteManyResponse;
   deleteManyUsers: DeleteManyResponse;
   deleteOneImageList: ImageListDeleteResponse;
+  deleteOneInvestmentPackageDto: InvestmentPackageDtoDeleteResponse;
   deleteOneMediaDto: MediaDtoDeleteResponse;
   deleteOneShowcase: Scalars['Boolean'];
   deleteOneShowcaseHighlightFeature: ShowcaseHighlightFeatureDeleteResponse;
@@ -377,12 +491,15 @@ export interface Mutation {
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
   updateManyImageLists: UpdateManyResponse;
+  updateManyInvestmentPackageDtos: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
   updateManyShowcaseHighlightFeatures: UpdateManyResponse;
   updateManyUsers: UpdateManyResponse;
   updateOneImageList: ImageList;
+  updateOneInvestmentPackageDto: InvestmentPackageDto;
   updateOneMediaDto: MediaDto;
   updateOneSetting: Scalars['Boolean'];
+  updateOneShowcase: Scalars['Boolean'];
   updateOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
   updateOneUser: User;
 }
@@ -408,6 +525,11 @@ export interface MutationCreateManyImageListsArgs {
 }
 
 
+export interface MutationCreateManyInvestmentPackageDtosArgs {
+  input: CreateManyInvestmentPackageDtosInput;
+}
+
+
 export interface MutationCreateManyMediaDtosArgs {
   input: CreateManyMediaDtosInput;
 }
@@ -425,6 +547,11 @@ export interface MutationCreateManyUsersArgs {
 
 export interface MutationCreateOneImageListArgs {
   input: CreateOneImageListInput;
+}
+
+
+export interface MutationCreateOneInvestmentPackageDtoArgs {
+  input: CreateOneInvestmentPackageDtoInput;
 }
 
 
@@ -458,6 +585,11 @@ export interface MutationDeleteManyImageListsArgs {
 }
 
 
+export interface MutationDeleteManyInvestmentPackageDtosArgs {
+  input: DeleteManyInvestmentPackageDtosInput;
+}
+
+
 export interface MutationDeleteManyMediaDtosArgs {
   input: DeleteManyMediaDtosInput;
 }
@@ -480,6 +612,11 @@ export interface MutationDeleteManyUsersArgs {
 
 export interface MutationDeleteOneImageListArgs {
   input: DeleteOneImageListInput;
+}
+
+
+export interface MutationDeleteOneInvestmentPackageDtoArgs {
+  input: DeleteOneInvestmentPackageDtoInput;
 }
 
 
@@ -568,6 +705,11 @@ export interface MutationUpdateManyImageListsArgs {
 }
 
 
+export interface MutationUpdateManyInvestmentPackageDtosArgs {
+  input: UpdateManyInvestmentPackageDtosInput;
+}
+
+
 export interface MutationUpdateManyMediaDtosArgs {
   input: UpdateManyMediaDtosInput;
 }
@@ -588,6 +730,11 @@ export interface MutationUpdateOneImageListArgs {
 }
 
 
+export interface MutationUpdateOneInvestmentPackageDtoArgs {
+  input: UpdateOneInvestmentPackageDtoInput;
+}
+
+
 export interface MutationUpdateOneMediaDtoArgs {
   input: UpdateOneMediaDtoInput;
 }
@@ -595,6 +742,12 @@ export interface MutationUpdateOneMediaDtoArgs {
 
 export interface MutationUpdateOneSettingArgs {
   input: SettingCreateDto;
+}
+
+
+export interface MutationUpdateOneShowcaseArgs {
+  input: ShowcaseCreateInputDto;
+  slug: Scalars['String'];
 }
 
 
@@ -639,6 +792,8 @@ export interface PublishStatusFilterComparison {
 export interface Query {
   imageList: Maybe<ImageList>;
   imageLists: ImageListConnection;
+  investmentPackageDto: Maybe<InvestmentPackageDto>;
+  investmentPackageDtos: InvestmentPackageDtoConnection;
   mediaDto: Maybe<MediaDto>;
   mediaDtos: MediaDtoConnection;
   setting: Maybe<SettingDto>;
@@ -662,6 +817,18 @@ export interface QueryImageListsArgs {
   filter?: Maybe<ImageListFilter>;
   paging?: Maybe<CursorPaging>;
   sorting?: Maybe<Array<ImageListSort>>;
+}
+
+
+export interface QueryInvestmentPackageDtoArgs {
+  id: Scalars['ID'];
+}
+
+
+export interface QueryInvestmentPackageDtosArgs {
+  filter?: Maybe<InvestmentPackageDtoFilter>;
+  paging?: Maybe<CursorPaging>;
+  sorting?: Maybe<Array<InvestmentPackageDtoSort>>;
 }
 
 
@@ -803,13 +970,15 @@ export interface Showcase {
   brand: ShowcaseBrand;
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
-  expectedQuantity: Scalars['Float'];
+  expectedQuantity: Maybe<ShowcasePrice>;
   expectedSaleAt: Maybe<Scalars['DateTime']>;
+  expectedSaleEndAt: Maybe<Scalars['DateTime']>;
   expectedSalePrice: Maybe<ShowcasePrice>;
   highlightFeatures: Array<ShowcaseHighlightFeature>;
   id: Scalars['ID'];
   image: MediaDto;
   imageLists: Array<ImageList>;
+  inventory: Maybe<ShowcaseInventoryDto>;
   name: Scalars['String'];
   publishStatus: PublishStatus;
   slug: Scalars['String'];
@@ -831,6 +1000,7 @@ export interface ShowcaseImageListsArgs {
 
 export interface ShowcaseAggregateGroupBy {
   expectedSaleAt: Maybe<Scalars['DateTime']>;
+  expectedSaleEndAt: Maybe<Scalars['DateTime']>;
   name: Maybe<Scalars['String']>;
   publishStatus: Maybe<PublishStatus>;
   slug: Maybe<Scalars['String']>;
@@ -855,6 +1025,7 @@ export interface ShowcaseConnection {
 
 export interface ShowcaseCountAggregate {
   expectedSaleAt: Maybe<Scalars['Int']>;
+  expectedSaleEndAt: Maybe<Scalars['Int']>;
   name: Maybe<Scalars['Int']>;
   publishStatus: Maybe<Scalars['Int']>;
   slug: Maybe<Scalars['Int']>;
@@ -865,13 +1036,15 @@ export interface ShowcaseCountAggregate {
 export interface ShowcaseCreateInputDto {
   brand: ShowcaseBrandInput;
   description: Scalars['String'];
-  expectedQuantity: Scalars['Float'];
+  expectedQuantity: Maybe<ShowcasePriceInput>;
   expectedSaleAt: Maybe<Scalars['DateTime']>;
+  expectedSaleEndAt: Maybe<Scalars['DateTime']>;
   expectedSalePrice: Maybe<ShowcasePriceInput>;
   highlightFeatures: Maybe<Array<ShowcaseHfCreateInputDto>>;
   id: Maybe<Scalars['String']>;
   image: MediaInput;
   imageLists: Maybe<Array<CreateImageListInputDto>>;
+  inventory: Maybe<ShowcaseInventoryDtoInput>;
   name: Scalars['String'];
   publishStatus: Maybe<PublishStatus>;
   status: ShowcaseStatus;
@@ -880,6 +1053,7 @@ export interface ShowcaseCreateInputDto {
 export interface ShowcaseDeleteFilter {
   and: Maybe<Array<ShowcaseDeleteFilter>>;
   expectedSaleAt: Maybe<DateFieldComparison>;
+  expectedSaleEndAt: Maybe<DateFieldComparison>;
   name: Maybe<StringFieldComparison>;
   or: Maybe<Array<ShowcaseDeleteFilter>>;
   publishStatus: Maybe<PublishStatusFilterComparison>;
@@ -896,6 +1070,7 @@ export interface ShowcaseEdge {
 export interface ShowcaseFilter {
   and: Maybe<Array<ShowcaseFilter>>;
   expectedSaleAt: Maybe<DateFieldComparison>;
+  expectedSaleEndAt: Maybe<DateFieldComparison>;
   name: Maybe<StringFieldComparison>;
   or: Maybe<Array<ShowcaseFilter>>;
   publishStatus: Maybe<PublishStatusFilterComparison>;
@@ -986,8 +1161,25 @@ export interface ShowcaseHighlightFeatureUpdateFilter {
   or: Maybe<Array<ShowcaseHighlightFeatureUpdateFilter>>;
 }
 
+export interface ShowcaseInventoryDto {
+  adCostRate: Scalars['Float'];
+  capitalizationRate: Scalars['Float'];
+  expectedGrowthRate: Scalars['Float'];
+  operatingCostRate: Scalars['Float'];
+  revolvingInterval: Scalars['Float'];
+}
+
+export interface ShowcaseInventoryDtoInput {
+  adCostRate: Scalars['Float'];
+  capitalizationRate: Scalars['Float'];
+  expectedGrowthRate: Scalars['Float'];
+  operatingCostRate: Scalars['Float'];
+  revolvingInterval: Scalars['Float'];
+}
+
 export interface ShowcaseMaxAggregate {
   expectedSaleAt: Maybe<Scalars['DateTime']>;
+  expectedSaleEndAt: Maybe<Scalars['DateTime']>;
   name: Maybe<Scalars['String']>;
   publishStatus: Maybe<PublishStatus>;
   slug: Maybe<Scalars['String']>;
@@ -997,6 +1189,7 @@ export interface ShowcaseMaxAggregate {
 
 export interface ShowcaseMinAggregate {
   expectedSaleAt: Maybe<Scalars['DateTime']>;
+  expectedSaleEndAt: Maybe<Scalars['DateTime']>;
   name: Maybe<Scalars['String']>;
   publishStatus: Maybe<PublishStatus>;
   slug: Maybe<Scalars['String']>;
@@ -1026,6 +1219,7 @@ export interface ShowcaseSort {
 
 export enum ShowcaseSortFields {
   ExpectedSaleAt = 'expectedSaleAt',
+  ExpectedSaleEndAt = 'expectedSaleEndAt',
   Name = 'name',
   PublishStatus = 'publishStatus',
   Slug = 'slug',
@@ -1087,9 +1281,22 @@ export interface UpdateImageList {
   id: Maybe<Scalars['ID']>;
 }
 
+export interface UpdateInvestmentPackageDto {
+  benefitRate: Maybe<Scalars['Float']>;
+  count: Maybe<Scalars['Float']>;
+  displayName: Maybe<Scalars['String']>;
+  fundedRate: Maybe<Scalars['Float']>;
+  id: Maybe<Scalars['ID']>;
+}
+
 export interface UpdateManyImageListsInput {
   filter: ImageListUpdateFilter;
   update: UpdateImageList;
+}
+
+export interface UpdateManyInvestmentPackageDtosInput {
+  filter: InvestmentPackageDtoUpdateFilter;
+  update: UpdateInvestmentPackageDto;
 }
 
 export interface UpdateManyMediaDtosInput {
@@ -1122,6 +1329,11 @@ export interface UpdateMediaDto {
 export interface UpdateOneImageListInput {
   id: Scalars['ID'];
   update: UpdateImageList;
+}
+
+export interface UpdateOneInvestmentPackageDtoInput {
+  id: Scalars['ID'];
+  update: UpdateInvestmentPackageDto;
 }
 
 export interface UpdateOneMediaDtoInput {

@@ -25,6 +25,11 @@ export default function CollapseCard({
       sx={[
         // @ts-ignore
         sx,
+        {
+          "&.MuiCard-root": {
+            p: 1,
+          },
+        },
         disableCardStyle
           ? {
               "&.MuiCard-root": {

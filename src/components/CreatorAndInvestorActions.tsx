@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   Backdrop,
   css,
+  Fade,
   SpeedDial,
   SpeedDialAction,
   styled,
@@ -84,28 +85,30 @@ export default function CreatorAndInvestorActions(
   return (
     <>
       <Backdrop open={open} sx={{ zIndex: 9 }} />
-      <StyledSpeedDial
-        ariaLabel="creator and investor speed dial"
-        icon={<SpeedDialIcon />}
-        onClose={handleClose}
-        onOpen={handleOpen}
-        open={open}
-      >
-        <SpeedDialAction
-          key={"htpt"}
-          icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
-          tooltipTitle={"Hợp tác"}
-          tooltipOpen
-          onClick={handleClose}
-        />
-        <SpeedDialAction
-          key={"qlda"}
-          icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
-          tooltipTitle={"Đăng sản phẩm"}
-          tooltipOpen
-          onClick={handleUploadNew}
-        />
-      </StyledSpeedDial>
+      <Fade in={!/\/manage\/create-post/.test(router.asPath)}>
+        <StyledSpeedDial
+          ariaLabel="creator and investor speed dial"
+          icon={<SpeedDialIcon />}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          open={open}
+        >
+          <SpeedDialAction
+            key={"htpt"}
+            icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
+            tooltipTitle={"Hợp tác"}
+            tooltipOpen
+            onClick={handleClose}
+          />
+          <SpeedDialAction
+            key={"qlda"}
+            icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
+            tooltipTitle={"Đăng sản phẩm"}
+            tooltipOpen
+            onClick={handleUploadNew}
+          />
+        </StyledSpeedDial>
+      </Fade>
     </>
   );
 }

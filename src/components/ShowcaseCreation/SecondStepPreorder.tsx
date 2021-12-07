@@ -150,21 +150,77 @@ export default function SecondStepPreorder(): JSX.Element {
               options={{ deletable: true }}
             />
           </CollapseCard>
-          <CollapseCard
-            header={"video / hình ảnh"}
-            defaultOpen
-            disableCardStyle
-          >
+          <CollapseCard header={"video / hình ảnh"} defaultOpen>
             <ImageListUploader control={control} />
           </CollapseCard>
           <CollapseCard header={"giá bán dự kiến"} defaultOpen>
-            <SimpleTableRoot>
+            <SimpleTableRoot rounded sx={{ whiteSpace: "nowrap" }}>
               <table>
                 <tr>
                   <td>
                     <Typography sx={{ fontWeight: 600 }}>
                       Giá niêm yết
                     </Typography>
+                  </td>
+                  <td colSpan={2}>
+                    <FormInput
+                      component={SimpleTableRoot.TextEditor}
+                      name={"expectedSalePrice.regular"}
+                      control={control}
+                      placeholder={"Nhập giá niêm yết"}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <Typography sx={{ fontWeight: 600 }}>
+                      Gói Tiên Phong
+                    </Typography>
+                  </td>
+                  <td>
+                    <FormInput
+                      component={SimpleTableRoot.TextEditor}
+                      name={"expectedSalePrice.pioneer"}
+                      control={control}
+                      placeholder={"Nhập giá"}
+                    />
+                  </td>
+                  <td>
+                    <Typography>%</Typography>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <Typography sx={{ fontWeight: 600 }}>Gói Ưu Đãi</Typography>
+                  </td>
+                  <td>
+                    <FormInput
+                      component={SimpleTableRoot.TextEditor}
+                      name={"expectedSalePrice.promo"}
+                      control={control}
+                      placeholder={"Nhập giá"}
+                    />
+                  </td>
+                  <td>
+                    <Typography>%</Typography>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <Typography sx={{ fontWeight: 600 }}>
+                      Gói Đặt Trước
+                    </Typography>
+                  </td>
+                  <td>
+                    <FormInput
+                      component={SimpleTableRoot.TextEditor}
+                      name={"expectedSalePrice.preorder"}
+                      control={control}
+                      placeholder={"Nhập giá"}
+                    />
+                  </td>
+                  <td>
+                    <Typography>%</Typography>
                   </td>
                 </tr>
               </table>

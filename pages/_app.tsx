@@ -83,8 +83,8 @@ export default function MyApp(props: AppPropsWithLayout) {
                   },
                 }}
               >
-                <SnackbarProvider maxSnack={3}>
-                  <ThemeProvider theme={theme}>
+                <ThemeProvider theme={theme}>
+                  <SnackbarProvider maxSnack={3}>
                     <CssBaseline />
                     <Header />
                     <LayoutGroup>
@@ -102,8 +102,8 @@ export default function MyApp(props: AppPropsWithLayout) {
                       )}
                       <CreatorAndInvestorActions />
                     </LayoutGroup>
-                  </ThemeProvider>
-                </SnackbarProvider>
+                  </SnackbarProvider>
+                </ThemeProvider>
               </VthThemeProvider>
               <AuthLoginHandler />
             </>

@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { useForm } from "react-hook-form";
 import { MediaInput, Showcase, User } from "../../types/graphql";
 import PlusIcon from "../../assets/icons/PlusIcon";
 import { CollapseCard } from "../index";
-import { EnhancedMultilineTextField, EnhancedTextField } from "./styled";
+import {
+  EnhancedMultilineTextField,
+  EnhancedTextField,
+  useShowcaseCreationSuccess,
+} from "./utils";
 import CreationBottomBar from "./CreationBottomBar";
 import { DevTool } from "@hookform/devtools";
 import { apiService } from "../../api";
-import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
 import {
   FormInput,
@@ -27,6 +30,7 @@ type ShowcaseForm = Omit<Showcase, "author" | "image"> & {
 export default function SecondStepPreorder(): JSX.Element {
   const router = useRouter();
   const { showcase, dispatch } = useShowcaseCreation(),
+    callback = useShowcaseCreationSuccess(),
     form = useForm<ShowcaseForm>({
       defaultValues: {
         ...(showcase as unknown as ShowcaseForm),
@@ -61,31 +65,10 @@ export default function SecondStepPreorder(): JSX.Element {
     }
   }, [setValue, watchRegularQuantity]);
 
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
   const onSave = async (values: ShowcaseForm) => {
     try {
       const { name, slug } = await apiService.createShowcase(values);
-      await router.prefetch(`/post/${slug}`);
-      enqueueSnackbar(
-        <>
-          Showcase <strong>{name}</strong> được tạo thành công!
-        </>,
-        {
-          variant: "success",
-          action: (key) => (
-            <Button
-              variant={"contained"}
-              onClick={async () => {
-                await router.push(`/post/${slug}`);
-                closeSnackbar(key);
-              }}
-            >
-              Xem
-            </Button>
-          ),
-        }
-      );
+      await callback({ name, slug });
     } catch (e) {}
   };
 

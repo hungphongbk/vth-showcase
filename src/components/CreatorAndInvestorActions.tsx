@@ -82,6 +82,11 @@ export default function CreatorAndInvestorActions(
     handleClose();
   };
 
+  const handleCorporate = async () => {
+    await router.push({ hash: "corporate" }, undefined, { shallow: true });
+    handleClose();
+  };
+
   return (
     <>
       <Backdrop open={open} sx={{ zIndex: 9 }} />
@@ -98,7 +103,7 @@ export default function CreatorAndInvestorActions(
             icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
             tooltipTitle={"Hợp tác"}
             tooltipOpen
-            onClick={handleClose}
+            onClick={handleCorporate}
           />
           <SpeedDialAction
             key={"qlda"}

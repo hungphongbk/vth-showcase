@@ -13,7 +13,7 @@ import { ReturnPromiseType } from "../../src/types/util.type";
 import { InvestorInformation } from "../../src/components/PostPage";
 
 const PreorderDialog = dynamic(
-  () => import("../../src/components/PreorderDialog"),
+  () => import("../../src/components/system/preorder-dialog"),
   { ssr: false }
 );
 

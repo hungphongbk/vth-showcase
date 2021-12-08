@@ -2,59 +2,40 @@ import { createTheme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 
 declare module "@mui/material/styles" {
+  interface VthPalette {
+    red: {
+      main: string;
+      light?: string;
+      dark?: string;
+    };
+    green: {
+      main: string;
+      light?: string;
+      dark?: string;
+    };
+    yellow: {
+      main: string;
+      light?: string;
+      dark?: string;
+    };
+    neutral: {
+      lightGrey: string;
+      darkGrey: string;
+      darkWhite: string;
+      black: string;
+      placeholderText: string;
+    };
+  }
+
   interface Theme {
     variables: {
       appBarHeight: number;
     };
   }
 
-  interface PaletteOptions {
-    red: {
-      main: string;
-      light?: string;
-      dark?: string;
-    };
-    green: {
-      main: string;
-      light?: string;
-      dark?: string;
-    };
-    yellow: {
-      main: string;
-      light?: string;
-      dark?: string;
-    };
-    neutral: {
-      lightGrey: string;
-      darkGrey: string;
-      darkWhite: string;
-      black: string;
-    };
-  }
+  interface PaletteOptions extends VthPalette {}
 
-  interface Palette {
-    red: {
-      main: string;
-      light?: string;
-      dark?: string;
-    };
-    green: {
-      main: string;
-      light?: string;
-      dark?: string;
-    };
-    yellow: {
-      main: string;
-      light?: string;
-      dark?: string;
-    };
-    neutral: {
-      lightGrey: string;
-      darkGrey: string;
-      darkWhite: string;
-      black: string;
-    };
-  }
+  interface Palette extends VthPalette {}
 
   // allow configuration using `createTheme`
   interface ThemeOptions {
@@ -96,6 +77,7 @@ const theme = createTheme({
       black: "#000",
       lightGrey: "#D5D5D5",
       darkGrey: "#ABABAB",
+      placeholderText: "rgba(0,0,0,.35)",
     },
   },
   variables: {

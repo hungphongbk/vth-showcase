@@ -12,6 +12,13 @@ import { SxProps } from "@mui/system";
 
 const StyledOutlinedInput = styled(OutlinedInput)(
   ({ theme }) => css`
+    .MuiInputBase-input {
+      box-sizing: border-box;
+      &::placeholder {
+        color: ${theme.palette.neutral.placeholderText};
+        opacity: 1;
+      }
+    }
     .MuiOutlinedInput-notchedOutline {
       border: none;
     }

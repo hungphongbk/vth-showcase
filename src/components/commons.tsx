@@ -1,4 +1,11 @@
-import { Box, Card, Dialog, DialogProps, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  Dialog,
+  DialogProps,
+  Select,
+  Typography,
+} from "@mui/material";
 import { motion } from "framer-motion";
 import { css, styled } from "@mui/material/styles";
 import { Timeline } from "@mui/lab";
@@ -74,6 +81,24 @@ export const StyledDialog = styled((props: Omit<DialogProps, "fullWidth">) => (
     }
     .MuiDialogContent-root {
       overflow-y: visible;
+    }
+  `
+);
+
+export const StyledSelect = styled(Select)(
+  ({ theme }) => css`
+    border: unset;
+    .MuiSelect-select {
+      height: 30px;
+      border: none;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      box-sizing: border-box;
+      border-radius: 15px;
+      background-color: #f3f3f3;
+    }
+    .MuiOutlinedInput-notchedOutline {
+      border: unset;
     }
   `
 );

@@ -623,6 +623,7 @@ export interface Mutation {
   setImageOnShowcase: Showcase;
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
+  submitInvestor: Scalars['Boolean'];
   updateManyCommentDtos: UpdateManyResponse;
   updateManyImageLists: UpdateManyResponse;
   updateManyInvestmentPackageDtos: UpdateManyResponse;
@@ -889,6 +890,11 @@ export interface MutationSetImageOnShowcaseHighlightFeatureArgs {
 
 export interface MutationSetImagesOnImageListArgs {
   input: SetImagesOnImageListInput;
+}
+
+
+export interface MutationSubmitInvestorArgs {
+  form: SubmitInvestorInputDto;
 }
 
 
@@ -1535,6 +1541,15 @@ export interface StringFieldComparison {
   notILike: Maybe<Scalars['String']>;
   notIn: Maybe<Array<Scalars['String']>>;
   notLike: Maybe<Scalars['String']>;
+}
+
+export interface SubmitInvestorInputDto {
+  email: Scalars['String'];
+  fund: Scalars['String'];
+  job: Scalars['String'];
+  method: Scalars['String'];
+  phone: Scalars['String'];
+  purpose: Scalars['String'];
 }
 
 export interface UpdateCommentDto {

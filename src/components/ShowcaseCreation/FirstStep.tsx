@@ -1,36 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  MenuItem,
-  Select,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, MenuItem, Stack, Typography } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { StyledInputLabel, TextInput } from "../TextInput";
 import { sxFullWidth } from "../../utils/predefinedSx";
-import { css, styled } from "@mui/material/styles";
 import StatusBadge from "../StatusBadge";
 import { ShowcaseStatus } from "../../types/graphql";
 import { useRouter } from "next/router";
-
-const StyledSelect = styled(Select)(
-  ({ theme }) => css`
-    border: unset;
-    .MuiSelect-select {
-      height: 36px;
-      border: 1px solid ${theme.palette.divider};
-      padding-top: 6px;
-      padding-bottom: 6px;
-      box-sizing: border-box;
-      border-radius: 18px;
-    }
-    .MuiOutlinedInput-notchedOutline {
-      border: unset;
-    }
-  `
-);
+import { StyledSelect } from "../commons";
 
 export default function FirstStep(): JSX.Element {
   const { showcase, dispatch } = useShowcaseCreation();

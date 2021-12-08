@@ -14,6 +14,11 @@ export interface Scalars {
   JSONObject: any;
 }
 
+export interface AddCommentsToShowcaseInput {
+  id: Scalars['String'];
+  relationIds: Array<Scalars['ID']>;
+}
+
 export interface AddHighlightFeaturesToShowcaseInput {
   id: Scalars['String'];
   relationIds: Array<Scalars['ID']>;
@@ -53,6 +58,107 @@ export interface AuthRoleTypeFilterComparison {
   notLike: Maybe<AuthRoleType>;
 }
 
+export interface CommentCreateDto {
+  content: Scalars['String'];
+  rate: Array<CommentRateEnum>;
+}
+
+export interface CommentDto {
+  author: Maybe<User>;
+  content: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+  rate: Array<CommentRateEnum>;
+  updatedAt: Scalars['DateTime'];
+}
+
+export interface CommentDtoAggregateGroupBy {
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface CommentDtoAvgAggregate {
+  id: Maybe<Scalars['Float']>;
+}
+
+export interface CommentDtoConnection {
+  edges: Array<CommentDtoEdge>;
+  pageInfo: PageInfo;
+}
+
+export interface CommentDtoCountAggregate {
+  id: Maybe<Scalars['Int']>;
+}
+
+export interface CommentDtoDeleteFilter {
+  and: Maybe<Array<CommentDtoDeleteFilter>>;
+  id: Maybe<IdFilterComparison>;
+  or: Maybe<Array<CommentDtoDeleteFilter>>;
+}
+
+export interface CommentDtoDeleteResponse {
+  content: Maybe<Scalars['String']>;
+  createdAt: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['ID']>;
+  rate: Maybe<Array<CommentRateEnum>>;
+  updatedAt: Maybe<Scalars['DateTime']>;
+}
+
+export interface CommentDtoEdge {
+  cursor: Scalars['ConnectionCursor'];
+  node: CommentDto;
+}
+
+export interface CommentDtoFilter {
+  and: Maybe<Array<CommentDtoFilter>>;
+  id: Maybe<IdFilterComparison>;
+  or: Maybe<Array<CommentDtoFilter>>;
+}
+
+export interface CommentDtoMaxAggregate {
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface CommentDtoMinAggregate {
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface CommentDtoSort {
+  direction: SortDirection;
+  field: CommentDtoSortFields;
+  nulls: Maybe<SortNulls>;
+}
+
+export enum CommentDtoSortFields {
+  Id = 'id'
+}
+
+export interface CommentDtoSumAggregate {
+  id: Maybe<Scalars['Float']>;
+}
+
+export interface CommentDtoUpdateFilter {
+  and: Maybe<Array<CommentDtoUpdateFilter>>;
+  id: Maybe<IdFilterComparison>;
+  or: Maybe<Array<CommentDtoUpdateFilter>>;
+}
+
+export enum CommentRateEnum {
+  CoTiemNang = 'CO_TIEM_NANG',
+  CungDuoc = 'CUNG_DUOC',
+  DangTien = 'DANG_TIEN',
+  Hay = 'HAY',
+  SieuPham = 'SIEU_PHAM',
+  XamXi = 'XAM_XI'
+}
+
+
+export interface CreateCommentDto {
+  content: Maybe<Scalars['String']>;
+  createdAt: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['ID']>;
+  rate: Maybe<Array<CommentRateEnum>>;
+  updatedAt: Maybe<Scalars['DateTime']>;
+}
 
 export interface CreateImageListInputDto {
   images: Maybe<Array<MediaInput>>;
@@ -64,6 +170,10 @@ export interface CreateInvestmentPackageDto {
   displayName: Maybe<Scalars['String']>;
   fundedRate: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['ID']>;
+}
+
+export interface CreateManyCommentDtosInput {
+  commentDtos: Array<CreateCommentDto>;
 }
 
 export interface CreateManyImageListsInput {
@@ -84,6 +194,10 @@ export interface CreateManyShowcaseHighlightFeaturesInput {
 
 export interface CreateManyUsersInput {
   users: Array<CreateUser>;
+}
+
+export interface CreateOneCommentDtoInput {
+  commentDto: CreateCommentDto;
 }
 
 export interface CreateOneImageListInput {
@@ -141,6 +255,10 @@ export interface DateFieldComparisonBetween {
 }
 
 
+export interface DeleteManyCommentDtosInput {
+  filter: CommentDtoDeleteFilter;
+}
+
 export interface DeleteManyImageListsInput {
   filter: ImageListDeleteFilter;
 }
@@ -167,6 +285,10 @@ export interface DeleteManyShowcasesInput {
 
 export interface DeleteManyUsersInput {
   filter: UserDeleteFilter;
+}
+
+export interface DeleteOneCommentDtoInput {
+  id: Scalars['ID'];
 }
 
 export interface DeleteOneImageListInput {
@@ -451,14 +573,17 @@ export interface MediaInput {
 }
 
 export interface Mutation {
+  addCommentsToShowcase: Showcase;
   addHighlightFeaturesToShowcase: Showcase;
   addImageListsToShowcase: Showcase;
   addImagesToImageList: ImageList;
+  createManyCommentDtos: Array<CommentDto>;
   createManyImageLists: Array<ImageList>;
   createManyInvestmentPackageDtos: Array<InvestmentPackageDto>;
   createManyMediaDtos: Array<MediaDto>;
   createManyShowcaseHighlightFeatures: Array<ShowcaseHighlightFeature>;
   createManyUsers: Array<User>;
+  createOneCommentDto: CommentDto;
   createOneImageList: ImageList;
   createOneInvestmentPackageDto: InvestmentPackageDto;
   createOneMediaDto: MediaDto;
@@ -466,35 +591,45 @@ export interface Mutation {
   createOneShowcase: Showcase;
   createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
   createOneUser: User;
+  deleteManyCommentDtos: DeleteManyResponse;
   deleteManyImageLists: DeleteManyResponse;
   deleteManyInvestmentPackageDtos: DeleteManyResponse;
   deleteManyMediaDtos: DeleteManyResponse;
   deleteManyShowcaseHighlightFeatures: DeleteManyResponse;
   deleteManyShowcases: DeleteManyResponse;
   deleteManyUsers: DeleteManyResponse;
+  deleteOneCommentDto: CommentDtoDeleteResponse;
   deleteOneImageList: ImageListDeleteResponse;
   deleteOneInvestmentPackageDto: InvestmentPackageDtoDeleteResponse;
   deleteOneMediaDto: MediaDtoDeleteResponse;
   deleteOneShowcase: Scalars['Boolean'];
   deleteOneShowcaseHighlightFeature: ShowcaseHighlightFeatureDeleteResponse;
   deleteOneUser: UserDeleteResponse;
+  postAnonymousComment: CommentDto;
+  postAuthorizedComment: CommentDto;
+  removeAuthorFromCommentDto: CommentDto;
   removeAuthorFromShowcase: Showcase;
+  removeCommentsFromShowcase: Showcase;
   removeHighlightFeaturesFromShowcase: Showcase;
   removeImageFromShowcase: Showcase;
   removeImageFromShowcaseHighlightFeature: ShowcaseHighlightFeature;
   removeImageListsFromShowcase: Showcase;
   removeImagesFromImageList: ImageList;
+  setAuthorOnCommentDto: CommentDto;
   setAuthorOnShowcase: Showcase;
+  setCommentsOnShowcase: Showcase;
   setHighlightFeaturesOnShowcase: Showcase;
   setImageListsOnShowcase: Showcase;
   setImageOnShowcase: Showcase;
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
+  updateManyCommentDtos: UpdateManyResponse;
   updateManyImageLists: UpdateManyResponse;
   updateManyInvestmentPackageDtos: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
   updateManyShowcaseHighlightFeatures: UpdateManyResponse;
   updateManyUsers: UpdateManyResponse;
+  updateOneCommentDto: CommentDto;
   updateOneImageList: ImageList;
   updateOneInvestmentPackageDto: InvestmentPackageDto;
   updateOneMediaDto: MediaDto;
@@ -502,6 +637,11 @@ export interface Mutation {
   updateOneShowcase: Scalars['Boolean'];
   updateOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
   updateOneUser: User;
+}
+
+
+export interface MutationAddCommentsToShowcaseArgs {
+  input: AddCommentsToShowcaseInput;
 }
 
 
@@ -517,6 +657,11 @@ export interface MutationAddImageListsToShowcaseArgs {
 
 export interface MutationAddImagesToImageListArgs {
   input: AddImagesToImageListInput;
+}
+
+
+export interface MutationCreateManyCommentDtosArgs {
+  input: CreateManyCommentDtosInput;
 }
 
 
@@ -542,6 +687,11 @@ export interface MutationCreateManyShowcaseHighlightFeaturesArgs {
 
 export interface MutationCreateManyUsersArgs {
   input: CreateManyUsersInput;
+}
+
+
+export interface MutationCreateOneCommentDtoArgs {
+  input: CreateOneCommentDtoInput;
 }
 
 
@@ -580,6 +730,11 @@ export interface MutationCreateOneUserArgs {
 }
 
 
+export interface MutationDeleteManyCommentDtosArgs {
+  input: DeleteManyCommentDtosInput;
+}
+
+
 export interface MutationDeleteManyImageListsArgs {
   input: DeleteManyImageListsInput;
 }
@@ -607,6 +762,11 @@ export interface MutationDeleteManyShowcasesArgs {
 
 export interface MutationDeleteManyUsersArgs {
   input: DeleteManyUsersInput;
+}
+
+
+export interface MutationDeleteOneCommentDtoArgs {
+  input: DeleteOneCommentDtoInput;
 }
 
 
@@ -640,8 +800,30 @@ export interface MutationDeleteOneUserArgs {
 }
 
 
+export interface MutationPostAnonymousCommentArgs {
+  input: CommentCreateDto;
+  slug: Scalars['String'];
+}
+
+
+export interface MutationPostAuthorizedCommentArgs {
+  input: CommentCreateDto;
+  slug: Scalars['String'];
+}
+
+
+export interface MutationRemoveAuthorFromCommentDtoArgs {
+  input: RemoveAuthorFromCommentDtoInput;
+}
+
+
 export interface MutationRemoveAuthorFromShowcaseArgs {
   input: RemoveAuthorFromShowcaseInput;
+}
+
+
+export interface MutationRemoveCommentsFromShowcaseArgs {
+  input: RemoveCommentsFromShowcaseInput;
 }
 
 
@@ -670,8 +852,18 @@ export interface MutationRemoveImagesFromImageListArgs {
 }
 
 
+export interface MutationSetAuthorOnCommentDtoArgs {
+  input: SetAuthorOnCommentDtoInput;
+}
+
+
 export interface MutationSetAuthorOnShowcaseArgs {
   input: SetAuthorOnShowcaseInput;
+}
+
+
+export interface MutationSetCommentsOnShowcaseArgs {
+  input: SetCommentsOnShowcaseInput;
 }
 
 
@@ -700,6 +892,11 @@ export interface MutationSetImagesOnImageListArgs {
 }
 
 
+export interface MutationUpdateManyCommentDtosArgs {
+  input: UpdateManyCommentDtosInput;
+}
+
+
 export interface MutationUpdateManyImageListsArgs {
   input: UpdateManyImageListsInput;
 }
@@ -722,6 +919,11 @@ export interface MutationUpdateManyShowcaseHighlightFeaturesArgs {
 
 export interface MutationUpdateManyUsersArgs {
   input: UpdateManyUsersInput;
+}
+
+
+export interface MutationUpdateOneCommentDtoArgs {
+  input: UpdateOneCommentDtoInput;
 }
 
 
@@ -760,6 +962,16 @@ export interface MutationUpdateOneUserArgs {
   input: UpdateOneUserInput;
 }
 
+export interface OffsetPageInfo {
+  hasNextPage: Maybe<Scalars['Boolean']>;
+  hasPreviousPage: Maybe<Scalars['Boolean']>;
+}
+
+export interface OffsetPaging {
+  limit: Maybe<Scalars['Int']>;
+  offset: Maybe<Scalars['Int']>;
+}
+
 export interface PageInfo {
   endCursor: Maybe<Scalars['ConnectionCursor']>;
   hasNextPage: Maybe<Scalars['Boolean']>;
@@ -790,6 +1002,8 @@ export interface PublishStatusFilterComparison {
 }
 
 export interface Query {
+  commentDto: Maybe<CommentDto>;
+  commentDtos: CommentDtoConnection;
   imageList: Maybe<ImageList>;
   imageLists: ImageListConnection;
   investmentPackageDto: Maybe<InvestmentPackageDto>;
@@ -805,6 +1019,18 @@ export interface Query {
   slugs: Array<Scalars['String']>;
   user: Maybe<User>;
   users: UserConnection;
+}
+
+
+export interface QueryCommentDtoArgs {
+  id: Scalars['ID'];
+}
+
+
+export interface QueryCommentDtosArgs {
+  filter?: Maybe<CommentDtoFilter>;
+  paging?: Maybe<CursorPaging>;
+  sorting?: Maybe<Array<CommentDtoSort>>;
 }
 
 
@@ -889,9 +1115,19 @@ export interface QueryUsersArgs {
   sorting?: Maybe<Array<UserSort>>;
 }
 
+export interface RemoveAuthorFromCommentDtoInput {
+  id: Scalars['ID'];
+  relationId: Scalars['ID'];
+}
+
 export interface RemoveAuthorFromShowcaseInput {
   id: Scalars['String'];
   relationId: Scalars['ID'];
+}
+
+export interface RemoveCommentsFromShowcaseInput {
+  id: Scalars['String'];
+  relationIds: Array<Scalars['ID']>;
 }
 
 export interface RemoveHighlightFeaturesFromShowcaseInput {
@@ -919,9 +1155,19 @@ export interface RemoveImagesFromImageListInput {
   relationIds: Array<Scalars['ID']>;
 }
 
+export interface SetAuthorOnCommentDtoInput {
+  id: Scalars['ID'];
+  relationId: Scalars['ID'];
+}
+
 export interface SetAuthorOnShowcaseInput {
   id: Scalars['String'];
   relationId: Scalars['ID'];
+}
+
+export interface SetCommentsOnShowcaseInput {
+  id: Scalars['String'];
+  relationIds: Array<Scalars['ID']>;
 }
 
 export interface SetHighlightFeaturesOnShowcaseInput {
@@ -968,6 +1214,7 @@ export interface SettingDtoEdge {
 export interface Showcase {
   author: User;
   brand: ShowcaseBrand;
+  comments: ShowcaseCommentsConnection;
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   expectedQuantity: Maybe<ShowcasePrice>;
@@ -984,6 +1231,13 @@ export interface Showcase {
   slug: Scalars['String'];
   status: ShowcaseStatus;
   updatedAt: Scalars['DateTime'];
+}
+
+
+export interface ShowcaseCommentsArgs {
+  filter?: Maybe<CommentDtoFilter>;
+  paging?: Maybe<OffsetPaging>;
+  sorting?: Maybe<Array<CommentDtoSort>>;
 }
 
 
@@ -1016,6 +1270,12 @@ export interface ShowcaseBrand {
 export interface ShowcaseBrandInput {
   description: Scalars['String'];
   name: Scalars['String'];
+}
+
+export interface ShowcaseCommentsConnection {
+  nodes: Array<CommentDto>;
+  pageInfo: OffsetPageInfo;
+  totalCount: Scalars['Int'];
 }
 
 export interface ShowcaseConnection {
@@ -1277,6 +1537,14 @@ export interface StringFieldComparison {
   notLike: Maybe<Scalars['String']>;
 }
 
+export interface UpdateCommentDto {
+  content: Maybe<Scalars['String']>;
+  createdAt: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['ID']>;
+  rate: Maybe<Array<CommentRateEnum>>;
+  updatedAt: Maybe<Scalars['DateTime']>;
+}
+
 export interface UpdateImageList {
   id: Maybe<Scalars['ID']>;
 }
@@ -1287,6 +1555,11 @@ export interface UpdateInvestmentPackageDto {
   displayName: Maybe<Scalars['String']>;
   fundedRate: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['ID']>;
+}
+
+export interface UpdateManyCommentDtosInput {
+  filter: CommentDtoUpdateFilter;
+  update: UpdateCommentDto;
 }
 
 export interface UpdateManyImageListsInput {
@@ -1324,6 +1597,11 @@ export interface UpdateMediaDto {
   mimetype: Maybe<Scalars['String']>;
   path: Maybe<Scalars['String']>;
   type: Maybe<Scalars['String']>;
+}
+
+export interface UpdateOneCommentDtoInput {
+  id: Scalars['ID'];
+  update: UpdateCommentDto;
 }
 
 export interface UpdateOneImageListInput {
@@ -1469,10 +1747,33 @@ export type DeleteMediaMutationVariables = Exact<{
 
 export type DeleteMediaMutation = { deleteOneMediaDto: { id: string | null } };
 
+export type PostAnonymousCommentMutationVariables = Exact<{
+  slug: Scalars['String'];
+  input: CommentCreateDto;
+}>;
+
+
+export type PostAnonymousCommentMutation = { postAnonymousComment: { id: string } };
+
+export type PostAuthorizedCommentMutationVariables = Exact<{
+  slug: Scalars['String'];
+  input: CommentCreateDto;
+}>;
+
+
+export type PostAuthorizedCommentMutation = { postAuthorizedComment: { id: string } };
+
 export type QueryBannerQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type QueryBannerQuery = { banner: { value: any } | null };
+
+export type QueryCommentsQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type QueryCommentsQuery = { showcase: { comments: { nodes: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author: { name: string } | null }> } } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];

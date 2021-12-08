@@ -1,5 +1,5 @@
 query queryBanner {
-    banner: setting(key: "common:banner"){
-        value
-    }
+  banner: setting(key: "common:banner"){
+    value
+  }
 }

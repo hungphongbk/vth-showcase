@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start -p 4000",
     "lint": "next lint",
-    "graphql-codegen": "NODE_ENV=development graphql-codegen --watch -r dotenv-flow/config",
+    "graphql-codegen:watch": "NODE_ENV=development graphql-codegen --watch -r dotenv-flow/config",
+    "graphql-codegen": "NODE_ENV=development graphql-codegen -r dotenv-flow/config",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -51,7 +52,8 @@
     "redux-persist": "^6.0.0",
     "redux-persist-indexeddb-storage": "^1.0.4",
     "sharp": "^0.29.3",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "swr": "^1.1.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "1.21.7",

@@ -1,0 +1,14 @@
+query QueryComments($slug: String!){
+  showcase(slug: $slug){
+    comments{
+      nodes {
+        id
+        author {
+          name
+        }
+        content
+        rate
+      }
+    }
+  }
+}

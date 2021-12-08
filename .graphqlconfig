@@ -3,8 +3,15 @@
   "schemaPath": "schema.graphql",
   "extensions": {
     "endpoints": {
-      "Default GraphQL Endpoint": {
+      "localhost": {
         "url": "http://localhost:3001/graphql",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": false
+      },
+      "staging": {
+        "url": "https://api.showcase-staging.vaithuhay.com/graphql",
         "headers": {
           "user-agent": "JS GraphQL"
         },

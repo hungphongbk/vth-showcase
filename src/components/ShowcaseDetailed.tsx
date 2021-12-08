@@ -20,6 +20,7 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import { Showcase, ShowcaseEdge } from "../types/graphql";
+import { CommentSection } from "./PostPage";
 
 const testPreview = (str: string) => /^\/preview/.test(str),
   testPost = (str: string) => /^\/post/.test(str);
@@ -277,6 +278,7 @@ export default function ShowcaseDetailed({
                 phải trải qua để đưa sản phẩm đến với người tiêu dùng...
               </Typography>
             </CollapseCard>
+            <CommentSection slug={item.slug} />
           </motion.div>
         )}
         <MotionBox

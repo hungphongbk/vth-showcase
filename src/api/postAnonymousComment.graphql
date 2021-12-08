@@ -1,0 +1,3 @@
+mutation postAnonymousComment($slug:String!,$input:CommentCreateDto!){
+  postAnonymousComment(slug: $slug,input: $input){id}
+}

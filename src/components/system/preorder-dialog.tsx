@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, Button, DialogContent, Stack, Typography } from "@mui/material";
-import { Showcase } from "../types/graphql";
-import { vndCurrency } from "../utils/string";
-import { TextInput } from "./TextInput";
-import { StyledDialog } from "./commons";
-import { useAppDispatch } from "../store";
-import { addShowcaseToCart } from "../store/cart/reducer";
+import { Showcase } from "../../types/graphql";
+import { vndCurrency } from "../../utils/string";
+import { TextInput } from "../TextInput";
+import { StyledDialog } from "../commons";
+import { useAppDispatch } from "../../store";
+import { addShowcaseToCart } from "../../store/cart/reducer";
 
 type PreorderDialogProps = {
   open: boolean;

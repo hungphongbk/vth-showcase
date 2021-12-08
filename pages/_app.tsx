@@ -18,7 +18,7 @@ import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { SnackbarProvider } from "notistack";
-import AuthLoginHandler from "../src/components/system/AuthLoginHandler";
+import { AuthLoginHandler, InvestorRegDialog } from "../src/components/system";
 import { StyledDialog } from "../src/components/commons";
 import { UploadService } from "../src/service";
 import { VthThemeProvider } from "@hungphongbk/vth-sdk";
@@ -109,6 +109,7 @@ export default function MyApp(props: AppPropsWithLayout) {
                           )}
                           <CreatorAndInvestorActions />
                         </LayoutGroup>
+                        <InvestorRegDialog />
                       </LocalizationProvider>
                     </SnackbarProvider>
                   </ThemeProvider>

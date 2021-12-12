@@ -26,7 +26,7 @@ import CreatorAndInvestorActions from "../src/components/CreatorAndInvestorActio
 import { LocalizationProvider } from "@mui/lab";
 import DateAdapter from "@mui/lab/AdapterDateFns";
 import { SWRConfig } from "swr";
-import { apolloClient } from "../src/api";
+import { useApollo } from "../src/api";
 import { ApolloProvider } from "@apollo/client";
 
 type NextPageWithLayout = NextPage & {
@@ -39,10 +39,9 @@ type AppPropsWithLayout = AppProps & {
 
 export default function MyApp(props: AppPropsWithLayout) {
   const { Component, pageProps, router } = props;
-
   const getLayout = Component.getLayout ?? ((page) => page);
-
   const persistor = persistStore(store);
+  const individualClient = useApollo(pageProps);
 
   return (
     <>
@@ -76,7 +75,7 @@ export default function MyApp(props: AppPropsWithLayout) {
         <PersistGate persistor={persistor}>
           {() => (
             <SWRConfig>
-              <ApolloProvider client={apolloClient}>
+              <ApolloProvider client={individualClient}>
                 <VthThemeProvider
                   config={{
                     components: {

@@ -3,6 +3,7 @@ import Image, { ImageProps } from "next/image";
 import { forwardRef } from "react";
 import bg1 from "../../assets/bg-investor-1.png";
 import BudgetIncreaseIcon from "../../assets/icons/BudgetIncreaseIcon";
+import { ShowcaseInvestorStatDto } from "../../types/graphql";
 
 type ImageBoxProps = BoxProps & { bg: ImageProps["src"] };
 // eslint-disable-next-line react/display-name
@@ -30,7 +31,7 @@ const StyledBox = styled(ImageBox)`
   height: 100%;
 `;
 
-export function PLIndex(props: unknown) {
+export function PLIndex({ stat }: { stat: ShowcaseInvestorStatDto }) {
   return (
     <Grid container spacing={1} alignItems={"stretch"}>
       <Grid item xs={12}>
@@ -56,7 +57,7 @@ export function PLIndex(props: unknown) {
               gridArea: "num",
             }}
           >
-            4.500.000.000 VND
+            {stat.firstYearRevenue.toLocaleString("vi-VN")} VND
           </Typography>
         </StyledBox>
       </Grid>
@@ -84,7 +85,7 @@ export function PLIndex(props: unknown) {
               gridArea: "num",
             }}
           >
-            500.000.000 VND
+            {stat.totalRevenue.toLocaleString("vi-VN")} VND
           </Typography>
         </StyledBox>
       </Grid>
@@ -113,7 +114,7 @@ export function PLIndex(props: unknown) {
               gridArea: "num",
             }}
           >
-            5%
+            {stat.growthRate}%
           </Typography>
         </StyledBox>
       </Grid>

@@ -5,6 +5,7 @@ export { apiService };
 
 export { default as queryShowcases } from "./queryShowcases.graphql";
 export { default as queryShowcasePreview } from "./queryShowcasePreview.graphql";
+export { default as queryShowcaseDetail } from "./queryShowcaseDetail.graphql";
 export { default as querySlugs } from "./querySlugs.graphql";
 export { default as queryBanner } from "./queryBanner.graphql";
 

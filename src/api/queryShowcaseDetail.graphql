@@ -1,0 +1,40 @@
+query ShowcaseDetail($slug: String!) {
+  showcase(slug: $slug) {
+    slug
+    name
+    author{
+      name
+    }
+    status
+    image {
+      path
+    }
+    description
+    expectedSalePrice{
+      regular
+      pioneer
+      preorder
+      promo
+    }
+  }
+  showcaseInvestorStat(slug:$slug) {
+    totalRevenue
+    firstYearRevenue
+    campaignDuration
+    growthRate
+  }
+  showcases(filter: { slug: { neq: $slug } }) {
+    edges {
+      node {
+        slug
+        name
+        status
+        image {
+          path
+        }
+        createdAt
+      }
+    }
+  }
+}
+

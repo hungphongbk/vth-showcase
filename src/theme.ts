@@ -52,7 +52,7 @@ const theme = createTheme({
     fontSize: 10,
   },
   palette: {
-    divider: "#ABABAB",
+    divider: "#BFBFBF",
     primary: {
       main: "#FFDE50",
     },

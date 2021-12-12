@@ -3,14 +3,26 @@ import { Box, Button, ButtonProps } from "@mui/material";
 import ShowcaseDetailed from "../../src/components/ShowcaseDetailed";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
-import { apiService } from "../../src/api";
+import {
+  addApolloState,
+  apiService,
+  apolloClient,
+  queryShowcaseDetail,
+} from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
 import BookmarkIcon from "../../src/assets/icons/BookmarkIcon";
 import dynamic from "next/dynamic";
-import { ShowcaseStatus } from "../../src/types/graphql";
-import { getShowcasePreview } from "../../src/service/graphql.service";
-import { ReturnPromiseType } from "../../src/types/util.type";
+import {
+  Showcase,
+  ShowcaseDetailQuery,
+  ShowcaseDetailQueryVariables,
+  ShowcaseEdge,
+  ShowcasePreviewQuery,
+  ShowcasePreviewQueryVariables,
+  ShowcaseStatus,
+} from "../../src/types/graphql";
 import { InvestorInformation } from "../../src/components/PostPage";
+import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 
 const PreorderDialog = dynamic(
   () => import("../../src/components/system/preorder-dialog"),
@@ -71,23 +83,30 @@ const BottomButton = ({
     </Box>
   );
 
-export default function PostDetailedPage({
-  post,
-  posts,
-}: ReturnPromiseType<typeof getShowcasePreview>) {
+export default function PostDetailedPage({ slug }: { slug: string }) {
   const router = useRouter();
   useEffect(() => {
     // noinspection JSIgnoredPromiseFromCall
     router.prefetch("/");
   }, [router]);
   const [open, setOpen] = useState(false);
+  const { loading, error, data } = useAuthQuery<
+    ShowcaseDetailQuery,
+    ShowcaseDetailQueryVariables
+  >(queryShowcaseDetail, {
+    variables: { slug },
+  });
+
+  const showcase = data!.showcase as Showcase,
+    showcases = data!.showcases.edges as ShowcaseEdge[];
+
   return (
     <Box sx={{ bgcolor: "#f0f0f0" }}>
-      <InvestorInformation />
+      <InvestorInformation stat={data!.showcaseInvestorStat} />
       <ShowcaseDetailed
-        item={post}
+        item={showcase}
         onClick={() => router.push("/")}
-        posts={posts}
+        posts={showcases}
       />
       <Box
         sx={{
@@ -126,15 +145,15 @@ export default function PostDetailedPage({
               <BookmarkIcon sx={{ color: "yellow.main", width: 10 }} />
             </IconWrapper>
           }
-          disabled={post.status !== ShowcaseStatus.Coming}
+          disabled={data!.showcase.status !== ShowcaseStatus.Coming}
         >
           Đăng ký đặt trước
         </BottomButton>
       </Box>
-      {post.status === ShowcaseStatus.Coming && (
+      {data!.showcase.status === ShowcaseStatus.Coming && (
         <PreorderDialog
           open={open}
-          showcase={post}
+          showcase={showcase}
           onClose={() => setOpen(false)}
         />
       )}
@@ -143,13 +162,19 @@ export default function PostDetailedPage({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  // noinspection PointlessArithmeticExpressionJS
-  return {
-    props: {
-      ...(await apiService.getShowcasePreview(context.params!.slug as string)),
-    },
+  const slug = context.params!.slug as string;
+  await apolloClient.query<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>(
+    {
+      query: queryShowcaseDetail,
+      variables: {
+        slug,
+      },
+    }
+  );
+  return addApolloState(apolloClient, {
+    props: { slug },
     revalidate: 60,
-  };
+  });
 };
 
 // noinspection JSUnusedGlobalSymbols

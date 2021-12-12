@@ -60,6 +60,12 @@ export default function FirstStep(): JSX.Element {
                 setMucTieu(e.target.value as string);
                 setTinhTrang("");
               }}
+              sx={{
+                "& .MuiSelect-select": {
+                  bgcolor: "#fafafa",
+                  borderColor: "divider",
+                },
+              }}
             >
               <MenuItem value={"kinh-doanh"}>Kinh doanh</MenuItem>
               <MenuItem value={"y-tuong"}>Thể hiện ý tưởng</MenuItem>
@@ -74,6 +80,12 @@ export default function FirstStep(): JSX.Element {
                 fullWidth
                 value={tinhTrang}
                 onChange={(e) => setTinhTrang(e.target.value as string)}
+                sx={{
+                  "& .MuiSelect-select": {
+                    bgcolor: "#fafafa",
+                    borderColor: "divider",
+                  },
+                }}
               >
                 {mucTieu === "kinh-doanh" && (
                   <MenuItem value={"san-sang"}>Sẵn sàng bán</MenuItem>

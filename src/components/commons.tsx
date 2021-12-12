@@ -89,12 +89,14 @@ export const StyledSelect = styled(Select)(
   ({ theme }) => css`
     border: unset;
     .MuiSelect-select {
-      height: 30px;
-      border: none;
+      height: 32px;
+      border-width: 1px;
+      border-color: transparent;
+      border-style: solid;
       padding-top: 6px;
       padding-bottom: 6px;
       box-sizing: border-box;
-      border-radius: 15px;
+      border-radius: 16px;
       background-color: #f3f3f3;
     }
     .MuiOutlinedInput-notchedOutline {

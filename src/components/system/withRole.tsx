@@ -10,6 +10,7 @@ export function withRole<T>(role: AuthRoleType) {
     useEffect(() => {
       if (user !== null)
         user?.getIdTokenResult(true).then((rs) => {
+          console.log(rs);
           if (rs.claims[(role as string).toLowerCase()] as unknown as boolean) {
             setMatch(true);
           }

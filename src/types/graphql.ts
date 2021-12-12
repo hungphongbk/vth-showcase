@@ -1021,6 +1021,7 @@ export interface Query {
   showcase: Showcase;
   showcaseHighlightFeature: Maybe<ShowcaseHighlightFeature>;
   showcaseHighlightFeatures: ShowcaseHighlightFeatureConnection;
+  showcaseInvestorStat: Maybe<ShowcaseInvestorStatDto>;
   showcases: ShowcaseConnection;
   slugs: Array<Scalars['String']>;
   user: Maybe<User>;
@@ -1100,6 +1101,11 @@ export interface QueryShowcaseHighlightFeaturesArgs {
   filter?: Maybe<ShowcaseHighlightFeatureFilter>;
   paging?: Maybe<CursorPaging>;
   sorting?: Maybe<Array<ShowcaseHighlightFeatureSort>>;
+}
+
+
+export interface QueryShowcaseInvestorStatArgs {
+  slug: Scalars['String'];
 }
 
 
@@ -1441,6 +1447,13 @@ export interface ShowcaseInventoryDtoInput {
   expectedGrowthRate: Scalars['Float'];
   operatingCostRate: Scalars['Float'];
   revolvingInterval: Scalars['Float'];
+}
+
+export interface ShowcaseInvestorStatDto {
+  campaignDuration: Scalars['Float'];
+  firstYearRevenue: Scalars['Float'];
+  growthRate: Scalars['Float'];
+  totalRevenue: Scalars['Float'];
 }
 
 export interface ShowcaseMaxAggregate {
@@ -1789,6 +1802,13 @@ export type QueryCommentsQueryVariables = Exact<{
 
 
 export type QueryCommentsQuery = { showcase: { comments: { nodes: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author: { name: string } | null }> } } };
+
+export type ShowcaseDetailQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type ShowcaseDetailQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { name: string }, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null }, showcaseInvestorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number } | null, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];

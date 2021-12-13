@@ -557,9 +557,16 @@ type ShowcaseInventoryDto {
 }
 
 type ShowcaseInvestorStatDto {
+  "Tổng chi phí quảng cáo trung bình"
+  adCost: String!
+  adCostRate: Float!
   campaignDuration: Float!
+  "Doanh thu dự kiến năm đầu"
   firstYearRevenue: Float!
   growthRate: Float!
+  operatingCost: String!
+  operatingCostRate: Float!
+  "Doanh thu tổng"
   totalRevenue: Float!
 }
 

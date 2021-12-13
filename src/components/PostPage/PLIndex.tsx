@@ -1,40 +1,14 @@
-import { Box, BoxProps, Grid, styled, Typography } from "@mui/material";
-import Image, { ImageProps } from "next/image";
-import { forwardRef } from "react";
+import { Box, Typography } from "@mui/material";
 import bg1 from "../../assets/bg-investor-1.png";
 import BudgetIncreaseIcon from "../../assets/icons/BudgetIncreaseIcon";
 import { ShowcaseInvestorStatDto } from "../../types/graphql";
+import { PLIndexWrapper, StyledBox } from "./styled";
+import BudgetTotalIcon from "../../assets/icons/budget-total-icon";
 
-type ImageBoxProps = BoxProps & { bg: ImageProps["src"] };
-// eslint-disable-next-line react/display-name
-const ImageBox = forwardRef(
-  ({ bg, children, ...props }: ImageBoxProps, ref: any) => (
-    <Box ref={ref} {...props}>
-      <Image src={bg} layout={"fill"} objectFit={"cover"} />
-      {children}
-    </Box>
-  )
-);
-const StyledBox = styled(ImageBox)`
-  padding: 11px 13px;
-  border-radius: 12px;
-  position: relative;
-  &,
-  * {
-    color: white;
-  }
-  display: grid;
-  grid-template-areas: "icon label" "num num";
-  grid-template-columns: auto 1fr;
-  grid-gap: 8px;
-  align-items: center;
-  height: 100%;
-`;
-
-export function PLIndex({ stat }: { stat: ShowcaseInvestorStatDto }) {
+export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
   return (
-    <Grid container spacing={1} alignItems={"stretch"}>
-      <Grid item xs={12}>
+    <PLIndexWrapper>
+      <Box sx={{ gridArea: "st1" }}>
         <StyledBox bg={bg1} sx={{ bgcolor: "#00b66a" }}>
           <BudgetIncreaseIcon
             sx={{ gridArea: "icon", height: 26, width: 26 }}
@@ -57,11 +31,11 @@ export function PLIndex({ stat }: { stat: ShowcaseInvestorStatDto }) {
               gridArea: "num",
             }}
           >
-            {stat.firstYearRevenue.toLocaleString("vi-VN")} VND
+            {stat.firstYearRevenue!.toLocaleString("vi-VN")} VND
           </Typography>
         </StyledBox>
-      </Grid>
-      <Grid item xs={8}>
+      </Box>
+      <Box sx={{ gridArea: "nd2" }}>
         <StyledBox bg={bg1} sx={{ bgcolor: "#707070" }}>
           <BudgetIncreaseIcon
             sx={{ gridArea: "icon", height: 26, width: 26 }}
@@ -85,14 +59,19 @@ export function PLIndex({ stat }: { stat: ShowcaseInvestorStatDto }) {
               gridArea: "num",
             }}
           >
-            {stat.totalRevenue.toLocaleString("vi-VN")} VND
+            {stat.totalRevenue!.toLocaleString("vi-VN")} VND
           </Typography>
         </StyledBox>
-      </Grid>
-      <Grid item xs={4}>
+      </Box>
+      <Box sx={{ gridArea: "rd3" }}>
         <StyledBox
           bg={bg1}
-          sx={{ bgcolor: "#00b66a", gridTemplateAreas: "'label' 'num'" }}
+          sx={{
+            bgcolor: "#00b66a",
+            gridTemplateAreas: "'label' 'num'",
+            pt: "5px",
+            gridRowGap: "1px",
+          }}
         >
           <Typography
             sx={{
@@ -114,10 +93,71 @@ export function PLIndex({ stat }: { stat: ShowcaseInvestorStatDto }) {
               gridArea: "num",
             }}
           >
-            {stat.growthRate}%
+            {stat.growthRate!}%
           </Typography>
         </StyledBox>
-      </Grid>
-    </Grid>
+      </Box>
+      <Box sx={{ gridArea: "th4" }}>
+        <StyledBox
+          bg={bg1}
+          sx={{
+            bgcolor: "red.main",
+          }}
+        >
+          <BudgetTotalIcon sx={{ gridArea: "icon" }} />
+          <Typography
+            sx={{
+              fontWeight: 500,
+              fontSize: 12.5,
+              lineHeight: "133.4%",
+              gridArea: "label",
+            }}
+          >
+            Chi phí quảng cáo trung bình <strong>({stat.adCostRate}%)</strong>
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: 700,
+              fontSize: 20,
+              lineHeight: "24px",
+              gridArea: "num",
+            }}
+          >
+            {stat.adCost!}
+          </Typography>
+        </StyledBox>
+      </Box>
+      <Box sx={{ gridArea: "th5" }}>
+        <StyledBox
+          bg={bg1}
+          sx={{
+            bgcolor: "red.main",
+          }}
+        >
+          <BudgetTotalIcon sx={{ gridArea: "icon" }} />
+          <Typography
+            sx={{
+              fontWeight: 500,
+              fontSize: 12.5,
+              lineHeight: "133.4%",
+              gridArea: "label",
+            }}
+          >
+            Chi phí vận hành từ vaithuhay{" "}
+            <strong>({stat.operatingCostRate}%)</strong>
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: 700,
+              fontSize: 20,
+              lineHeight: "24px",
+              gridArea: "num",
+            }}
+          >
+            {stat.operatingCost!}
+          </Typography>
+        </StyledBox>
+      </Box>
+    </PLIndexWrapper>
   );
 }

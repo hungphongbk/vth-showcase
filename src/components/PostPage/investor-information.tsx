@@ -3,7 +3,7 @@ import { PLIndex } from "./PLIndex";
 import { Box } from "@mui/material";
 
 type InvestorInformationProps = {
-  stat: ShowcaseInvestorStatDto | null;
+  stat: Partial<ShowcaseInvestorStatDto> | null;
 };
 export default function InvestorInformation({
   stat,

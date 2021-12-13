@@ -1450,9 +1450,13 @@ export interface ShowcaseInventoryDtoInput {
 }
 
 export interface ShowcaseInvestorStatDto {
+  adCost: Scalars['String'];
+  adCostRate: Scalars['Float'];
   campaignDuration: Scalars['Float'];
   firstYearRevenue: Scalars['Float'];
   growthRate: Scalars['Float'];
+  operatingCost: Scalars['String'];
+  operatingCostRate: Scalars['Float'];
   totalRevenue: Scalars['Float'];
 }
 
@@ -1808,7 +1812,7 @@ export type ShowcaseDetailQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { name: string }, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null }, showcaseInvestorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number } | null, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
+export type ShowcaseDetailQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { name: string }, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null }, showcaseInvestorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string } | null, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];

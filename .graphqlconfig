@@ -11,7 +11,7 @@
         "introspect": false
       },
       "staging": {
-        "url": "https://api.showcase-staging.vaithuhay.com/graphql",
+        "url": "https://api.showcase-dev.vaithuhay.com/graphql",
         "headers": {
           "user-agent": "JS GraphQL"
         },

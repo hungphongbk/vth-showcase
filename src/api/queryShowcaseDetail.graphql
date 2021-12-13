@@ -22,6 +22,10 @@ query ShowcaseDetail($slug: String!) {
     firstYearRevenue
     campaignDuration
     growthRate
+    adCostRate
+    adCost
+    operatingCostRate
+    operatingCost
   }
   showcases(filter: { slug: { neq: $slug } }) {
     edges {

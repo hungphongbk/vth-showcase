@@ -9,7 +9,7 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
   return (
     <PLIndexWrapper>
       <Box sx={{ gridArea: "st1" }}>
-        <StyledBox bg={bg1} sx={{ bgcolor: "#00b66a" }}>
+        <StyledBox bg={bg1} sx={{ bgcolor: "#00B66A" }}>
           <BudgetIncreaseIcon
             sx={{ gridArea: "icon", height: 26, width: 26 }}
           />
@@ -67,7 +67,7 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
         <StyledBox
           bg={bg1}
           sx={{
-            bgcolor: "#00b66a",
+            bgcolor: "#00B66A",
             gridTemplateAreas: "'label' 'num'",
             pt: "5px",
             gridRowGap: "1px",
@@ -155,6 +155,34 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
             }}
           >
             {stat.operatingCost!}
+          </Typography>
+        </StyledBox>
+      </Box>
+      <Box sx={{ gridArea: "th7" }}>
+        <StyledBox bg={bg1} sx={{ bgcolor: "#00B66A" }}>
+          <BudgetIncreaseIcon
+            sx={{ gridArea: "icon", height: 26, width: 26 }}
+          />
+          <Typography
+            sx={{
+              fontWeight: 500,
+              fontSize: 13,
+              lineHeight: "133.4%",
+              gridArea: "label",
+            }}
+          >
+            Lợi nhuận dự kiến <br />
+            01 năm (trước thuế)
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: 700,
+              fontSize: 20,
+              lineHeight: "24px",
+              gridArea: "num",
+            }}
+          >
+            {stat.firstYearRevenue!.toLocaleString("vi-VN")} VND
           </Typography>
         </StyledBox>
       </Box>

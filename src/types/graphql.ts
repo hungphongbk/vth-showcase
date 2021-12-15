@@ -1010,6 +1010,7 @@ export interface PublishStatusFilterComparison {
 export interface Query {
   commentDto: Maybe<CommentDto>;
   commentDtos: CommentDtoConnection;
+  currentUser: User;
   imageList: Maybe<ImageList>;
   imageLists: ImageListConnection;
   investmentPackageDto: Maybe<InvestmentPackageDto>;
@@ -1453,7 +1454,6 @@ export interface ShowcaseInvestorStatDto {
   expectedProfit: Scalars['String'];
   firstYearRevenue: Scalars['Float'];
   growthRate: Scalars['Float'];
-  id: Scalars['ID'];
   initialCapital: Scalars['String'];
   operatingCost: Scalars['String'];
   operatingCostRate: Scalars['Float'];

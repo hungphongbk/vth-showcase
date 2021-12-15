@@ -4,7 +4,6 @@ import MenuBarIcon from "../../assets/icons/MenuBarIcon";
 import { AnimatePresence, motion } from "framer-motion";
 import useWindowDimensions from "../../utils/hooks";
 import { MotionBox } from "../commons";
-import { sxFullSize } from "../../utils/predefinedSx";
 import MenuPanel from "./MenuPanel";
 import { useAppSelector } from "../../store";
 
@@ -62,46 +61,14 @@ export default function MenuDrawer(): JSX.Element {
                 width: "100vw",
                 height: "100vh",
                 zIndex: 13,
+                bgcolor: "rgba(0,0,0,.65)",
               }}
               transition={{ duration: 0.35, ease: "circOut" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
             >
-              <MotionBox
-                style={{
-                  originX: 0.5,
-                  originY: 0.5,
-                }}
-                sx={{
-                  position: "fixed",
-                  top: MENU_BTN_Y_ORIGIN,
-                  left: MENU_BTN_X_ORIGIN,
-                  bgcolor: "rgba(30,30,30,.85)",
-                  width: "1px",
-                  height: "1px",
-                  borderRadius: "50%",
-                }}
-                initial={{ scale: 0 }}
-                animate={{ scale: scaleFactor }}
-                exit={{ scale: 0 }}
-              />
-              <MotionMenuBarIcon
-                key={"menu-button"}
-                sx={{
-                  width: MENU_BTN_WIDTH,
-                  height: MENU_BTN_HEIGHT,
-                  position: "fixed",
-                  top: MENU_BTN_TOP,
-                  left: MENU_BTN_LEFT,
-                }}
-                onClick={doCloseMenu}
-              />
-              <MotionBox
-                sx={[sxFullSize, { pt: 10 }]}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <MenuPanel />
-              </MotionBox>
+              <MenuPanel />
             </MotionBox>
           )}
         </AnimatePresence>

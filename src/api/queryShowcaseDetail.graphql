@@ -16,17 +16,19 @@ query ShowcaseDetail($slug: String!) {
       preorder
       promo
     }
-  }
-  showcaseInvestorStat(slug:$slug) {
-    totalRevenue
-    firstYearRevenue
-    campaignDuration
-    growthRate
-    adCostRate
-    adCost
-    operatingCostRate
-    operatingCost
-    initialCapital
+    investorStat {
+      totalRevenue
+      firstYearRevenue
+      campaignDuration
+      growthRate
+      adCostRate
+      adCost
+      operatingCostRate
+      operatingCost
+      initialCapital
+      revolvingInterval
+      revolvingPerDay
+    }
   }
   showcases(filter: { slug: { neq: $slug } }) {
     edges {

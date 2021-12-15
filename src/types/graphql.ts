@@ -1010,6 +1010,7 @@ export interface PublishStatusFilterComparison {
 export interface Query {
   commentDto: Maybe<CommentDto>;
   commentDtos: CommentDtoConnection;
+  currentUser: User;
   imageList: Maybe<ImageList>;
   imageLists: ImageListConnection;
   investmentPackageDto: Maybe<InvestmentPackageDto>;
@@ -1021,7 +1022,6 @@ export interface Query {
   showcase: Showcase;
   showcaseHighlightFeature: Maybe<ShowcaseHighlightFeature>;
   showcaseHighlightFeatures: ShowcaseHighlightFeatureConnection;
-  showcaseInvestorStat: Maybe<ShowcaseInvestorStatDto>;
   showcases: ShowcaseConnection;
   slugs: Array<Scalars['String']>;
   user: Maybe<User>;
@@ -1101,11 +1101,6 @@ export interface QueryShowcaseHighlightFeaturesArgs {
   filter?: Maybe<ShowcaseHighlightFeatureFilter>;
   paging?: Maybe<CursorPaging>;
   sorting?: Maybe<Array<ShowcaseHighlightFeatureSort>>;
-}
-
-
-export interface QueryShowcaseInvestorStatArgs {
-  slug: Scalars['String'];
 }
 
 
@@ -1238,6 +1233,7 @@ export interface Showcase {
   image: MediaDto;
   imageLists: Array<ImageList>;
   inventory: Maybe<ShowcaseInventoryDto>;
+  investorStat: Maybe<ShowcaseInvestorStatDto>;
   name: Scalars['String'];
   publishStatus: PublishStatus;
   slug: Scalars['String'];
@@ -1811,14 +1807,14 @@ export type QueryCommentsQueryVariables = Exact<{
 }>;
 
 
-export type QueryCommentsQuery = { showcase: { comments: { nodes: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author: { name: string } | null }> } } };
+export type QueryCommentsQuery = { showcase: { slug: string, comments: { nodes: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author: { name: string } | null }> } } };
 
 export type ShowcaseDetailQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { name: string }, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null }, showcaseInvestorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string } | null, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
+export type ShowcaseDetailQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { name: string }, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, investorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];

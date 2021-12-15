@@ -25,7 +25,6 @@ import { VthThemeProvider } from "@hungphongbk/vth-sdk";
 import CreatorAndInvestorActions from "../src/components/CreatorAndInvestorActions";
 import { LocalizationProvider } from "@mui/lab";
 import DateAdapter from "@mui/lab/AdapterDateFns";
-import { SWRConfig } from "swr";
 import { useApollo } from "../src/api";
 import { ApolloProvider } from "@apollo/client";
 
@@ -74,48 +73,46 @@ export default function MyApp(props: AppPropsWithLayout) {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           {() => (
-            <SWRConfig>
-              <ApolloProvider client={individualClient}>
-                <VthThemeProvider
-                  config={{
-                    components: {
-                      Dialog: StyledDialog,
-                      TextField: TextField,
-                      MultilineTextField: TextField,
-                    },
-                    services: {
-                      uploadService: UploadService.upload,
-                    },
-                  }}
-                >
-                  <ThemeProvider theme={theme}>
-                    <SnackbarProvider maxSnack={3}>
-                      <LocalizationProvider dateAdapter={DateAdapter}>
-                        <CssBaseline />
-                        <Header />
-                        <LayoutGroup>
-                          <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
-                            <Image
-                              src={"/background.png"}
-                              layout="fill"
-                              objectFit="cover"
-                              quality={70}
-                            />
-                          </Box>
-                          {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
-                          {getLayout(
-                            <Component {...pageProps} key={router.route} />
-                          )}
-                          <CreatorAndInvestorActions />
-                        </LayoutGroup>
-                        <InvestorRegDialog />
-                      </LocalizationProvider>
-                    </SnackbarProvider>
-                  </ThemeProvider>
-                </VthThemeProvider>
-                <AuthLoginHandler />
-              </ApolloProvider>
-            </SWRConfig>
+            <ApolloProvider client={individualClient}>
+              <VthThemeProvider
+                config={{
+                  components: {
+                    Dialog: StyledDialog,
+                    TextField: TextField,
+                    MultilineTextField: TextField,
+                  },
+                  services: {
+                    uploadService: UploadService.upload,
+                  },
+                }}
+              >
+                <ThemeProvider theme={theme}>
+                  <SnackbarProvider maxSnack={3}>
+                    <LocalizationProvider dateAdapter={DateAdapter}>
+                      <CssBaseline />
+                      <Header />
+                      <LayoutGroup>
+                        <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
+                          <Image
+                            src={"/background.png"}
+                            layout="fill"
+                            objectFit="cover"
+                            quality={70}
+                          />
+                        </Box>
+                        {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
+                        {getLayout(
+                          <Component {...pageProps} key={router.route} />
+                        )}
+                        <CreatorAndInvestorActions />
+                      </LayoutGroup>
+                      <InvestorRegDialog />
+                    </LocalizationProvider>
+                  </SnackbarProvider>
+                </ThemeProvider>
+              </VthThemeProvider>
+              <AuthLoginHandler />
+            </ApolloProvider>
           )}
         </PersistGate>
       </Provider>

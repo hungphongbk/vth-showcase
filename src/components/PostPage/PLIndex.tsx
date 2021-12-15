@@ -26,7 +26,7 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
           <Typography
             sx={{
               fontWeight: 700,
-              fontSize: 20,
+              fontSize: 18,
               lineHeight: "24px",
               gridArea: "num",
             }}
@@ -54,7 +54,7 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
           <Typography
             sx={{
               fontWeight: 700,
-              fontSize: 20,
+              fontSize: 18,
               lineHeight: "24px",
               gridArea: "num",
             }}
@@ -88,7 +88,7 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
           <Typography
             sx={{
               fontWeight: 700,
-              fontSize: 20,
+              fontSize: 18,
               lineHeight: "24px",
               gridArea: "num",
             }}
@@ -118,7 +118,7 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
           <Typography
             sx={{
               fontWeight: 700,
-              fontSize: 20,
+              fontSize: 18,
               lineHeight: "24px",
               gridArea: "num",
             }}
@@ -149,12 +149,59 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
           <Typography
             sx={{
               fontWeight: 700,
-              fontSize: 20,
+              fontSize: 18,
               lineHeight: "24px",
               gridArea: "num",
             }}
           >
             {stat.operatingCost!}
+          </Typography>
+        </StyledBox>
+      </Box>
+      <Box sx={{ gridArea: "th6" }}>
+        <StyledBox
+          bg={bg1}
+          sx={{
+            bgcolor: "#00B66A",
+            // pt: "5px",
+            gridRowGap: "1px",
+            gridTemplateAreas: "'label' 'num'",
+            alignItems: "start",
+            gridTemplateRows: "auto 1fr",
+          }}
+        >
+          <Typography
+            sx={{
+              fontWeight: 500,
+              fontSize: 12.5,
+              lineHeight: "133.4%",
+              gridArea: "label",
+            }}
+          >
+            <BudgetTotalIcon
+              sx={{
+                gridArea: "icon",
+                height: "12px !important",
+                width: "12px !important",
+                display: "inline-block",
+                mr: "5px",
+              }}
+            />
+            Giá vốn
+            <br />
+            sản phẩm
+            <br />({stat.adCostRate}%)
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: 700,
+              fontSize: 18,
+              lineHeight: "24px",
+              gridArea: "num",
+              wordBreak: "break-all",
+            }}
+          >
+            {stat.adCost}
           </Typography>
         </StyledBox>
       </Box>
@@ -177,7 +224,7 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
           <Typography
             sx={{
               fontWeight: 700,
-              fontSize: 20,
+              fontSize: 18,
               lineHeight: "24px",
               gridArea: "num",
             }}

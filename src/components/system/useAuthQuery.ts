@@ -16,7 +16,7 @@ export function useAuthQuery<TData = any, TVariables = OperationVariables>(
   const user = useAppSelector((state) => state.auth.user);
   const queryResult = useQuery(query, options);
   useEffect(() => {
-    if (user !== null) {
+    if (typeof user !== "undefined" && user !== null) {
       // noinspection JSIgnoredPromiseFromCall
       queryResult.refetch(options?.variables);
     }

@@ -6,10 +6,10 @@ import {
 } from "@apollo/client";
 import introspection from "./introspection.json";
 import { setContext } from "@apollo/client/link/context";
-import { FirebaseAuthService } from "../service";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
 import { useMemo } from "react";
+import store from "../store";
 
 const httpLink = new HttpLink({
   uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
@@ -17,7 +17,8 @@ const httpLink = new HttpLink({
 const authLink = setContext(async (_, { headers }) => {
   if (typeof window === "undefined") return headers;
 
-  const { token } = await (await FirebaseAuthService()).getPersistAuth();
+  const token = store.getState().auth?.token;
+  if (!token) return headers;
 
   return {
     headers: {
@@ -30,12 +31,10 @@ const authLink = setContext(async (_, { headers }) => {
 const apolloClient = new ApolloClient({
   ssrMode: typeof window === "undefined",
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache(introspection),
-  defaultOptions: {
-    watchQuery: {
-      fetchPolicy: "cache-and-network",
-    },
-  },
+  cache: new InMemoryCache({
+    ...introspection,
+    typePolicies: { Showcase: { keyFields: ["slug"] } },
+  }),
 });
 
 if (process.env.NODE_ENV === "development" && typeof window !== "undefined") {

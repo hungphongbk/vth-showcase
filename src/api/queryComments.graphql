@@ -1,5 +1,6 @@
 query QueryComments($slug: String!){
   showcase(slug: $slug){
+    slug
     comments{
       nodes {
         id

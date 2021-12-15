@@ -100,11 +100,9 @@ export default function PostDetailedPage({ slug }: { slug: string }) {
   const showcase = data!.showcase as Showcase,
     showcases = data!.showcases.edges as ShowcaseEdge[];
 
-  console.log(data!.showcaseInvestorStat);
-
   return (
     <Box sx={{ bgcolor: "#f0f0f0" }}>
-      <InvestorInformation stat={data!.showcaseInvestorStat} />
+      <InvestorInformation stat={data!.showcase.investorStat} />
       <ShowcaseDetailed
         item={showcase}
         onClick={() => router.push("/")}

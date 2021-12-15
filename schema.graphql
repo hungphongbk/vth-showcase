@@ -371,7 +371,6 @@ type Query {
     "Specify to sort results."
     sorting: [ShowcaseHighlightFeatureSort!] = []
   ): ShowcaseHighlightFeatureConnection!
-  showcaseInvestorStat(slug: String!): ShowcaseInvestorStatDto
   showcases(
     "Specify to filter the records returned."
     filter: ShowcaseFilter = {},
@@ -440,6 +439,7 @@ type Showcase {
     sorting: [ImageListSort!] = []
   ): [ImageList!]!
   inventory: ShowcaseInventoryDto
+  investorStat: ShowcaseInvestorStatDto
   name: String!
   publishStatus: PublishStatus!
   slug: String!
@@ -567,6 +567,7 @@ type ShowcaseInvestorStatDto {
   "Doanh thu dự kiến năm đầu"
   firstYearRevenue: Float!
   growthRate: Float!
+  id: ID!
   initialCapital: String!
   operatingCost: String!
   operatingCostRate: Float!

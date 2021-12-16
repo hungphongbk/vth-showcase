@@ -1,6 +1,18 @@
-import { Box, styled, Typography } from "@mui/material";
+import {
+  Box,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  styled,
+  Typography,
+} from "@mui/material";
 import { css } from "@mui/material/styles";
 import { useState } from "react";
+import ManageShowcaseIcon from "./ManageShowcaseIcon";
+import { StyledMenuList } from "./styled";
+import ManagePreorderIcon from "./ManagePreorderIcon";
+import HopTacIcon from "../../../assets/icons/HopTacIcon";
 
 const StyledTabs = styled(Box)`
   background: #ffffff;
@@ -56,6 +68,36 @@ export default function LoggedInMenu(props: LoggedInMenuProps): JSX.Element {
           Showcase là gì?
         </StyledTab>
       </StyledTabs>
+      {tab === 0 && (
+        <StyledMenuList disablePadding dense sx={{ mt: 2 }}>
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <ManageShowcaseIcon sx={{ width: 22, height: 22 }} />
+              </ListItemIcon>
+              <ListItemText primary={"Quản lý dự án"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <ManagePreorderIcon sx={{ width: 22, height: 26 }} />
+              </ListItemIcon>
+              <ListItemText primary={"Giỏ hàng đặt trước"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <HopTacIcon
+                  sx={{ width: 27, height: 27, ml: "-2px", color: "black" }}
+                />
+              </ListItemIcon>
+              <ListItemText primary={"Hợp tác - Investor"} />
+            </ListItemButton>
+          </ListItem>
+        </StyledMenuList>
+      )}
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { Box, css, styled } from "@mui/material";
+import { Box, css, List, styled } from "@mui/material";
 import { AuthRoleType } from "../../../types/graphql";
 import { ComponentType, useMemo } from "react";
 import CreatorConfirmedIcon from "./CreatorConfirmedIcon";
@@ -30,3 +30,13 @@ export const RoleIcon = (props: { role: AuthRoleType }) => {
     <Component sx={{ gridArea: "user-role", width: "auto", height: "auto" }} />
   );
 };
+
+export const StyledMenuList = styled(List)`
+  .MuiListItemIcon-root {
+    min-width: ${18 + 22}px;
+  }
+  .MuiListItemText-primary {
+    font-size: 15px;
+    font-weight: 600;
+  }
+`;

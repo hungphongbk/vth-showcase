@@ -10,6 +10,7 @@ import { RoleIcon, StyledUpper } from "./menu/styled";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
 import LoggedInMenu from "./menu/LoggedInMenu";
+import FooterMobile from "./menu/FooterMobile";
 
 const CURRENT_USER = gql`
   query CurrentUser {
@@ -32,7 +33,8 @@ export default function MenuPanel(props: unknown): JSX.Element {
         width: "calc(100% - 60px)",
         height: "100%",
         bgcolor: "white",
-        borderRadius: "0 30px 30px 0",
+        borderRadius: "0 30px 0 0",
+        position: "relative",
       }}
     >
       {isLoggedIn ? (
@@ -105,6 +107,9 @@ export default function MenuPanel(props: unknown): JSX.Element {
           </Button>
         )}
       </Stack>
+      <Box sx={{ position: "absolute", bottom: 0, left: 0, right: 0 }}>
+        <FooterMobile />
+      </Box>
     </Box>
   );
 }

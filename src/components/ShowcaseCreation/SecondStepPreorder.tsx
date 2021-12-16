@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { useForm } from "react-hook-form";
-import { MediaInput, Showcase, User } from "../../types/graphql";
+import { ShowcaseCreateInputDto } from "../../types/graphql";
 import PlusIcon from "../../assets/icons/PlusIcon";
 import { CollapseCard } from "../index";
 import {
@@ -23,10 +23,7 @@ import {
 } from "@hungphongbk/vth-sdk";
 import { MobileDatePicker } from "@mui/lab";
 
-type ShowcaseForm = Omit<Showcase, "author" | "image"> & {
-  author: Omit<User, "showcasePosts">;
-  image: MediaInput;
-};
+type ShowcaseForm = ShowcaseCreateInputDto;
 
 export default function SecondStepPreorder(): JSX.Element {
   const router = useRouter();

@@ -15,6 +15,7 @@ generates:
       - typescript-react-apollo
     config:
       withHooks: true
+      withRefetchFn: true
       avoidOptionals: true
       dedupeFragments: false
       declarationKind: interface

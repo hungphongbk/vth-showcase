@@ -1586,6 +1586,7 @@ export interface User {
   name: Scalars['String'];
   photoURL: Scalars['String'];
   role: AuthRoleType;
+  showcases: ShowcaseConnection;
   uid: Scalars['ID'];
 }
 
@@ -1649,6 +1650,11 @@ export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CurrentUserQuery = { currentUser: { email: string, name: string, role: AuthRoleType, approvalStatus: UserStatusEnum } };
+
+export type DraftShowcasesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DraftShowcasesQuery = { showcases: { edges: Array<{ node: { slug: string, name: string, image: { path: string } } }> } };
 
 export type ShowcaseDetailQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -1883,6 +1889,9 @@ export function useQueryBannerLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type QueryBannerQueryHookResult = ReturnType<typeof useQueryBannerQuery>;
 export type QueryBannerLazyQueryHookResult = ReturnType<typeof useQueryBannerLazyQuery>;
 export type QueryBannerQueryResult = Apollo.QueryResult<QueryBannerQuery, QueryBannerQueryVariables>;
+export function refetchQueryBannerQuery(variables?: QueryBannerQueryVariables) {
+      return { query: QueryBannerDocument, variables: variables }
+    }
 export const QueryCommentsDocument = gql`
     query QueryComments($slug: String!) {
   showcase(slug: $slug) {
@@ -1928,6 +1937,9 @@ export function useQueryCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type QueryCommentsQueryHookResult = ReturnType<typeof useQueryCommentsQuery>;
 export type QueryCommentsLazyQueryHookResult = ReturnType<typeof useQueryCommentsLazyQuery>;
 export type QueryCommentsQueryResult = Apollo.QueryResult<QueryCommentsQuery, QueryCommentsQueryVariables>;
+export function refetchQueryCommentsQuery(variables: QueryCommentsQueryVariables) {
+      return { query: QueryCommentsDocument, variables: variables }
+    }
 export const CurrentUserDocument = gql`
     query CurrentUser {
   currentUser {
@@ -1965,6 +1977,54 @@ export function useCurrentUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
 export type CurrentUserLazyQueryHookResult = ReturnType<typeof useCurrentUserLazyQuery>;
 export type CurrentUserQueryResult = Apollo.QueryResult<CurrentUserQuery, CurrentUserQueryVariables>;
+export function refetchCurrentUserQuery(variables?: CurrentUserQueryVariables) {
+      return { query: CurrentUserDocument, variables: variables }
+    }
+export const DraftShowcasesDocument = gql`
+    query DraftShowcases {
+  showcases(filter: {publishStatus: {eq: DRAFT}}) {
+    edges {
+      node {
+        slug
+        name
+        image {
+          path
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useDraftShowcasesQuery__
+ *
+ * To run a query within a React component, call `useDraftShowcasesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDraftShowcasesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDraftShowcasesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDraftShowcasesQuery(baseOptions?: Apollo.QueryHookOptions<DraftShowcasesQuery, DraftShowcasesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DraftShowcasesQuery, DraftShowcasesQueryVariables>(DraftShowcasesDocument, options);
+      }
+export function useDraftShowcasesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DraftShowcasesQuery, DraftShowcasesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DraftShowcasesQuery, DraftShowcasesQueryVariables>(DraftShowcasesDocument, options);
+        }
+export type DraftShowcasesQueryHookResult = ReturnType<typeof useDraftShowcasesQuery>;
+export type DraftShowcasesLazyQueryHookResult = ReturnType<typeof useDraftShowcasesLazyQuery>;
+export type DraftShowcasesQueryResult = Apollo.QueryResult<DraftShowcasesQuery, DraftShowcasesQueryVariables>;
+export function refetchDraftShowcasesQuery(variables?: DraftShowcasesQueryVariables) {
+      return { query: DraftShowcasesDocument, variables: variables }
+    }
 export const ShowcaseDetailDocument = gql`
     query ShowcaseDetail($slug: String!) {
   showcase(slug: $slug) {
@@ -2041,6 +2101,9 @@ export function useShowcaseDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type ShowcaseDetailQueryHookResult = ReturnType<typeof useShowcaseDetailQuery>;
 export type ShowcaseDetailLazyQueryHookResult = ReturnType<typeof useShowcaseDetailLazyQuery>;
 export type ShowcaseDetailQueryResult = Apollo.QueryResult<ShowcaseDetailQuery, ShowcaseDetailQueryVariables>;
+export function refetchShowcaseDetailQuery(variables: ShowcaseDetailQueryVariables) {
+      return { query: ShowcaseDetailDocument, variables: variables }
+    }
 export const ShowcasePreviewDocument = gql`
     query ShowcasePreview($slug: String!) {
   showcase(slug: $slug) {
@@ -2104,6 +2167,9 @@ export function useShowcasePreviewLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type ShowcasePreviewQueryHookResult = ReturnType<typeof useShowcasePreviewQuery>;
 export type ShowcasePreviewLazyQueryHookResult = ReturnType<typeof useShowcasePreviewLazyQuery>;
 export type ShowcasePreviewQueryResult = Apollo.QueryResult<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>;
+export function refetchShowcasePreviewQuery(variables: ShowcasePreviewQueryVariables) {
+      return { query: ShowcasePreviewDocument, variables: variables }
+    }
 export const ShowcasesDocument = gql`
     query Showcases($filter: ShowcaseFilter, $paging: CursorPaging!) {
   showcases(filter: $filter, paging: $paging) {
@@ -2155,6 +2221,9 @@ export function useShowcasesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type ShowcasesQueryHookResult = ReturnType<typeof useShowcasesQuery>;
 export type ShowcasesLazyQueryHookResult = ReturnType<typeof useShowcasesLazyQuery>;
 export type ShowcasesQueryResult = Apollo.QueryResult<ShowcasesQuery, ShowcasesQueryVariables>;
+export function refetchShowcasesQuery(variables: ShowcasesQueryVariables) {
+      return { query: ShowcasesDocument, variables: variables }
+    }
 export const SlugsDocument = gql`
     query Slugs {
   slugs
@@ -2187,3 +2256,6 @@ export function useSlugsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Slug
 export type SlugsQueryHookResult = ReturnType<typeof useSlugsQuery>;
 export type SlugsLazyQueryHookResult = ReturnType<typeof useSlugsLazyQuery>;
 export type SlugsQueryResult = Apollo.QueryResult<SlugsQuery, SlugsQueryVariables>;
+export function refetchSlugsQuery(variables?: SlugsQueryVariables) {
+      return { query: SlugsDocument, variables: variables }
+    }

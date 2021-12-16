@@ -18,7 +18,7 @@ import LoggedInMenu from "./menu/LoggedInMenu";
 import FooterMobile from "./menu/FooterMobile";
 
 const MenuPanel = forwardRef(function MenuPanel(
-  props: unknown,
+  props: { onClose: () => void },
   ref
 ): JSX.Element {
   const isLoggedIn = useAppSelector(isLoggedInSelector),
@@ -80,7 +80,7 @@ const MenuPanel = forwardRef(function MenuPanel(
               )}
             </Box>
           </StyledUpper>
-          <LoggedInMenu />
+          <LoggedInMenu onClose={props.onClose} />
         </>
       ) : null}
       <Stack direction={"column"} alignItems={"center"}>

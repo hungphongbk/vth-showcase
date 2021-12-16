@@ -46,13 +46,15 @@ export const ProductInfoSecond = styled("div")`
   background-color: white;
   align-items: start;
 `;
-export const MotionCard = motion(styled(Card)`
+
+export const StyledCard = styled(Card)`
   &.MuiCard-root {
     border-radius: 20px;
     padding: 12px;
     box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.1);
   }
-`);
+`;
+export const MotionCard = motion(StyledCard);
 
 export const StyledTimeline = styled(Timeline)`
   &.MuiTimeline-root {

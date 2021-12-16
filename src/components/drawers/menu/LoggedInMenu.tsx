@@ -13,6 +13,7 @@ import ManageShowcaseIcon from "./ManageShowcaseIcon";
 import { StyledMenuList } from "./styled";
 import ManagePreorderIcon from "./ManagePreorderIcon";
 import HopTacIcon from "../../../assets/icons/HopTacIcon";
+import Link from "../../Link";
 
 const StyledTabs = styled(Box)`
   background: #ffffff;
@@ -55,7 +56,7 @@ const StyledTab = styled(Typography)<{ isActive: boolean }>`
     `}
 `;
 
-type LoggedInMenuProps = {};
+type LoggedInMenuProps = { onClose: () => void };
 export default function LoggedInMenu(props: LoggedInMenuProps): JSX.Element {
   const [tab, setTab] = useState(0);
   return (
@@ -71,7 +72,12 @@ export default function LoggedInMenu(props: LoggedInMenuProps): JSX.Element {
       {tab === 0 && (
         <StyledMenuList disablePadding dense sx={{ mt: 2 }}>
           <ListItem>
-            <ListItemButton>
+            <ListItemButton
+              component={Link}
+              href={"/manage"}
+              noLinkStyle
+              onClick={props.onClose}
+            >
               <ListItemIcon>
                 <ManageShowcaseIcon sx={{ width: 22, height: 22 }} />
               </ListItemIcon>

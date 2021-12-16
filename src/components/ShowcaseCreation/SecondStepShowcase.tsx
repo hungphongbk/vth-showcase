@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { useForm } from "react-hook-form";
-import { MediaInput, Showcase, User } from "../../types/graphql";
+import { ShowcaseCreateInputDto } from "../../types/graphql";
 import PlusIcon from "../../assets/icons/PlusIcon";
 import { CollapseCard } from "../index";
 import {
@@ -21,10 +21,7 @@ import {
   ListEditor,
 } from "@hungphongbk/vth-sdk";
 
-type ShowcaseForm = Omit<Showcase, "author" | "image"> & {
-  author: Omit<User, "showcasePosts">;
-  image: MediaInput;
-};
+type ShowcaseForm = ShowcaseCreateInputDto;
 
 export default function SecondStepShowcase(): JSX.Element {
   const router = useRouter();

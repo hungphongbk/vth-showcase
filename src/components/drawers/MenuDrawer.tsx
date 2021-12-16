@@ -72,7 +72,7 @@ export default function MenuDrawer(): JSX.Element {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <MenuPanel ref={ref} />
+              <MenuPanel ref={ref} onClose={doCloseMenu} />
             </MotionBox>
           )}
         </AnimatePresence>

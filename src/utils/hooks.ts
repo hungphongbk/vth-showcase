@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useAppSelector } from "../store";
+import { useRouter } from "next/router";
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -50,4 +52,19 @@ export function useOnClickOutside(ref: any, handler: any) {
     // ... passing it into this hook.
     [ref, handler]
   );
+}
+
+export function useLoginRequired() {
+  const router = useRouter();
+  const { initialized, token } = useAppSelector((state) => state.auth);
+  const isLoggedIn = typeof token !== "undefined";
+
+  useEffect(() => {
+    if (initialized && !isLoggedIn) {
+      // noinspection JSIgnoredPromiseFromCall
+      router.replace("/");
+    }
+  }, [initialized, router, isLoggedIn]);
+
+  return { loading: !initialized };
 }

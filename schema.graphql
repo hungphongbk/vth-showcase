@@ -594,6 +594,7 @@ type UpdateManyResponse {
 }
 
 type User {
+  approvalStatus: UserStatusEnum!
   email: String!
   name: String!
   photoURL: String!
@@ -671,6 +672,13 @@ enum SortDirection {
 enum SortNulls {
   NULLS_FIRST
   NULLS_LAST
+}
+
+enum UserStatusEnum {
+  APPROVED_CREATOR
+  APPROVED_INVESTOR
+  PENDING_CREATOR
+  PENDING_INVESTOR
 }
 
 "Cursor for paging through collections"

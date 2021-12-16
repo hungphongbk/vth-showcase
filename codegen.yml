@@ -1,6 +1,7 @@
 overwrite: true
 schema: ${NEXT_PUBLIC_API_URL}/graphql
-documents: ./src/**/*.graphql
+documents:
+  - ./src/**/*.graphql
 generates:
   ./src/api/introspection.json:
     plugins:
@@ -11,7 +12,9 @@ generates:
     plugins:
       - typescript
       - typescript-operations
+      - typescript-react-apollo
     config:
+      withHooks: true
       avoidOptionals: true
       dedupeFragments: false
       declarationKind: interface

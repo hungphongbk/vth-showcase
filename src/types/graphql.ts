@@ -1,7 +1,10 @@
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions =  {}
 /** All built-in and custom scalars, mapped to their actual values */
 export interface Scalars {
   ID: string;
@@ -1578,11 +1581,19 @@ export interface UpdateShowcaseHighlightFeature {
 }
 
 export interface User {
+  approvalStatus: UserStatusEnum;
   email: Scalars['String'];
   name: Scalars['String'];
   photoURL: Scalars['String'];
   role: AuthRoleType;
   uid: Scalars['ID'];
+}
+
+export enum UserStatusEnum {
+  ApprovedCreator = 'APPROVED_CREATOR',
+  ApprovedInvestor = 'APPROVED_INVESTOR',
+  PendingCreator = 'PENDING_CREATOR',
+  PendingInvestor = 'PENDING_INVESTOR'
 }
 
 export type CreateMediaMutationVariables = Exact<{
@@ -1634,6 +1645,11 @@ export type QueryCommentsQueryVariables = Exact<{
 
 export type QueryCommentsQuery = { showcase: { slug: string, comments: { nodes: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author: { name: string } | null }> } } };
 
+export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentUserQuery = { currentUser: { email: string, name: string, role: AuthRoleType, approvalStatus: UserStatusEnum } };
+
 export type ShowcaseDetailQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
@@ -1660,3 +1676,514 @@ export type SlugsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type SlugsQuery = { slugs: Array<string> };
+
+
+export const CreateMediaDocument = gql`
+    mutation createMedia($input: MediaInput!) {
+  createOneMediaDto(input: {mediaDto: $input}) {
+    id
+    filename
+    mimetype
+    path
+  }
+}
+    `;
+export type CreateMediaMutationFn = Apollo.MutationFunction<CreateMediaMutation, CreateMediaMutationVariables>;
+
+/**
+ * __useCreateMediaMutation__
+ *
+ * To run a mutation, you first call `useCreateMediaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMediaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMediaMutation, { data, loading, error }] = useCreateMediaMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateMediaMutation(baseOptions?: Apollo.MutationHookOptions<CreateMediaMutation, CreateMediaMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMediaMutation, CreateMediaMutationVariables>(CreateMediaDocument, options);
+      }
+export type CreateMediaMutationHookResult = ReturnType<typeof useCreateMediaMutation>;
+export type CreateMediaMutationResult = Apollo.MutationResult<CreateMediaMutation>;
+export type CreateMediaMutationOptions = Apollo.BaseMutationOptions<CreateMediaMutation, CreateMediaMutationVariables>;
+export const CreateShowcaseDocument = gql`
+    mutation createShowcase($input: ShowcaseCreateInputDto!) {
+  createOneShowcase(input: $input) {
+    name
+    slug
+  }
+}
+    `;
+export type CreateShowcaseMutationFn = Apollo.MutationFunction<CreateShowcaseMutation, CreateShowcaseMutationVariables>;
+
+/**
+ * __useCreateShowcaseMutation__
+ *
+ * To run a mutation, you first call `useCreateShowcaseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateShowcaseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createShowcaseMutation, { data, loading, error }] = useCreateShowcaseMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateShowcaseMutation(baseOptions?: Apollo.MutationHookOptions<CreateShowcaseMutation, CreateShowcaseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateShowcaseMutation, CreateShowcaseMutationVariables>(CreateShowcaseDocument, options);
+      }
+export type CreateShowcaseMutationHookResult = ReturnType<typeof useCreateShowcaseMutation>;
+export type CreateShowcaseMutationResult = Apollo.MutationResult<CreateShowcaseMutation>;
+export type CreateShowcaseMutationOptions = Apollo.BaseMutationOptions<CreateShowcaseMutation, CreateShowcaseMutationVariables>;
+export const DeleteMediaDocument = gql`
+    mutation deleteMedia($id: ID!) {
+  deleteOneMediaDto(input: {id: $id}) {
+    id
+  }
+}
+    `;
+export type DeleteMediaMutationFn = Apollo.MutationFunction<DeleteMediaMutation, DeleteMediaMutationVariables>;
+
+/**
+ * __useDeleteMediaMutation__
+ *
+ * To run a mutation, you first call `useDeleteMediaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteMediaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteMediaMutation, { data, loading, error }] = useDeleteMediaMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteMediaMutation(baseOptions?: Apollo.MutationHookOptions<DeleteMediaMutation, DeleteMediaMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteMediaMutation, DeleteMediaMutationVariables>(DeleteMediaDocument, options);
+      }
+export type DeleteMediaMutationHookResult = ReturnType<typeof useDeleteMediaMutation>;
+export type DeleteMediaMutationResult = Apollo.MutationResult<DeleteMediaMutation>;
+export type DeleteMediaMutationOptions = Apollo.BaseMutationOptions<DeleteMediaMutation, DeleteMediaMutationVariables>;
+export const PostAnonymousCommentDocument = gql`
+    mutation postAnonymousComment($slug: String!, $input: CommentCreateDto!) {
+  postAnonymousComment(slug: $slug, input: $input) {
+    id
+  }
+}
+    `;
+export type PostAnonymousCommentMutationFn = Apollo.MutationFunction<PostAnonymousCommentMutation, PostAnonymousCommentMutationVariables>;
+
+/**
+ * __usePostAnonymousCommentMutation__
+ *
+ * To run a mutation, you first call `usePostAnonymousCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostAnonymousCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postAnonymousCommentMutation, { data, loading, error }] = usePostAnonymousCommentMutation({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePostAnonymousCommentMutation(baseOptions?: Apollo.MutationHookOptions<PostAnonymousCommentMutation, PostAnonymousCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PostAnonymousCommentMutation, PostAnonymousCommentMutationVariables>(PostAnonymousCommentDocument, options);
+      }
+export type PostAnonymousCommentMutationHookResult = ReturnType<typeof usePostAnonymousCommentMutation>;
+export type PostAnonymousCommentMutationResult = Apollo.MutationResult<PostAnonymousCommentMutation>;
+export type PostAnonymousCommentMutationOptions = Apollo.BaseMutationOptions<PostAnonymousCommentMutation, PostAnonymousCommentMutationVariables>;
+export const PostAuthorizedCommentDocument = gql`
+    mutation postAuthorizedComment($slug: String!, $input: CommentCreateDto!) {
+  postAuthorizedComment(slug: $slug, input: $input) {
+    id
+  }
+}
+    `;
+export type PostAuthorizedCommentMutationFn = Apollo.MutationFunction<PostAuthorizedCommentMutation, PostAuthorizedCommentMutationVariables>;
+
+/**
+ * __usePostAuthorizedCommentMutation__
+ *
+ * To run a mutation, you first call `usePostAuthorizedCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostAuthorizedCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postAuthorizedCommentMutation, { data, loading, error }] = usePostAuthorizedCommentMutation({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePostAuthorizedCommentMutation(baseOptions?: Apollo.MutationHookOptions<PostAuthorizedCommentMutation, PostAuthorizedCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PostAuthorizedCommentMutation, PostAuthorizedCommentMutationVariables>(PostAuthorizedCommentDocument, options);
+      }
+export type PostAuthorizedCommentMutationHookResult = ReturnType<typeof usePostAuthorizedCommentMutation>;
+export type PostAuthorizedCommentMutationResult = Apollo.MutationResult<PostAuthorizedCommentMutation>;
+export type PostAuthorizedCommentMutationOptions = Apollo.BaseMutationOptions<PostAuthorizedCommentMutation, PostAuthorizedCommentMutationVariables>;
+export const QueryBannerDocument = gql`
+    query queryBanner {
+  banner: setting(key: "common:banner") {
+    value
+  }
+}
+    `;
+
+/**
+ * __useQueryBannerQuery__
+ *
+ * To run a query within a React component, call `useQueryBannerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryBannerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryBannerQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useQueryBannerQuery(baseOptions?: Apollo.QueryHookOptions<QueryBannerQuery, QueryBannerQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QueryBannerQuery, QueryBannerQueryVariables>(QueryBannerDocument, options);
+      }
+export function useQueryBannerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryBannerQuery, QueryBannerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QueryBannerQuery, QueryBannerQueryVariables>(QueryBannerDocument, options);
+        }
+export type QueryBannerQueryHookResult = ReturnType<typeof useQueryBannerQuery>;
+export type QueryBannerLazyQueryHookResult = ReturnType<typeof useQueryBannerLazyQuery>;
+export type QueryBannerQueryResult = Apollo.QueryResult<QueryBannerQuery, QueryBannerQueryVariables>;
+export const QueryCommentsDocument = gql`
+    query QueryComments($slug: String!) {
+  showcase(slug: $slug) {
+    slug
+    comments {
+      nodes {
+        id
+        author {
+          name
+        }
+        content
+        rate
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useQueryCommentsQuery__
+ *
+ * To run a query within a React component, call `useQueryCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryCommentsQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useQueryCommentsQuery(baseOptions: Apollo.QueryHookOptions<QueryCommentsQuery, QueryCommentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QueryCommentsQuery, QueryCommentsQueryVariables>(QueryCommentsDocument, options);
+      }
+export function useQueryCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryCommentsQuery, QueryCommentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QueryCommentsQuery, QueryCommentsQueryVariables>(QueryCommentsDocument, options);
+        }
+export type QueryCommentsQueryHookResult = ReturnType<typeof useQueryCommentsQuery>;
+export type QueryCommentsLazyQueryHookResult = ReturnType<typeof useQueryCommentsLazyQuery>;
+export type QueryCommentsQueryResult = Apollo.QueryResult<QueryCommentsQuery, QueryCommentsQueryVariables>;
+export const CurrentUserDocument = gql`
+    query CurrentUser {
+  currentUser {
+    email
+    name
+    role
+    approvalStatus
+  }
+}
+    `;
+
+/**
+ * __useCurrentUserQuery__
+ *
+ * To run a query within a React component, call `useCurrentUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCurrentUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCurrentUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCurrentUserQuery(baseOptions?: Apollo.QueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
+      }
+export function useCurrentUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
+        }
+export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
+export type CurrentUserLazyQueryHookResult = ReturnType<typeof useCurrentUserLazyQuery>;
+export type CurrentUserQueryResult = Apollo.QueryResult<CurrentUserQuery, CurrentUserQueryVariables>;
+export const ShowcaseDetailDocument = gql`
+    query ShowcaseDetail($slug: String!) {
+  showcase(slug: $slug) {
+    slug
+    name
+    author {
+      name
+    }
+    status
+    image {
+      path
+    }
+    description
+    expectedSalePrice {
+      regular
+      pioneer
+      preorder
+      promo
+    }
+    investorStat {
+      totalRevenue
+      firstYearRevenue
+      campaignDuration
+      growthRate
+      adCostRate
+      adCost
+      operatingCostRate
+      operatingCost
+      initialCapital
+      revolvingInterval
+      revolvingPerDay
+    }
+  }
+  showcases(filter: {slug: {neq: $slug}}) {
+    edges {
+      node {
+        slug
+        name
+        status
+        image {
+          path
+        }
+        createdAt
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useShowcaseDetailQuery__
+ *
+ * To run a query within a React component, call `useShowcaseDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShowcaseDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShowcaseDetailQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useShowcaseDetailQuery(baseOptions: Apollo.QueryHookOptions<ShowcaseDetailQuery, ShowcaseDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ShowcaseDetailQuery, ShowcaseDetailQueryVariables>(ShowcaseDetailDocument, options);
+      }
+export function useShowcaseDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShowcaseDetailQuery, ShowcaseDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ShowcaseDetailQuery, ShowcaseDetailQueryVariables>(ShowcaseDetailDocument, options);
+        }
+export type ShowcaseDetailQueryHookResult = ReturnType<typeof useShowcaseDetailQuery>;
+export type ShowcaseDetailLazyQueryHookResult = ReturnType<typeof useShowcaseDetailLazyQuery>;
+export type ShowcaseDetailQueryResult = Apollo.QueryResult<ShowcaseDetailQuery, ShowcaseDetailQueryVariables>;
+export const ShowcasePreviewDocument = gql`
+    query ShowcasePreview($slug: String!) {
+  showcase(slug: $slug) {
+    slug
+    name
+    author {
+      name
+    }
+    status
+    image {
+      path
+    }
+    description
+    expectedSalePrice {
+      regular
+      pioneer
+      preorder
+      promo
+    }
+  }
+  showcases(filter: {slug: {neq: $slug}}) {
+    edges {
+      node {
+        slug
+        name
+        status
+        image {
+          path
+        }
+        createdAt
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useShowcasePreviewQuery__
+ *
+ * To run a query within a React component, call `useShowcasePreviewQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShowcasePreviewQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShowcasePreviewQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useShowcasePreviewQuery(baseOptions: Apollo.QueryHookOptions<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>(ShowcasePreviewDocument, options);
+      }
+export function useShowcasePreviewLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>(ShowcasePreviewDocument, options);
+        }
+export type ShowcasePreviewQueryHookResult = ReturnType<typeof useShowcasePreviewQuery>;
+export type ShowcasePreviewLazyQueryHookResult = ReturnType<typeof useShowcasePreviewLazyQuery>;
+export type ShowcasePreviewQueryResult = Apollo.QueryResult<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>;
+export const ShowcasesDocument = gql`
+    query Showcases($filter: ShowcaseFilter, $paging: CursorPaging!) {
+  showcases(filter: $filter, paging: $paging) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          path
+        }
+        createdAt
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useShowcasesQuery__
+ *
+ * To run a query within a React component, call `useShowcasesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShowcasesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShowcasesQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      paging: // value for 'paging'
+ *   },
+ * });
+ */
+export function useShowcasesQuery(baseOptions: Apollo.QueryHookOptions<ShowcasesQuery, ShowcasesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ShowcasesQuery, ShowcasesQueryVariables>(ShowcasesDocument, options);
+      }
+export function useShowcasesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShowcasesQuery, ShowcasesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ShowcasesQuery, ShowcasesQueryVariables>(ShowcasesDocument, options);
+        }
+export type ShowcasesQueryHookResult = ReturnType<typeof useShowcasesQuery>;
+export type ShowcasesLazyQueryHookResult = ReturnType<typeof useShowcasesLazyQuery>;
+export type ShowcasesQueryResult = Apollo.QueryResult<ShowcasesQuery, ShowcasesQueryVariables>;
+export const SlugsDocument = gql`
+    query Slugs {
+  slugs
+}
+    `;
+
+/**
+ * __useSlugsQuery__
+ *
+ * To run a query within a React component, call `useSlugsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSlugsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSlugsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSlugsQuery(baseOptions?: Apollo.QueryHookOptions<SlugsQuery, SlugsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SlugsQuery, SlugsQueryVariables>(SlugsDocument, options);
+      }
+export function useSlugsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SlugsQuery, SlugsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SlugsQuery, SlugsQueryVariables>(SlugsDocument, options);
+        }
+export type SlugsQueryHookResult = ReturnType<typeof useSlugsQuery>;
+export type SlugsLazyQueryHookResult = ReturnType<typeof useSlugsLazyQuery>;
+export type SlugsQueryResult = Apollo.QueryResult<SlugsQuery, SlugsQueryVariables>;

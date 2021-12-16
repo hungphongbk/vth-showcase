@@ -1,5 +1,12 @@
 import React from "react";
-import { Avatar, Box, Button, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Skeleton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { isLoggedInSelector } from "../../store/auth.selectors";
 import GoogleColoredIcon from "../../assets/icons/GoogleColoredIcon";
@@ -7,24 +14,13 @@ import { signInWithGoogle } from "../../service/auth";
 import { afterSignInFirebase, afterSignOut } from "../../store/auth.reducer";
 import { FirebaseAuthService } from "../../service";
 import { RoleIcon, StyledUpper } from "./menu/styled";
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/client";
 import LoggedInMenu from "./menu/LoggedInMenu";
 import FooterMobile from "./menu/FooterMobile";
-
-const CURRENT_USER = gql`
-  query CurrentUser {
-    currentUser {
-      name
-      role
-    }
-  }
-`;
 
 export default function MenuPanel(props: unknown): JSX.Element {
   const isLoggedIn = useAppSelector(isLoggedInSelector),
     dispatch = useAppDispatch(),
-    { data } = useQuery(CURRENT_USER);
+    { data, loading } = useAppSelector((state) => state.auth.userInfo);
   return (
     <Box
       sx={{
@@ -65,12 +61,18 @@ export default function MenuPanel(props: unknown): JSX.Element {
               </Avatar>
               <Box sx={{ gridArea: "user-name" }}>
                 <Typography>Xin chào</Typography>
-                <Typography sx={{ fontWeight: 700, color: "black" }}>
-                  {data?.currentUser?.name}
-                </Typography>
+                {loading ? (
+                  <Skeleton variant="rectangular" width={"100%"} height={17} />
+                ) : (
+                  <Typography sx={{ fontWeight: 700, color: "black" }}>
+                    {data?.currentUser.name}
+                  </Typography>
+                )}
               </Box>
-              {data?.currentUser?.role && (
-                <RoleIcon role={data.currentUser.role} />
+              {loading || !data?.currentUser.approvalStatus ? (
+                <Skeleton variant="rectangular" width={147} height={20} />
+              ) : (
+                <RoleIcon role={data.currentUser.approvalStatus} />
               )}
             </Box>
           </StyledUpper>

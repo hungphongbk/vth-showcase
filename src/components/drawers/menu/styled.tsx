@@ -1,5 +1,5 @@
 import { Box, css, List, styled } from "@mui/material";
-import { AuthRoleType } from "../../../types/graphql";
+import { UserStatusEnum } from "../../../types/graphql";
 import { ComponentType, useMemo } from "react";
 import CreatorConfirmedIcon from "./CreatorConfirmedIcon";
 import InvestorConfirmedIcon from "./InvestorConfirmedIcon";
@@ -12,14 +12,14 @@ export const StyledUpper = styled(Box)(
   `
 );
 
-export const RoleIcon = (props: { role: AuthRoleType }) => {
+export const RoleIcon = (props: { role: UserStatusEnum }) => {
   const Component = useMemo<ComponentType<any>>(() => {
     switch (props.role) {
-      case AuthRoleType.User:
+      case UserStatusEnum.PendingCreator:
+      case UserStatusEnum.ApprovedCreator:
         return CreatorConfirmedIcon;
-      case AuthRoleType.Investor:
-      case AuthRoleType.Admin:
-      case AuthRoleType.Superadmin:
+      case UserStatusEnum.PendingInvestor:
+      case UserStatusEnum.ApprovedInvestor:
         return InvestorConfirmedIcon;
       default:
         return () => null;

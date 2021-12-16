@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import {
   Avatar,
   Box,
@@ -17,12 +17,16 @@ import { RoleIcon, StyledUpper } from "./menu/styled";
 import LoggedInMenu from "./menu/LoggedInMenu";
 import FooterMobile from "./menu/FooterMobile";
 
-export default function MenuPanel(props: unknown): JSX.Element {
+const MenuPanel = forwardRef(function MenuPanel(
+  props: unknown,
+  ref
+): JSX.Element {
   const isLoggedIn = useAppSelector(isLoggedInSelector),
     dispatch = useAppDispatch(),
     { data, loading } = useAppSelector((state) => state.auth.userInfo);
   return (
     <Box
+      ref={ref}
       sx={{
         top: 0,
         left: 0,
@@ -114,4 +118,6 @@ export default function MenuPanel(props: unknown): JSX.Element {
       </Box>
     </Box>
   );
-}
+});
+
+export default MenuPanel;

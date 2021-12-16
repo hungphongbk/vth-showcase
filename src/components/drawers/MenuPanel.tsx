@@ -9,6 +9,7 @@ import { FirebaseAuthService } from "../../service";
 import { RoleIcon, StyledUpper } from "./menu/styled";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
+import LoggedInMenu from "./menu/LoggedInMenu";
 
 const CURRENT_USER = gql`
   query CurrentUser {
@@ -28,46 +29,52 @@ export default function MenuPanel(props: unknown): JSX.Element {
       sx={{
         top: 0,
         left: 0,
-        width: "80%",
+        width: "calc(100% - 60px)",
+        height: "100%",
         bgcolor: "white",
         borderRadius: "0 30px 30px 0",
       }}
     >
-      <StyledUpper>
-        {isLoggedIn ? (
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateAreas: '"user-icon user-name" "user-icon user-role"',
-              gridTemplateColumns: "55px 1fr",
-              gridColumnGap: "8px",
-              gridRowGap: "4px",
-            }}
-          >
-            <Avatar
+      {isLoggedIn ? (
+        <>
+          <StyledUpper>
+            <Box
               sx={{
-                width: 55,
-                height: 55,
-                gridArea: "user-icon",
-                bgcolor: "#3e3e3e",
-                fontSize: "20px",
-                fontWeight: 700,
+                display: "grid",
+                gridTemplateAreas:
+                  '"user-icon user-name" "user-icon user-role"',
+                gridTemplateColumns: "55px 1fr",
+                gridColumnGap: "8px",
+                gridRowGap: "4px",
+                mb: 4,
               }}
             >
-              {data?.currentUser?.name?.[0]}
-            </Avatar>
-            <Box sx={{ gridArea: "user-name" }}>
-              <Typography>Xin chào</Typography>
-              <Typography sx={{ fontWeight: 700, color: "black" }}>
-                {data?.currentUser?.name}
-              </Typography>
+              <Avatar
+                sx={{
+                  width: 55,
+                  height: 55,
+                  gridArea: "user-icon",
+                  bgcolor: "#3e3e3e",
+                  fontSize: "20px",
+                  fontWeight: 700,
+                }}
+              >
+                {data?.currentUser?.name?.[0]}
+              </Avatar>
+              <Box sx={{ gridArea: "user-name" }}>
+                <Typography>Xin chào</Typography>
+                <Typography sx={{ fontWeight: 700, color: "black" }}>
+                  {data?.currentUser?.name}
+                </Typography>
+              </Box>
+              {data?.currentUser?.role && (
+                <RoleIcon role={data.currentUser.role} />
+              )}
             </Box>
-            {data?.currentUser?.role && (
-              <RoleIcon role={data.currentUser.role} />
-            )}
-          </Box>
-        ) : null}
-      </StyledUpper>
+          </StyledUpper>
+          <LoggedInMenu />
+        </>
+      ) : null}
       <Stack direction={"column"} alignItems={"center"}>
         {isLoggedIn ? (
           <Button

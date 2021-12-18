@@ -26,6 +26,7 @@ module.exports = withTM({
       "api.showcase.vaithuhay.com",
       "i.imgur.com",
       "product.hstatic.net",
+      ...(process.env.NODE_ENV === "development" ? ["207.148.126.213"] : []),
     ],
   },
   experimental: {

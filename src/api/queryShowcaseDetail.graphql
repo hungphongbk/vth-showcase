@@ -3,6 +3,7 @@ query ShowcaseDetail($slug: String!) {
     slug
     name
     author{
+      email
       name
     }
     status

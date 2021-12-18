@@ -3,23 +3,18 @@ import { Box, Button, ButtonProps } from "@mui/material";
 import ShowcaseDetailed from "../../src/components/ShowcaseDetailed";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
-import {
-  addApolloState,
-  apiService,
-  apolloClient,
-  queryShowcaseDetail,
-} from "../../src/api";
+import { addApolloState, apiService, apolloClient } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
 import BookmarkIcon from "../../src/assets/icons/BookmarkIcon";
 import dynamic from "next/dynamic";
 import {
   Showcase,
-  ShowcaseDetailQuery,
-  ShowcaseDetailQueryVariables,
+  ShowcaseDetailDocument,
   ShowcaseEdge,
   ShowcasePreviewQuery,
   ShowcasePreviewQueryVariables,
   ShowcaseStatus,
+  useShowcaseDetailQuery,
 } from "../../src/types/graphql";
 import { InvestorInformation } from "../../src/components/PostPage";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
@@ -90,15 +85,14 @@ export default function PostDetailedPage({ slug }: { slug: string }) {
     router.prefetch("/");
   }, [router]);
   const [open, setOpen] = useState(false);
-  const { loading, error, data } = useAuthQuery<
-    ShowcaseDetailQuery,
-    ShowcaseDetailQueryVariables
-  >(queryShowcaseDetail, {
+  const { loading, error, data } = useAuthQuery(useShowcaseDetailQuery, {
     variables: { slug },
   });
 
-  const showcase = data!.showcase as Showcase,
-    showcases = data!.showcases.edges as ShowcaseEdge[];
+  const showcase = data?.showcase as Showcase,
+    showcases = data?.showcases.edges as ShowcaseEdge[];
+
+  if (!showcase) return null;
 
   return (
     <Box sx={{ bgcolor: "#f0f0f0" }}>
@@ -165,10 +159,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context.params!.slug as string;
   await apolloClient.query<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>(
     {
-      query: queryShowcaseDetail,
+      query: ShowcaseDetailDocument,
       variables: {
         slug,
       },
+      errorPolicy: "ignore",
     }
   );
   return addApolloState(apolloClient, {

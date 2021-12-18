@@ -5,6 +5,7 @@ query QueryComments($slug: String!){
       nodes {
         id
         author {
+          email
           name
         }
         content

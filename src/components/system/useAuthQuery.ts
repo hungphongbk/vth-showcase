@@ -1,20 +1,16 @@
-import { OperationVariables } from "@apollo/client/core";
-import { DocumentNode } from "graphql";
-import { TypedDocumentNode } from "@graphql-typed-document-node/core";
-import {
-  QueryHookOptions,
-  QueryResult,
-} from "@apollo/client/react/types/types";
-import { useQuery } from "@apollo/client";
+import { QueryResult } from "@apollo/client/react/types/types";
+import * as Apollo from "@apollo/client";
 import { useAppSelector } from "../../store";
 import { useEffect } from "react";
 
-export function useAuthQuery<TData = any, TVariables = OperationVariables>(
-  query: DocumentNode | TypedDocumentNode<TData, TVariables>,
-  options?: QueryHookOptions<TData, TVariables>
+export function useAuthQuery<TData, TVariables>(
+  fn: (
+    baseOpt: Apollo.QueryHookOptions<TData, TVariables>
+  ) => QueryResult<TData, TVariables>,
+  options: Apollo.QueryHookOptions<TData, TVariables>
 ): QueryResult<TData, TVariables> {
   const user = useAppSelector((state) => state.auth.user);
-  const queryResult = useQuery(query, options);
+  const queryResult = fn(options);
   useEffect(() => {
     if (typeof user !== "undefined" && user !== null) {
       // noinspection JSIgnoredPromiseFromCall

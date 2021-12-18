@@ -887,7 +887,7 @@ export interface MutationUpdateOneSettingArgs {
 
 
 export interface MutationUpdateOneShowcaseArgs {
-  input: ShowcaseCreateInputDto;
+  input: ShowcaseUpdateInputDto;
   slug: Scalars['String'];
 }
 
@@ -1132,11 +1132,6 @@ export interface SettingDto {
   id: Scalars['ID'];
   key: Scalars['String'];
   value: Scalars['JSONObject'];
-}
-
-export interface SettingDtoEdge {
-  cursor: Scalars['ConnectionCursor'];
-  node: SettingDto;
 }
 
 export interface Showcase {
@@ -1456,6 +1451,23 @@ export interface ShowcaseStatusFilterComparison {
   notLike: Maybe<ShowcaseStatus>;
 }
 
+export interface ShowcaseUpdateInputDto {
+  brand: Maybe<ShowcaseBrandInput>;
+  description: Maybe<Scalars['String']>;
+  expectedQuantity: Maybe<ShowcasePriceInput>;
+  expectedSaleAt: Maybe<Scalars['DateTime']>;
+  expectedSaleEndAt: Maybe<Scalars['DateTime']>;
+  expectedSalePrice: Maybe<ShowcasePriceInput>;
+  highlightFeatures: Maybe<Array<ShowcaseHfCreateInputDto>>;
+  id: Maybe<Scalars['String']>;
+  image: Maybe<MediaInput>;
+  imageLists: Maybe<Array<CreateImageListInputDto>>;
+  inventory: Maybe<ShowcaseInventoryDtoInput>;
+  name: Maybe<Scalars['String']>;
+  publishStatus: Maybe<PublishStatus>;
+  status: Maybe<ShowcaseStatus>;
+}
+
 export enum SortDirection {
   Asc = 'ASC',
   Desc = 'DESC'
@@ -1644,7 +1656,7 @@ export type QueryCommentsQueryVariables = Exact<{
 }>;
 
 
-export type QueryCommentsQuery = { showcase: { slug: string, comments: { nodes: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author: { name: string } | null }> } } };
+export type QueryCommentsQuery = { showcase: { slug: string, comments: { nodes: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author: { email: string, name: string } | null }> } } };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1661,7 +1673,7 @@ export type ShowcaseDetailQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { name: string }, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, investorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
+export type ShowcaseDetailQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, investorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string } } }> } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -1900,6 +1912,7 @@ export const QueryCommentsDocument = gql`
       nodes {
         id
         author {
+          email
           name
         }
         content
@@ -2031,6 +2044,7 @@ export const ShowcaseDetailDocument = gql`
     slug
     name
     author {
+      email
       name
     }
     status

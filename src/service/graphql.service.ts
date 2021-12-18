@@ -4,7 +4,6 @@ import {
   mutationDeleteMedia,
   queryShowcasePreview,
   queryShowcases,
-  querySlugs,
 } from "../api";
 import {
   CreateShowcaseMutation,
@@ -21,11 +20,14 @@ import {
   ShowcasePreviewQueryVariables,
   ShowcasesQuery,
   ShowcasesQueryVariables,
+  SlugsDocument,
   SlugsQuery,
 } from "../types/graphql";
 
 export const getAllSlugs = async () => {
-  const { data } = await apolloClient.query<SlugsQuery>({ query: querySlugs });
+  const { data } = await apolloClient.query<SlugsQuery>({
+    query: SlugsDocument,
+  });
   return data!.slugs;
 };
 

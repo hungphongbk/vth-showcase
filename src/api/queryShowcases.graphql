@@ -12,6 +12,7 @@ query Showcases($filter: ShowcaseFilter, $paging: CursorPaging!) {
         status
         image {
           path
+          preloadUrl
         }
         createdAt
       }

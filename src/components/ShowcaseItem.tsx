@@ -104,6 +104,8 @@ export default function ShowcaseItem({
           layout={"fill"}
           objectFit={"cover"}
           sizes={"50vw"}
+          placeholder={"blur"}
+          blurDataURL={item.image.preloadUrl}
         />
       </MotionBox>
       {/*<img src={item.image} alt={item.title} />*/}

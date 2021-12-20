@@ -9,6 +9,7 @@ query ShowcaseDetail($slug: String!) {
     status
     image {
       path
+      preloadUrl
     }
     description
     expectedSalePrice{
@@ -39,6 +40,7 @@ query ShowcaseDetail($slug: String!) {
         status
         image {
           path
+          preloadUrl
         }
         createdAt
       }

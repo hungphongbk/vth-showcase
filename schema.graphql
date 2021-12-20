@@ -176,6 +176,7 @@ type MediaDto implements IdInterface {
   id: ID!
   mimetype: String!
   path: String!
+  preloadUrl: String
   type: String!
 }
 
@@ -201,6 +202,7 @@ type MediaDtoDeleteResponse {
   id: ID
   mimetype: String
   path: String
+  preloadUrl: String
   type: String
 }
 
@@ -279,7 +281,7 @@ type Mutation {
   updateOneInvestmentPackageDto(input: UpdateOneInvestmentPackageDtoInput!): InvestmentPackageDto!
   updateOneMediaDto(input: UpdateOneMediaDtoInput!): MediaDto!
   updateOneSetting(input: SettingCreateDto!): Boolean!
-  updateOneShowcase(input: ShowcaseCreateInputDto!, slug: String!): Boolean!
+  updateOneShowcase(input: ShowcaseUpdateInputDto!, slug: String!): Boolean!
   updateOneShowcaseHighlightFeature(input: UpdateOneShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
   updateOneUser(role: AuthRoleType!, uid: String!): Boolean!
 }
@@ -370,7 +372,7 @@ type Query {
   ): ShowcaseHighlightFeatureConnection!
   showcases(
     "Specify to filter the records returned."
-    filter: ShowcaseFilter = {},
+    filter: ShowcaseFilter = {publishStatus: {eq: PUBLISHED}},
     "Limit or page results."
     paging: CursorPaging = {first: 10},
     "Specify to sort results."
@@ -383,13 +385,6 @@ type SettingDto {
   id: ID!
   key: String!
   value: JSONObject!
-}
-
-type SettingDtoEdge {
-  "Cursor for this node."
-  cursor: ConnectionCursor!
-  "The node containing the SettingDto"
-  node: SettingDto!
 }
 
 type Showcase {
@@ -599,6 +594,7 @@ type User {
   name: String!
   photoURL: String!
   role: AuthRoleType!
+  showcases: ShowcaseConnection!
   uid: ID!
 }
 
@@ -1002,6 +998,7 @@ input MediaInput {
   filename: String!
   mimetype: String!
   path: String!
+  preloadUrl: String
 }
 
 input OffsetPaging {
@@ -1268,6 +1265,23 @@ input ShowcaseStatusFilterComparison {
   notLike: ShowcaseStatus
 }
 
+input ShowcaseUpdateInputDto {
+  brand: ShowcaseBrandInput
+  description: String
+  expectedQuantity: ShowcasePriceInput
+  expectedSaleAt: DateTime
+  expectedSaleEndAt: DateTime
+  expectedSalePrice: ShowcasePriceInput
+  highlightFeatures: [ShowcaseHFCreateInputDto!]
+  id: String
+  image: MediaInput
+  imageLists: [CreateImageListInputDto!]
+  inventory: ShowcaseInventoryDtoInput
+  name: String
+  publishStatus: PublishStatus
+  status: ShowcaseStatus
+}
+
 input StringFieldComparison {
   eq: String
   gt: String
@@ -1354,6 +1368,7 @@ input UpdateMediaDto {
   id: ID
   mimetype: String
   path: String
+  preloadUrl: String
   type: String
 }
 

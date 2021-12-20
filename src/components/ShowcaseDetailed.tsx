@@ -21,6 +21,7 @@ import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import { Showcase, ShowcaseEdge } from "../types/graphql";
 import { CommentSection } from "./PostPage";
+import Image from "next/image";
 
 const testPreview = (str: string) => /^\/preview/.test(str),
   testPost = (str: string) => /^\/post/.test(str);
@@ -113,29 +114,22 @@ export default function ShowcaseDetailed({
           <MotionBox
             sx={{
               position: "relative",
-              "& img": {
-                width: "100%",
-                userSelect: "none",
-              },
+              // "& img": {
+              //   width: "100%",
+              //   userSelect: "none",
+              // },
             }}
           >
-            <MotionBox
-              // layoutId={`${item.id}/thumb-wrapper`}
-              sx={{
-                "& img": {
-                  objectFit: "cover",
-                  width: "100%",
-                  height: "100%",
-                },
-              }}
-            >
-              <motion.img
-                layoutId={"detail-image"}
-                // layoutId={`${item.id}/thumb`}
-                src={item.image.path}
-                alt={item.image.path}
-              />
-            </MotionBox>
+            <Image
+              src={item.image.path}
+              alt={item.image.path}
+              width={1000}
+              height={1200}
+              objectFit={"cover"}
+              sizes={"100vw"}
+              placeholder={"blur"}
+              blurDataURL={item.image.preloadUrl}
+            />
             <motion.div>
               <ProductInfoDetailed
                 onClick={() =>

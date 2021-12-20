@@ -1,24 +1,39 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetStaticProps } from "next";
 import ShowcaseDetailed from "../../src/components/ShowcaseDetailed";
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { MotionBox } from "../../src/components/commons";
-import { apiService } from "../../src/api";
+import { addApolloState, apiService, apolloClient } from "../../src/api";
+import {
+  Showcase,
+  ShowcaseEdge,
+  ShowcasePreviewDocument,
+  ShowcasePreviewQuery,
+  ShowcasePreviewQueryVariables,
+  useShowcasePreviewQuery,
+} from "../../src/types/graphql";
+import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 
-export default function PreviewPage({
-  post,
-  posts,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function PreviewPage({ slug }: { slug: string }) {
   const router = useRouter();
+
   useEffect(() => {
     // noinspection JSIgnoredPromiseFromCall
     router.prefetch("/");
     // noinspection JSIgnoredPromiseFromCall
-    router
-      .prefetch(`/post/${post.slug}`)
-      .then(() => console.log("prefetch post"));
-  }, [post.slug, router]);
+    router.prefetch(`/post/${slug}`);
+  }, [slug, router]);
+
+  const { loading, error, data } = useAuthQuery(useShowcasePreviewQuery, {
+    variables: { slug },
+  });
+
+  const showcase = data?.showcase as Showcase,
+    showcases = data?.showcases.edges as ShowcaseEdge[];
+
+  if (!showcase) return null;
+
   return (
     <Box
       sx={{
@@ -32,9 +47,9 @@ export default function PreviewPage({
       }}
     >
       <ShowcaseDetailed
-        item={post}
+        item={showcase}
         onClick={() => router.back()}
-        posts={posts}
+        posts={showcases}
       />
       <MotionBox
         data-testid={"backdrop"}
@@ -58,13 +73,20 @@ export default function PreviewPage({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  // noinspection PointlessArithmeticExpressionJS
-  return {
-    props: {
-      ...(await apiService.getShowcasePreview(context.params!.slug as string)),
-    },
+  const slug = context.params!.slug as string;
+  await apolloClient.query<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>(
+    {
+      query: ShowcasePreviewDocument,
+      variables: {
+        slug,
+      },
+      errorPolicy: "ignore",
+    }
+  );
+  return addApolloState(apolloClient, {
+    props: { slug },
     revalidate: 60,
-  };
+  });
 };
 
 // noinspection JSUnusedGlobalSymbols

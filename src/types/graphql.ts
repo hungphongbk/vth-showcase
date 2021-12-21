@@ -1368,6 +1368,12 @@ export interface ShowcaseInventoryDtoInput {
   revolvingInterval: Scalars['Float'];
 }
 
+export interface ShowcaseInvestorPackageDto {
+  firstYearBenefit: Scalars['String'];
+  fund: Scalars['String'];
+  package: InvestmentPackageDto;
+}
+
 export interface ShowcaseInvestorStatDto {
   adCost: Scalars['String'];
   adCostRate: Scalars['Float'];
@@ -1380,6 +1386,7 @@ export interface ShowcaseInvestorStatDto {
   initialCapital: Scalars['String'];
   operatingCost: Scalars['String'];
   operatingCostRate: Scalars['Float'];
+  packages: Array<ShowcaseInvestorPackageDto>;
   revolvingInterval: Scalars['Float'];
   revolvingPerDay: Scalars['Float'];
   totalRevenue: Scalars['Float'];
@@ -1678,12 +1685,17 @@ export type DraftShowcasesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type DraftShowcasesQuery = { showcases: { edges: Array<{ node: { slug: string, name: string, image: { path: string } } }> } };
 
+export type InvestmentPackagesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type InvestmentPackagesQuery = { investmentPackageDtos: { edges: Array<{ node: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } };
+
 export type ShowcaseDetailQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, brand: { name: string }, image: { path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, investorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number } | null, highlightFeatures: Array<{ name: string, description: string, image: { path: string, preloadUrl: string | null, width: number | null, height: number | null } }> }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string, preloadUrl: string | null } } }> } };
+export type ShowcaseDetailQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, brand: { name: string }, image: { path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, investorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number } }> } | null, highlightFeatures: Array<{ name: string, description: string, image: { path: string, preloadUrl: string | null, width: number | null, height: number | null } }> }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string, preloadUrl: string | null } } }> } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -2048,6 +2060,51 @@ export type DraftShowcasesQueryResult = Apollo.QueryResult<DraftShowcasesQuery, 
 export function refetchDraftShowcasesQuery(variables?: DraftShowcasesQueryVariables) {
       return { query: DraftShowcasesDocument, variables: variables }
     }
+export const InvestmentPackagesDocument = gql`
+    query InvestmentPackages {
+  investmentPackageDtos {
+    edges {
+      node {
+        id
+        displayName
+        fundedRate
+        benefitRate
+        count
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useInvestmentPackagesQuery__
+ *
+ * To run a query within a React component, call `useInvestmentPackagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useInvestmentPackagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useInvestmentPackagesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useInvestmentPackagesQuery(baseOptions?: Apollo.QueryHookOptions<InvestmentPackagesQuery, InvestmentPackagesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<InvestmentPackagesQuery, InvestmentPackagesQueryVariables>(InvestmentPackagesDocument, options);
+      }
+export function useInvestmentPackagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<InvestmentPackagesQuery, InvestmentPackagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<InvestmentPackagesQuery, InvestmentPackagesQueryVariables>(InvestmentPackagesDocument, options);
+        }
+export type InvestmentPackagesQueryHookResult = ReturnType<typeof useInvestmentPackagesQuery>;
+export type InvestmentPackagesLazyQueryHookResult = ReturnType<typeof useInvestmentPackagesLazyQuery>;
+export type InvestmentPackagesQueryResult = Apollo.QueryResult<InvestmentPackagesQuery, InvestmentPackagesQueryVariables>;
+export function refetchInvestmentPackagesQuery(variables?: InvestmentPackagesQueryVariables) {
+      return { query: InvestmentPackagesDocument, variables: variables }
+    }
 export const ShowcaseDetailDocument = gql`
     query ShowcaseDetail($slug: String!) {
   showcase(slug: $slug) {
@@ -2086,6 +2143,15 @@ export const ShowcaseDetailDocument = gql`
       initialCapital
       revolvingInterval
       revolvingPerDay
+      packages {
+        package {
+          id
+          displayName
+          fundedRate
+        }
+        fund
+        firstYearBenefit
+      }
     }
     highlightFeatures {
       name

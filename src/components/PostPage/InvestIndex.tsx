@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import bg1 from "../../assets/bg-investor-1.png";
 import BudgetIncreaseIcon from "../../assets/icons/BudgetIncreaseIcon";
 import ClockwiseIcon from "../../assets/icons/ClockwiseIcon";
+import PackagesData from "./packages-data";
 
 export default function InvestIndex({
   stat,
@@ -11,7 +12,7 @@ export default function InvestIndex({
   stat: Partial<ShowcaseInvestorStatDto>;
 }): JSX.Element {
   return (
-    <InvestIndexWrapper>
+    <InvestIndexWrapper sx={{ overflow: "hidden" }}>
       <Box sx={{ gridArea: "st1" }}>
         <StyledBox bg={bg1} sx={{ bgcolor: "#707070" }}>
           <BudgetIncreaseIcon
@@ -66,6 +67,9 @@ export default function InvestIndex({
             {stat.revolvingInterval} ngày - {stat.revolvingPerDay?.toFixed(2)}
           </Typography>
         </StyledBox>
+      </Box>
+      <Box sx={{ gridArea: "rd3", overflow: "scroll", mr: -1 }}>
+        <PackagesData stat={stat} />
       </Box>
     </InvestIndexWrapper>
   );

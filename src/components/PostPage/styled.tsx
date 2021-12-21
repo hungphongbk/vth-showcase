@@ -48,15 +48,20 @@ export const PLIndexWrapper = styled(Box)`
 `;
 export const InvestIndexWrapper = styled(Box)`
   display: grid;
-  grid-template-areas: "st1" "nd2";
+  grid-template-areas: "st1" "nd2" "rd3";
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(2, 90px);
+  grid-template-rows: repeat(2, 90px) 270px;
   grid-gap: 8px;
+  margin: -8px;
+  padding: 8px;
 `;
 
 export const StyledTabPanel = styled(TabPanel)`
   &.MuiTabPanel-root {
-    padding: 10px 0 0;
+    padding: 10px 8px 10px;
+    margin-left: -8px;
+    margin-right: -8px;
+    background: white;
   }
 `;
 export const StyledTabList = styled(TabList)(

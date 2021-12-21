@@ -35,6 +35,15 @@ query ShowcaseDetail($slug: String!) {
       initialCapital
       revolvingInterval
       revolvingPerDay
+      packages {
+        package{
+          id
+          displayName
+          fundedRate
+        }
+        fund
+        firstYearBenefit
+      }
     }
     highlightFeatures{
       name

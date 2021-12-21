@@ -1,0 +1,13 @@
+query InvestmentPackages{
+  investmentPackageDtos{
+    edges {
+      node {
+        id
+        displayName
+        fundedRate
+        benefitRate
+        count
+      }
+    }
+  }
+}

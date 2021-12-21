@@ -96,7 +96,7 @@ export default function PostDetailedPage({ slug }: { slug: string }) {
 
   return (
     <Box sx={{ bgcolor: "#f0f0f0" }}>
-      <InvestorInformation stat={data!.showcase.investorStat} />
+      <InvestorInformation stat={data!.showcase.investorStat as any} />
       <ShowcaseDetailed
         item={showcase}
         onClick={() => router.push("/")}

@@ -1,13 +1,6 @@
-const generateUrl = (body: string) =>
-  `${process.env.NEXT_PUBLIC_UPLOAD_API_URL}${body}?token=${process.env.NEXT_PUBLIC_UPLOAD_API_TOKEN}`;
-export const upload = async (file: File): Promise<string> => {
-  const form = new FormData();
-  form.append("file", file);
-  const response = await fetch(generateUrl("/upload"), {
-      method: "POST",
-      body: form,
-    }),
-    text = await response.text();
+import { UploadServiceGenerator } from "@hungphongbk/vth-sdk";
 
-  return generateUrl(JSON.parse(text).path);
-};
+export const upload = UploadServiceGenerator({
+  uploadHost: process.env.NEXT_PUBLIC_UPLOAD_API_URL as string,
+  token: process.env.NEXT_PUBLIC_UPLOAD_API_TOKEN as string,
+});

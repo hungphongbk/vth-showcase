@@ -21,9 +21,14 @@ const StyledSlider = styled(Slider)`
     display: flex;
     align-items: stretch;
   }
+  .slick-list {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
   .slick-slide {
     float: unset;
     height: unset;
+    margin: 0 10px;
     > div {
       height: 100%;
     }

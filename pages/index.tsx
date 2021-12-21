@@ -96,7 +96,7 @@ function Home({
 
   return (
     <Container sx={{ mt: 2, pl: 1, pr: 1 }}>
-      <Banner sx={{ mt: -2, mx: -1 }} banner={banner} />
+      <Banner banner={banner} />
       <Typography
         sx={{
           fontSize: 15,

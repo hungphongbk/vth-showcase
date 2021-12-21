@@ -12,7 +12,7 @@ export default function InvestIndex({
   stat: Partial<ShowcaseInvestorStatDto>;
 }): JSX.Element {
   return (
-    <InvestIndexWrapper sx={{ overflow: "hidden" }}>
+    <InvestIndexWrapper sx={{ overflowX: "hidden" }}>
       <Box sx={{ gridArea: "st1" }}>
         <StyledBox bg={bg1} sx={{ bgcolor: "#707070" }}>
           <BudgetIncreaseIcon

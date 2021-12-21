@@ -50,7 +50,7 @@ export const InvestIndexWrapper = styled(Box)`
   display: grid;
   grid-template-areas: "st1" "nd2" "rd3";
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(2, 90px) 270px;
+  grid-template-rows: repeat(2, 90px) auto;
   grid-gap: 8px;
   margin: -8px;
   padding: 8px;

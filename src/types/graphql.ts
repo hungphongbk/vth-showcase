@@ -1695,7 +1695,7 @@ export type ShowcaseDetailQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, brand: { name: string }, image: { path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, investorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number } }> } | null, highlightFeatures: Array<{ name: string, description: string, image: { path: string, preloadUrl: string | null, width: number | null, height: number | null } }> }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string, preloadUrl: string | null } } }> } };
+export type ShowcaseDetailQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, brand: { name: string }, image: { path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, investorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null, highlightFeatures: Array<{ name: string, description: string, image: { path: string, preloadUrl: string | null, width: number | null, height: number | null } }> }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string, preloadUrl: string | null } } }> } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -2148,6 +2148,8 @@ export const ShowcaseDetailDocument = gql`
           id
           displayName
           fundedRate
+          benefitRate
+          count
         }
         fund
         firstYearBenefit

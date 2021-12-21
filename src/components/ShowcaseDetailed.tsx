@@ -123,8 +123,8 @@ export default function ShowcaseDetailed({
             <Image
               src={item.image.path}
               alt={item.image.path}
-              width={1000}
-              height={1200}
+              width={item.image.width}
+              height={item.image.height}
               objectFit={"cover"}
               sizes={"100vw"}
               placeholder={"blur"}
@@ -173,7 +173,7 @@ export default function ShowcaseDetailed({
             }}
           >
             <Typography sx={{ mb: 1 }}>
-              Thương hiệu: <strong>XXX</strong>
+              Thương hiệu: <strong>{item.brand.name}</strong>
             </Typography>
             <CollapseDetail>{item.description}</CollapseDetail>
           </MotionBox>

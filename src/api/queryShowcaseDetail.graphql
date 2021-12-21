@@ -6,10 +6,15 @@ query ShowcaseDetail($slug: String!) {
       email
       name
     }
+    brand{
+      name
+    }
     status
     image {
       path
       preloadUrl
+      width
+      height
     }
     description
     expectedSalePrice{

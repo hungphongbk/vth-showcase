@@ -173,11 +173,13 @@ type InvestmentPackageDtoSumAggregate {
 
 type MediaDto implements IdInterface {
   filename: String!
+  height: Float
   id: ID!
   mimetype: String!
   path: String!
   preloadUrl: String
   type: String!
+  width: Float
 }
 
 type MediaDtoAggregateGroupBy {
@@ -199,11 +201,13 @@ type MediaDtoCountAggregate {
 
 type MediaDtoDeleteResponse {
   filename: String
+  height: Float
   id: ID
   mimetype: String
   path: String
   preloadUrl: String
   type: String
+  width: Float
 }
 
 type MediaDtoEdge {
@@ -1365,11 +1369,13 @@ input UpdateManyShowcaseHighlightFeaturesInput {
 
 input UpdateMediaDto {
   filename: String
+  height: Float
   id: ID
   mimetype: String
   path: String
   preloadUrl: String
   type: String
+  width: Float
 }
 
 input UpdateOneCommentDtoInput {

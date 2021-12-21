@@ -5,10 +5,15 @@ query ShowcasePreview($slug: String!) {
     author{
       name
     }
+    brand{
+      name
+    }
     status
     image {
       path
       preloadUrl
+      width
+      height
     }
     description
     expectedSalePrice{

@@ -453,11 +453,13 @@ export interface InvestmentPackageDtoUpdateFilter {
 
 export interface MediaDto extends IdInterface {
   filename: Scalars['String'];
+  height: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
   mimetype: Scalars['String'];
   path: Scalars['String'];
   preloadUrl: Maybe<Scalars['String']>;
   type: Scalars['String'];
+  width: Maybe<Scalars['Float']>;
 }
 
 export interface MediaDtoAggregateGroupBy {
@@ -484,11 +486,13 @@ export interface MediaDtoDeleteFilter {
 
 export interface MediaDtoDeleteResponse {
   filename: Maybe<Scalars['String']>;
+  height: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['ID']>;
   mimetype: Maybe<Scalars['String']>;
   path: Maybe<Scalars['String']>;
   preloadUrl: Maybe<Scalars['String']>;
   type: Maybe<Scalars['String']>;
+  width: Maybe<Scalars['Float']>;
 }
 
 export interface MediaDtoEdge {
@@ -1558,11 +1562,13 @@ export interface UpdateManyShowcaseHighlightFeaturesInput {
 
 export interface UpdateMediaDto {
   filename: Maybe<Scalars['String']>;
+  height: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['ID']>;
   mimetype: Maybe<Scalars['String']>;
   path: Maybe<Scalars['String']>;
   preloadUrl: Maybe<Scalars['String']>;
   type: Maybe<Scalars['String']>;
+  width: Maybe<Scalars['Float']>;
 }
 
 export interface UpdateOneCommentDtoInput {
@@ -1677,14 +1683,14 @@ export type ShowcaseDetailQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, image: { path: string, preloadUrl: string | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, investorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string, preloadUrl: string | null } } }> } };
+export type ShowcaseDetailQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, brand: { name: string }, image: { path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, investorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string, preloadUrl: string | null } } }> } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { name: string }, image: { path: string }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string, preloadUrl: string | null } } }> } };
+export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { name: string }, brand: { name: string }, image: { path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { path: string, preloadUrl: string | null } } }> } };
 
 export type ShowcasesQueryVariables = Exact<{
   filter: Maybe<ShowcaseFilter>;
@@ -2051,10 +2057,15 @@ export const ShowcaseDetailDocument = gql`
       email
       name
     }
+    brand {
+      name
+    }
     status
     image {
       path
       preloadUrl
+      width
+      height
     }
     description
     expectedSalePrice {
@@ -2132,9 +2143,15 @@ export const ShowcasePreviewDocument = gql`
     author {
       name
     }
+    brand {
+      name
+    }
     status
     image {
       path
+      preloadUrl
+      width
+      height
     }
     description
     expectedSalePrice {

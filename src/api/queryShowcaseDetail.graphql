@@ -6,10 +6,15 @@ query ShowcaseDetail($slug: String!) {
       email
       name
     }
+    brand{
+      name
+    }
     status
     image {
       path
       preloadUrl
+      width
+      height
     }
     description
     expectedSalePrice{
@@ -31,8 +36,18 @@ query ShowcaseDetail($slug: String!) {
       revolvingInterval
       revolvingPerDay
     }
+    highlightFeatures{
+      name
+      description
+      image {
+        path
+        preloadUrl
+        width
+        height
+      }
+    }
   }
-  showcases(filter: { slug: { neq: $slug } }) {
+  showcases(filter: { slug: { neq: $slug,notLike: "ci-test%" } }) {
     edges {
       node {
         slug

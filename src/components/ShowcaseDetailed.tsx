@@ -1,4 +1,4 @@
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import { HTMLProps, useCallback, useEffect, useRef } from "react";
 import {
   MotionBox,
@@ -13,7 +13,7 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import ShowcaseList from "./ShowcaseList";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
-import { CollapseCard } from "./index";
+import { CollapseCard, SlickSlider } from "./index";
 import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
@@ -22,6 +22,7 @@ import TimelineDot from "@mui/lab/TimelineDot";
 import { Showcase, ShowcaseEdge } from "../types/graphql";
 import { CommentSection } from "./PostPage";
 import Image from "next/image";
+import { AspectRatio } from "@hungphongbk/vth-sdk";
 
 const testPreview = (str: string) => /^\/preview/.test(str),
   testPost = (str: string) => /^\/post/.test(str);
@@ -114,17 +115,14 @@ export default function ShowcaseDetailed({
           <MotionBox
             sx={{
               position: "relative",
-              // "& img": {
-              //   width: "100%",
-              //   userSelect: "none",
-              // },
             }}
+            layoutId={"main-image"}
           >
             <Image
               src={item.image.path}
               alt={item.image.path}
-              width={1000}
-              height={1200}
+              width={item.image.width}
+              height={item.image.height}
               objectFit={"cover"}
               sizes={"100vw"}
               placeholder={"blur"}
@@ -173,7 +171,7 @@ export default function ShowcaseDetailed({
             }}
           >
             <Typography sx={{ mb: 1 }}>
-              Thương hiệu: <strong>XXX</strong>
+              Thương hiệu: <strong>{item.brand.name}</strong>
             </Typography>
             <CollapseDetail>{item.description}</CollapseDetail>
           </MotionBox>
@@ -251,16 +249,48 @@ export default function ShowcaseDetailed({
               sx={{ mt: 1 }}
               defaultOpen
             >
-              <Typography sx={{ fontSize: 13 }}>
-                <strong>TÍNH NĂNG 1</strong>
-              </Typography>
-              <Typography sx={{ fontSize: 13 }}>
-                Earth is the third planet from the Sun and the only astronomical
-                object known to harbor life. According to radiometric dating
-                estimation. Earth is the third planet from the Sun and the only
-                astronomical object known to harbor life. According to
-                radiometric dating estimation...
-              </Typography>
+              <SlickSlider>
+                {item.highlightFeatures.map((hf, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      px: "2px",
+                      pb: 1,
+                      display: "block !important",
+                      height: "100%",
+                    }}
+                  >
+                    <Stack
+                      gap={2}
+                      alignItems={"stretch"}
+                      sx={{ height: "100%" }}
+                    >
+                      <Typography sx={{ fontSize: 13 }}>
+                        <strong>{hf.name}</strong>
+                      </Typography>
+                      <Typography sx={{ fontSize: 13 }}>
+                        {hf.description}
+                      </Typography>
+                      <AspectRatio ratio={"307/146"} sx={{ mt: "auto" }}>
+                        <Box sx={{ borderRadius: 2, overflow: "hidden" }}>
+                          <Box sx={{ position: "relative" }}>
+                            <Image
+                              src={hf.image.path}
+                              alt={hf.name}
+                              width={hf.image.width}
+                              height={hf.image.height}
+                              objectFit={"cover"}
+                              sizes={"100vw"}
+                              placeholder={"blur"}
+                              blurDataURL={hf.image.preloadUrl}
+                            />
+                          </Box>
+                        </Box>
+                      </AspectRatio>
+                    </Stack>
+                  </Box>
+                ))}
+              </SlickSlider>
             </CollapseCard>
             <CollapseCard
               header={"câu chuyện chưa kể"}

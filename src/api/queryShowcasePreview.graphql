@@ -3,6 +3,7 @@ query ShowcasePreview($slug: String!) {
     slug
     name
     author{
+      email
       name
     }
     brand{
@@ -23,7 +24,7 @@ query ShowcasePreview($slug: String!) {
       promo
     }
   }
-  showcases(filter: { slug: { neq: $slug } }) {
+  showcases(filter: { slug: { neq: $slug,notLike: "ci-test%" } }) {
     edges {
       node {
         slug

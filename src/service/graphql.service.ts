@@ -2,8 +2,6 @@ import {
   apolloClient,
   mutationCreateShowcase,
   mutationDeleteMedia,
-  queryShowcasePreview,
-  queryShowcases,
 } from "../api";
 import {
   CreateShowcaseMutation,
@@ -16,8 +14,10 @@ import {
   ShowcaseCreateInputDto,
   ShowcaseEdge,
   ShowcaseFilter,
+  ShowcasePreviewDocument,
   ShowcasePreviewQuery,
   ShowcasePreviewQueryVariables,
+  ShowcasesDocument,
   ShowcasesQuery,
   ShowcasesQueryVariables,
   SlugsDocument,
@@ -50,7 +50,7 @@ export const getAllShowcases = async (
     ShowcasesQuery,
     ShowcasesQueryVariables
   >({
-    query: queryShowcases,
+    query: ShowcasesDocument,
     variables: { paging, filter },
   });
   return data.showcases;
@@ -61,7 +61,7 @@ export const getShowcasePreview = async (slug: string) => {
     ShowcasePreviewQuery,
     ShowcasePreviewQueryVariables
   >({
-    query: queryShowcasePreview,
+    query: ShowcasePreviewDocument,
     variables: {
       slug,
     },

@@ -15,7 +15,7 @@
     "@apollo/client": "^3.4.17",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
-    "@hungphongbk/vth-sdk": "^1.0.6-40",
+    "@hungphongbk/vth-sdk": "^1.0.6-44",
     "@mui/icons-material": "^5.2.0",
     "@mui/lab": "^5.0.0-alpha.58",
     "@mui/material": "^5.2.2",
@@ -61,6 +61,7 @@
   "devDependencies": {
     "@graphql-codegen/cli": "1.21.7",
     "@graphql-codegen/fragment-matcher": "^2.0.1",
+    "@graphql-codegen/schema-ast": "^2.4.0",
     "@graphql-codegen/typescript": "1.23.0",
     "@graphql-codegen/typescript-operations": "^2.2.0",
     "@graphql-codegen/typescript-react-apollo": "^3.2.2",

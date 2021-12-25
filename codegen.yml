@@ -2,7 +2,11 @@ overwrite: true
 schema: ${NEXT_PUBLIC_API_URL}/graphql
 documents:
   - ./src/**/*.graphql
+  - ./node_modules/@hungphongbk/vth-sdk/**/*.graphql
 generates:
+  ./schema.graphql:
+    plugins:
+      - schema-ast
   ./src/api/introspection.json:
     plugins:
       - fragment-matcher

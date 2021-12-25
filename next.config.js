@@ -22,6 +22,7 @@ module.exports = withTM({
       "localhost",
       "showcase-dev.vaithuhay.com",
       "api.showcase-dev.vaithuhay.com",
+      "media.showcase-dev.vaithuhay.com",
       "showcase.vaithuhay.com",
       "api.showcase.vaithuhay.com",
       "i.imgur.com",

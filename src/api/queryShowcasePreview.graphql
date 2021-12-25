@@ -11,10 +11,7 @@ query ShowcasePreview($slug: String!) {
     }
     status
     image {
-      path
-      preloadUrl
-      width
-      height
+      ...MediaFragment
     }
     description
     expectedSalePrice{
@@ -31,8 +28,7 @@ query ShowcasePreview($slug: String!) {
         name
         status
         image {
-          path
-          preloadUrl
+          ...MediaFragment
         }
         createdAt
       }

@@ -23,7 +23,7 @@ export default function ShowcaseManagement(
         <CardContent sx={{ p: 0 }}>
           <Grid container spacing={1}>
             {loading
-              ? range(3).map((index) => (
+              ? range(1).map((index) => (
                   <Grid key={index} item xs={6}>
                     <Item />
                   </Grid>

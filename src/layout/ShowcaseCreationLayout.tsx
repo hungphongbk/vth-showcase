@@ -10,7 +10,9 @@ import produce from "immer";
 import { Theme, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 
-type AnAction = { type: "update"; payload: Partial<ShowcaseCreateInputDto> };
+type AnAction =
+  | { type: "update"; payload: Partial<ShowcaseCreateInputDto> }
+  | { type: "enterEditMode" };
 const ShowcaseCreationContext = createContext<
   | {
       showcase: Partial<ShowcaseCreateInputDto>;
@@ -18,11 +20,18 @@ const ShowcaseCreationContext = createContext<
     }
   | undefined
 >(undefined);
-const reducer = (state: Partial<ShowcaseCreateInputDto>, action: AnAction) =>
+const reducer = (
+  state: { showcase: Partial<ShowcaseCreateInputDto>; mode: "add" | "edit" },
+  action: AnAction
+) =>
   produce(state, (draft) => {
     switch (action.type) {
       case "update":
-        return { ...state, ...action.payload };
+        draft.showcase = { ...state.showcase, ...action.payload };
+        return draft;
+      case "enterEditMode":
+        draft.mode = "edit";
+        return draft;
       default:
         return state;
     }
@@ -31,7 +40,10 @@ const reducer = (state: Partial<ShowcaseCreateInputDto>, action: AnAction) =>
 export default function ShowcaseCreationLayout({
   children,
 }: PropsWithChildren<unknown>): JSX.Element {
-  const [showcase, dispatch] = useReducer(reducer, {});
+  const [{ showcase, mode }, dispatch] = useReducer(reducer, {
+    showcase: {},
+    mode: "add",
+  });
   return (
     <ThemeProvider
       theme={(theme: Theme) => {

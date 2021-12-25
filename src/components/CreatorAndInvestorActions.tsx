@@ -90,7 +90,7 @@ export default function CreatorAndInvestorActions(
   return (
     <>
       <Backdrop open={open} sx={{ zIndex: 9 }} />
-      <Fade in={!/\/manage\/create-post/.test(router.asPath)}>
+      <Fade in={!/\/manage\/(create-post|update)/.test(router.asPath)}>
         <StyledSpeedDial
           ariaLabel="creator and investor speed dial"
           icon={<SpeedDialIcon />}

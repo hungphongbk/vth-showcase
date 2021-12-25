@@ -1,9 +1,12 @@
 import { useLoginRequired } from "../../../src/utils/hooks";
-import { Box } from "@mui/material";
+import { getShowcaseCreationLayout } from "../../../src/layout/ShowcaseCreationLayout";
+import ShowcaseUpdater from "../../../src/components/showcase-management/showcase-updater";
 
-export default function UpdateShowcase() {
+export default function UpdateShowcase(props: any) {
   const { loading } = useLoginRequired();
   if (loading) return null;
 
-  return <Box></Box>;
+  return <ShowcaseUpdater />;
 }
+
+UpdateShowcase.getLayout = getShowcaseCreationLayout;

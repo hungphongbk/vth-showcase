@@ -1,6 +1,7 @@
 query ShowcaseDetail($slug: String!) {
   showcase(slug: $slug) {
     ...ShowcaseDetailFragment
+    ...ShowcaseInvestorStat
   }
   showcases(filter: { slug: { neq: $slug,notLike: "ci-test%" } }) {
     edges {
@@ -17,3 +18,8 @@ query ShowcaseDetail($slug: String!) {
   }
 }
 
+query ShowcaseForUpdate($slug: String!){
+  showcase(slug: $slug){
+    ...ShowcaseDetailFragment
+  }
+}

@@ -31,7 +31,7 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
               gridArea: "num",
             }}
           >
-            {stat.firstYearRevenue!.toLocaleString("vi-VN")} VND
+            {stat.firstYearRevenue}
           </Typography>
         </StyledBox>
       </Box>
@@ -59,7 +59,7 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
               gridArea: "num",
             }}
           >
-            {stat.totalRevenue!.toLocaleString("vi-VN")} VND
+            {stat.totalRevenue}
           </Typography>
         </StyledBox>
       </Box>
@@ -229,7 +229,7 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
               gridArea: "num",
             }}
           >
-            {stat.firstYearRevenue!.toLocaleString("vi-VN")} VND
+            {stat.firstYearRevenue}
           </Typography>
         </StyledBox>
       </Box>

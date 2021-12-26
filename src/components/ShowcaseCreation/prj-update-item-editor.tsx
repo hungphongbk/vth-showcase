@@ -46,7 +46,7 @@ export default function PrjUpdateItemEditor({
     } = useVthTheme(),
     [open, doOpenDialog, doCloseDialog] = useOpenCloseState();
 
-  const handleChange = (values: any, event: any) => {
+  const handleChange = async (values: any, event: any) => {
     if (onChange) {
       const nativeEvent = event.nativeEvent || event;
       // @ts-ignore
@@ -62,48 +62,56 @@ export default function PrjUpdateItemEditor({
           name,
         },
       });
+      const isUpdate = typeof value !== "undefined";
       onChange(clonedEvent);
+      if (isUpdate) await onUpdate?.(values);
       doCloseDialog();
     }
   };
 
-  return value && value.content ? (
-    <TimelineItem>
-      <TimelineSeparator>
-        <TimelineDot />
-        <TimelineConnector />
-      </TimelineSeparator>
-      <TimelineContent sx={{ pr: 0 }}>
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "1fr auto",
-            gridTemplateAreas: '"time action" "content action"',
-            gridGap: 6,
-          }}
-        >
-          <Box sx={{ gridArea: "time" }}>
-            <Typography sx={{ fontWeight: 600 }}>
-              <strong>{format(new Date(value.createdAt), "hh:mm aa")}</strong> |
-              Thứ Sáu, ngày 15/10/2021
-            </Typography>
-          </Box>
-          <Typography sx={{ gridArea: "content" }}>{value.content}</Typography>
-          <Stack
-            gap={0.5}
-            sx={{ gridArea: "action", "& svg": { width: 24, height: 24 } }}
-          >
-            <PrjUpdateIcon />
-            <PrjUpdateDelIcon />
-          </Stack>
-        </Box>
-      </TimelineContent>
-    </TimelineItem>
-  ) : (
+  return (
     <>
-      <Button variant={"contained"} onClick={doOpenDialog}>
-        Thêm cập nhật
-      </Button>
+      {value && value.content ? (
+        <TimelineItem>
+          <TimelineSeparator>
+            <TimelineDot />
+            <TimelineConnector />
+          </TimelineSeparator>
+          <TimelineContent sx={{ pr: 0 }}>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "1fr auto",
+                gridTemplateAreas: '"time action" "content action"',
+                gridGap: 6,
+              }}
+            >
+              <Box sx={{ gridArea: "time" }}>
+                <Typography sx={{ fontWeight: 600 }}>
+                  <strong>
+                    {format(new Date(value.createdAt), "hh:mm aa")}
+                  </strong>{" "}
+                  | Thứ Sáu, ngày 15/10/2021
+                </Typography>
+              </Box>
+              <Typography sx={{ gridArea: "content" }}>
+                {value.content}
+              </Typography>
+              <Stack
+                gap={0.5}
+                sx={{ gridArea: "action", "& svg": { width: 24, height: 24 } }}
+              >
+                <PrjUpdateIcon onClick={doOpenDialog} />
+                <PrjUpdateDelIcon />
+              </Stack>
+            </Box>
+          </TimelineContent>
+        </TimelineItem>
+      ) : (
+        <Button variant={"contained"} onClick={doOpenDialog}>
+          Thêm cập nhật
+        </Button>
+      )}
       <Dialog open={open} onClose={doCloseDialog}>
         <DialogContent>
           <Stack direction={"column"} gap={2}>

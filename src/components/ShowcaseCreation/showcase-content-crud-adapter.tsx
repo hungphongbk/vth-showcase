@@ -23,9 +23,9 @@ type ShowcaseContentCrudAdapterProps = ListEditorProps & {
     getAllPath: string;
     refetchAll: any;
     getOneFn?: any;
-    refetchOneFn?: any;
+    refetchOneFn: any;
     create: [MutationHooks, any];
-    update?: any;
+    update: [MutationHooks, any];
     del?: any;
   };
 };
@@ -52,11 +52,18 @@ function InnerAdapter({
     }),
     { setValue, control } = form;
   const [getAllHookFn, getAllHookArg] = hooks.getAll;
+
   const [createMutationHookFn, createMutationHookArgs] = hooks.create,
     [createMutation] = createMutationHookFn({
       ...createMutationHookArgs,
       refetchQueries: [hooks.refetchAll],
     });
+
+  const [updateMutationHookFn, updateMutationHookArg] = hooks.update,
+    [updateMutation] = updateMutationHookFn({
+      ...updateMutationHookArg,
+    });
+
   const { data, loading: fetchingAll } = getAllHookFn(getAllHookArg);
   useEffect(() => {
     if (data && !fetchingAll)
@@ -71,6 +78,16 @@ function InnerAdapter({
         ...options,
         onAppend: async (value) => {
           await createMutation({ variables: { input: omit(value, ["id"]) } });
+          return false;
+        },
+        onUpdate: async (value) => {
+          await updateMutation({
+            variables: {
+              id: value.id,
+              input: omit(value, ["__typename", "id"]),
+            },
+            refetchQueries: [hooks.refetchOneFn({ id: value.id })],
+          });
           return false;
         },
       }}

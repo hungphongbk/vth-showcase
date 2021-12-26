@@ -221,6 +221,10 @@ export interface DeleteOneMediaDtoInput {
   id: Scalars['ID'];
 }
 
+export interface DeleteOnePrjUpdateDtoInput {
+  id: Scalars['ID'];
+}
+
 export interface DeleteOneShowcaseHighlightFeatureInput {
   id: Scalars['ID'];
 }
@@ -525,6 +529,7 @@ export interface Mutation {
   deleteOneImageList: ImageListDeleteResponse;
   deleteOneInvestmentPackageDto: InvestmentPackageDtoDeleteResponse;
   deleteOneMediaDto: MediaDtoDeleteResponse;
+  deleteOnePrjUpdateDto: PrjUpdateDtoDeleteResponse;
   deleteOneShowcase: Scalars['Boolean'];
   deleteOneShowcaseHighlightFeature: ShowcaseHighlightFeatureDeleteResponse;
   postAnonymousComment: CommentDto;
@@ -554,6 +559,7 @@ export interface Mutation {
   updateOneImageList: ImageList;
   updateOneInvestmentPackageDto: InvestmentPackageDto;
   updateOneMediaDto: MediaDto;
+  updateOnePrjUpdateDto: PrjUpdateDto;
   updateOneSetting: Scalars['Boolean'];
   updateOneShowcase: Scalars['Boolean'];
   updateOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
@@ -668,6 +674,11 @@ export interface MutationDeleteOneInvestmentPackageDtoArgs {
 
 export interface MutationDeleteOneMediaDtoArgs {
   input: DeleteOneMediaDtoInput;
+}
+
+
+export interface MutationDeleteOnePrjUpdateDtoArgs {
+  input: DeleteOnePrjUpdateDtoInput;
 }
 
 
@@ -819,6 +830,11 @@ export interface MutationUpdateOneMediaDtoArgs {
 }
 
 
+export interface MutationUpdateOnePrjUpdateDtoArgs {
+  input: UpdateOnePrjUpdateDtoInput;
+}
+
+
 export interface MutationUpdateOneSettingArgs {
   input: SettingCreateDto;
 }
@@ -877,6 +893,12 @@ export interface PrjUpdateDtoAvgAggregate {
 
 export interface PrjUpdateDtoCountAggregate {
   id: Maybe<Scalars['Int']>;
+}
+
+export interface PrjUpdateDtoDeleteResponse {
+  content: Maybe<Scalars['String']>;
+  createdAt: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['ID']>;
 }
 
 export interface PrjUpdateDtoEdge {
@@ -1573,9 +1595,20 @@ export interface UpdateOneMediaDtoInput {
   update: UpdateMediaDto;
 }
 
+export interface UpdateOnePrjUpdateDtoInput {
+  id: Scalars['ID'];
+  update: UpdatePrjUpdateDto;
+}
+
 export interface UpdateOneShowcaseHighlightFeatureInput {
   id: Scalars['ID'];
   update: UpdateShowcaseHighlightFeature;
+}
+
+export interface UpdatePrjUpdateDto {
+  content: Maybe<Scalars['String']>;
+  createdAt: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['ID']>;
 }
 
 export interface UpdateShowcaseHighlightFeature {
@@ -1664,6 +1697,14 @@ export type PostAnUpdateInShowcaseMutationVariables = Exact<{
 
 
 export type PostAnUpdateInShowcaseMutation = { postProjectUpdate: { id: string } };
+
+export type UpdateOneUpdateInShowcaseMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: UpdatePrjUpdateDto;
+}>;
+
+
+export type UpdateOneUpdateInShowcaseMutation = { updateOnePrjUpdateDto: { id: string } };
 
 export type PostAnonymousCommentMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -2124,6 +2165,40 @@ export function usePostAnUpdateInShowcaseMutation(baseOptions?: Apollo.MutationH
 export type PostAnUpdateInShowcaseMutationHookResult = ReturnType<typeof usePostAnUpdateInShowcaseMutation>;
 export type PostAnUpdateInShowcaseMutationResult = Apollo.MutationResult<PostAnUpdateInShowcaseMutation>;
 export type PostAnUpdateInShowcaseMutationOptions = Apollo.BaseMutationOptions<PostAnUpdateInShowcaseMutation, PostAnUpdateInShowcaseMutationVariables>;
+export const UpdateOneUpdateInShowcaseDocument = gql`
+    mutation UpdateOneUpdateInShowcase($id: ID!, $input: UpdatePrjUpdateDto!) {
+  updateOnePrjUpdateDto(input: {id: $id, update: $input}) {
+    id
+  }
+}
+    `;
+export type UpdateOneUpdateInShowcaseMutationFn = Apollo.MutationFunction<UpdateOneUpdateInShowcaseMutation, UpdateOneUpdateInShowcaseMutationVariables>;
+
+/**
+ * __useUpdateOneUpdateInShowcaseMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneUpdateInShowcaseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneUpdateInShowcaseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOneUpdateInShowcaseMutation, { data, loading, error }] = useUpdateOneUpdateInShowcaseMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOneUpdateInShowcaseMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneUpdateInShowcaseMutation, UpdateOneUpdateInShowcaseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOneUpdateInShowcaseMutation, UpdateOneUpdateInShowcaseMutationVariables>(UpdateOneUpdateInShowcaseDocument, options);
+      }
+export type UpdateOneUpdateInShowcaseMutationHookResult = ReturnType<typeof useUpdateOneUpdateInShowcaseMutation>;
+export type UpdateOneUpdateInShowcaseMutationResult = Apollo.MutationResult<UpdateOneUpdateInShowcaseMutation>;
+export type UpdateOneUpdateInShowcaseMutationOptions = Apollo.BaseMutationOptions<UpdateOneUpdateInShowcaseMutation, UpdateOneUpdateInShowcaseMutationVariables>;
 export const PostAnonymousCommentDocument = gql`
     mutation postAnonymousComment($slug: String!, $input: CommentCreateDto!) {
   postAnonymousComment(slug: $slug, input: $input) {

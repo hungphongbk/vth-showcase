@@ -20,3 +20,8 @@ mutation PostAnUpdateInShowcase($slug:String!,$input:PrjUpdateCreateDto!){
     id
   }
 }
+mutation UpdateOneUpdateInShowcase($id:ID!,$input:UpdatePrjUpdateDto!){
+  updateOnePrjUpdateDto(input: {id: $id,update:$input}){
+    id
+  }
+}

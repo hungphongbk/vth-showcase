@@ -2,14 +2,7 @@ import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { useForm } from "react-hook-form";
-import {
-  refetchAllUpdatesInShowcaseQuery,
-  refetchOneUpdateInShowcaseQuery,
-  ShowcaseCreateInputDto,
-  useAllUpdatesInShowcaseQuery,
-  useOneUpdateInShowcaseQuery,
-  usePostAnUpdateInShowcaseMutation,
-} from "../../types/graphql";
+import { ShowcaseCreateInputDto } from "../../types/graphql";
 import PlusIcon from "../../assets/icons/PlusIcon";
 import { CollapseCard } from "../index";
 import {
@@ -24,10 +17,9 @@ import {
   ImageUploader,
   ListEditor,
 } from "@hungphongbk/vth-sdk";
-import PrjUpdateItemEditor from "./prj-update-item-editor";
 import CreationBottomBar from "./CreationBottomBar";
 import { StyledTimeline } from "../commons";
-import ShowcaseContentCrudAdapter from "./showcase-content-crud-adapter";
+import PrjUpdateEditor from "./prj-update-editor";
 
 type ShowcaseForm = ShowcaseCreateInputDto;
 
@@ -158,34 +150,7 @@ export default function SecondStepShowcase(): JSX.Element {
           </CollapseCard>
           <CollapseCard header={"cập nhật dự án"} defaultOpen>
             <StyledTimeline sx={{ px: 0 }}>
-              <ShowcaseContentCrudAdapter
-                mode={mode}
-                hooks={{
-                  getAll: [
-                    useAllUpdatesInShowcaseQuery,
-                    {
-                      variables: { slug: (showcase as any).slug },
-                    },
-                  ],
-                  getAllPath: "showcase.updates",
-                  refetchAll: refetchAllUpdatesInShowcaseQuery({
-                    slug: (showcase as any).slug,
-                  }),
-                  getOneFn: useOneUpdateInShowcaseQuery,
-                  refetchOneFn: refetchOneUpdateInShowcaseQuery,
-                  create: [
-                    usePostAnUpdateInShowcaseMutation,
-                    {
-                      variables: { slug: (showcase as any).slug },
-                    },
-                  ],
-                }}
-                name={"updates"}
-                control={control}
-                ItemComponent={(itemProps) => (
-                  <PrjUpdateItemEditor {...itemProps} />
-                )}
-              />
+              <PrjUpdateEditor control={control} />
             </StyledTimeline>
           </CollapseCard>
         </Stack>

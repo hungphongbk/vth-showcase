@@ -1830,7 +1830,7 @@ export const ShowcaseDetailFragmentFragmentDoc = gql`
   updatedAt
   createdAt
 }
-    ${MediaFragmentFragmentDoc}`;
+    `;
 export const ShowcaseDocument = gql`
     query Showcase($slug: String!) {
   showcase(slug: $slug) {
@@ -1839,6 +1839,7 @@ export const ShowcaseDocument = gql`
   }
 }
     ${ShowcaseDetailFragmentFragmentDoc}
+${MediaFragmentFragmentDoc}
 ${ShowcaseInvestorStatFragmentDoc}`;
 
 /**
@@ -2428,8 +2429,8 @@ export const ShowcaseDetailDocument = gql`
   }
 }
     ${ShowcaseDetailFragmentFragmentDoc}
-${ShowcaseInvestorStatFragmentDoc}
-${MediaFragmentFragmentDoc}`;
+${MediaFragmentFragmentDoc}
+${ShowcaseInvestorStatFragmentDoc}`;
 
 /**
  * __useShowcaseDetailQuery__
@@ -2467,7 +2468,8 @@ export const ShowcaseForUpdateDocument = gql`
     ...ShowcaseDetailFragment
   }
 }
-    ${ShowcaseDetailFragmentFragmentDoc}`;
+    ${ShowcaseDetailFragmentFragmentDoc}
+${MediaFragmentFragmentDoc}`;
 
 /**
  * __useShowcaseForUpdateQuery__

@@ -21,7 +21,7 @@ generates:
       withHooks: true
       withRefetchFn: true
       avoidOptionals: true
-      dedupeFragments: false
+      dedupeFragments: true
       declarationKind: interface
       disableDescriptions: true
       flattenGeneratedTypes: false

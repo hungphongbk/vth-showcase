@@ -66,27 +66,8 @@ export interface CommentDtoAvgAggregate {
   id: Maybe<Scalars['Float']>;
 }
 
-export interface CommentDtoConnection {
-  edges: Array<CommentDtoEdge>;
-  pageInfo: PageInfo;
-}
-
 export interface CommentDtoCountAggregate {
   id: Maybe<Scalars['Int']>;
-}
-
-export interface CommentDtoDeleteFilter {
-  and: Maybe<Array<CommentDtoDeleteFilter>>;
-  id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<CommentDtoDeleteFilter>>;
-}
-
-export interface CommentDtoDeleteResponse {
-  content: Maybe<Scalars['String']>;
-  createdAt: Maybe<Scalars['DateTime']>;
-  id: Maybe<Scalars['ID']>;
-  rate: Maybe<Array<CommentRateEnum>>;
-  updatedAt: Maybe<Scalars['DateTime']>;
 }
 
 export interface CommentDtoEdge {
@@ -122,12 +103,6 @@ export interface CommentDtoSumAggregate {
   id: Maybe<Scalars['Float']>;
 }
 
-export interface CommentDtoUpdateFilter {
-  and: Maybe<Array<CommentDtoUpdateFilter>>;
-  id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<CommentDtoUpdateFilter>>;
-}
-
 export enum CommentRateEnum {
   CoTiemNang = 'CO_TIEM_NANG',
   CungDuoc = 'CUNG_DUOC',
@@ -137,14 +112,6 @@ export enum CommentRateEnum {
   XamXi = 'XAM_XI'
 }
 
-
-export interface CreateCommentDto {
-  content: Maybe<Scalars['String']>;
-  createdAt: Maybe<Scalars['DateTime']>;
-  id: Maybe<Scalars['ID']>;
-  rate: Maybe<Array<CommentRateEnum>>;
-  updatedAt: Maybe<Scalars['DateTime']>;
-}
 
 export interface CreateImageListInputDto {
   images: Maybe<Array<MediaInput>>;
@@ -156,10 +123,6 @@ export interface CreateInvestmentPackageDto {
   displayName: Maybe<Scalars['String']>;
   fundedRate: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['ID']>;
-}
-
-export interface CreateManyCommentDtosInput {
-  commentDtos: Array<CreateCommentDto>;
 }
 
 export interface CreateManyImageListsInput {
@@ -176,10 +139,6 @@ export interface CreateManyMediaDtosInput {
 
 export interface CreateManyShowcaseHighlightFeaturesInput {
   showcaseHighlightFeatures: Array<ShowcaseHfCreateInputDto>;
-}
-
-export interface CreateOneCommentDtoInput {
-  commentDto: CreateCommentDto;
 }
 
 export interface CreateOneImageListInput {
@@ -226,10 +185,6 @@ export interface DateFieldComparisonBetween {
 }
 
 
-export interface DeleteManyCommentDtosInput {
-  filter: CommentDtoDeleteFilter;
-}
-
 export interface DeleteManyImageListsInput {
   filter: ImageListDeleteFilter;
 }
@@ -252,10 +207,6 @@ export interface DeleteManyShowcaseHighlightFeaturesInput {
 
 export interface DeleteManyShowcasesInput {
   filter: ShowcaseDeleteFilter;
-}
-
-export interface DeleteOneCommentDtoInput {
-  id: Scalars['ID'];
 }
 
 export interface DeleteOneImageListInput {
@@ -556,25 +507,21 @@ export interface Mutation {
   addHighlightFeaturesToShowcase: Showcase;
   addImageListsToShowcase: Showcase;
   addImagesToImageList: ImageList;
-  createManyCommentDtos: Array<CommentDto>;
   createManyImageLists: Array<ImageList>;
   createManyInvestmentPackageDtos: Array<InvestmentPackageDto>;
   createManyMediaDtos: Array<MediaDto>;
   createManyShowcaseHighlightFeatures: Array<ShowcaseHighlightFeature>;
-  createOneCommentDto: CommentDto;
   createOneImageList: ImageList;
   createOneInvestmentPackageDto: InvestmentPackageDto;
   createOneMediaDto: MediaDto;
   createOneSetting: Scalars['Boolean'];
   createOneShowcase: Showcase;
   createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
-  deleteManyCommentDtos: DeleteManyResponse;
   deleteManyImageLists: DeleteManyResponse;
   deleteManyInvestmentPackageDtos: DeleteManyResponse;
   deleteManyMediaDtos: DeleteManyResponse;
   deleteManyShowcaseHighlightFeatures: DeleteManyResponse;
   deleteManyShowcases: DeleteManyResponse;
-  deleteOneCommentDto: CommentDtoDeleteResponse;
   deleteOneImageList: ImageListDeleteResponse;
   deleteOneInvestmentPackageDto: InvestmentPackageDtoDeleteResponse;
   deleteOneMediaDto: MediaDtoDeleteResponse;
@@ -582,6 +529,7 @@ export interface Mutation {
   deleteOneShowcaseHighlightFeature: ShowcaseHighlightFeatureDeleteResponse;
   postAnonymousComment: CommentDto;
   postAuthorizedComment: CommentDto;
+  postProjectUpdate: PrjUpdateDto;
   removeAuthorFromCommentDto: CommentDto;
   removeAuthorFromShowcase: Showcase;
   removeCommentsFromShowcase: Showcase;
@@ -599,12 +547,10 @@ export interface Mutation {
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
   submitInvestor: Scalars['Boolean'];
-  updateManyCommentDtos: UpdateManyResponse;
   updateManyImageLists: UpdateManyResponse;
   updateManyInvestmentPackageDtos: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
   updateManyShowcaseHighlightFeatures: UpdateManyResponse;
-  updateOneCommentDto: CommentDto;
   updateOneImageList: ImageList;
   updateOneInvestmentPackageDto: InvestmentPackageDto;
   updateOneMediaDto: MediaDto;
@@ -635,11 +581,6 @@ export interface MutationAddImagesToImageListArgs {
 }
 
 
-export interface MutationCreateManyCommentDtosArgs {
-  input: CreateManyCommentDtosInput;
-}
-
-
 export interface MutationCreateManyImageListsArgs {
   input: CreateManyImageListsInput;
 }
@@ -657,11 +598,6 @@ export interface MutationCreateManyMediaDtosArgs {
 
 export interface MutationCreateManyShowcaseHighlightFeaturesArgs {
   input: CreateManyShowcaseHighlightFeaturesInput;
-}
-
-
-export interface MutationCreateOneCommentDtoArgs {
-  input: CreateOneCommentDtoInput;
 }
 
 
@@ -695,11 +631,6 @@ export interface MutationCreateOneShowcaseHighlightFeatureArgs {
 }
 
 
-export interface MutationDeleteManyCommentDtosArgs {
-  input: DeleteManyCommentDtosInput;
-}
-
-
 export interface MutationDeleteManyImageListsArgs {
   input: DeleteManyImageListsInput;
 }
@@ -722,11 +653,6 @@ export interface MutationDeleteManyShowcaseHighlightFeaturesArgs {
 
 export interface MutationDeleteManyShowcasesArgs {
   input: DeleteManyShowcasesInput;
-}
-
-
-export interface MutationDeleteOneCommentDtoArgs {
-  input: DeleteOneCommentDtoInput;
 }
 
 
@@ -763,6 +689,12 @@ export interface MutationPostAnonymousCommentArgs {
 
 export interface MutationPostAuthorizedCommentArgs {
   input: CommentCreateDto;
+  slug: Scalars['String'];
+}
+
+
+export interface MutationPostProjectUpdateArgs {
+  input: PrjUpdateCreateDto;
   slug: Scalars['String'];
 }
 
@@ -852,11 +784,6 @@ export interface MutationSubmitInvestorArgs {
 }
 
 
-export interface MutationUpdateManyCommentDtosArgs {
-  input: UpdateManyCommentDtosInput;
-}
-
-
 export interface MutationUpdateManyImageListsArgs {
   input: UpdateManyImageListsInput;
 }
@@ -874,11 +801,6 @@ export interface MutationUpdateManyMediaDtosArgs {
 
 export interface MutationUpdateManyShowcaseHighlightFeaturesArgs {
   input: UpdateManyShowcaseHighlightFeaturesInput;
-}
-
-
-export interface MutationUpdateOneCommentDtoArgs {
-  input: UpdateOneCommentDtoInput;
 }
 
 
@@ -935,6 +857,61 @@ export interface PageInfo {
   startCursor: Maybe<Scalars['ConnectionCursor']>;
 }
 
+export interface PrjUpdateCreateDto {
+  content: Scalars['String'];
+}
+
+export interface PrjUpdateDto {
+  content: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+}
+
+export interface PrjUpdateDtoAggregateGroupBy {
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface PrjUpdateDtoAvgAggregate {
+  id: Maybe<Scalars['Float']>;
+}
+
+export interface PrjUpdateDtoCountAggregate {
+  id: Maybe<Scalars['Int']>;
+}
+
+export interface PrjUpdateDtoEdge {
+  cursor: Scalars['ConnectionCursor'];
+  node: PrjUpdateDto;
+}
+
+export interface PrjUpdateDtoFilter {
+  and: Maybe<Array<PrjUpdateDtoFilter>>;
+  id: Maybe<IdFilterComparison>;
+  or: Maybe<Array<PrjUpdateDtoFilter>>;
+}
+
+export interface PrjUpdateDtoMaxAggregate {
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface PrjUpdateDtoMinAggregate {
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface PrjUpdateDtoSort {
+  direction: SortDirection;
+  field: PrjUpdateDtoSortFields;
+  nulls: Maybe<SortNulls>;
+}
+
+export enum PrjUpdateDtoSortFields {
+  Id = 'id'
+}
+
+export interface PrjUpdateDtoSumAggregate {
+  id: Maybe<Scalars['Float']>;
+}
+
 export enum PublishStatus {
   Draft = 'DRAFT',
   Published = 'PUBLISHED'
@@ -958,8 +935,6 @@ export interface PublishStatusFilterComparison {
 }
 
 export interface Query {
-  commentDto: Maybe<CommentDto>;
-  commentDtos: CommentDtoConnection;
   currentUser: User;
   getAllUsers: Array<User>;
   getOneUser: User;
@@ -976,18 +951,6 @@ export interface Query {
   showcaseHighlightFeatures: ShowcaseHighlightFeatureConnection;
   showcases: ShowcaseConnection;
   slugs: Array<Scalars['String']>;
-}
-
-
-export interface QueryCommentDtoArgs {
-  id: Scalars['ID'];
-}
-
-
-export interface QueryCommentDtosArgs {
-  filter?: Maybe<CommentDtoFilter>;
-  paging?: Maybe<CursorPaging>;
-  sorting?: Maybe<Array<CommentDtoSort>>;
 }
 
 
@@ -1177,6 +1140,7 @@ export interface Showcase {
   slug: Scalars['String'];
   status: ShowcaseStatus;
   updatedAt: Scalars['DateTime'];
+  updates: Array<PrjUpdateDto>;
 }
 
 
@@ -1196,6 +1160,12 @@ export interface ShowcaseHighlightFeaturesArgs {
 export interface ShowcaseImageListsArgs {
   filter?: Maybe<ImageListFilter>;
   sorting?: Maybe<Array<ImageListSort>>;
+}
+
+
+export interface ShowcaseUpdatesArgs {
+  filter?: Maybe<PrjUpdateDtoFilter>;
+  sorting?: Maybe<Array<PrjUpdateDtoSort>>;
 }
 
 export interface ShowcaseAggregateGroupBy {
@@ -1533,14 +1503,6 @@ export interface SubmitInvestorInputDto {
   purpose: Scalars['String'];
 }
 
-export interface UpdateCommentDto {
-  content: Maybe<Scalars['String']>;
-  createdAt: Maybe<Scalars['DateTime']>;
-  id: Maybe<Scalars['ID']>;
-  rate: Maybe<Array<CommentRateEnum>>;
-  updatedAt: Maybe<Scalars['DateTime']>;
-}
-
 export interface UpdateImageList {
   id: Maybe<Scalars['ID']>;
 }
@@ -1551,11 +1513,6 @@ export interface UpdateInvestmentPackageDto {
   displayName: Maybe<Scalars['String']>;
   fundedRate: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['ID']>;
-}
-
-export interface UpdateManyCommentDtosInput {
-  filter: CommentDtoUpdateFilter;
-  update: UpdateCommentDto;
 }
 
 export interface UpdateManyImageListsInput {
@@ -1591,11 +1548,6 @@ export interface UpdateMediaDto {
   preloadUrl: Maybe<Scalars['String']>;
   type: Maybe<MediaType>;
   width: Maybe<Scalars['Float']>;
-}
-
-export interface UpdateOneCommentDtoInput {
-  id: Scalars['ID'];
-  update: UpdateCommentDto;
 }
 
 export interface UpdateOneImageListInput {
@@ -1739,6 +1691,11 @@ export type ShowcaseForUpdateQueryVariables = Exact<{
 
 
 export type ShowcaseForUpdateQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } }>, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }> }> } };
+
+export type ShowcasePortalQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ShowcasePortalQuery = { showcases: { pageInfo: { hasNextPage: boolean | null, endCursor: any | null }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { path: string, preloadUrl: string | null } } }> } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -2399,6 +2356,59 @@ export type ShowcaseForUpdateLazyQueryHookResult = ReturnType<typeof useShowcase
 export type ShowcaseForUpdateQueryResult = Apollo.QueryResult<ShowcaseForUpdateQuery, ShowcaseForUpdateQueryVariables>;
 export function refetchShowcaseForUpdateQuery(variables: ShowcaseForUpdateQueryVariables) {
       return { query: ShowcaseForUpdateDocument, variables: variables }
+    }
+export const ShowcasePortalDocument = gql`
+    query ShowcasePortal {
+  showcases(paging: {first: 10}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          path
+          preloadUrl
+        }
+        createdAt
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useShowcasePortalQuery__
+ *
+ * To run a query within a React component, call `useShowcasePortalQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShowcasePortalQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShowcasePortalQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useShowcasePortalQuery(baseOptions?: Apollo.QueryHookOptions<ShowcasePortalQuery, ShowcasePortalQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ShowcasePortalQuery, ShowcasePortalQueryVariables>(ShowcasePortalDocument, options);
+      }
+export function useShowcasePortalLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShowcasePortalQuery, ShowcasePortalQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ShowcasePortalQuery, ShowcasePortalQueryVariables>(ShowcasePortalDocument, options);
+        }
+export type ShowcasePortalQueryHookResult = ReturnType<typeof useShowcasePortalQuery>;
+export type ShowcasePortalLazyQueryHookResult = ReturnType<typeof useShowcasePortalLazyQuery>;
+export type ShowcasePortalQueryResult = Apollo.QueryResult<ShowcasePortalQuery, ShowcasePortalQueryVariables>;
+export function refetchShowcasePortalQuery(variables?: ShowcasePortalQueryVariables) {
+      return { query: ShowcasePortalDocument, variables: variables }
     }
 export const ShowcasePreviewDocument = gql`
     query ShowcasePreview($slug: String!) {

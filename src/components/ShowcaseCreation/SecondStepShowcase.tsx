@@ -10,8 +10,6 @@ import {
   EnhancedTextField,
   useShowcaseCreationSuccess,
 } from "./utils";
-import CreationBottomBar from "./CreationBottomBar";
-import { DevTool } from "@hookform/devtools";
 import { apiService } from "../../api";
 import { useRouter } from "next/router";
 import {
@@ -20,6 +18,8 @@ import {
   ImageUploader,
   ListEditor,
 } from "@hungphongbk/vth-sdk";
+import PrjUpdateItemEditor from "./prj-update-item-editor";
+import CreationBottomBar from "./CreationBottomBar";
 
 type ShowcaseForm = ShowcaseCreateInputDto;
 
@@ -149,9 +149,17 @@ export default function SecondStepShowcase(): JSX.Element {
               options={{ deletable: true }}
             />
           </CollapseCard>
+          <CollapseCard header={"cập nhật dự án"} defaultOpen>
+            <ListEditor
+              name={"updates"}
+              control={control}
+              ItemComponent={(itemProps) => (
+                <PrjUpdateItemEditor {...itemProps} />
+              )}
+            />
+          </CollapseCard>
         </Stack>
       </Box>
-      {process.env.NODE_ENV === "development" && <DevTool control={control} />}
       <CreationBottomBar
         onSave={handleSubmit(onSave)}
         isSaving={formState.isSubmitting}

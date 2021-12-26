@@ -167,6 +167,7 @@ export default function SecondStepShowcase(): JSX.Element {
                       variables: { slug: (showcase as any).slug },
                     },
                   ],
+                  getAllPath: "showcase.updates",
                   refetchAll: refetchAllUpdatesInShowcaseQuery({
                     slug: (showcase as any).slug,
                   }),

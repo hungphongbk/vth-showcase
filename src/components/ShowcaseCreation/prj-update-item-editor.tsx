@@ -1,6 +1,13 @@
 import { PrjUpdateDto } from "../../types/graphql";
 import { EventHandler, SyntheticEvent } from "react";
-import { Button, Dialog, DialogContent, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  Stack,
+  Typography,
+} from "@mui/material";
 import {
   FormInput,
   useOpenCloseState,
@@ -9,16 +16,25 @@ import {
 import { useForm } from "react-hook-form";
 import { EnhancedMultilineTextField } from "./utils";
 import { TimelineItem } from "@mui/lab";
+import TimelineDot from "@mui/lab/TimelineDot";
+import TimelineConnector from "@mui/lab/TimelineConnector";
+import TimelineSeparator from "@mui/lab/TimelineSeparator";
+import TimelineContent from "@mui/lab/TimelineContent";
+import { format } from "date-fns";
+import PrjUpdateIcon from "./PrjUpdateIcon";
+import PrjUpdateDelIcon from "./PrjUpdateDelIcon";
 
 type PrjUpdateItemEditorProps = {
   name: string;
   value?: PrjUpdateDto;
   onChange: EventHandler<SyntheticEvent>;
+  onUpdate?: (value: PrjUpdateDto) => boolean | Promise<boolean>;
 };
 export default function PrjUpdateItemEditor({
   name,
   value,
   onChange,
+  onUpdate,
 }: PrjUpdateItemEditorProps) {
   const form = useForm({
       defaultValues: value ?? {},
@@ -52,7 +68,37 @@ export default function PrjUpdateItemEditor({
   };
 
   return value && value.content ? (
-    <TimelineItem></TimelineItem>
+    <TimelineItem>
+      <TimelineSeparator>
+        <TimelineDot />
+        <TimelineConnector />
+      </TimelineSeparator>
+      <TimelineContent sx={{ pr: 0 }}>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "1fr auto",
+            gridTemplateAreas: '"time action" "content action"',
+            gridGap: 6,
+          }}
+        >
+          <Box sx={{ gridArea: "time" }}>
+            <Typography sx={{ fontWeight: 600 }}>
+              <strong>{format(new Date(value.createdAt), "hh:mm aa")}</strong> |
+              Thứ Sáu, ngày 15/10/2021
+            </Typography>
+          </Box>
+          <Typography sx={{ gridArea: "content" }}>{value.content}</Typography>
+          <Stack
+            gap={0.5}
+            sx={{ gridArea: "action", "& svg": { width: 24, height: 24 } }}
+          >
+            <PrjUpdateIcon />
+            <PrjUpdateDelIcon />
+          </Stack>
+        </Box>
+      </TimelineContent>
+    </TimelineItem>
   ) : (
     <>
       <Button variant={"contained"} onClick={doOpenDialog}>

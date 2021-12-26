@@ -7,6 +7,7 @@ import {
   QueryHookOptions,
   QueryResult,
 } from "@apollo/client/react/types/types";
+import { cloneDeep, get, omit } from "lodash";
 
 type QueryHooks<TD = any, TV = any> = (
   baseOptions: QueryHookOptions<TD, TV>
@@ -19,10 +20,11 @@ type ShowcaseContentCrudAdapterProps = ListEditorProps & {
   mode: "add" | "edit";
   hooks: {
     getAll: [QueryHooks, any];
+    getAllPath: string;
     refetchAll: any;
     getOneFn?: any;
     refetchOneFn?: any;
-    create?: [MutationHooks, any];
+    create: [MutationHooks, any];
     update?: any;
     del?: any;
   };
@@ -39,18 +41,42 @@ type ShowcaseContentCrudAdapterProps = ListEditorProps & {
 function InnerAdapter({
   name,
   hooks,
-  control,
+  control: _,
+  options,
   ...props
 }: Omit<ShowcaseContentCrudAdapterProps, "mode">) {
   const form = useForm({
-    defaultValues: {
-      [name]: undefined,
-    },
+      defaultValues: {
+        [name]: [],
+      },
+    }),
+    { setValue, control } = form;
+  const [getAllHookFn, getAllHookArg] = hooks.getAll;
+  const [createMutationHookFn, createMutationHookArgs] = hooks.create,
+    [createMutation] = createMutationHookFn({
+      ...createMutationHookArgs,
+      refetchQueries: [hooks.refetchAll],
+    });
+  const { data, loading: fetchingAll } = getAllHookFn(getAllHookArg);
+  useEffect(() => {
+    if (data && !fetchingAll)
+      setValue(name, cloneDeep(get(data, hooks.getAllPath)));
   });
-  const { data } = hooks.getAll[0](hooks.getAll[1]);
-  useEffect(() => {});
 
-  return <></>;
+  return (
+    <ListEditor
+      name={name}
+      control={control}
+      options={{
+        ...options,
+        onAppend: async (value) => {
+          await createMutation({ variables: { input: omit(value, ["id"]) } });
+          return false;
+        },
+      }}
+      {...props}
+    />
+  );
 }
 
 export default function ShowcaseContentCrudAdapter({

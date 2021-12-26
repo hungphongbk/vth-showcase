@@ -1,0 +1,27 @@
+query AllUpdatesInShowcase($slug:String!){
+showcase(slug: $slug){
+  slug
+  updates{
+    id
+    content
+    createdAt
+  }
+}
+}
+query OneUpdateInShowcase($id:ID!){
+  update: prjUpdateDto(id: $id){
+    id
+    content
+    createdAt
+  }
+}
+mutation PostAnUpdateInShowcase($slug:String!,$input:PrjUpdateCreateDto!){
+  postProjectUpdate(slug: $slug,input:$input){
+    id
+  }
+}
+mutation UpdateOneUpdateInShowcase($id:ID!,$input:UpdatePrjUpdateDto!){
+  updateOnePrjUpdateDto(input: {id: $id,update:$input}){
+    id
+  }
+}

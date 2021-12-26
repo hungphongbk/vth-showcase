@@ -66,27 +66,8 @@ export interface CommentDtoAvgAggregate {
   id: Maybe<Scalars['Float']>;
 }
 
-export interface CommentDtoConnection {
-  edges: Array<CommentDtoEdge>;
-  pageInfo: PageInfo;
-}
-
 export interface CommentDtoCountAggregate {
   id: Maybe<Scalars['Int']>;
-}
-
-export interface CommentDtoDeleteFilter {
-  and: Maybe<Array<CommentDtoDeleteFilter>>;
-  id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<CommentDtoDeleteFilter>>;
-}
-
-export interface CommentDtoDeleteResponse {
-  content: Maybe<Scalars['String']>;
-  createdAt: Maybe<Scalars['DateTime']>;
-  id: Maybe<Scalars['ID']>;
-  rate: Maybe<Array<CommentRateEnum>>;
-  updatedAt: Maybe<Scalars['DateTime']>;
 }
 
 export interface CommentDtoEdge {
@@ -122,12 +103,6 @@ export interface CommentDtoSumAggregate {
   id: Maybe<Scalars['Float']>;
 }
 
-export interface CommentDtoUpdateFilter {
-  and: Maybe<Array<CommentDtoUpdateFilter>>;
-  id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<CommentDtoUpdateFilter>>;
-}
-
 export enum CommentRateEnum {
   CoTiemNang = 'CO_TIEM_NANG',
   CungDuoc = 'CUNG_DUOC',
@@ -137,14 +112,6 @@ export enum CommentRateEnum {
   XamXi = 'XAM_XI'
 }
 
-
-export interface CreateCommentDto {
-  content: Maybe<Scalars['String']>;
-  createdAt: Maybe<Scalars['DateTime']>;
-  id: Maybe<Scalars['ID']>;
-  rate: Maybe<Array<CommentRateEnum>>;
-  updatedAt: Maybe<Scalars['DateTime']>;
-}
 
 export interface CreateImageListInputDto {
   images: Maybe<Array<MediaInput>>;
@@ -156,10 +123,6 @@ export interface CreateInvestmentPackageDto {
   displayName: Maybe<Scalars['String']>;
   fundedRate: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['ID']>;
-}
-
-export interface CreateManyCommentDtosInput {
-  commentDtos: Array<CreateCommentDto>;
 }
 
 export interface CreateManyImageListsInput {
@@ -176,10 +139,6 @@ export interface CreateManyMediaDtosInput {
 
 export interface CreateManyShowcaseHighlightFeaturesInput {
   showcaseHighlightFeatures: Array<ShowcaseHfCreateInputDto>;
-}
-
-export interface CreateOneCommentDtoInput {
-  commentDto: CreateCommentDto;
 }
 
 export interface CreateOneImageListInput {
@@ -226,10 +185,6 @@ export interface DateFieldComparisonBetween {
 }
 
 
-export interface DeleteManyCommentDtosInput {
-  filter: CommentDtoDeleteFilter;
-}
-
 export interface DeleteManyImageListsInput {
   filter: ImageListDeleteFilter;
 }
@@ -254,10 +209,6 @@ export interface DeleteManyShowcasesInput {
   filter: ShowcaseDeleteFilter;
 }
 
-export interface DeleteOneCommentDtoInput {
-  id: Scalars['ID'];
-}
-
 export interface DeleteOneImageListInput {
   id: Scalars['ID'];
 }
@@ -267,6 +218,10 @@ export interface DeleteOneInvestmentPackageDtoInput {
 }
 
 export interface DeleteOneMediaDtoInput {
+  id: Scalars['ID'];
+}
+
+export interface DeleteOnePrjUpdateDtoInput {
   id: Scalars['ID'];
 }
 
@@ -556,32 +511,30 @@ export interface Mutation {
   addHighlightFeaturesToShowcase: Showcase;
   addImageListsToShowcase: Showcase;
   addImagesToImageList: ImageList;
-  createManyCommentDtos: Array<CommentDto>;
   createManyImageLists: Array<ImageList>;
   createManyInvestmentPackageDtos: Array<InvestmentPackageDto>;
   createManyMediaDtos: Array<MediaDto>;
   createManyShowcaseHighlightFeatures: Array<ShowcaseHighlightFeature>;
-  createOneCommentDto: CommentDto;
   createOneImageList: ImageList;
   createOneInvestmentPackageDto: InvestmentPackageDto;
   createOneMediaDto: MediaDto;
   createOneSetting: Scalars['Boolean'];
   createOneShowcase: Showcase;
   createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
-  deleteManyCommentDtos: DeleteManyResponse;
   deleteManyImageLists: DeleteManyResponse;
   deleteManyInvestmentPackageDtos: DeleteManyResponse;
   deleteManyMediaDtos: DeleteManyResponse;
   deleteManyShowcaseHighlightFeatures: DeleteManyResponse;
   deleteManyShowcases: DeleteManyResponse;
-  deleteOneCommentDto: CommentDtoDeleteResponse;
   deleteOneImageList: ImageListDeleteResponse;
   deleteOneInvestmentPackageDto: InvestmentPackageDtoDeleteResponse;
   deleteOneMediaDto: MediaDtoDeleteResponse;
+  deleteOnePrjUpdateDto: PrjUpdateDtoDeleteResponse;
   deleteOneShowcase: Scalars['Boolean'];
   deleteOneShowcaseHighlightFeature: ShowcaseHighlightFeatureDeleteResponse;
   postAnonymousComment: CommentDto;
   postAuthorizedComment: CommentDto;
+  postProjectUpdate: PrjUpdateDto;
   removeAuthorFromCommentDto: CommentDto;
   removeAuthorFromShowcase: Showcase;
   removeCommentsFromShowcase: Showcase;
@@ -599,15 +552,14 @@ export interface Mutation {
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
   submitInvestor: Scalars['Boolean'];
-  updateManyCommentDtos: UpdateManyResponse;
   updateManyImageLists: UpdateManyResponse;
   updateManyInvestmentPackageDtos: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
   updateManyShowcaseHighlightFeatures: UpdateManyResponse;
-  updateOneCommentDto: CommentDto;
   updateOneImageList: ImageList;
   updateOneInvestmentPackageDto: InvestmentPackageDto;
   updateOneMediaDto: MediaDto;
+  updateOnePrjUpdateDto: PrjUpdateDto;
   updateOneSetting: Scalars['Boolean'];
   updateOneShowcase: Scalars['Boolean'];
   updateOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
@@ -635,11 +587,6 @@ export interface MutationAddImagesToImageListArgs {
 }
 
 
-export interface MutationCreateManyCommentDtosArgs {
-  input: CreateManyCommentDtosInput;
-}
-
-
 export interface MutationCreateManyImageListsArgs {
   input: CreateManyImageListsInput;
 }
@@ -657,11 +604,6 @@ export interface MutationCreateManyMediaDtosArgs {
 
 export interface MutationCreateManyShowcaseHighlightFeaturesArgs {
   input: CreateManyShowcaseHighlightFeaturesInput;
-}
-
-
-export interface MutationCreateOneCommentDtoArgs {
-  input: CreateOneCommentDtoInput;
 }
 
 
@@ -695,11 +637,6 @@ export interface MutationCreateOneShowcaseHighlightFeatureArgs {
 }
 
 
-export interface MutationDeleteManyCommentDtosArgs {
-  input: DeleteManyCommentDtosInput;
-}
-
-
 export interface MutationDeleteManyImageListsArgs {
   input: DeleteManyImageListsInput;
 }
@@ -725,11 +662,6 @@ export interface MutationDeleteManyShowcasesArgs {
 }
 
 
-export interface MutationDeleteOneCommentDtoArgs {
-  input: DeleteOneCommentDtoInput;
-}
-
-
 export interface MutationDeleteOneImageListArgs {
   input: DeleteOneImageListInput;
 }
@@ -742,6 +674,11 @@ export interface MutationDeleteOneInvestmentPackageDtoArgs {
 
 export interface MutationDeleteOneMediaDtoArgs {
   input: DeleteOneMediaDtoInput;
+}
+
+
+export interface MutationDeleteOnePrjUpdateDtoArgs {
+  input: DeleteOnePrjUpdateDtoInput;
 }
 
 
@@ -763,6 +700,12 @@ export interface MutationPostAnonymousCommentArgs {
 
 export interface MutationPostAuthorizedCommentArgs {
   input: CommentCreateDto;
+  slug: Scalars['String'];
+}
+
+
+export interface MutationPostProjectUpdateArgs {
+  input: PrjUpdateCreateDto;
   slug: Scalars['String'];
 }
 
@@ -852,11 +795,6 @@ export interface MutationSubmitInvestorArgs {
 }
 
 
-export interface MutationUpdateManyCommentDtosArgs {
-  input: UpdateManyCommentDtosInput;
-}
-
-
 export interface MutationUpdateManyImageListsArgs {
   input: UpdateManyImageListsInput;
 }
@@ -877,11 +815,6 @@ export interface MutationUpdateManyShowcaseHighlightFeaturesArgs {
 }
 
 
-export interface MutationUpdateOneCommentDtoArgs {
-  input: UpdateOneCommentDtoInput;
-}
-
-
 export interface MutationUpdateOneImageListArgs {
   input: UpdateOneImageListInput;
 }
@@ -894,6 +827,11 @@ export interface MutationUpdateOneInvestmentPackageDtoArgs {
 
 export interface MutationUpdateOneMediaDtoArgs {
   input: UpdateOneMediaDtoInput;
+}
+
+
+export interface MutationUpdateOnePrjUpdateDtoArgs {
+  input: UpdateOnePrjUpdateDtoInput;
 }
 
 
@@ -935,6 +873,67 @@ export interface PageInfo {
   startCursor: Maybe<Scalars['ConnectionCursor']>;
 }
 
+export interface PrjUpdateCreateDto {
+  content: Scalars['String'];
+}
+
+export interface PrjUpdateDto {
+  content: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+}
+
+export interface PrjUpdateDtoAggregateGroupBy {
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface PrjUpdateDtoAvgAggregate {
+  id: Maybe<Scalars['Float']>;
+}
+
+export interface PrjUpdateDtoCountAggregate {
+  id: Maybe<Scalars['Int']>;
+}
+
+export interface PrjUpdateDtoDeleteResponse {
+  content: Maybe<Scalars['String']>;
+  createdAt: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface PrjUpdateDtoEdge {
+  cursor: Scalars['ConnectionCursor'];
+  node: PrjUpdateDto;
+}
+
+export interface PrjUpdateDtoFilter {
+  and: Maybe<Array<PrjUpdateDtoFilter>>;
+  id: Maybe<IdFilterComparison>;
+  or: Maybe<Array<PrjUpdateDtoFilter>>;
+}
+
+export interface PrjUpdateDtoMaxAggregate {
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface PrjUpdateDtoMinAggregate {
+  id: Maybe<Scalars['ID']>;
+}
+
+export interface PrjUpdateDtoSort {
+  direction: SortDirection;
+  field: PrjUpdateDtoSortFields;
+  nulls: Maybe<SortNulls>;
+}
+
+export enum PrjUpdateDtoSortFields {
+  Id = 'id'
+}
+
+export interface PrjUpdateDtoSumAggregate {
+  id: Maybe<Scalars['Float']>;
+}
+
 export enum PublishStatus {
   Draft = 'DRAFT',
   Published = 'PUBLISHED'
@@ -958,8 +957,6 @@ export interface PublishStatusFilterComparison {
 }
 
 export interface Query {
-  commentDto: Maybe<CommentDto>;
-  commentDtos: CommentDtoConnection;
   currentUser: User;
   getAllUsers: Array<User>;
   getOneUser: User;
@@ -969,6 +966,7 @@ export interface Query {
   investmentPackageDtos: InvestmentPackageDtoConnection;
   mediaDto: Maybe<MediaDto>;
   mediaDtos: MediaDtoConnection;
+  prjUpdateDto: Maybe<PrjUpdateDto>;
   setting: Maybe<SettingDto>;
   settings: Array<SettingDto>;
   showcase: Showcase;
@@ -976,18 +974,6 @@ export interface Query {
   showcaseHighlightFeatures: ShowcaseHighlightFeatureConnection;
   showcases: ShowcaseConnection;
   slugs: Array<Scalars['String']>;
-}
-
-
-export interface QueryCommentDtoArgs {
-  id: Scalars['ID'];
-}
-
-
-export interface QueryCommentDtosArgs {
-  filter?: Maybe<CommentDtoFilter>;
-  paging?: Maybe<CursorPaging>;
-  sorting?: Maybe<Array<CommentDtoSort>>;
 }
 
 
@@ -1029,6 +1015,11 @@ export interface QueryMediaDtosArgs {
   filter?: Maybe<MediaDtoFilter>;
   paging?: Maybe<CursorPaging>;
   sorting?: Maybe<Array<MediaDtoSort>>;
+}
+
+
+export interface QueryPrjUpdateDtoArgs {
+  id: Scalars['ID'];
 }
 
 
@@ -1177,6 +1168,7 @@ export interface Showcase {
   slug: Scalars['String'];
   status: ShowcaseStatus;
   updatedAt: Scalars['DateTime'];
+  updates: Array<PrjUpdateDto>;
 }
 
 
@@ -1196,6 +1188,12 @@ export interface ShowcaseHighlightFeaturesArgs {
 export interface ShowcaseImageListsArgs {
   filter?: Maybe<ImageListFilter>;
   sorting?: Maybe<Array<ImageListSort>>;
+}
+
+
+export interface ShowcaseUpdatesArgs {
+  filter?: Maybe<PrjUpdateDtoFilter>;
+  sorting?: Maybe<Array<PrjUpdateDtoSort>>;
 }
 
 export interface ShowcaseAggregateGroupBy {
@@ -1254,6 +1252,7 @@ export interface ShowcaseCreateInputDto {
   name: Scalars['String'];
   publishStatus: Maybe<PublishStatus>;
   status: ShowcaseStatus;
+  updates: Maybe<Array<PrjUpdateCreateDto>>;
 }
 
 export interface ShowcaseDeleteFilter {
@@ -1495,6 +1494,7 @@ export interface ShowcaseUpdateInputDto {
   name: Maybe<Scalars['String']>;
   publishStatus: Maybe<PublishStatus>;
   status: Maybe<ShowcaseStatus>;
+  updates: Maybe<Array<PrjUpdateCreateDto>>;
 }
 
 export enum SortDirection {
@@ -1533,14 +1533,6 @@ export interface SubmitInvestorInputDto {
   purpose: Scalars['String'];
 }
 
-export interface UpdateCommentDto {
-  content: Maybe<Scalars['String']>;
-  createdAt: Maybe<Scalars['DateTime']>;
-  id: Maybe<Scalars['ID']>;
-  rate: Maybe<Array<CommentRateEnum>>;
-  updatedAt: Maybe<Scalars['DateTime']>;
-}
-
 export interface UpdateImageList {
   id: Maybe<Scalars['ID']>;
 }
@@ -1551,11 +1543,6 @@ export interface UpdateInvestmentPackageDto {
   displayName: Maybe<Scalars['String']>;
   fundedRate: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['ID']>;
-}
-
-export interface UpdateManyCommentDtosInput {
-  filter: CommentDtoUpdateFilter;
-  update: UpdateCommentDto;
 }
 
 export interface UpdateManyImageListsInput {
@@ -1593,11 +1580,6 @@ export interface UpdateMediaDto {
   width: Maybe<Scalars['Float']>;
 }
 
-export interface UpdateOneCommentDtoInput {
-  id: Scalars['ID'];
-  update: UpdateCommentDto;
-}
-
 export interface UpdateOneImageListInput {
   id: Scalars['ID'];
   update: UpdateImageList;
@@ -1613,9 +1595,20 @@ export interface UpdateOneMediaDtoInput {
   update: UpdateMediaDto;
 }
 
+export interface UpdateOnePrjUpdateDtoInput {
+  id: Scalars['ID'];
+  update: UpdatePrjUpdateDto;
+}
+
 export interface UpdateOneShowcaseHighlightFeatureInput {
   id: Scalars['ID'];
   update: UpdateShowcaseHighlightFeature;
+}
+
+export interface UpdatePrjUpdateDto {
+  content: Maybe<Scalars['String']>;
+  createdAt: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['ID']>;
 }
 
 export interface UpdateShowcaseHighlightFeature {
@@ -1683,6 +1676,36 @@ export type DeleteMediaMutationVariables = Exact<{
 
 export type DeleteMediaMutation = { deleteOneMediaDto: { id: string | null } };
 
+export type AllUpdatesInShowcaseQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type AllUpdatesInShowcaseQuery = { showcase: { slug: string, updates: Array<{ id: string, content: string, createdAt: any }> } };
+
+export type OneUpdateInShowcaseQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type OneUpdateInShowcaseQuery = { update: { id: string, content: string, createdAt: any } | null };
+
+export type PostAnUpdateInShowcaseMutationVariables = Exact<{
+  slug: Scalars['String'];
+  input: PrjUpdateCreateDto;
+}>;
+
+
+export type PostAnUpdateInShowcaseMutation = { postProjectUpdate: { id: string } };
+
+export type UpdateOneUpdateInShowcaseMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: UpdatePrjUpdateDto;
+}>;
+
+
+export type UpdateOneUpdateInShowcaseMutation = { updateOnePrjUpdateDto: { id: string } };
+
 export type PostAnonymousCommentMutationVariables = Exact<{
   slug: Scalars['String'];
   input: CommentCreateDto;
@@ -1731,7 +1754,7 @@ export type ShowcaseDetailQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } }>, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }> }>, investorStat: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } } }> } };
+export type ShowcaseDetailQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } }>, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }> }>, investorStat: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } } }> } };
 
 export type ShowcaseForUpdateQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -1848,7 +1871,7 @@ export const ShowcaseDetailFragmentFragmentDoc = gql`
   updatedAt
   createdAt
 }
-    ${MediaFragmentFragmentDoc}`;
+    `;
 export const ShowcaseDocument = gql`
     query Showcase($slug: String!) {
   showcase(slug: $slug) {
@@ -1857,6 +1880,7 @@ export const ShowcaseDocument = gql`
   }
 }
     ${ShowcaseDetailFragmentFragmentDoc}
+${MediaFragmentFragmentDoc}
 ${ShowcaseInvestorStatFragmentDoc}`;
 
 /**
@@ -2024,6 +2048,157 @@ export function useDeleteMediaMutation(baseOptions?: Apollo.MutationHookOptions<
 export type DeleteMediaMutationHookResult = ReturnType<typeof useDeleteMediaMutation>;
 export type DeleteMediaMutationResult = Apollo.MutationResult<DeleteMediaMutation>;
 export type DeleteMediaMutationOptions = Apollo.BaseMutationOptions<DeleteMediaMutation, DeleteMediaMutationVariables>;
+export const AllUpdatesInShowcaseDocument = gql`
+    query AllUpdatesInShowcase($slug: String!) {
+  showcase(slug: $slug) {
+    slug
+    updates {
+      id
+      content
+      createdAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useAllUpdatesInShowcaseQuery__
+ *
+ * To run a query within a React component, call `useAllUpdatesInShowcaseQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllUpdatesInShowcaseQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllUpdatesInShowcaseQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useAllUpdatesInShowcaseQuery(baseOptions: Apollo.QueryHookOptions<AllUpdatesInShowcaseQuery, AllUpdatesInShowcaseQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllUpdatesInShowcaseQuery, AllUpdatesInShowcaseQueryVariables>(AllUpdatesInShowcaseDocument, options);
+      }
+export function useAllUpdatesInShowcaseLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllUpdatesInShowcaseQuery, AllUpdatesInShowcaseQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllUpdatesInShowcaseQuery, AllUpdatesInShowcaseQueryVariables>(AllUpdatesInShowcaseDocument, options);
+        }
+export type AllUpdatesInShowcaseQueryHookResult = ReturnType<typeof useAllUpdatesInShowcaseQuery>;
+export type AllUpdatesInShowcaseLazyQueryHookResult = ReturnType<typeof useAllUpdatesInShowcaseLazyQuery>;
+export type AllUpdatesInShowcaseQueryResult = Apollo.QueryResult<AllUpdatesInShowcaseQuery, AllUpdatesInShowcaseQueryVariables>;
+export function refetchAllUpdatesInShowcaseQuery(variables: AllUpdatesInShowcaseQueryVariables) {
+      return { query: AllUpdatesInShowcaseDocument, variables: variables }
+    }
+export const OneUpdateInShowcaseDocument = gql`
+    query OneUpdateInShowcase($id: ID!) {
+  update: prjUpdateDto(id: $id) {
+    id
+    content
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useOneUpdateInShowcaseQuery__
+ *
+ * To run a query within a React component, call `useOneUpdateInShowcaseQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOneUpdateInShowcaseQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOneUpdateInShowcaseQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useOneUpdateInShowcaseQuery(baseOptions: Apollo.QueryHookOptions<OneUpdateInShowcaseQuery, OneUpdateInShowcaseQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<OneUpdateInShowcaseQuery, OneUpdateInShowcaseQueryVariables>(OneUpdateInShowcaseDocument, options);
+      }
+export function useOneUpdateInShowcaseLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<OneUpdateInShowcaseQuery, OneUpdateInShowcaseQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<OneUpdateInShowcaseQuery, OneUpdateInShowcaseQueryVariables>(OneUpdateInShowcaseDocument, options);
+        }
+export type OneUpdateInShowcaseQueryHookResult = ReturnType<typeof useOneUpdateInShowcaseQuery>;
+export type OneUpdateInShowcaseLazyQueryHookResult = ReturnType<typeof useOneUpdateInShowcaseLazyQuery>;
+export type OneUpdateInShowcaseQueryResult = Apollo.QueryResult<OneUpdateInShowcaseQuery, OneUpdateInShowcaseQueryVariables>;
+export function refetchOneUpdateInShowcaseQuery(variables: OneUpdateInShowcaseQueryVariables) {
+      return { query: OneUpdateInShowcaseDocument, variables: variables }
+    }
+export const PostAnUpdateInShowcaseDocument = gql`
+    mutation PostAnUpdateInShowcase($slug: String!, $input: PrjUpdateCreateDto!) {
+  postProjectUpdate(slug: $slug, input: $input) {
+    id
+  }
+}
+    `;
+export type PostAnUpdateInShowcaseMutationFn = Apollo.MutationFunction<PostAnUpdateInShowcaseMutation, PostAnUpdateInShowcaseMutationVariables>;
+
+/**
+ * __usePostAnUpdateInShowcaseMutation__
+ *
+ * To run a mutation, you first call `usePostAnUpdateInShowcaseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostAnUpdateInShowcaseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postAnUpdateInShowcaseMutation, { data, loading, error }] = usePostAnUpdateInShowcaseMutation({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePostAnUpdateInShowcaseMutation(baseOptions?: Apollo.MutationHookOptions<PostAnUpdateInShowcaseMutation, PostAnUpdateInShowcaseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PostAnUpdateInShowcaseMutation, PostAnUpdateInShowcaseMutationVariables>(PostAnUpdateInShowcaseDocument, options);
+      }
+export type PostAnUpdateInShowcaseMutationHookResult = ReturnType<typeof usePostAnUpdateInShowcaseMutation>;
+export type PostAnUpdateInShowcaseMutationResult = Apollo.MutationResult<PostAnUpdateInShowcaseMutation>;
+export type PostAnUpdateInShowcaseMutationOptions = Apollo.BaseMutationOptions<PostAnUpdateInShowcaseMutation, PostAnUpdateInShowcaseMutationVariables>;
+export const UpdateOneUpdateInShowcaseDocument = gql`
+    mutation UpdateOneUpdateInShowcase($id: ID!, $input: UpdatePrjUpdateDto!) {
+  updateOnePrjUpdateDto(input: {id: $id, update: $input}) {
+    id
+  }
+}
+    `;
+export type UpdateOneUpdateInShowcaseMutationFn = Apollo.MutationFunction<UpdateOneUpdateInShowcaseMutation, UpdateOneUpdateInShowcaseMutationVariables>;
+
+/**
+ * __useUpdateOneUpdateInShowcaseMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneUpdateInShowcaseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneUpdateInShowcaseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOneUpdateInShowcaseMutation, { data, loading, error }] = useUpdateOneUpdateInShowcaseMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOneUpdateInShowcaseMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneUpdateInShowcaseMutation, UpdateOneUpdateInShowcaseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOneUpdateInShowcaseMutation, UpdateOneUpdateInShowcaseMutationVariables>(UpdateOneUpdateInShowcaseDocument, options);
+      }
+export type UpdateOneUpdateInShowcaseMutationHookResult = ReturnType<typeof useUpdateOneUpdateInShowcaseMutation>;
+export type UpdateOneUpdateInShowcaseMutationResult = Apollo.MutationResult<UpdateOneUpdateInShowcaseMutation>;
+export type UpdateOneUpdateInShowcaseMutationOptions = Apollo.BaseMutationOptions<UpdateOneUpdateInShowcaseMutation, UpdateOneUpdateInShowcaseMutationVariables>;
 export const PostAnonymousCommentDocument = gql`
     mutation postAnonymousComment($slug: String!, $input: CommentCreateDto!) {
   postAnonymousComment(slug: $slug, input: $input) {
@@ -2313,6 +2488,11 @@ export const ShowcaseDetailDocument = gql`
   showcase(slug: $slug) {
     ...ShowcaseDetailFragment
     ...ShowcaseInvestorStat
+    updates {
+      id
+      content
+      createdAt
+    }
   }
   showcases(filter: {slug: {neq: $slug, notLike: "ci-test%"}}) {
     edges {
@@ -2329,8 +2509,8 @@ export const ShowcaseDetailDocument = gql`
   }
 }
     ${ShowcaseDetailFragmentFragmentDoc}
-${ShowcaseInvestorStatFragmentDoc}
-${MediaFragmentFragmentDoc}`;
+${MediaFragmentFragmentDoc}
+${ShowcaseInvestorStatFragmentDoc}`;
 
 /**
  * __useShowcaseDetailQuery__
@@ -2368,7 +2548,8 @@ export const ShowcaseForUpdateDocument = gql`
     ...ShowcaseDetailFragment
   }
 }
-    ${ShowcaseDetailFragmentFragmentDoc}`;
+    ${ShowcaseDetailFragmentFragmentDoc}
+${MediaFragmentFragmentDoc}`;
 
 /**
  * __useShowcaseForUpdateQuery__

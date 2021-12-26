@@ -3,6 +3,7 @@ import { Box, Skeleton, styled, Typography } from "@mui/material";
 import ModifyShowcaseIconButton from "./ModifyShowcaseIconButton";
 import Image from "next/image";
 import { DeepPartial } from "redux";
+import { useRouter } from "next/router";
 
 const Wrapper = styled(Box)`
   background: #f3f3f3;
@@ -21,6 +22,7 @@ type ItemProps<T = DeepPartial<Showcase>> = {
   item?: T;
 };
 export default function Item({ item }: ItemProps): JSX.Element {
+  const router = useRouter();
   if (!item)
     return (
       <Wrapper>
@@ -32,12 +34,20 @@ export default function Item({ item }: ItemProps): JSX.Element {
   return (
     <Wrapper>
       <Box sx={{ position: "relative", mt: "-13px", ml: "-13px", mr: "-13px" }}>
-        <Image src={item.image!.path!} layout={"fill"} objectFit={"cover"} />
+        <Image
+          src={item.image!.path!}
+          layout={"fill"}
+          objectFit={"cover"}
+          alt={""}
+        />
       </Box>
       <Typography sx={{ fontSize: 10, justifySelf: "center" }}>
         Ngày cập nhật: 24.10.2021
       </Typography>
-      <ModifyShowcaseIconButton sx={{ justifySelf: "center" }} />
+      <ModifyShowcaseIconButton
+        sx={{ justifySelf: "center" }}
+        onClick={() => router.push(`/manage/update/${item!.slug}`)}
+      />
     </Wrapper>
   );
 }

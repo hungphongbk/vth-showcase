@@ -10,22 +10,21 @@ import {
   EnhancedTextField,
   useShowcaseCreationSuccess,
 } from "./utils";
-import CreationBottomBar from "./CreationBottomBar";
-import { DevTool } from "@hookform/devtools";
 import { apiService } from "../../api";
-import { useRouter } from "next/router";
 import {
   FormInput,
   HighlightFeature,
   ImageUploader,
   ListEditor,
 } from "@hungphongbk/vth-sdk";
+import CreationBottomBar from "./CreationBottomBar";
+import { StyledTimeline } from "../commons";
+import PrjUpdateEditor from "./prj-update-editor";
 
 type ShowcaseForm = ShowcaseCreateInputDto;
 
 export default function SecondStepShowcase(): JSX.Element {
-  const router = useRouter();
-  const { showcase, dispatch } = useShowcaseCreation(),
+  const { showcase, dispatch, mode } = useShowcaseCreation(),
     callback = useShowcaseCreationSuccess(),
     form = useForm<ShowcaseForm>({
       defaultValues: {
@@ -149,9 +148,13 @@ export default function SecondStepShowcase(): JSX.Element {
               options={{ deletable: true }}
             />
           </CollapseCard>
+          <CollapseCard header={"cập nhật dự án"} defaultOpen>
+            <StyledTimeline sx={{ px: 0 }}>
+              <PrjUpdateEditor control={control} />
+            </StyledTimeline>
+          </CollapseCard>
         </Stack>
       </Box>
-      {process.env.NODE_ENV === "development" && <DevTool control={control} />}
       <CreationBottomBar
         onSave={handleSubmit(onSave)}
         isSaving={formState.isSubmitting}

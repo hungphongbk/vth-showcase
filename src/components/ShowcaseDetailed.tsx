@@ -23,6 +23,7 @@ import { Showcase, ShowcaseEdge } from "../types/graphql";
 import { CommentSection } from "./PostPage";
 import Image from "next/image";
 import { AspectRatio } from "@hungphongbk/vth-sdk";
+import { format } from "date-fns";
 
 const testPreview = (str: string) => /^\/preview/.test(str),
   testPost = (str: string) => /^\/post/.test(str);
@@ -180,68 +181,31 @@ export default function ShowcaseDetailed({
           <motion.div layoutId={"main content"}>
             <CollapseCard header={"cập nhật dự án"} sx={{ mt: 1 }} defaultOpen>
               <StyledTimeline sx={{ px: 0 }}>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot />
-                    <TimelineConnector />
-                  </TimelineSeparator>
-                  <TimelineContent>
-                    <Box>
+                {item.updates.map((update) => (
+                  <TimelineItem key={update.id}>
+                    <TimelineSeparator>
+                      <TimelineDot />
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent>
                       <Box>
-                        <Typography sx={{ fontWeight: 600 }}>
-                          08:25 PM | Thứ Sáu, ngày 15/10/2021
+                        <Box>
+                          <Typography sx={{ fontWeight: 600 }}>
+                            <strong>
+                              {format(new Date(update.createdAt), "hh:mm aa")}
+                            </strong>{" "}
+                            | Thứ Sáu, ngày 15/10/2021
+                          </Typography>
+                        </Box>
+                        <Typography>
+                          Earth is the third planet from the Sun and the only
+                          astronomical object known to harbor life. According to
+                          radiometric dating estimation.
                         </Typography>
                       </Box>
-                      <Typography>
-                        Earth is the third planet from the Sun and the only
-                        astronomical object known to harbor life. According to
-                        radiometric dating estimation.
-                      </Typography>
-                    </Box>
-                  </TimelineContent>
-                </TimelineItem>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot />
-                    <TimelineConnector />
-                  </TimelineSeparator>
-                  <TimelineContent>
-                    <Box>
-                      <Box>
-                        <Typography sx={{ fontWeight: 600 }}>
-                          12:46 AM | Thứ Hai, ngày 18/10/2021
-                        </Typography>
-                      </Box>
-                      <Typography>
-                        Earth is the third planet from the Sun and the only
-                        astronomical object known to harbor life. According to
-                        radiometric dating estimation. Earth is the third planet
-                        from the Sun and the only astronomical object...
-                      </Typography>
-                    </Box>
-                  </TimelineContent>
-                </TimelineItem>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot sx={{ bgcolor: "green.main" }} />
-                    <TimelineConnector />
-                  </TimelineSeparator>
-                  <TimelineContent>
-                    <Box>
-                      <Box>
-                        <Typography sx={{ fontWeight: 600 }}>
-                          09:45 AM | Thứ Năm, ngày 21/10/2021
-                        </Typography>
-                      </Box>
-                      <Typography>
-                        Earth is the third planet from the Sun and the only
-                        astronomical object known to harbor life. According to
-                        radiometric dating estimation. Earth is the third planet
-                        from the Sun and the only astronomical object...
-                      </Typography>
-                    </Box>
-                  </TimelineContent>
-                </TimelineItem>
+                    </TimelineContent>
+                  </TimelineItem>
+                ))}
               </StyledTimeline>
             </CollapseCard>
             <CollapseCard

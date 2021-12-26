@@ -9,13 +9,14 @@
     "lint": "next lint",
     "graphql-codegen:watch": "NODE_ENV=development graphql-codegen --watch -r dotenv-flow/config",
     "graphql-codegen": "NODE_ENV=development graphql-codegen -r dotenv-flow/config",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "update-sdk": "npm i @hungphongbk/vth-sdk@latest"
   },
   "dependencies": {
     "@apollo/client": "^3.5.6",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
-    "@hungphongbk/vth-sdk": "^1.0.6-52",
+    "@hungphongbk/vth-sdk": "^1.0.6-56",
     "@mui/icons-material": "^5.2.0",
     "@mui/lab": "^5.0.0-alpha.58",
     "@mui/material": "^5.2.2",

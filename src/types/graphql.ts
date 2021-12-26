@@ -133,6 +133,10 @@ export interface CreateManyMediaDtosInput {
   mediaDtos: Array<MediaInput>;
 }
 
+export interface CreateOneImageListInput {
+  imageList: CreateImageListInputDto;
+}
+
 export interface CreateOneInvestmentPackageDtoInput {
   investmentPackageDto: CreateInvestmentPackageDto;
 }
@@ -472,10 +476,12 @@ export interface Mutation {
   addImagesToImageList: ImageList;
   createManyInvestmentPackageDtos: Array<InvestmentPackageDto>;
   createManyMediaDtos: Array<MediaDto>;
+  createOneImageList: ImageList;
   createOneInvestmentPackageDto: InvestmentPackageDto;
   createOneMediaDto: MediaDto;
   createOneSetting: Scalars['Boolean'];
   createOneShowcase: Showcase;
+  createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
   deleteManyInvestmentPackageDtos: DeleteManyResponse;
   deleteManyMediaDtos: DeleteManyResponse;
   deleteManyShowcases: DeleteManyResponse;
@@ -548,6 +554,11 @@ export interface MutationCreateManyMediaDtosArgs {
 }
 
 
+export interface MutationCreateOneImageListArgs {
+  input: CreateOneImageListInput;
+}
+
+
 export interface MutationCreateOneInvestmentPackageDtoArgs {
   input: CreateOneInvestmentPackageDtoInput;
 }
@@ -565,6 +576,12 @@ export interface MutationCreateOneSettingArgs {
 
 export interface MutationCreateOneShowcaseArgs {
   input: ShowcaseCreateInputDto;
+}
+
+
+export interface MutationCreateOneShowcaseHighlightFeatureArgs {
+  input: ShowcaseHfCreateInputDto;
+  slug: Scalars['String'];
 }
 
 
@@ -758,7 +775,8 @@ export interface MutationUpdateOneShowcaseArgs {
 
 
 export interface MutationUpdateOneShowcaseHighlightFeatureArgs {
-  input: UpdateOneShowcaseHighlightFeatureInput;
+  id: Scalars['ID'];
+  input: ShowcaseHfCreateInputDto;
 }
 
 
@@ -1466,21 +1484,10 @@ export interface UpdateOnePrjUpdateDtoInput {
   update: UpdatePrjUpdateDto;
 }
 
-export interface UpdateOneShowcaseHighlightFeatureInput {
-  id: Scalars['ID'];
-  update: UpdateShowcaseHighlightFeature;
-}
-
 export interface UpdatePrjUpdateDto {
   content: Maybe<Scalars['String']>;
   createdAt: Maybe<Scalars['DateTime']>;
   id: Maybe<Scalars['ID']>;
-}
-
-export interface UpdateShowcaseHighlightFeature {
-  description: Maybe<Scalars['String']>;
-  id: Maybe<Scalars['ID']>;
-  name: Maybe<Scalars['String']>;
 }
 
 export interface User {
@@ -1636,14 +1643,14 @@ export type ShowcaseForUpdateQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseForUpdateQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }> }> } };
+export type ShowcaseForUpdateQuery = { showcase: { slug: string, id: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }> }> } };
 
 export type GetHighlightFeaturesOnShowcaseQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type GetHighlightFeaturesOnShowcaseQuery = { showcase: { highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } }> } };
+export type GetHighlightFeaturesOnShowcaseQuery = { showcase: { slug: string, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } }> } };
 
 export type GetOneHighlightFeatureQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -1651,6 +1658,29 @@ export type GetOneHighlightFeatureQueryVariables = Exact<{
 
 
 export type GetOneHighlightFeatureQuery = { showcaseHighlightFeature: { id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } } | null };
+
+export type CreateOneHighlightFeatureMutationVariables = Exact<{
+  slug: Scalars['String'];
+  input: ShowcaseHfCreateInputDto;
+}>;
+
+
+export type CreateOneHighlightFeatureMutation = { createOneShowcaseHighlightFeature: { id: string } };
+
+export type UpdateOneHighlightFeatureMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: ShowcaseHfCreateInputDto;
+}>;
+
+
+export type UpdateOneHighlightFeatureMutation = { updateOneShowcaseHighlightFeature: { id: string } };
+
+export type DeleteOneHighlightFeatureMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteOneHighlightFeatureMutation = { deleteOneShowcaseHighlightFeature: { id: string | null } };
 
 export const MediaFragmentDoc = gql`
     fragment Media on MediaDto {
@@ -2512,6 +2542,7 @@ export function refetchShowcaseDetailQuery(variables: ShowcaseDetailQueryVariabl
 export const ShowcaseForUpdateDocument = gql`
     query ShowcaseForUpdate($slug: String!) {
   showcase(slug: $slug) {
+    slug
     ...ShowcaseDetail
   }
 }
@@ -2551,6 +2582,7 @@ export function refetchShowcaseForUpdateQuery(variables: ShowcaseForUpdateQueryV
 export const GetHighlightFeaturesOnShowcaseDocument = gql`
     query GetHighlightFeaturesOnShowcase($slug: String!) {
   showcase(slug: $slug) {
+    slug
     ...ShowcaseHF
   }
 }
@@ -2627,3 +2659,104 @@ export type GetOneHighlightFeatureQueryResult = Apollo.QueryResult<GetOneHighlig
 export function refetchGetOneHighlightFeatureQuery(variables: GetOneHighlightFeatureQueryVariables) {
       return { query: GetOneHighlightFeatureDocument, variables: variables }
     }
+export const CreateOneHighlightFeatureDocument = gql`
+    mutation CreateOneHighlightFeature($slug: String!, $input: ShowcaseHFCreateInputDto!) {
+  createOneShowcaseHighlightFeature(slug: $slug, input: $input) {
+    id
+  }
+}
+    `;
+export type CreateOneHighlightFeatureMutationFn = Apollo.MutationFunction<CreateOneHighlightFeatureMutation, CreateOneHighlightFeatureMutationVariables>;
+
+/**
+ * __useCreateOneHighlightFeatureMutation__
+ *
+ * To run a mutation, you first call `useCreateOneHighlightFeatureMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOneHighlightFeatureMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOneHighlightFeatureMutation, { data, loading, error }] = useCreateOneHighlightFeatureMutation({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOneHighlightFeatureMutation(baseOptions?: Apollo.MutationHookOptions<CreateOneHighlightFeatureMutation, CreateOneHighlightFeatureMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOneHighlightFeatureMutation, CreateOneHighlightFeatureMutationVariables>(CreateOneHighlightFeatureDocument, options);
+      }
+export type CreateOneHighlightFeatureMutationHookResult = ReturnType<typeof useCreateOneHighlightFeatureMutation>;
+export type CreateOneHighlightFeatureMutationResult = Apollo.MutationResult<CreateOneHighlightFeatureMutation>;
+export type CreateOneHighlightFeatureMutationOptions = Apollo.BaseMutationOptions<CreateOneHighlightFeatureMutation, CreateOneHighlightFeatureMutationVariables>;
+export const UpdateOneHighlightFeatureDocument = gql`
+    mutation UpdateOneHighlightFeature($id: ID!, $input: ShowcaseHFCreateInputDto!) {
+  updateOneShowcaseHighlightFeature(id: $id, input: $input) {
+    id
+  }
+}
+    `;
+export type UpdateOneHighlightFeatureMutationFn = Apollo.MutationFunction<UpdateOneHighlightFeatureMutation, UpdateOneHighlightFeatureMutationVariables>;
+
+/**
+ * __useUpdateOneHighlightFeatureMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneHighlightFeatureMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneHighlightFeatureMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOneHighlightFeatureMutation, { data, loading, error }] = useUpdateOneHighlightFeatureMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOneHighlightFeatureMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneHighlightFeatureMutation, UpdateOneHighlightFeatureMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOneHighlightFeatureMutation, UpdateOneHighlightFeatureMutationVariables>(UpdateOneHighlightFeatureDocument, options);
+      }
+export type UpdateOneHighlightFeatureMutationHookResult = ReturnType<typeof useUpdateOneHighlightFeatureMutation>;
+export type UpdateOneHighlightFeatureMutationResult = Apollo.MutationResult<UpdateOneHighlightFeatureMutation>;
+export type UpdateOneHighlightFeatureMutationOptions = Apollo.BaseMutationOptions<UpdateOneHighlightFeatureMutation, UpdateOneHighlightFeatureMutationVariables>;
+export const DeleteOneHighlightFeatureDocument = gql`
+    mutation DeleteOneHighlightFeature($id: ID!) {
+  deleteOneShowcaseHighlightFeature(input: {id: $id}) {
+    id
+  }
+}
+    `;
+export type DeleteOneHighlightFeatureMutationFn = Apollo.MutationFunction<DeleteOneHighlightFeatureMutation, DeleteOneHighlightFeatureMutationVariables>;
+
+/**
+ * __useDeleteOneHighlightFeatureMutation__
+ *
+ * To run a mutation, you first call `useDeleteOneHighlightFeatureMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteOneHighlightFeatureMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteOneHighlightFeatureMutation, { data, loading, error }] = useDeleteOneHighlightFeatureMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteOneHighlightFeatureMutation(baseOptions?: Apollo.MutationHookOptions<DeleteOneHighlightFeatureMutation, DeleteOneHighlightFeatureMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteOneHighlightFeatureMutation, DeleteOneHighlightFeatureMutationVariables>(DeleteOneHighlightFeatureDocument, options);
+      }
+export type DeleteOneHighlightFeatureMutationHookResult = ReturnType<typeof useDeleteOneHighlightFeatureMutation>;
+export type DeleteOneHighlightFeatureMutationResult = Apollo.MutationResult<DeleteOneHighlightFeatureMutation>;
+export type DeleteOneHighlightFeatureMutationOptions = Apollo.BaseMutationOptions<DeleteOneHighlightFeatureMutation, DeleteOneHighlightFeatureMutationVariables>;

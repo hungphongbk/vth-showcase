@@ -133,6 +133,11 @@ input CreateManyMediaDtosInput {
   mediaDtos: [MediaInput!]!
 }
 
+input CreateOneImageListInput {
+  """The record to create"""
+  imageList: CreateImageListInputDto!
+}
+
 input CreateOneInvestmentPackageDtoInput {
   """The record to create"""
   investmentPackageDto: CreateInvestmentPackageDto!
@@ -513,10 +518,12 @@ type Mutation {
   addImagesToImageList(input: AddImagesToImageListInput!): ImageList!
   createManyInvestmentPackageDtos(input: CreateManyInvestmentPackageDtosInput!): [InvestmentPackageDto!]!
   createManyMediaDtos(input: CreateManyMediaDtosInput!): [MediaDto!]!
+  createOneImageList(input: CreateOneImageListInput!): ImageList!
   createOneInvestmentPackageDto(input: CreateOneInvestmentPackageDtoInput!): InvestmentPackageDto!
   createOneMediaDto(input: CreateOneMediaDtoInput!): MediaDto!
   createOneSetting(input: SettingCreateDto!): Boolean!
   createOneShowcase(input: ShowcaseCreateInputDto!): Showcase!
+  createOneShowcaseHighlightFeature(input: ShowcaseHFCreateInputDto!, slug: String!): ShowcaseHighlightFeature!
   deleteManyInvestmentPackageDtos(input: DeleteManyInvestmentPackageDtosInput!): DeleteManyResponse!
   deleteManyMediaDtos(input: DeleteManyMediaDtosInput!): DeleteManyResponse!
   deleteManyShowcases(input: DeleteManyShowcasesInput!): DeleteManyResponse!
@@ -554,7 +561,7 @@ type Mutation {
   updateOnePrjUpdateDto(input: UpdateOnePrjUpdateDtoInput!): PrjUpdateDto!
   updateOneSetting(input: SettingCreateDto!): Boolean!
   updateOneShowcase(input: ShowcaseUpdateInputDto!, slug: String!): Boolean!
-  updateOneShowcaseHighlightFeature(input: UpdateOneShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
+  updateOneShowcaseHighlightFeature(id: ID!, input: ShowcaseHFCreateInputDto!): ShowcaseHighlightFeature!
   updateOneUser(role: AuthRoleType!, uid: String!): Boolean!
 }
 
@@ -1358,24 +1365,10 @@ input UpdateOnePrjUpdateDtoInput {
   update: UpdatePrjUpdateDto!
 }
 
-input UpdateOneShowcaseHighlightFeatureInput {
-  """The id of the record to update"""
-  id: ID!
-
-  """The update to apply."""
-  update: UpdateShowcaseHighlightFeature!
-}
-
 input UpdatePrjUpdateDto {
   content: String
   createdAt: DateTime
   id: ID
-}
-
-input UpdateShowcaseHighlightFeature {
-  description: String
-  id: ID
-  name: String
 }
 
 type User {

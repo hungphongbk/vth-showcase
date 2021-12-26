@@ -20,6 +20,7 @@ import {
 import CreationBottomBar from "./CreationBottomBar";
 import { StyledTimeline } from "../commons";
 import PrjUpdateEditor from "./prj-update-editor";
+import HfEditor from "./hf-editor";
 
 type ShowcaseForm = ShowcaseCreateInputDto;
 
@@ -128,25 +129,7 @@ export default function SecondStepShowcase(): JSX.Element {
             />
           </CollapseCard>
           <CollapseCard header={"video / hình ảnh"} defaultOpen>
-            <ListEditor
-              name={"imageList.0.images"}
-              control={control}
-              ItemComponent={(itemProps) => (
-                <ImageUploader {...itemProps}>
-                  <Stack direction={"column"} alignItems={"center"}>
-                    <PlusIcon
-                      sx={{ color: "black", height: 26, width: 26, mb: 0.5 }}
-                    />
-                    <Typography sx={{ fontSize: 15, fontWeight: 600 }}>
-                      Thêm hình ảnh
-                    </Typography>
-                    <Typography>JPEG, JPG - 1300x630px</Typography>
-                    <Typography>Tối đa 1MB</Typography>
-                  </Stack>
-                </ImageUploader>
-              )}
-              options={{ deletable: true }}
-            />
+            <HfEditor control={control} />
           </CollapseCard>
           <CollapseCard header={"cập nhật dự án"} defaultOpen>
             <StyledTimeline sx={{ px: 0 }}>

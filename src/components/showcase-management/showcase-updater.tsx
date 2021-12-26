@@ -27,7 +27,6 @@ export default function ShowcaseUpdater() {
       });
     }
   }, [data, dispatch, fetching]);
-  console.log(showcase, showcase?.status);
   if (isEmpty(showcase)) return null;
   return (
     <Box>

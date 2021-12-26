@@ -1,15 +1,32 @@
 query ShowcaseForUpdate($slug: String!){
   showcase(slug: $slug){
+    slug
     ...ShowcaseDetail
   }
 }
 query GetHighlightFeaturesOnShowcase($slug: String!){
   showcase(slug:$slug){
+    slug
     ...ShowcaseHF
   }
 }
 query GetOneHighlightFeature($id:ID!){
   showcaseHighlightFeature(id: $id){
     ...HighlightFeature
+  }
+}
+mutation CreateOneHighlightFeature($slug: String!,$input:ShowcaseHFCreateInputDto!){
+  createOneShowcaseHighlightFeature(slug: $slug, input: $input){
+    id
+  }
+}
+mutation UpdateOneHighlightFeature($id:ID!,$input:ShowcaseHFCreateInputDto!){
+  updateOneShowcaseHighlightFeature(id: $id,input: $input){
+    id
+  }
+}
+mutation DeleteOneHighlightFeature($id:ID!){
+  deleteOneShowcaseHighlightFeature(input: {id: $id}){
+    id
   }
 }

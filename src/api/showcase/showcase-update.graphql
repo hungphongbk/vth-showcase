@@ -1,0 +1,15 @@
+query ShowcaseForUpdate($slug: String!){
+  showcase(slug: $slug){
+    ...ShowcaseDetail
+  }
+}
+query GetHighlightFeaturesOnShowcase($slug: String!){
+  showcase(slug:$slug){
+    ...ShowcaseHF
+  }
+}
+query GetOneHighlightFeature($id:ID!){
+  showcaseHighlightFeature(id: $id){
+    ...HighlightFeature
+  }
+}

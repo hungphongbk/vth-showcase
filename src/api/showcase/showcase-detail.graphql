@@ -1,6 +1,7 @@
 query ShowcaseDetail($slug: String!) {
   showcase(slug: $slug) {
-    ...ShowcaseDetailFragment
+    ...ShowcaseDetail
+    ...ShowcaseHF
     ...ShowcaseInvestorStat
     updates{
       id
@@ -15,16 +16,10 @@ query ShowcaseDetail($slug: String!) {
         name
         status
         image {
-          ...MediaFragment
+          ...Media
         }
         createdAt
       }
     }
-  }
-}
-
-query ShowcaseForUpdate($slug: String!){
-  showcase(slug: $slug){
-    ...ShowcaseDetailFragment
   }
 }

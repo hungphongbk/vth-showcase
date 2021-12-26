@@ -58,7 +58,7 @@ export const MotionCard = motion(StyledCard);
 
 export const StyledTimeline = styled(Timeline)`
   &.MuiTimeline-root {
-    margin-top: 0;
+    margin-top: -24px;
     margin-bottom: 0;
   }
   .MuiTimelineItem-root::before {

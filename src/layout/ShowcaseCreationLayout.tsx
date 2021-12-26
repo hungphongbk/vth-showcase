@@ -17,6 +17,7 @@ const ShowcaseCreationContext = createContext<
   | {
       showcase: Partial<ShowcaseCreateInputDto>;
       dispatch: React.Dispatch<AnAction>;
+      mode: "add" | "edit";
     }
   | undefined
 >(undefined);
@@ -60,7 +61,7 @@ export default function ShowcaseCreationLayout({
         });
       }}
     >
-      <ShowcaseCreationContext.Provider value={{ showcase, dispatch }}>
+      <ShowcaseCreationContext.Provider value={{ showcase, dispatch, mode }}>
         {children}
       </ShowcaseCreationContext.Provider>
     </ThemeProvider>

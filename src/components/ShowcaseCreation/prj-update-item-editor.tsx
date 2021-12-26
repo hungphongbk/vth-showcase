@@ -7,6 +7,8 @@ import {
   useVthTheme,
 } from "@hungphongbk/vth-sdk";
 import { useForm } from "react-hook-form";
+import { EnhancedMultilineTextField } from "./utils";
+import { TimelineItem } from "@mui/lab";
 
 type PrjUpdateItemEditorProps = {
   name: string;
@@ -49,7 +51,9 @@ export default function PrjUpdateItemEditor({
     }
   };
 
-  return value && value.content ? null : (
+  return value && value.content ? (
+    <TimelineItem></TimelineItem>
+  ) : (
     <>
       <Button variant={"contained"} onClick={doOpenDialog}>
         Thêm cập nhật
@@ -62,7 +66,7 @@ export default function PrjUpdateItemEditor({
               control={control}
               variant={"standard"}
               placeholder={"Chi tiết cập nhật"}
-              component={MultilineTextField}
+              component={EnhancedMultilineTextField}
             />
             <Button
               variant={"contained"}

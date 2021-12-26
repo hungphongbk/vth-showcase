@@ -944,6 +944,7 @@ export interface Query {
   investmentPackageDtos: InvestmentPackageDtoConnection;
   mediaDto: Maybe<MediaDto>;
   mediaDtos: MediaDtoConnection;
+  prjUpdateDto: Maybe<PrjUpdateDto>;
   setting: Maybe<SettingDto>;
   settings: Array<SettingDto>;
   showcase: Showcase;
@@ -992,6 +993,11 @@ export interface QueryMediaDtosArgs {
   filter?: Maybe<MediaDtoFilter>;
   paging?: Maybe<CursorPaging>;
   sorting?: Maybe<Array<MediaDtoSort>>;
+}
+
+
+export interface QueryPrjUpdateDtoArgs {
+  id: Scalars['ID'];
 }
 
 
@@ -1224,6 +1230,7 @@ export interface ShowcaseCreateInputDto {
   name: Scalars['String'];
   publishStatus: Maybe<PublishStatus>;
   status: ShowcaseStatus;
+  updates: Maybe<Array<PrjUpdateCreateDto>>;
 }
 
 export interface ShowcaseDeleteFilter {
@@ -1465,6 +1472,7 @@ export interface ShowcaseUpdateInputDto {
   name: Maybe<Scalars['String']>;
   publishStatus: Maybe<PublishStatus>;
   status: Maybe<ShowcaseStatus>;
+  updates: Maybe<Array<PrjUpdateCreateDto>>;
 }
 
 export enum SortDirection {
@@ -1635,6 +1643,28 @@ export type DeleteMediaMutationVariables = Exact<{
 
 export type DeleteMediaMutation = { deleteOneMediaDto: { id: string | null } };
 
+export type AllUpdatesInShowcaseQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type AllUpdatesInShowcaseQuery = { showcase: { slug: string, updates: Array<{ id: string, content: string, createdAt: any }> } };
+
+export type OneUpdateInShowcaseQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type OneUpdateInShowcaseQuery = { update: { id: string, content: string, createdAt: any } | null };
+
+export type PostAnUpdateInShowcaseMutationVariables = Exact<{
+  slug: Scalars['String'];
+  input: PrjUpdateCreateDto;
+}>;
+
+
+export type PostAnUpdateInShowcaseMutation = { postProjectUpdate: { id: string } };
+
 export type PostAnonymousCommentMutationVariables = Exact<{
   slug: Scalars['String'];
   input: CommentCreateDto;
@@ -1691,11 +1721,6 @@ export type ShowcaseForUpdateQueryVariables = Exact<{
 
 
 export type ShowcaseForUpdateQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } }>, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }> }> } };
-
-export type ShowcasePortalQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ShowcasePortalQuery = { showcases: { pageInfo: { hasNextPage: boolean | null, endCursor: any | null }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { path: string, preloadUrl: string | null } } }> } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -1981,6 +2006,123 @@ export function useDeleteMediaMutation(baseOptions?: Apollo.MutationHookOptions<
 export type DeleteMediaMutationHookResult = ReturnType<typeof useDeleteMediaMutation>;
 export type DeleteMediaMutationResult = Apollo.MutationResult<DeleteMediaMutation>;
 export type DeleteMediaMutationOptions = Apollo.BaseMutationOptions<DeleteMediaMutation, DeleteMediaMutationVariables>;
+export const AllUpdatesInShowcaseDocument = gql`
+    query AllUpdatesInShowcase($slug: String!) {
+  showcase(slug: $slug) {
+    slug
+    updates {
+      id
+      content
+      createdAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useAllUpdatesInShowcaseQuery__
+ *
+ * To run a query within a React component, call `useAllUpdatesInShowcaseQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllUpdatesInShowcaseQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllUpdatesInShowcaseQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useAllUpdatesInShowcaseQuery(baseOptions: Apollo.QueryHookOptions<AllUpdatesInShowcaseQuery, AllUpdatesInShowcaseQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllUpdatesInShowcaseQuery, AllUpdatesInShowcaseQueryVariables>(AllUpdatesInShowcaseDocument, options);
+      }
+export function useAllUpdatesInShowcaseLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllUpdatesInShowcaseQuery, AllUpdatesInShowcaseQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllUpdatesInShowcaseQuery, AllUpdatesInShowcaseQueryVariables>(AllUpdatesInShowcaseDocument, options);
+        }
+export type AllUpdatesInShowcaseQueryHookResult = ReturnType<typeof useAllUpdatesInShowcaseQuery>;
+export type AllUpdatesInShowcaseLazyQueryHookResult = ReturnType<typeof useAllUpdatesInShowcaseLazyQuery>;
+export type AllUpdatesInShowcaseQueryResult = Apollo.QueryResult<AllUpdatesInShowcaseQuery, AllUpdatesInShowcaseQueryVariables>;
+export function refetchAllUpdatesInShowcaseQuery(variables: AllUpdatesInShowcaseQueryVariables) {
+      return { query: AllUpdatesInShowcaseDocument, variables: variables }
+    }
+export const OneUpdateInShowcaseDocument = gql`
+    query OneUpdateInShowcase($id: ID!) {
+  update: prjUpdateDto(id: $id) {
+    id
+    content
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useOneUpdateInShowcaseQuery__
+ *
+ * To run a query within a React component, call `useOneUpdateInShowcaseQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOneUpdateInShowcaseQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOneUpdateInShowcaseQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useOneUpdateInShowcaseQuery(baseOptions: Apollo.QueryHookOptions<OneUpdateInShowcaseQuery, OneUpdateInShowcaseQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<OneUpdateInShowcaseQuery, OneUpdateInShowcaseQueryVariables>(OneUpdateInShowcaseDocument, options);
+      }
+export function useOneUpdateInShowcaseLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<OneUpdateInShowcaseQuery, OneUpdateInShowcaseQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<OneUpdateInShowcaseQuery, OneUpdateInShowcaseQueryVariables>(OneUpdateInShowcaseDocument, options);
+        }
+export type OneUpdateInShowcaseQueryHookResult = ReturnType<typeof useOneUpdateInShowcaseQuery>;
+export type OneUpdateInShowcaseLazyQueryHookResult = ReturnType<typeof useOneUpdateInShowcaseLazyQuery>;
+export type OneUpdateInShowcaseQueryResult = Apollo.QueryResult<OneUpdateInShowcaseQuery, OneUpdateInShowcaseQueryVariables>;
+export function refetchOneUpdateInShowcaseQuery(variables: OneUpdateInShowcaseQueryVariables) {
+      return { query: OneUpdateInShowcaseDocument, variables: variables }
+    }
+export const PostAnUpdateInShowcaseDocument = gql`
+    mutation PostAnUpdateInShowcase($slug: String!, $input: PrjUpdateCreateDto!) {
+  postProjectUpdate(slug: $slug, input: $input) {
+    id
+  }
+}
+    `;
+export type PostAnUpdateInShowcaseMutationFn = Apollo.MutationFunction<PostAnUpdateInShowcaseMutation, PostAnUpdateInShowcaseMutationVariables>;
+
+/**
+ * __usePostAnUpdateInShowcaseMutation__
+ *
+ * To run a mutation, you first call `usePostAnUpdateInShowcaseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostAnUpdateInShowcaseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postAnUpdateInShowcaseMutation, { data, loading, error }] = usePostAnUpdateInShowcaseMutation({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePostAnUpdateInShowcaseMutation(baseOptions?: Apollo.MutationHookOptions<PostAnUpdateInShowcaseMutation, PostAnUpdateInShowcaseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PostAnUpdateInShowcaseMutation, PostAnUpdateInShowcaseMutationVariables>(PostAnUpdateInShowcaseDocument, options);
+      }
+export type PostAnUpdateInShowcaseMutationHookResult = ReturnType<typeof usePostAnUpdateInShowcaseMutation>;
+export type PostAnUpdateInShowcaseMutationResult = Apollo.MutationResult<PostAnUpdateInShowcaseMutation>;
+export type PostAnUpdateInShowcaseMutationOptions = Apollo.BaseMutationOptions<PostAnUpdateInShowcaseMutation, PostAnUpdateInShowcaseMutationVariables>;
 export const PostAnonymousCommentDocument = gql`
     mutation postAnonymousComment($slug: String!, $input: CommentCreateDto!) {
   postAnonymousComment(slug: $slug, input: $input) {
@@ -2356,59 +2498,6 @@ export type ShowcaseForUpdateLazyQueryHookResult = ReturnType<typeof useShowcase
 export type ShowcaseForUpdateQueryResult = Apollo.QueryResult<ShowcaseForUpdateQuery, ShowcaseForUpdateQueryVariables>;
 export function refetchShowcaseForUpdateQuery(variables: ShowcaseForUpdateQueryVariables) {
       return { query: ShowcaseForUpdateDocument, variables: variables }
-    }
-export const ShowcasePortalDocument = gql`
-    query ShowcasePortal {
-  showcases(paging: {first: 10}) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    edges {
-      node {
-        id
-        name
-        slug
-        status
-        image {
-          path
-          preloadUrl
-        }
-        createdAt
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useShowcasePortalQuery__
- *
- * To run a query within a React component, call `useShowcasePortalQuery` and pass it any options that fit your needs.
- * When your component renders, `useShowcasePortalQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useShowcasePortalQuery({
- *   variables: {
- *   },
- * });
- */
-export function useShowcasePortalQuery(baseOptions?: Apollo.QueryHookOptions<ShowcasePortalQuery, ShowcasePortalQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ShowcasePortalQuery, ShowcasePortalQueryVariables>(ShowcasePortalDocument, options);
-      }
-export function useShowcasePortalLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShowcasePortalQuery, ShowcasePortalQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ShowcasePortalQuery, ShowcasePortalQueryVariables>(ShowcasePortalDocument, options);
-        }
-export type ShowcasePortalQueryHookResult = ReturnType<typeof useShowcasePortalQuery>;
-export type ShowcasePortalLazyQueryHookResult = ReturnType<typeof useShowcasePortalLazyQuery>;
-export type ShowcasePortalQueryResult = Apollo.QueryResult<ShowcasePortalQuery, ShowcasePortalQueryVariables>;
-export function refetchShowcasePortalQuery(variables?: ShowcasePortalQueryVariables) {
-      return { query: ShowcasePortalDocument, variables: variables }
     }
 export const ShowcasePreviewDocument = gql`
     query ShowcasePreview($slug: String!) {

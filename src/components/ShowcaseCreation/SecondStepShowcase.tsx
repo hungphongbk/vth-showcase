@@ -2,7 +2,14 @@ import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { useForm } from "react-hook-form";
-import { ShowcaseCreateInputDto } from "../../types/graphql";
+import {
+  refetchAllUpdatesInShowcaseQuery,
+  refetchOneUpdateInShowcaseQuery,
+  ShowcaseCreateInputDto,
+  useAllUpdatesInShowcaseQuery,
+  useOneUpdateInShowcaseQuery,
+  usePostAnUpdateInShowcaseMutation,
+} from "../../types/graphql";
 import PlusIcon from "../../assets/icons/PlusIcon";
 import { CollapseCard } from "../index";
 import {
@@ -11,7 +18,6 @@ import {
   useShowcaseCreationSuccess,
 } from "./utils";
 import { apiService } from "../../api";
-import { useRouter } from "next/router";
 import {
   FormInput,
   HighlightFeature,
@@ -20,12 +26,13 @@ import {
 } from "@hungphongbk/vth-sdk";
 import PrjUpdateItemEditor from "./prj-update-item-editor";
 import CreationBottomBar from "./CreationBottomBar";
+import { StyledTimeline } from "../commons";
+import ShowcaseContentCrudAdapter from "./showcase-content-crud-adapter";
 
 type ShowcaseForm = ShowcaseCreateInputDto;
 
 export default function SecondStepShowcase(): JSX.Element {
-  const router = useRouter();
-  const { showcase, dispatch } = useShowcaseCreation(),
+  const { showcase, dispatch, mode } = useShowcaseCreation(),
     callback = useShowcaseCreationSuccess(),
     form = useForm<ShowcaseForm>({
       defaultValues: {
@@ -150,13 +157,35 @@ export default function SecondStepShowcase(): JSX.Element {
             />
           </CollapseCard>
           <CollapseCard header={"cập nhật dự án"} defaultOpen>
-            <ListEditor
-              name={"updates"}
-              control={control}
-              ItemComponent={(itemProps) => (
-                <PrjUpdateItemEditor {...itemProps} />
-              )}
-            />
+            <StyledTimeline sx={{ px: 0 }}>
+              <ShowcaseContentCrudAdapter
+                mode={mode}
+                hooks={{
+                  getAll: [
+                    useAllUpdatesInShowcaseQuery,
+                    {
+                      variables: { slug: (showcase as any).slug },
+                    },
+                  ],
+                  refetchAll: refetchAllUpdatesInShowcaseQuery({
+                    slug: (showcase as any).slug,
+                  }),
+                  getOneFn: useOneUpdateInShowcaseQuery,
+                  refetchOneFn: refetchOneUpdateInShowcaseQuery,
+                  create: [
+                    usePostAnUpdateInShowcaseMutation,
+                    {
+                      variables: { slug: (showcase as any).slug },
+                    },
+                  ],
+                }}
+                name={"updates"}
+                control={control}
+                ItemComponent={(itemProps) => (
+                  <PrjUpdateItemEditor {...itemProps} />
+                )}
+              />
+            </StyledTimeline>
           </CollapseCard>
         </Stack>
       </Box>

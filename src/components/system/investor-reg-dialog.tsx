@@ -16,14 +16,17 @@ import {
   sxFullSize,
   sxFullSizeAbsolute,
 } from "@hungphongbk/vth-sdk/utils/predefinedSx";
-import { AspectRatio, FormInput } from "@hungphongbk/vth-sdk";
+import {
+  AspectRatio,
+  FormInput,
+  SubmitInvestorConstants,
+} from "@hungphongbk/vth-sdk";
 import { TextInput } from "../TextInput";
 import { useForm } from "react-hook-form";
 import {
   MutationSubmitInvestorArgs,
   SubmitInvestorInputDto,
 } from "../../types/graphql";
-import { SubmitInvestorConstants } from "@hungphongbk/vth-sdk/constants";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 

@@ -1,8 +1,7 @@
 import { Control } from "react-hook-form";
-import { HighlightFeature } from "@hungphongbk/vth-sdk";
+import { ContentCrudAdapter, HighlightFeature } from "@hungphongbk/vth-sdk";
 import React from "react";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
-import ShowcaseContentCrudAdapter from "./showcase-content-crud-adapter";
 import {
   refetchGetHighlightFeaturesOnShowcaseQuery,
   refetchGetOneHighlightFeatureQuery,
@@ -19,7 +18,7 @@ export default function HfEditor({ control }: HfEditorProps): JSX.Element {
   const { showcase, mode } = useShowcaseCreation(),
     slug = (showcase as any).slug as string;
   return (
-    <ShowcaseContentCrudAdapter
+    <ContentCrudAdapter
       mode={mode}
       hooks={{
         getAll: [

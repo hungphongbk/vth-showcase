@@ -2,7 +2,6 @@
   "name": "Untitled GraphQL Schema",
   "schemaPath": "schema.graphql",
   "includes": [
-    "**/*.graphql",
-    "./node_modules/@hungphongbk/vth-sdk/api/*.graphql"
+    "**/*.graphql"
   ]
 }

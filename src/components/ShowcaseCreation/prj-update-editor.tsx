@@ -9,8 +9,8 @@ import {
   useUpdateOneUpdateInShowcaseMutation,
 } from "../../types/graphql";
 import PrjUpdateItemEditor from "./prj-update-item-editor";
-import ShowcaseContentCrudAdapter from "./showcase-content-crud-adapter";
 import React from "react";
+import { ContentCrudAdapter } from "@hungphongbk/vth-sdk";
 
 type Props = {
   control: Control<any, any>;
@@ -19,7 +19,7 @@ export default function PrjUpdateEditor({ control }: Props): JSX.Element {
   const { showcase, mode } = useShowcaseCreation(),
     slug = (showcase as any).slug as string;
   return (
-    <ShowcaseContentCrudAdapter
+    <ContentCrudAdapter
       mode={mode}
       hooks={{
         getAll: [

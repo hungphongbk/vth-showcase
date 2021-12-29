@@ -1,6 +1,8 @@
 const webpack = require("webpack");
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 const entryApp = path.resolve(__dirname, "./src/sdk.tsx"),
   buildPath = path.resolve(__dirname, "../public"),
@@ -41,6 +43,17 @@ module.exports = {
               ],
               "@babel/preset-typescript",
             ],
+            plugins: [
+              [
+                "babel-plugin-transform-imports",
+                {
+                  lodash: {
+                    transform: "lodash/${member}",
+                    preventFullImport: true,
+                  },
+                },
+              ],
+            ],
           },
         },
         include: srcPath,
@@ -62,7 +75,6 @@ module.exports = {
     }),
   ],
   optimization: {
-    minimize: process.env.NODE_ENV !== "development",
     minimizer: [
       new TerserPlugin({
         minify: TerserPlugin.swcMinify,

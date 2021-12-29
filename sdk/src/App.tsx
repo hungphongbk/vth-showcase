@@ -1,23 +1,20 @@
 import { useShowcasePortalQuery } from "../../src/types/graphql";
 import { StyledSection, StyledTitle } from "./styled";
-import { Typography } from "@mui/material";
+import ShowcaseItem from "./ShowcaseItem";
+import SlickSlider from "../../src/components/SlickSlider";
 
 export default function App() {
   const { data } = useShowcasePortalQuery();
   return (
     <StyledSection>
-      <div className="container">
-        <StyledTitle className="vth-section-title">
-          <span>SHOWCASE</span>
-        </StyledTitle>
-        <div>
-          {data?.showcases.edges.map(({ node }) => (
-            <Typography key={node.slug} variant={"h6"}>
-              {node.name}
-            </Typography>
-          ))}
-        </div>
-      </div>
+      <StyledTitle className="vth-section-title">
+        <span>SHOWCASE</span>
+      </StyledTitle>
+      <SlickSlider>
+        {data?.showcases.edges.map(({ node }) => (
+          <ShowcaseItem key={node.id} showcase={node} />
+        ))}
+      </SlickSlider>
     </StyledSection>
   );
 }

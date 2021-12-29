@@ -5,7 +5,7 @@ const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 const entryApp = path.resolve(__dirname, "./src/sdk.tsx"),
-  buildPath = path.resolve(__dirname, "../public"),
+  buildPath = path.resolve(__dirname, "../public/sdk"),
   srcPath = [
     path.resolve(__dirname, "./src"),
     path.resolve(__dirname, "../src"),
@@ -58,6 +58,10 @@ module.exports = {
         },
         include: srcPath,
         exclude: /node_modules/,
+      },
+      {
+        use: ["style-loader", "css-loader"],
+        test: /\.css$/,
       },
     ],
   },

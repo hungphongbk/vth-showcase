@@ -13,6 +13,8 @@ query ShowcasePortal {
         image {
           path
           preloadUrl
+          height
+          width
         }
         createdAt
       }

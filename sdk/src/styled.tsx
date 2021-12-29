@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 
 export const StyledSection = styled(Box)`
   position: relative;
-  padding: 45px 24px 7px;
+  padding: 45px 15px 15px;
   background-color: #e5e5e5;
 `;
 

@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/(runtime|sdk).js",
+      "source": "/sdk/(runtime|sdk).js",
       "headers": [
         {
           "key": "Cache-Control",

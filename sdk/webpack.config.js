@@ -1,7 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const entryApp = path.resolve(__dirname, "./src/sdk.tsx"),
-  buildPath = path.resolve(__dirname, "./build"),
+  buildPath = path.resolve(__dirname, "../public"),
   srcPath = [
     path.resolve(__dirname, "./src"),
     path.resolve(__dirname, "../src"),

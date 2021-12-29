@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 4000",
+    "build:portal": "webpack -c ./sdk/webpack.config.js",
+    "prebuild": "npm run build:portal",
     "build": "next build",
     "build:analyze": "ANALYZE=true next build",
     "start": "next start -p 4000",
+    "start:portal": "webpack-dev-server -c ./sdk/webpack.config.js",
     "lint": "next lint",
     "graphql-codegen:watch": "NODE_ENV=development graphql-codegen --watch -r dotenv-flow/config",
     "graphql-codegen": "NODE_ENV=development graphql-codegen -r dotenv-flow/config",

@@ -776,7 +776,7 @@ export interface MutationUpdateOneShowcaseArgs {
 
 export interface MutationUpdateOneShowcaseHighlightFeatureArgs {
   id: Scalars['ID'];
-  input: ShowcaseHfCreateInputDto;
+  input: ShowcaseHfUpdateInputDto;
 }
 
 
@@ -1202,6 +1202,12 @@ export interface ShowcaseHfCreateInputDto {
   id: Maybe<Scalars['String']>;
   image: MediaInput;
   name: Scalars['String'];
+}
+
+export interface ShowcaseHfUpdateInputDto {
+  description: Maybe<Scalars['String']>;
+  image: Maybe<MediaInput>;
+  name: Maybe<Scalars['String']>;
 }
 
 export interface ShowcaseHighlightFeature {
@@ -1669,7 +1675,7 @@ export type CreateOneHighlightFeatureMutation = { createOneShowcaseHighlightFeat
 
 export type UpdateOneHighlightFeatureMutationVariables = Exact<{
   id: Scalars['ID'];
-  input: ShowcaseHfCreateInputDto;
+  input: ShowcaseHfUpdateInputDto;
 }>;
 
 
@@ -2694,7 +2700,7 @@ export type CreateOneHighlightFeatureMutationHookResult = ReturnType<typeof useC
 export type CreateOneHighlightFeatureMutationResult = Apollo.MutationResult<CreateOneHighlightFeatureMutation>;
 export type CreateOneHighlightFeatureMutationOptions = Apollo.BaseMutationOptions<CreateOneHighlightFeatureMutation, CreateOneHighlightFeatureMutationVariables>;
 export const UpdateOneHighlightFeatureDocument = gql`
-    mutation UpdateOneHighlightFeature($id: ID!, $input: ShowcaseHFCreateInputDto!) {
+    mutation UpdateOneHighlightFeature($id: ID!, $input: ShowcaseHFUpdateInputDto!) {
   updateOneShowcaseHighlightFeature(id: $id, input: $input) {
     id
   }

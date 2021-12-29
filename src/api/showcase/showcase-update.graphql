@@ -20,7 +20,7 @@ mutation CreateOneHighlightFeature($slug: String!,$input:ShowcaseHFCreateInputDt
     id
   }
 }
-mutation UpdateOneHighlightFeature($id:ID!,$input:ShowcaseHFCreateInputDto!){
+mutation UpdateOneHighlightFeature($id:ID!,$input:ShowcaseHFUpdateInputDto!){
   updateOneShowcaseHighlightFeature(id: $id,input: $input){
     id
   }

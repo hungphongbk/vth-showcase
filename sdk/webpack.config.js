@@ -10,7 +10,7 @@ const entryApp = path.resolve(__dirname, "./src/sdk.tsx"),
   ];
 
 module.exports = {
-  mode: "development",
+  mode: process.env.NODE_ENV ?? "development",
   entry: {
     runtime: "regenerator-runtime/runtime.js",
     sdk: entryApp,

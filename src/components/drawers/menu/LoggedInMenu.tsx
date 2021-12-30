@@ -14,6 +14,7 @@ import { StyledMenuList } from "./styled";
 import ManagePreorderIcon from "./ManagePreorderIcon";
 import HopTacIcon from "../../../assets/icons/HopTacIcon";
 import Link from "../../Link";
+import ShowCaseTab from "./ShowCaseTab";
 
 const StyledTabs = styled(Box)`
   background: #ffffff;
@@ -69,7 +70,7 @@ export default function LoggedInMenu(props: LoggedInMenuProps): JSX.Element {
           Showcase là gì?
         </StyledTab>
       </StyledTabs>
-      {tab === 0 && (
+      {tab === 0 ?   (
         <StyledMenuList disablePadding dense sx={{ mt: 2 }}>
           <ListItem>
             <ListItemButton
@@ -103,7 +104,7 @@ export default function LoggedInMenu(props: LoggedInMenuProps): JSX.Element {
             </ListItemButton>
           </ListItem>
         </StyledMenuList>
-      )}
+      ): <ShowCaseTab />}
     </>
   );
 }

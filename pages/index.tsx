@@ -1,4 +1,4 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { GetStaticProps } from "next";
 import {
   Box,
   Container,
@@ -13,10 +13,10 @@ import { MotionBox, ProductInfoSecond } from "../src/components/commons";
 import { range } from "lodash";
 import { AspectRatio, VthCountdown } from "../src/components";
 import Banner from "../src/components/Banner";
-import { apiService, apolloClient, queryBanner } from "../src/api";
+import { withApollo } from "../src/api";
 import {
+  IndexPageQuery,
   Maybe,
-  QueryBannerQuery,
   ShowcaseEdge,
   ShowcaseFilter,
   ShowcaseStatus,
@@ -27,16 +27,25 @@ import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { NextSeo } from "next-seo";
+import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
 
 const FilterPanel = dynamic(() => import("../src/components/FilterPanel"), {
   ssr: false,
 });
 
-function Home({
-  posts: _posts,
-  pageInfo: _pageInfo,
-  banner,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+const Home = () => {
+  const ssrData = ssrIndex.usePage().data,
+    { data: clientData, fetchMore, refetch } = ssrIndexClient.usePage();
+  const data = useMemo(() => {
+    return {
+      ...ssrData,
+      ...clientData,
+    } as unknown as IndexPageQuery;
+  }, [ssrData, clientData]);
+  const posts = data!.showcases.edges,
+    pageInfo = data!.showcases.pageInfo,
+    banner = data!.banner;
+
   const [openFilter, setOpenFilter] = useState(false);
   const [statusFilter, setStatusFilter] = useState<
       ShowcaseStatus | undefined
@@ -69,25 +78,20 @@ function Home({
    * Trigger reload API
    */
   useEffect(() => {
-    apiService.getAllShowcases(calculatedFilter).then((data) => {
+    refetch({ filter: calculatedFilter }).then(() => {
       setStatusFiltered(statusFilter);
-      setPosts(data.edges);
-      setPageInfo(data.pageInfo);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [calculatedFilter]);
 
-  const [posts, setPosts] = useState(() => _posts),
-    [pageInfo, setPageInfo] = useState(() => _pageInfo);
-
   const loadMore = async () => {
     if (!pageInfo.hasNextPage) return;
-    const data = await apiService.getAllShowcases(
-      calculatedFilter,
-      pageInfo.endCursor
-    );
-    setPosts([...posts, ...data.edges]);
-    setPageInfo(data.pageInfo);
+    await fetchMore({
+      variables: {
+        filter: calculatedFilter,
+        cursor: pageInfo.endCursor,
+      },
+    });
   };
 
   const restPost = useMemo(() => {
@@ -239,23 +243,14 @@ function Home({
       </Box>
     </Container>
   );
-}
+};
 
 // noinspection JSUnusedGlobalSymbols
-export default Home;
+export default withApollo(ssrIndex.withPage(() => ({}))(Home));
 
-export const getStaticProps: GetStaticProps = async () => {
-  const [
-    { edges, pageInfo },
-    {
-      data: { banner },
-    },
-  ] = await Promise.all([
-    apiService.getAllShowcases(),
-    apolloClient.query<QueryBannerQuery>({ query: queryBanner }),
-  ]);
+export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
-    props: { posts: edges, pageInfo, banner },
+    ...(await ssrIndex.getServerPage({}, ctx)),
     revalidate: 60,
   };
 };

@@ -1,5 +1,6 @@
 import {
   ApolloClient,
+  ApolloProvider,
   HttpLink,
   InMemoryCache,
   NormalizedCacheObject,
@@ -10,6 +11,9 @@ import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
 import { useMemo } from "react";
 import store from "../store";
+import { NextPage } from "next";
+
+export type ApolloClientContext = unknown;
 
 const httpLink = new HttpLink({
   uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
@@ -51,7 +55,7 @@ if (process.env.NODE_ENV === "development" && typeof window !== "undefined") {
 
 export { apolloClient };
 
-export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
+export const APOLLO_STATE_PROP_NAME = "apolloState";
 
 export function addApolloState(
   client: ApolloClient<NormalizedCacheObject>,
@@ -66,10 +70,12 @@ export function addApolloState(
 
 /**
  * Only use for App
+ * @param ctx
  * @param initialState
  */
-export function initializeApollo(
-  initialState: NormalizedCacheObject | null = null
+export function getApolloClient(
+  ctx?: ApolloClientContext,
+  initialState?: NormalizedCacheObject
 ) {
   if (initialState) {
     // Get existing cache, loaded during client side data fetching
@@ -95,5 +101,15 @@ export function initializeApollo(
 
 export function useApollo(pageProps: any) {
   const state = pageProps[APOLLO_STATE_PROP_NAME];
-  return useMemo(() => initializeApollo(state), [state]);
+  return useMemo(() => getApolloClient(state), [state]);
 }
+
+export const withApollo = (Comp: NextPage) => (props: any) => {
+  return (
+    <ApolloProvider
+      client={getApolloClient(undefined, props[APOLLO_STATE_PROP_NAME])}
+    >
+      <Comp />
+    </ApolloProvider>
+  );
+};

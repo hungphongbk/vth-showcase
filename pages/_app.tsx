@@ -25,9 +25,9 @@ import { VthThemeProvider } from "@hungphongbk/vth-sdk";
 import CreatorAndInvestorActions from "../src/components/CreatorAndInvestorActions";
 import { LocalizationProvider } from "@mui/lab";
 import DateAdapter from "@mui/lab/AdapterDateFns";
-import { useApollo } from "../src/api";
 import { ApolloProvider } from "@apollo/client";
 import { useGATrackView } from "../src/utils/hooks";
+import { apolloClient } from "../src/api";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -41,7 +41,6 @@ export default function MyApp(props: AppPropsWithLayout) {
   const { Component, pageProps, router } = props;
   const getLayout = Component.getLayout ?? ((page) => page);
   const persistor = persistStore(store);
-  const individualClient = useApollo(pageProps);
   useGATrackView();
 
   return (
@@ -76,7 +75,7 @@ export default function MyApp(props: AppPropsWithLayout) {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           {() => (
-            <ApolloProvider client={individualClient}>
+            <ApolloProvider client={apolloClient}>
               <VthThemeProvider
                 config={{
                   components: {

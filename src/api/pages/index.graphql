@@ -1,0 +1,43 @@
+query IndexPage {
+  banner: setting(key: "common:banner"){
+    value
+  }
+  showcases(paging: {first: 10}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          ...Media
+        }
+        createdAt
+      }
+    }
+  }
+}
+query IndexPageClient($filter: ShowcaseFilter, $cursor: ConnectionCursor){
+  showcases(filter: $filter, paging: {first:10,after: $cursor}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          ...Media
+        }
+        createdAt
+      }
+    }
+  }
+}

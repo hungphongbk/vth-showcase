@@ -44,6 +44,11 @@ export enum AuthRoleType {
   User = 'USER'
 }
 
+export interface BooleanFieldComparison {
+  is: Maybe<Scalars['Boolean']>;
+  isNot: Maybe<Scalars['Boolean']>;
+}
+
 export interface CommentCreateDto {
   content: Scalars['String'];
   rate: Array<CommentRateEnum>;
@@ -371,13 +376,13 @@ export interface InvestmentPackageDtoUpdateFilter {
 
 export interface MediaDto extends IdInterface {
   filename: Scalars['String'];
-  height: Maybe<Scalars['Float']>;
+  height: Scalars['Float'];
   id: Scalars['ID'];
   mimetype: Scalars['String'];
   path: Scalars['String'];
-  preloadUrl: Maybe<Scalars['String']>;
+  preloadUrl: Scalars['String'];
   type: MediaType;
-  width: Maybe<Scalars['Float']>;
+  width: Scalars['Float'];
 }
 
 export interface MediaDtoAggregateGroupBy {
@@ -1076,6 +1081,7 @@ export interface Showcase {
   imageLists: Array<ImageList>;
   inventory: Maybe<ShowcaseInventoryDto>;
   investorStat: Maybe<ShowcaseInvestorStatDto>;
+  isFeatured: Maybe<Scalars['Boolean']>;
   name: Scalars['String'];
   publishStatus: PublishStatus;
   slug: Scalars['String'];
@@ -1112,6 +1118,7 @@ export interface ShowcaseUpdatesArgs {
 export interface ShowcaseAggregateGroupBy {
   expectedSaleAt: Maybe<Scalars['DateTime']>;
   expectedSaleEndAt: Maybe<Scalars['DateTime']>;
+  isFeatured: Maybe<Scalars['Boolean']>;
   name: Maybe<Scalars['String']>;
   publishStatus: Maybe<PublishStatus>;
   slug: Maybe<Scalars['String']>;
@@ -1143,6 +1150,7 @@ export interface ShowcaseConnection {
 export interface ShowcaseCountAggregate {
   expectedSaleAt: Maybe<Scalars['Int']>;
   expectedSaleEndAt: Maybe<Scalars['Int']>;
+  isFeatured: Maybe<Scalars['Int']>;
   name: Maybe<Scalars['Int']>;
   publishStatus: Maybe<Scalars['Int']>;
   slug: Maybe<Scalars['Int']>;
@@ -1162,6 +1170,7 @@ export interface ShowcaseCreateInputDto {
   image: MediaInput;
   imageLists: Maybe<Array<CreateImageListInputDto>>;
   inventory: Maybe<ShowcaseInventoryDtoInput>;
+  isFeatured: Maybe<Scalars['Boolean']>;
   name: Scalars['String'];
   publishStatus: Maybe<PublishStatus>;
   status: ShowcaseStatus;
@@ -1172,6 +1181,7 @@ export interface ShowcaseDeleteFilter {
   and: Maybe<Array<ShowcaseDeleteFilter>>;
   expectedSaleAt: Maybe<DateFieldComparison>;
   expectedSaleEndAt: Maybe<DateFieldComparison>;
+  isFeatured: Maybe<BooleanFieldComparison>;
   name: Maybe<StringFieldComparison>;
   or: Maybe<Array<ShowcaseDeleteFilter>>;
   publishStatus: Maybe<PublishStatusFilterComparison>;
@@ -1189,6 +1199,7 @@ export interface ShowcaseFilter {
   and: Maybe<Array<ShowcaseFilter>>;
   expectedSaleAt: Maybe<DateFieldComparison>;
   expectedSaleEndAt: Maybe<DateFieldComparison>;
+  isFeatured: Maybe<BooleanFieldComparison>;
   name: Maybe<StringFieldComparison>;
   or: Maybe<Array<ShowcaseFilter>>;
   publishStatus: Maybe<PublishStatusFilterComparison>;
@@ -1349,6 +1360,7 @@ export interface ShowcaseSort {
 export enum ShowcaseSortFields {
   ExpectedSaleAt = 'expectedSaleAt',
   ExpectedSaleEndAt = 'expectedSaleEndAt',
+  IsFeatured = 'isFeatured',
   Name = 'name',
   PublishStatus = 'publishStatus',
   Slug = 'slug',
@@ -1391,6 +1403,7 @@ export interface ShowcaseUpdateInputDto {
   image: Maybe<MediaInput>;
   imageLists: Maybe<Array<CreateImageListInputDto>>;
   inventory: Maybe<ShowcaseInventoryDtoInput>;
+  isFeatured: Maybe<Scalars['Boolean']>;
   name: Maybe<Scalars['String']>;
   publishStatus: Maybe<PublishStatus>;
   status: Maybe<ShowcaseStatus>;
@@ -1564,15 +1577,28 @@ export type UpdateOneUpdateInShowcaseMutationVariables = Exact<{
 
 export type UpdateOneUpdateInShowcaseMutation = { updateOnePrjUpdateDto: { id: string } };
 
-export type MediaFragment = { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null };
+export type MediaFragment = { id: string, path: string, preloadUrl: string, width: number, height: number };
 
-export type HighlightFeatureFragment = { id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } };
+export type HighlightFeatureFragment = { id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } };
 
-export type ShowcaseHfFragment = { highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } }> };
+export type ShowcaseHfFragment = { highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }> };
 
 export type ShowcaseInvestorStatFragment = { investorStat: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null };
 
-export type ShowcaseDetailFragment = { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }> }> };
+export type ShowcaseDetailFragment = { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> };
+
+export type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type IndexPageQuery = { banner: { value: any } | null, showcases: { pageInfo: { hasNextPage: boolean | null, endCursor: any | null }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
+
+export type IndexPageClientQueryVariables = Exact<{
+  filter: Maybe<ShowcaseFilter>;
+  cursor: Maybe<Scalars['ConnectionCursor']>;
+}>;
+
+
+export type IndexPageClientQuery = { showcases: { pageInfo: { hasNextPage: boolean | null, endCursor: any | null }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type PostAnonymousCommentMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -1622,7 +1648,7 @@ export type ShowcasePreviewQueryVariables = Exact<{
 }>;
 
 
-export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, brand: { name: string }, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } } }> } };
+export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, brand: { name: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type ShowcasesQueryVariables = Exact<{
   filter: Maybe<ShowcaseFilter>;
@@ -1630,7 +1656,7 @@ export type ShowcasesQueryVariables = Exact<{
 }>;
 
 
-export type ShowcasesQuery = { showcases: { pageInfo: { hasNextPage: boolean | null, endCursor: any | null }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } } }> } };
+export type ShowcasesQuery = { showcases: { pageInfo: { hasNextPage: boolean | null, endCursor: any | null }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type SlugsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1642,28 +1668,28 @@ export type ShowcaseDetailQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }> }>, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } }>, investorStat: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } } }> } };
+export type ShowcaseDetailQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }>, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type ShowcaseForUpdateQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type ShowcaseForUpdateQuery = { showcase: { slug: string, id: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }> }> } };
+export type ShowcaseForUpdateQuery = { showcase: { slug: string, id: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> } };
 
 export type GetHighlightFeaturesOnShowcaseQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type GetHighlightFeaturesOnShowcaseQuery = { showcase: { slug: string, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } }> } };
+export type GetHighlightFeaturesOnShowcaseQuery = { showcase: { slug: string, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }> } };
 
 export type GetOneHighlightFeatureQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetOneHighlightFeatureQuery = { showcaseHighlightFeature: { id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } } | null };
+export type GetOneHighlightFeatureQuery = { showcaseHighlightFeature: { id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } | null };
 
 export type CreateOneHighlightFeatureMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -2040,6 +2066,115 @@ export function useUpdateOneUpdateInShowcaseMutation(baseOptions?: Apollo.Mutati
 export type UpdateOneUpdateInShowcaseMutationHookResult = ReturnType<typeof useUpdateOneUpdateInShowcaseMutation>;
 export type UpdateOneUpdateInShowcaseMutationResult = Apollo.MutationResult<UpdateOneUpdateInShowcaseMutation>;
 export type UpdateOneUpdateInShowcaseMutationOptions = Apollo.BaseMutationOptions<UpdateOneUpdateInShowcaseMutation, UpdateOneUpdateInShowcaseMutationVariables>;
+export const IndexPageDocument = gql`
+    query IndexPage {
+  banner: setting(key: "common:banner") {
+    value
+  }
+  showcases(paging: {first: 10}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          ...Media
+        }
+        createdAt
+      }
+    }
+  }
+}
+    ${MediaFragmentDoc}`;
+
+/**
+ * __useIndexPageQuery__
+ *
+ * To run a query within a React component, call `useIndexPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIndexPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useIndexPageQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useIndexPageQuery(baseOptions?: Apollo.QueryHookOptions<IndexPageQuery, IndexPageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<IndexPageQuery, IndexPageQueryVariables>(IndexPageDocument, options);
+      }
+export function useIndexPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IndexPageQuery, IndexPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<IndexPageQuery, IndexPageQueryVariables>(IndexPageDocument, options);
+        }
+export type IndexPageQueryHookResult = ReturnType<typeof useIndexPageQuery>;
+export type IndexPageLazyQueryHookResult = ReturnType<typeof useIndexPageLazyQuery>;
+export type IndexPageQueryResult = Apollo.QueryResult<IndexPageQuery, IndexPageQueryVariables>;
+export function refetchIndexPageQuery(variables?: IndexPageQueryVariables) {
+      return { query: IndexPageDocument, variables: variables }
+    }
+export const IndexPageClientDocument = gql`
+    query IndexPageClient($filter: ShowcaseFilter, $cursor: ConnectionCursor) {
+  showcases(filter: $filter, paging: {first: 10, after: $cursor}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          ...Media
+        }
+        createdAt
+      }
+    }
+  }
+}
+    ${MediaFragmentDoc}`;
+
+/**
+ * __useIndexPageClientQuery__
+ *
+ * To run a query within a React component, call `useIndexPageClientQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIndexPageClientQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useIndexPageClientQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useIndexPageClientQuery(baseOptions?: Apollo.QueryHookOptions<IndexPageClientQuery, IndexPageClientQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<IndexPageClientQuery, IndexPageClientQueryVariables>(IndexPageClientDocument, options);
+      }
+export function useIndexPageClientLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IndexPageClientQuery, IndexPageClientQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<IndexPageClientQuery, IndexPageClientQueryVariables>(IndexPageClientDocument, options);
+        }
+export type IndexPageClientQueryHookResult = ReturnType<typeof useIndexPageClientQuery>;
+export type IndexPageClientLazyQueryHookResult = ReturnType<typeof useIndexPageClientLazyQuery>;
+export type IndexPageClientQueryResult = Apollo.QueryResult<IndexPageClientQuery, IndexPageClientQueryVariables>;
+export function refetchIndexPageClientQuery(variables?: IndexPageClientQueryVariables) {
+      return { query: IndexPageClientDocument, variables: variables }
+    }
 export const PostAnonymousCommentDocument = gql`
     mutation postAnonymousComment($slug: String!, $input: CommentCreateDto!) {
   postAnonymousComment(slug: $slug, input: $input) {

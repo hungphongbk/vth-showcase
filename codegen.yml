@@ -20,7 +20,7 @@ generates:
       reactApolloVersion: 3
       withHooks: true
       withRefetchFn: true
-      avoidOptionals: true
+      avoidOptionals: false
       dedupeFragments: true
       declarationKind: interface
       disableDescriptions: true

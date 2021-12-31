@@ -9,7 +9,7 @@ query ShowcaseDetail($slug: String!) {
       createdAt
     }
   }
-  showcases(filter: { slug: { neq: $slug,notLike: "ci-test%" } }) {
+  showcases(filter: {and:[{ slug: { neq: $slug } },{slug:{notLike: "ci-test%"}}]}) {
     edges {
       node {
         slug

@@ -35,7 +35,17 @@ const FilterPanel = dynamic(() => import("../src/components/FilterPanel"), {
 
 const Home = () => {
   const ssrData = ssrIndex.usePage().data,
-    { data: clientData, fetchMore, refetch } = ssrIndexClient.usePage();
+    {
+      data: clientData,
+      fetchMore,
+      refetch,
+    } = ssrIndexClient.usePage(() => ({
+      variables: {
+        filter: {
+          isFeatured: { is: false },
+        },
+      },
+    }));
   const data = useMemo(() => {
     return {
       ...ssrData,
@@ -66,10 +76,13 @@ const Home = () => {
       typeof statusFilter === "undefined" &&
       typeof calculatedFilter !== "undefined"
     )
-      setCalculatedFilter(undefined);
+      setCalculatedFilter({ isFeatured: { is: false } });
     if (typeof statusFilter !== "undefined") {
       // @ts-ignore
-      setCalculatedFilter({ status: { eq: statusFilter } });
+      setCalculatedFilter({
+        status: { eq: statusFilter },
+        isFeatured: { is: false },
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
@@ -78,9 +91,10 @@ const Home = () => {
    * Trigger reload API
    */
   useEffect(() => {
-    refetch({ filter: calculatedFilter }).then(() => {
-      setStatusFiltered(statusFilter);
-    });
+    if (typeof calculatedFilter !== "undefined")
+      refetch({ filter: calculatedFilter }).then(() => {
+        setStatusFiltered(statusFilter);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [calculatedFilter]);
 

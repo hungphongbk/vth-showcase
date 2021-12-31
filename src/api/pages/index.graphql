@@ -2,7 +2,21 @@ query IndexPage {
   banner: setting(key: "common:banner"){
     value
   }
-  showcases(paging: {first: 10}) {
+  featured: showcases(filter: {isFeatured: {is: true}}){
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          ...Media
+        }
+        createdAt
+      }
+    }
+  }
+  showcases(paging: {first: 10},filter: {isFeatured: {is: false}}) {
     pageInfo {
       hasNextPage
       endCursor
@@ -21,7 +35,7 @@ query IndexPage {
     }
   }
 }
-query IndexPageClient($filter: ShowcaseFilter, $cursor: ConnectionCursor){
+query IndexPageClient($filter: ShowcaseFilter!, $cursor: ConnectionCursor){
   showcases(filter: $filter, paging: {first:10,after: $cursor}) {
     pageInfo {
       hasNextPage

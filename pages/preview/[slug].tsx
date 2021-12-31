@@ -2,7 +2,7 @@ import { GetStaticProps } from "next";
 import ShowcaseDetailed from "../../src/components/ShowcaseDetailed";
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { MotionBox } from "../../src/components/commons";
 import { addApolloState, apiService, apolloClient } from "../../src/api";
 import {
@@ -14,6 +14,7 @@ import {
   useShowcasePreviewQuery,
 } from "../../src/types/graphql";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
+import { NextSeo } from "next-seo";
 
 export default function PreviewPage({ slug }: { slug: string }) {
   const router = useRouter();
@@ -46,6 +47,7 @@ export default function PreviewPage({ slug }: { slug: string }) {
         overflowY: "scroll",
       }}
     >
+      <NextSeo canonical={"https://showcase.vaithuhay.com"} />
       <ShowcaseDetailed
         item={showcase}
         onClick={() => router.back()}
@@ -92,7 +94,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 // noinspection JSUnusedGlobalSymbols
 export async function getStaticPaths() {
   return {
-    paths: (await apiService.getAllSlugs()).map((slug) => `/preview/${slug}`),
+    paths: (await apiService.getAllSlugs())
+      .filter((slug) => !/^ci-test/.test(slug))
+      .map((slug) => `/preview/${slug}`),
     fallback: "blocking",
   };
 }

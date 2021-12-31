@@ -18,6 +18,7 @@ import {
 } from "../../src/types/graphql";
 import { InvestorInformation } from "../../src/components/PostPage";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
+import { NextSeo } from "next-seo";
 
 const PreorderDialog = dynamic(
   () => import("../../src/components/system/preorder-dialog"),
@@ -95,63 +96,70 @@ export default function PostDetailedPage({ slug }: { slug: string }) {
   if (!showcase) return null;
 
   return (
-    <Box sx={{ bgcolor: "#f0f0f0" }}>
-      <InvestorInformation stat={data!.showcase.investorStat as any} />
-      <ShowcaseDetailed
-        item={showcase}
-        onClick={() => router.push("/")}
-        posts={showcases}
+    <>
+      <NextSeo
+        title={showcase.name}
+        description={showcase.description}
+        canonical={`https://showcase.vaithuhay.com/post/${showcase.slug}`}
       />
-      <Box
-        sx={{
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          display: "flex",
-          justifyContent: "space-evenly",
-          gap: 1,
-          p: 1,
-          px: 3,
-          height: 35,
-          zIndex: 12,
-          bgcolor: "white",
-          boxShadow: "0px -4px 30px rgba(0, 0, 0, 0.15)",
-          borderTopLeftRadius: "20px",
-          borderTopRightRadius: "20px",
-        }}
-      >
-        <BottomButton
-          startIcon={
-            <IconWrapper>
-              <HopTacIcon
-                sx={{ color: "yellow.main", transform: "translateX(1px)" }}
-              />
-            </IconWrapper>
-          }
-        >
-          Hợp tác
-        </BottomButton>
-        <BottomButton
-          onClick={() => setOpen(true)}
-          startIcon={
-            <IconWrapper>
-              <BookmarkIcon sx={{ color: "yellow.main", width: 10 }} />
-            </IconWrapper>
-          }
-          disabled={data!.showcase.status !== ShowcaseStatus.Coming}
-        >
-          Đăng ký đặt trước
-        </BottomButton>
-      </Box>
-      {data!.showcase.status === ShowcaseStatus.Coming && (
-        <PreorderDialog
-          open={open}
-          showcase={showcase}
-          onClose={() => setOpen(false)}
+      <Box sx={{ bgcolor: "#f0f0f0" }}>
+        <InvestorInformation stat={data!.showcase.investorStat as any} />
+        <ShowcaseDetailed
+          item={showcase}
+          onClick={() => router.push("/")}
+          posts={showcases}
         />
-      )}
-    </Box>
+        <Box
+          sx={{
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            display: "flex",
+            justifyContent: "space-evenly",
+            gap: 1,
+            p: 1,
+            px: 3,
+            height: 35,
+            zIndex: 12,
+            bgcolor: "white",
+            boxShadow: "0px -4px 30px rgba(0, 0, 0, 0.15)",
+            borderTopLeftRadius: "20px",
+            borderTopRightRadius: "20px",
+          }}
+        >
+          <BottomButton
+            startIcon={
+              <IconWrapper>
+                <HopTacIcon
+                  sx={{ color: "yellow.main", transform: "translateX(1px)" }}
+                />
+              </IconWrapper>
+            }
+          >
+            Hợp tác
+          </BottomButton>
+          <BottomButton
+            onClick={() => setOpen(true)}
+            startIcon={
+              <IconWrapper>
+                <BookmarkIcon sx={{ color: "yellow.main", width: 10 }} />
+              </IconWrapper>
+            }
+            disabled={data!.showcase.status !== ShowcaseStatus.Coming}
+          >
+            Đăng ký đặt trước
+          </BottomButton>
+        </Box>
+        {data!.showcase.status === ShowcaseStatus.Coming && (
+          <PreorderDialog
+            open={open}
+            showcase={showcase}
+            onClose={() => setOpen(false)}
+          />
+        )}
+      </Box>
+    </>
   );
 }
 
@@ -175,7 +183,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 // noinspection JSUnusedGlobalSymbols
 export async function getStaticPaths() {
   return {
-    paths: (await apiService.getAllSlugs()).map((slug) => `/post/${slug}`),
+    paths: (await apiService.getAllSlugs())
+      .filter((slug) => !/^ci-test/.test(slug))
+      .map((slug) => `/post/${slug}`),
     fallback: "blocking",
   };
 }

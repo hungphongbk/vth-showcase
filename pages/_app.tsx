@@ -27,6 +27,7 @@ import { LocalizationProvider } from "@mui/lab";
 import DateAdapter from "@mui/lab/AdapterDateFns";
 import { useApollo } from "../src/api";
 import { ApolloProvider } from "@apollo/client";
+import { useGATrackView } from "../src/utils/hooks";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -41,6 +42,7 @@ export default function MyApp(props: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
   const persistor = persistStore(store);
   const individualClient = useApollo(pageProps);
+  useGATrackView();
 
   return (
     <>
@@ -58,7 +60,8 @@ export default function MyApp(props: AppPropsWithLayout) {
               dangerouslySetAllPagesToNoFollow: true,
             }
           : {})}
-        title={"Dự án showcase sản phẩm mới tại Vaithuhay"}
+        defaultTitle={"Dự án showcase sản phẩm mới tại Vaithuhay"}
+        titleTemplate={"%s | Dự án showcase sản phẩm mới tại Vaithuhay"}
         description={
           "Chuyên trang giới thiệu sản phẩm mới showcase, chạy pre-order campaign & phát triển dự án gọi vốn sản phẩm do người Việt tạo nên"
         }

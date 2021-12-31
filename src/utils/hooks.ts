@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAppSelector } from "../store";
 import { useRouter } from "next/router";
+import { AnalyticsService } from "../service";
+import { ReturnPromiseType } from "../types/util.type";
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -67,4 +69,32 @@ export function useLoginRequired() {
   }, [initialized, router, isLoggedIn]);
 
   return { loading: !initialized };
+}
+
+export function useGATrackView() {
+  const serviceRef = useRef<ReturnPromiseType<typeof AnalyticsService>>();
+  const router = useRouter();
+
+  const load = useCallback(async () => {
+    if (!serviceRef.current) serviceRef.current = await AnalyticsService();
+  }, []);
+
+  const handlerRef = useMemo(
+    () => (url: string) => {
+      load().then(() => {
+        serviceRef.current?.default.logPage(url);
+      });
+    },
+    [load]
+  );
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      handlerRef(window.location.pathname);
+      router.events.on("routeChangeComplete", handlerRef);
+      return () => {
+        router.events.off("routeChangeComplete", handlerRef);
+      };
+    }
+  }, [handlerRef, load, router.events]);
 }

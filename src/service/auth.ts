@@ -1,3 +1,5 @@
+// const analytics = getAnalytics(firebaseApp);
+import { firebaseApp } from "./firebase";
 import {
   browserLocalPersistence,
   getAuth,
@@ -8,21 +10,7 @@ import {
   signOut as _signOut,
   User,
 } from "firebase/auth";
-import { initializeApp } from "firebase/app";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAsNJFP3lqEvf9yjkq9tnUCPZyYi1mURjw",
-  authDomain: "vaithuhay-showcase.firebaseapp.com",
-  projectId: "vaithuhay-showcase",
-  storageBucket: "vaithuhay-showcase.appspot.com",
-  messagingSenderId: "52917475782",
-  appId: "1:52917475782:web:2ca9c4d5035d36648bbac7",
-  measurementId: "G-37F3R8T60Y",
-};
-
-// Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(firebaseApp);
 const auth = getAuth(firebaseApp);
 
 const provider = new GoogleAuthProvider();

@@ -26,6 +26,7 @@ import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { NextSeo } from "next-seo";
 
 const FilterPanel = dynamic(() => import("../src/components/FilterPanel"), {
   ssr: false,
@@ -96,6 +97,7 @@ function Home({
 
   return (
     <Container sx={{ mt: 2, pl: 1, pr: 1 }}>
+      <NextSeo canonical={"https://showcase.vaithuhay.com"} />
       <Banner banner={banner} />
       <Typography
         sx={{

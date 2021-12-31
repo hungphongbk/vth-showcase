@@ -136,6 +136,8 @@ export default function ShowcaseDetailed({
                 }
               >
                 <MotionTypo
+                  // @ts-ignore
+                  component={"h1"}
                   variant="h5"
                   sx={{ textTransform: "uppercase", fontWeight: 600 }}
                   layoutId={"name"}

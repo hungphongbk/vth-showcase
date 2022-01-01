@@ -27,6 +27,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { NextSeo } from "next-seo";
 import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
+import { FnsDate } from "@hungphongbk/vth-sdk";
 
 const FilterPanel = dynamic(() => import("../src/components/FilterPanel"), {
   ssr: false,
@@ -179,7 +180,10 @@ const Home = () => {
                 </Typography>
               </Box>
               <Typography sx={{ fontSize: 10, my: 0.5 }}>
-                Dự kiến ra mắt: <strong>15/11/2021</strong>
+                Dự kiến ra mắt:{" "}
+                <strong>
+                  <FnsDate value={node.expectedSaleAt} format={"dd/MM/yyyy"} />
+                </strong>
               </Typography>
               <Box sx={{ width: "100%", my: 0.5 }}>
                 <VthCountdown />

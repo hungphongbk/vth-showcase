@@ -48,7 +48,7 @@ const apolloClient = new ApolloClient({
   }),
 });
 
-if (process.env.NODE_ENV === "development" && typeof window !== "undefined") {
+if (typeof window !== "undefined") {
   // @ts-ignore
   window.__APOLLO_CLIENT__ = apolloClient;
 }

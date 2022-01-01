@@ -58,7 +58,13 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
         </Head>
-        <body style={{ paddingTop: theme.variables.appBarHeight }}>
+        <body
+          style={{
+            paddingTop: theme.variables.appBarHeight,
+            width: "100%",
+            height: "100%",
+          }}
+        >
           <Main />
           <NextScript />
         </body>

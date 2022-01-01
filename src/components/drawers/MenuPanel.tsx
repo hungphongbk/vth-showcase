@@ -35,6 +35,8 @@ const MenuPanel = forwardRef(function MenuPanel(
         bgcolor: "white",
         borderRadius: "0 30px 0 0",
         position: "relative",
+        // display: "flex",
+        // flexDirection: "column",
       }}
     >
       {isLoggedIn ? (

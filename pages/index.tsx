@@ -41,9 +41,7 @@ const Home = () => {
       refetch,
     } = ssrIndexClient.usePage(() => ({
       variables: {
-        filter: {
-          isFeatured: { is: false },
-        },
+        filter: {},
       },
     }));
   const data = useMemo(() => {
@@ -65,8 +63,8 @@ const Home = () => {
     >();
 
   const [calculatedFilter, setCalculatedFilter] = useState<
-    Maybe<ShowcaseFilter> | undefined
-  >(undefined);
+    Maybe<ShowcaseFilter>
+  >({});
 
   /**
    * Calculate final filter
@@ -76,12 +74,11 @@ const Home = () => {
       typeof statusFilter === "undefined" &&
       typeof calculatedFilter !== "undefined"
     )
-      setCalculatedFilter({ isFeatured: { is: false } });
+      setCalculatedFilter({});
     if (typeof statusFilter !== "undefined") {
       // @ts-ignore
       setCalculatedFilter({
         status: { eq: statusFilter },
-        isFeatured: { is: false },
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

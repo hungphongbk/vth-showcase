@@ -2137,7 +2137,10 @@ export function refetchIndexPageQuery(variables?: IndexPageQueryVariables) {
     }
 export const IndexPageClientDocument = gql`
     query IndexPageClient($filter: ShowcaseFilter!, $cursor: ConnectionCursor) {
-  showcases(filter: $filter, paging: {first: 10, after: $cursor}) {
+  showcases(
+    filter: {and: [$filter, {isFeatured: {is: false}}]}
+    paging: {first: 10, after: $cursor}
+  ) {
     pageInfo {
       hasNextPage
       endCursor

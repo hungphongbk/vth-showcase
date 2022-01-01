@@ -34,7 +34,7 @@ const FilterPanel = dynamic(() => import("../src/components/FilterPanel"), {
 });
 
 const Home = () => {
-  const ssrData = ssrIndex.usePage().data,
+  const ssrData = ssrIndex.usePage(() => ({ fetchPolicy: "cache-only" })).data,
     {
       data: clientData,
       fetchMore,

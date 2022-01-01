@@ -61,7 +61,8 @@ export default class MyDocument extends Document {
         <body
           style={{
             paddingTop: theme.variables.appBarHeight,
-            overflowX: "hidden",
+            width: "100%",
+            height: "100%",
           }}
         >
           <Main />

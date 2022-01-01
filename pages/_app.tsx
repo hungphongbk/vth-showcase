@@ -29,6 +29,7 @@ import DateAdapter from "@mui/lab/AdapterDateFns";
 import { ApolloProvider } from "@apollo/client";
 import { useGATrackView } from "../src/utils/hooks";
 import { apolloClient } from "../src/api";
+import "../styles/globals.css";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -104,9 +105,17 @@ export default function MyApp(props: AppPropsWithLayout) {
                           />
                         </Box>
                         {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
-                        {getLayout(
-                          <Component {...pageProps} key={router.route} />
-                        )}
+                        <Box
+                          sx={{
+                            width: "100%",
+                            height: (theme) =>
+                              `calc(100% - ${theme.variables.appBarHeight}px)`,
+                          }}
+                        >
+                          {getLayout(
+                            <Component {...pageProps} key={router.route} />
+                          )}
+                        </Box>
                         <CreatorAndInvestorActions />
                       </LayoutGroup>
                       <InvestorRegDialog />

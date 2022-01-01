@@ -1,10 +1,8 @@
 import { ShowcaseStatus } from "../types/graphql";
 import { memoize } from "lodash";
 import { ReactNode } from "react";
-import IdeaBulbIcon from "../assets/icons/IdeaBulbIcon";
-import LookupIcon from "../assets/icons/LookupIcon";
-import ComingSoonIcon from "../assets/icons/ComingSoonIcon";
 import { SxProps } from "@mui/system";
+import { ComingSoonIcon, IdeaBulbIcon, LookupIcon } from "@hungphongbk/vth-sdk";
 
 export const usingShowcaseStatusColor = memoize(
   (status: ShowcaseStatus): string => {

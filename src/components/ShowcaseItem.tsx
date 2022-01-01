@@ -100,7 +100,7 @@ export default function ShowcaseItem({
         <Image
           // layoutId={getLayoutId("/thumb")}
           src={item.image.path}
-          alt={item.image.path}
+          alt={item.name}
           layout={"fill"}
           objectFit={"cover"}
           sizes={"50vw"}

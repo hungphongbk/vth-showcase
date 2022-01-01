@@ -10,7 +10,6 @@ import ShowcaseList from "../src/components/ShowcaseList";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 import { MotionBox, ProductInfoSecond } from "../src/components/commons";
-import { range } from "lodash";
 import { AspectRatio, VthCountdown } from "../src/components";
 import Banner from "../src/components/Banner";
 import { withApollo } from "../src/api";
@@ -51,6 +50,7 @@ const Home = () => {
     } as unknown as IndexPageQuery;
   }, [ssrData, clientData]);
   const posts = data!.showcases.edges,
+    featured = data!.featured.edges,
     pageInfo = data!.showcases.pageInfo,
     banner = data!.banner;
 
@@ -127,9 +127,9 @@ const Home = () => {
         Dự án đang chuẩn bị &quot;rời bệ phóng&quot;
       </Typography>
       <ImageList variant={"standard"} cols={2} gap={8}>
-        {range(0, 2).map((index) => (
+        {featured.map(({ node }, index) => (
           <ImageListItem
-            key={index}
+            key={node.id}
             sx={{
               borderRadius: 3,
               overflow: "hidden",
@@ -141,13 +141,13 @@ const Home = () => {
             <AspectRatio>
               <Box sx={{ zIndex: -1 }}>
                 <Image
-                  src={
-                    "https://product.hstatic.net/1000069970/product/carpio22_fcc7132be79748e08ffabac9bd65aa4f_large.png"
-                  }
-                  alt={"ke co tay cong thai hoc"}
+                  src={node.image.path}
+                  alt={node.name}
                   layout={"fill"}
                   objectFit={"cover"}
                   sizes={"50vw"}
+                  placeholder={"blur"}
+                  blurDataURL={node.image.preloadUrl}
                 />
               </Box>
             </AspectRatio>
@@ -155,6 +155,7 @@ const Home = () => {
               <Box
                 sx={{
                   height: 35,
+                  width: "100%",
                   borderRadius: 17.5,
                   bgcolor: "yellow.main",
                   border: "3px solid white",
@@ -174,7 +175,7 @@ const Home = () => {
                   }}
                   component={"div"}
                 >
-                  Kê cổ tay công thái học Carpio 2.0 - DeltaHub
+                  {node.name}
                 </Typography>
               </Box>
               <Typography sx={{ fontSize: 10, my: 0.5 }}>
@@ -262,6 +263,6 @@ export default withApollo(ssrIndex.withPage(() => ({}))(Home));
 export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
     ...(await ssrIndex.getServerPage({}, ctx)),
-    revalidate: 60,
+    revalidate: 45,
   };
 };

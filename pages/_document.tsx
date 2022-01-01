@@ -54,6 +54,16 @@ export default class MyDocument extends Document {
             crossOrigin="true"
           />
           <link
+            rel="preconnect"
+            href={process.env.NEXT_PUBLIC_UPLOAD_API_URL}
+          />
+          <link
+            rel="dns-prefetch"
+            href={process.env.NEXT_PUBLIC_UPLOAD_API_URL}
+          />
+          <link rel="preconnect" href={process.env.NEXT_PUBLIC_API_URL} />
+          <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_API_URL} />
+          <link
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
             rel="stylesheet"
           />

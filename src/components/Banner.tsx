@@ -19,7 +19,7 @@ export default function Banner({ sx, banner }: BannerProps): JSX.Element {
         <Typography>Banner (updating...)</Typography>
       ) : (
         <SlickSlider>
-          {banner!.value!.images!.map((item: MediaDto) => (
+          {banner!.value!.images!.map((item: MediaDto, index: number) => (
             <Box key={item.path}>
               <AspectRatio ratio={"5/4"} sx={{ ...sx, ...sxFlexCenter }}>
                 <Box sx={{ borderRadius: 3, overflow: "hidden" }}>
@@ -32,6 +32,7 @@ export default function Banner({ sx, banner }: BannerProps): JSX.Element {
                       sizes={"100vw"}
                       placeholder={"blur"}
                       blurDataURL={item.preloadUrl}
+                      priority={index === 0}
                     />
                   </Box>
                 </Box>

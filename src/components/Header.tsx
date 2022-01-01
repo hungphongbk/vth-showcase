@@ -45,7 +45,7 @@ export default function Header(): JSX.Element {
         component={Link}
         href={"/"}
       >
-        <Image src={logo} alt={"logo"} objectFit={"contain"} />
+        <Image src={logo} alt={"logo"} objectFit={"contain"} priority />
       </Box>
       <Box sx={{ gridColumn: 3, justifySelf: "end" }}>
         <NoSsr>

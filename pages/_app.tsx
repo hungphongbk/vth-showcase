@@ -97,11 +97,13 @@ export default function MyApp(props: AppPropsWithLayout) {
                       <Header />
                       <LayoutGroup>
                         <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
+                          {/* eslint-disable-next-line jsx-a11y/alt-text */}
                           <Image
                             src={"/background.png"}
                             layout="fill"
                             objectFit="cover"
                             quality={70}
+                            priority
                           />
                         </Box>
                         {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}

@@ -149,6 +149,7 @@ const Home = () => {
                   sizes={"50vw"}
                   placeholder={"blur"}
                   blurDataURL={node.image.preloadUrl}
+                  priority={true}
                 />
               </Box>
             </AspectRatio>

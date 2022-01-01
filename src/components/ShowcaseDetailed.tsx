@@ -131,6 +131,7 @@ export default function ShowcaseDetailed({
               sizes={"100vw"}
               placeholder={"blur"}
               blurDataURL={item.image.preloadUrl}
+              priority
             />
             <motion.div>
               <ProductInfoDetailed

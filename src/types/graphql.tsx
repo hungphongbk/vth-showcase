@@ -1075,6 +1075,7 @@ export interface Showcase {
   expectedSaleAt?: Maybe<Scalars['DateTime']>;
   expectedSaleEndAt?: Maybe<Scalars['DateTime']>;
   expectedSalePrice?: Maybe<ShowcasePrice>;
+  ga?: Maybe<ShowcaseGaDto>;
   highlightFeatures: Array<ShowcaseHighlightFeature>;
   id: Scalars['ID'];
   image: MediaDto;
@@ -1206,6 +1207,10 @@ export interface ShowcaseFilter {
   slug?: Maybe<StringFieldComparison>;
   status?: Maybe<ShowcaseStatusFilterComparison>;
   updatedAt?: Maybe<DateFieldComparison>;
+}
+
+export interface ShowcaseGaDto {
+  viewCount: Scalars['Float'];
 }
 
 export interface ShowcaseHfCreateInputDto {
@@ -1643,13 +1648,6 @@ export type InvestmentPackagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type InvestmentPackagesQuery = { investmentPackageDtos: { edges: Array<{ node: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } };
 
-export type ShowcasePreviewQueryVariables = Exact<{
-  slug: Scalars['String'];
-}>;
-
-
-export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, brand: { name: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
-
 export type ShowcasesQueryVariables = Exact<{
   filter?: Maybe<ShowcaseFilter>;
   paging: CursorPaging;
@@ -1669,6 +1667,13 @@ export type ShowcaseDetailQueryVariables = Exact<{
 
 
 export type ShowcaseDetailQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }>, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null | undefined }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
+
+export type ShowcasePreviewQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, brand: { name: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type ShowcaseForUpdateQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -2477,76 +2482,6 @@ export type InvestmentPackagesQueryResult = Apollo.QueryResult<InvestmentPackage
 export function refetchInvestmentPackagesQuery(variables?: InvestmentPackagesQueryVariables) {
       return { query: InvestmentPackagesDocument, variables: variables }
     }
-export const ShowcasePreviewDocument = gql`
-    query ShowcasePreview($slug: String!) {
-  showcase(slug: $slug) {
-    slug
-    name
-    author {
-      email
-      name
-    }
-    brand {
-      name
-    }
-    status
-    image {
-      ...Media
-    }
-    description
-    expectedSalePrice {
-      regular
-      pioneer
-      preorder
-      promo
-    }
-  }
-  showcases(filter: {slug: {neq: $slug, notLike: "ci-test%"}}) {
-    edges {
-      node {
-        slug
-        name
-        status
-        image {
-          ...Media
-        }
-        createdAt
-      }
-    }
-  }
-}
-    ${MediaFragmentDoc}`;
-
-/**
- * __useShowcasePreviewQuery__
- *
- * To run a query within a React component, call `useShowcasePreviewQuery` and pass it any options that fit your needs.
- * When your component renders, `useShowcasePreviewQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useShowcasePreviewQuery({
- *   variables: {
- *      slug: // value for 'slug'
- *   },
- * });
- */
-export function useShowcasePreviewQuery(baseOptions: Apollo.QueryHookOptions<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>(ShowcasePreviewDocument, options);
-      }
-export function useShowcasePreviewLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>(ShowcasePreviewDocument, options);
-        }
-export type ShowcasePreviewQueryHookResult = ReturnType<typeof useShowcasePreviewQuery>;
-export type ShowcasePreviewLazyQueryHookResult = ReturnType<typeof useShowcasePreviewLazyQuery>;
-export type ShowcasePreviewQueryResult = Apollo.QueryResult<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>;
-export function refetchShowcasePreviewQuery(variables: ShowcasePreviewQueryVariables) {
-      return { query: ShowcasePreviewDocument, variables: variables }
-    }
 export const ShowcasesDocument = gql`
     query Showcases($filter: ShowcaseFilter, $paging: CursorPaging!) {
   showcases(filter: $filter, paging: $paging) {
@@ -2697,6 +2632,76 @@ export type ShowcaseDetailLazyQueryHookResult = ReturnType<typeof useShowcaseDet
 export type ShowcaseDetailQueryResult = Apollo.QueryResult<ShowcaseDetailQuery, ShowcaseDetailQueryVariables>;
 export function refetchShowcaseDetailQuery(variables: ShowcaseDetailQueryVariables) {
       return { query: ShowcaseDetailDocument, variables: variables }
+    }
+export const ShowcasePreviewDocument = gql`
+    query ShowcasePreview($slug: String!) {
+  showcase(slug: $slug) {
+    slug
+    name
+    author {
+      email
+      name
+    }
+    brand {
+      name
+    }
+    status
+    image {
+      ...Media
+    }
+    description
+    expectedSalePrice {
+      regular
+      pioneer
+      preorder
+      promo
+    }
+  }
+  showcases(filter: {and: [{slug: {neq: $slug}}, {slug: {notLike: "ci-test%"}}]}) {
+    edges {
+      node {
+        slug
+        name
+        status
+        image {
+          ...Media
+        }
+        createdAt
+      }
+    }
+  }
+}
+    ${MediaFragmentDoc}`;
+
+/**
+ * __useShowcasePreviewQuery__
+ *
+ * To run a query within a React component, call `useShowcasePreviewQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShowcasePreviewQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShowcasePreviewQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useShowcasePreviewQuery(baseOptions: Apollo.QueryHookOptions<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>(ShowcasePreviewDocument, options);
+      }
+export function useShowcasePreviewLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>(ShowcasePreviewDocument, options);
+        }
+export type ShowcasePreviewQueryHookResult = ReturnType<typeof useShowcasePreviewQuery>;
+export type ShowcasePreviewLazyQueryHookResult = ReturnType<typeof useShowcasePreviewLazyQuery>;
+export type ShowcasePreviewQueryResult = Apollo.QueryResult<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>;
+export function refetchShowcasePreviewQuery(variables: ShowcasePreviewQueryVariables) {
+      return { query: ShowcasePreviewDocument, variables: variables }
     }
 export const ShowcaseForUpdateDocument = gql`
     query ShowcaseForUpdate($slug: String!) {

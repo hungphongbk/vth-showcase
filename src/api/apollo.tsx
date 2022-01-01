@@ -19,7 +19,13 @@ const httpLink = new HttpLink({
   uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
 });
 const authLink = setContext(async (_, { headers }) => {
-  if (typeof window === "undefined") return headers;
+  if (typeof window === "undefined")
+    return {
+      headers: {
+        ...headers,
+        ssr: true,
+      },
+    };
 
   const token = store.getState().auth?.token;
   if (!token) return headers;
@@ -104,12 +110,17 @@ export function useApollo(pageProps: any) {
   return useMemo(() => getApolloClient(state), [state]);
 }
 
-export const withApollo = (Comp: NextPage) => (props: any) => {
-  return (
-    <ApolloProvider
-      client={getApolloClient(undefined, props[APOLLO_STATE_PROP_NAME])}
-    >
-      <Comp />
-    </ApolloProvider>
-  );
+export const withApollo = (Comp: NextPage) => {
+  function WithApollo(props: any) {
+    return (
+      <ApolloProvider
+        client={getApolloClient(undefined, props[APOLLO_STATE_PROP_NAME])}
+      >
+        <Comp />
+      </ApolloProvider>
+    );
+  }
+  if (process.env.NODE_ENV !== "production")
+    WithApollo.displayName = `WithApollo(${Comp.displayName})`;
+  return WithApollo;
 };

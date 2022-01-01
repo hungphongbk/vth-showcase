@@ -21,7 +21,7 @@ query ShowcasePreview($slug: String!) {
       promo
     }
   }
-  showcases(filter: { slug: { neq: $slug,notLike: "ci-test%" } }) {
+  showcases(filter: {and:[{ slug: { neq: $slug } },{slug:{notLike: "ci-test%"}}]}) {
     edges {
       node {
         slug

@@ -329,41 +329,6 @@ export const ssrInvestmentPackages = {
       withPage: withPageInvestmentPackages,
       usePage: useInvestmentPackages,
     }
-export async function getServerPageShowcasePreview
-    (options: Omit<Apollo.QueryOptions<Types.ShowcasePreviewQueryVariables>, 'query'>, ctx: ApolloClientContext ){
-        const apolloClient = getApolloClient(ctx);
-        
-        const data = await apolloClient.query<Types.ShowcasePreviewQuery>({ ...options, query: Operations.ShowcasePreviewDocument });
-        
-        const apolloState = apolloClient.cache.extract();
-
-        return {
-            props: {
-                apolloState: apolloState,
-                data: data?.data,
-                error: data?.error ?? data?.errors ?? null,
-            },
-        };
-      }
-export const useShowcasePreview = (
-  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.ShowcasePreviewQuery, Types.ShowcasePreviewQueryVariables>) => {
-  const router = useRouter();
-  const options = optionsFunc ? optionsFunc(router) : {};
-  return useQuery(Operations.ShowcasePreviewDocument, options);
-};
-export type PageShowcasePreviewComp = React.FC<{data?: Types.ShowcasePreviewQuery, error?: Apollo.ApolloError}>;
-export const withPageShowcasePreview = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.ShowcasePreviewQuery, Types.ShowcasePreviewQueryVariables>) => (WrappedComponent:PageShowcasePreviewComp) : NextPage  => (props) => {
-                const router = useRouter()
-                const options = optionsFunc ? optionsFunc(router) : {};
-                const {data, error } = useQuery(Operations.ShowcasePreviewDocument, options)    
-                return <WrappedComponent {...props} data={data} error={error} /> ;
-                   
-            }; 
-export const ssrShowcasePreview = {
-      getServerPage: getServerPageShowcasePreview,
-      withPage: withPageShowcasePreview,
-      usePage: useShowcasePreview,
-    }
 export async function getServerPageShowcases
     (options: Omit<Apollo.QueryOptions<Types.ShowcasesQueryVariables>, 'query'>, ctx: ApolloClientContext ){
         const apolloClient = getApolloClient(ctx);
@@ -468,6 +433,41 @@ export const ssrShowcaseDetail = {
       getServerPage: getServerPageShowcaseDetail,
       withPage: withPageShowcaseDetail,
       usePage: useShowcaseDetail,
+    }
+export async function getServerPageShowcasePreview
+    (options: Omit<Apollo.QueryOptions<Types.ShowcasePreviewQueryVariables>, 'query'>, ctx: ApolloClientContext ){
+        const apolloClient = getApolloClient(ctx);
+        
+        const data = await apolloClient.query<Types.ShowcasePreviewQuery>({ ...options, query: Operations.ShowcasePreviewDocument });
+        
+        const apolloState = apolloClient.cache.extract();
+
+        return {
+            props: {
+                apolloState: apolloState,
+                data: data?.data,
+                error: data?.error ?? data?.errors ?? null,
+            },
+        };
+      }
+export const useShowcasePreview = (
+  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.ShowcasePreviewQuery, Types.ShowcasePreviewQueryVariables>) => {
+  const router = useRouter();
+  const options = optionsFunc ? optionsFunc(router) : {};
+  return useQuery(Operations.ShowcasePreviewDocument, options);
+};
+export type PageShowcasePreviewComp = React.FC<{data?: Types.ShowcasePreviewQuery, error?: Apollo.ApolloError}>;
+export const withPageShowcasePreview = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.ShowcasePreviewQuery, Types.ShowcasePreviewQueryVariables>) => (WrappedComponent:PageShowcasePreviewComp) : NextPage  => (props) => {
+                const router = useRouter()
+                const options = optionsFunc ? optionsFunc(router) : {};
+                const {data, error } = useQuery(Operations.ShowcasePreviewDocument, options)    
+                return <WrappedComponent {...props} data={data} error={error} /> ;
+                   
+            }; 
+export const ssrShowcasePreview = {
+      getServerPage: getServerPageShowcasePreview,
+      withPage: withPageShowcasePreview,
+      usePage: useShowcasePreview,
     }
 export async function getServerPageShowcaseForUpdate
     (options: Omit<Apollo.QueryOptions<Types.ShowcaseForUpdateQueryVariables>, 'query'>, ctx: ApolloClientContext ){

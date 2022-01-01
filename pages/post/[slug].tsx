@@ -3,22 +3,20 @@ import { Box, Button, ButtonProps } from "@mui/material";
 import ShowcaseDetailed from "../../src/components/ShowcaseDetailed";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
-import { addApolloState, apiService, apolloClient } from "../../src/api";
+import { apiService } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
 import BookmarkIcon from "../../src/assets/icons/BookmarkIcon";
 import dynamic from "next/dynamic";
 import {
   Showcase,
-  ShowcaseDetailDocument,
   ShowcaseEdge,
-  ShowcasePreviewQuery,
-  ShowcasePreviewQueryVariables,
   ShowcaseStatus,
-  useShowcaseDetailQuery,
 } from "../../src/types/graphql";
 import { InvestorInformation } from "../../src/components/PostPage";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
+import { ssrShowcaseDetail } from "../../src/types/graphql.ssr";
+import { withApollo } from "@apollo/client/react/hoc";
 
 const PreorderDialog = dynamic(
   () => import("../../src/components/system/preorder-dialog"),
@@ -79,15 +77,15 @@ const BottomButton = ({
     </Box>
   );
 
-export default function PostDetailedPage({ slug }: { slug: string }) {
+function PostDetailedPage() {
   const router = useRouter();
   useEffect(() => {
     // noinspection JSIgnoredPromiseFromCall
     router.prefetch("/");
   }, [router]);
   const [open, setOpen] = useState(false);
-  const { loading, error, data } = useAuthQuery(useShowcaseDetailQuery, {
-    variables: { slug },
+  const { loading, error, data } = useAuthQuery(ssrShowcaseDetail.usePage, {
+    variables: { slug: router.query.slug as string },
   });
 
   const showcase = data?.showcase as Showcase,
@@ -163,21 +161,22 @@ export default function PostDetailedPage({ slug }: { slug: string }) {
   );
 }
 
+export default withApollo(
+  ssrShowcaseDetail.withPage((r) => ({
+    variables: { slug: r.query.slug as string },
+  }))(PostDetailedPage)
+);
+
 export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context.params!.slug as string;
-  await apolloClient.query<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>(
-    {
-      query: ShowcaseDetailDocument,
-      variables: {
-        slug,
-      },
-      errorPolicy: "ignore",
-    }
-  );
-  return addApolloState(apolloClient, {
-    props: { slug },
-    revalidate: 60,
-  });
+
+  return {
+    ...(await ssrShowcaseDetail.getServerPage(
+      { variables: { slug } },
+      context
+    )),
+    revalidate: 45,
+  };
 };
 
 // noinspection JSUnusedGlobalSymbols

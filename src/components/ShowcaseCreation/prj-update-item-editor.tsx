@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import {
+  FnsDate,
   FormInput,
   useOpenCloseState,
   useVthTheme,
@@ -20,7 +21,6 @@ import TimelineDot from "@mui/lab/TimelineDot";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineContent from "@mui/lab/TimelineContent";
-import { format } from "date-fns";
 import PrjUpdateIcon from "./PrjUpdateIcon";
 import PrjUpdateDelIcon from "./PrjUpdateDelIcon";
 
@@ -89,7 +89,7 @@ export default function PrjUpdateItemEditor({
               <Box sx={{ gridArea: "time" }}>
                 <Typography sx={{ fontWeight: 600 }}>
                   <strong>
-                    {format(new Date(value.createdAt), "hh:mm aa")}
+                    <FnsDate value={value.createdAt} format={"hh:mm aa"} />
                   </strong>{" "}
                   | Thứ Sáu, ngày 15/10/2021
                 </Typography>

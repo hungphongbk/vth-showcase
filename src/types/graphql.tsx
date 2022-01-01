@@ -44,13 +44,18 @@ export enum AuthRoleType {
   User = 'USER'
 }
 
+export interface BooleanFieldComparison {
+  is?: Maybe<Scalars['Boolean']>;
+  isNot?: Maybe<Scalars['Boolean']>;
+}
+
 export interface CommentCreateDto {
   content: Scalars['String'];
   rate: Array<CommentRateEnum>;
 }
 
 export interface CommentDto {
-  author: Maybe<User>;
+  author?: Maybe<User>;
   content: Scalars['String'];
   createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
@@ -59,15 +64,15 @@ export interface CommentDto {
 }
 
 export interface CommentDtoAggregateGroupBy {
-  id: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface CommentDtoAvgAggregate {
-  id: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
 }
 
 export interface CommentDtoCountAggregate {
-  id: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
 }
 
 export interface CommentDtoEdge {
@@ -76,23 +81,23 @@ export interface CommentDtoEdge {
 }
 
 export interface CommentDtoFilter {
-  and: Maybe<Array<CommentDtoFilter>>;
-  id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<CommentDtoFilter>>;
+  and?: Maybe<Array<CommentDtoFilter>>;
+  id?: Maybe<IdFilterComparison>;
+  or?: Maybe<Array<CommentDtoFilter>>;
 }
 
 export interface CommentDtoMaxAggregate {
-  id: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface CommentDtoMinAggregate {
-  id: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface CommentDtoSort {
   direction: SortDirection;
   field: CommentDtoSortFields;
-  nulls: Maybe<SortNulls>;
+  nulls?: Maybe<SortNulls>;
 }
 
 export enum CommentDtoSortFields {
@@ -100,7 +105,7 @@ export enum CommentDtoSortFields {
 }
 
 export interface CommentDtoSumAggregate {
-  id: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
 }
 
 export enum CommentRateEnum {
@@ -114,15 +119,15 @@ export enum CommentRateEnum {
 
 
 export interface CreateImageListInputDto {
-  images: Maybe<Array<MediaInput>>;
+  images?: Maybe<Array<MediaInput>>;
 }
 
 export interface CreateInvestmentPackageDto {
-  benefitRate: Maybe<Scalars['Float']>;
-  count: Maybe<Scalars['Float']>;
-  displayName: Maybe<Scalars['String']>;
-  fundedRate: Maybe<Scalars['Float']>;
-  id: Maybe<Scalars['ID']>;
+  benefitRate?: Maybe<Scalars['Float']>;
+  count?: Maybe<Scalars['Float']>;
+  displayName?: Maybe<Scalars['String']>;
+  fundedRate?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface CreateManyInvestmentPackageDtosInput {
@@ -146,25 +151,25 @@ export interface CreateOneMediaDtoInput {
 }
 
 export interface CursorPaging {
-  after: Maybe<Scalars['ConnectionCursor']>;
-  before: Maybe<Scalars['ConnectionCursor']>;
-  first: Maybe<Scalars['Int']>;
-  last: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['ConnectionCursor']>;
+  before?: Maybe<Scalars['ConnectionCursor']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
 }
 
 export interface DateFieldComparison {
-  between: Maybe<DateFieldComparisonBetween>;
-  eq: Maybe<Scalars['DateTime']>;
-  gt: Maybe<Scalars['DateTime']>;
-  gte: Maybe<Scalars['DateTime']>;
-  in: Maybe<Array<Scalars['DateTime']>>;
-  is: Maybe<Scalars['Boolean']>;
-  isNot: Maybe<Scalars['Boolean']>;
-  lt: Maybe<Scalars['DateTime']>;
-  lte: Maybe<Scalars['DateTime']>;
-  neq: Maybe<Scalars['DateTime']>;
-  notBetween: Maybe<DateFieldComparisonBetween>;
-  notIn: Maybe<Array<Scalars['DateTime']>>;
+  between?: Maybe<DateFieldComparisonBetween>;
+  eq?: Maybe<Scalars['DateTime']>;
+  gt?: Maybe<Scalars['DateTime']>;
+  gte?: Maybe<Scalars['DateTime']>;
+  in?: Maybe<Array<Scalars['DateTime']>>;
+  is?: Maybe<Scalars['Boolean']>;
+  isNot?: Maybe<Scalars['Boolean']>;
+  lt?: Maybe<Scalars['DateTime']>;
+  lte?: Maybe<Scalars['DateTime']>;
+  neq?: Maybe<Scalars['DateTime']>;
+  notBetween?: Maybe<DateFieldComparisonBetween>;
+  notIn?: Maybe<Array<Scalars['DateTime']>>;
 }
 
 export interface DateFieldComparisonBetween {
@@ -210,20 +215,20 @@ export interface DeleteOneShowcaseHighlightFeatureInput {
 }
 
 export interface IdFilterComparison {
-  eq: Maybe<Scalars['ID']>;
-  gt: Maybe<Scalars['ID']>;
-  gte: Maybe<Scalars['ID']>;
-  iLike: Maybe<Scalars['ID']>;
-  in: Maybe<Array<Scalars['ID']>>;
-  is: Maybe<Scalars['Boolean']>;
-  isNot: Maybe<Scalars['Boolean']>;
-  like: Maybe<Scalars['ID']>;
-  lt: Maybe<Scalars['ID']>;
-  lte: Maybe<Scalars['ID']>;
-  neq: Maybe<Scalars['ID']>;
-  notILike: Maybe<Scalars['ID']>;
-  notIn: Maybe<Array<Scalars['ID']>>;
-  notLike: Maybe<Scalars['ID']>;
+  eq?: Maybe<Scalars['ID']>;
+  gt?: Maybe<Scalars['ID']>;
+  gte?: Maybe<Scalars['ID']>;
+  iLike?: Maybe<Scalars['ID']>;
+  in?: Maybe<Array<Scalars['ID']>>;
+  is?: Maybe<Scalars['Boolean']>;
+  isNot?: Maybe<Scalars['Boolean']>;
+  like?: Maybe<Scalars['ID']>;
+  lt?: Maybe<Scalars['ID']>;
+  lte?: Maybe<Scalars['ID']>;
+  neq?: Maybe<Scalars['ID']>;
+  notILike?: Maybe<Scalars['ID']>;
+  notIn?: Maybe<Array<Scalars['ID']>>;
+  notLike?: Maybe<Scalars['ID']>;
 }
 
 export interface IdInterface {
@@ -242,15 +247,15 @@ export interface ImageListImagesArgs {
 }
 
 export interface ImageListAggregateGroupBy {
-  id: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface ImageListCountAggregate {
-  id: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
 }
 
 export interface ImageListDeleteResponse {
-  id: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface ImageListEdge {
@@ -259,23 +264,23 @@ export interface ImageListEdge {
 }
 
 export interface ImageListFilter {
-  and: Maybe<Array<ImageListFilter>>;
-  id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<ImageListFilter>>;
+  and?: Maybe<Array<ImageListFilter>>;
+  id?: Maybe<IdFilterComparison>;
+  or?: Maybe<Array<ImageListFilter>>;
 }
 
 export interface ImageListMaxAggregate {
-  id: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface ImageListMinAggregate {
-  id: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface ImageListSort {
   direction: SortDirection;
   field: ImageListSortFields;
-  nulls: Maybe<SortNulls>;
+  nulls?: Maybe<SortNulls>;
 }
 
 export enum ImageListSortFields {
@@ -291,12 +296,12 @@ export interface InvestmentPackageDto {
 }
 
 export interface InvestmentPackageDtoAggregateGroupBy {
-  displayName: Maybe<Scalars['String']>;
-  id: Maybe<Scalars['ID']>;
+  displayName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface InvestmentPackageDtoAvgAggregate {
-  id: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
 }
 
 export interface InvestmentPackageDtoConnection {
@@ -305,23 +310,23 @@ export interface InvestmentPackageDtoConnection {
 }
 
 export interface InvestmentPackageDtoCountAggregate {
-  displayName: Maybe<Scalars['Int']>;
-  id: Maybe<Scalars['Int']>;
+  displayName?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
 }
 
 export interface InvestmentPackageDtoDeleteFilter {
-  and: Maybe<Array<InvestmentPackageDtoDeleteFilter>>;
-  displayName: Maybe<StringFieldComparison>;
-  id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<InvestmentPackageDtoDeleteFilter>>;
+  and?: Maybe<Array<InvestmentPackageDtoDeleteFilter>>;
+  displayName?: Maybe<StringFieldComparison>;
+  id?: Maybe<IdFilterComparison>;
+  or?: Maybe<Array<InvestmentPackageDtoDeleteFilter>>;
 }
 
 export interface InvestmentPackageDtoDeleteResponse {
-  benefitRate: Maybe<Scalars['Float']>;
-  count: Maybe<Scalars['Float']>;
-  displayName: Maybe<Scalars['String']>;
-  fundedRate: Maybe<Scalars['Float']>;
-  id: Maybe<Scalars['ID']>;
+  benefitRate?: Maybe<Scalars['Float']>;
+  count?: Maybe<Scalars['Float']>;
+  displayName?: Maybe<Scalars['String']>;
+  fundedRate?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface InvestmentPackageDtoEdge {
@@ -330,26 +335,26 @@ export interface InvestmentPackageDtoEdge {
 }
 
 export interface InvestmentPackageDtoFilter {
-  and: Maybe<Array<InvestmentPackageDtoFilter>>;
-  displayName: Maybe<StringFieldComparison>;
-  id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<InvestmentPackageDtoFilter>>;
+  and?: Maybe<Array<InvestmentPackageDtoFilter>>;
+  displayName?: Maybe<StringFieldComparison>;
+  id?: Maybe<IdFilterComparison>;
+  or?: Maybe<Array<InvestmentPackageDtoFilter>>;
 }
 
 export interface InvestmentPackageDtoMaxAggregate {
-  displayName: Maybe<Scalars['String']>;
-  id: Maybe<Scalars['ID']>;
+  displayName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface InvestmentPackageDtoMinAggregate {
-  displayName: Maybe<Scalars['String']>;
-  id: Maybe<Scalars['ID']>;
+  displayName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface InvestmentPackageDtoSort {
   direction: SortDirection;
   field: InvestmentPackageDtoSortFields;
-  nulls: Maybe<SortNulls>;
+  nulls?: Maybe<SortNulls>;
 }
 
 export enum InvestmentPackageDtoSortFields {
@@ -358,31 +363,31 @@ export enum InvestmentPackageDtoSortFields {
 }
 
 export interface InvestmentPackageDtoSumAggregate {
-  id: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
 }
 
 export interface InvestmentPackageDtoUpdateFilter {
-  and: Maybe<Array<InvestmentPackageDtoUpdateFilter>>;
-  displayName: Maybe<StringFieldComparison>;
-  id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<InvestmentPackageDtoUpdateFilter>>;
+  and?: Maybe<Array<InvestmentPackageDtoUpdateFilter>>;
+  displayName?: Maybe<StringFieldComparison>;
+  id?: Maybe<IdFilterComparison>;
+  or?: Maybe<Array<InvestmentPackageDtoUpdateFilter>>;
 }
 
 
 export interface MediaDto extends IdInterface {
   filename: Scalars['String'];
-  height: Maybe<Scalars['Float']>;
+  height: Scalars['Float'];
   id: Scalars['ID'];
   mimetype: Scalars['String'];
   path: Scalars['String'];
-  preloadUrl: Maybe<Scalars['String']>;
+  preloadUrl: Scalars['String'];
   type: MediaType;
-  width: Maybe<Scalars['Float']>;
+  width: Scalars['Float'];
 }
 
 export interface MediaDtoAggregateGroupBy {
-  filename: Maybe<Scalars['String']>;
-  id: Maybe<Scalars['ID']>;
+  filename?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface MediaDtoConnection {
@@ -391,26 +396,26 @@ export interface MediaDtoConnection {
 }
 
 export interface MediaDtoCountAggregate {
-  filename: Maybe<Scalars['Int']>;
-  id: Maybe<Scalars['Int']>;
+  filename?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
 }
 
 export interface MediaDtoDeleteFilter {
-  and: Maybe<Array<MediaDtoDeleteFilter>>;
-  filename: Maybe<StringFieldComparison>;
-  id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<MediaDtoDeleteFilter>>;
+  and?: Maybe<Array<MediaDtoDeleteFilter>>;
+  filename?: Maybe<StringFieldComparison>;
+  id?: Maybe<IdFilterComparison>;
+  or?: Maybe<Array<MediaDtoDeleteFilter>>;
 }
 
 export interface MediaDtoDeleteResponse {
-  filename: Maybe<Scalars['String']>;
-  height: Maybe<Scalars['Float']>;
-  id: Maybe<Scalars['ID']>;
-  mimetype: Maybe<Scalars['String']>;
-  path: Maybe<Scalars['String']>;
-  preloadUrl: Maybe<Scalars['String']>;
-  type: Maybe<MediaType>;
-  width: Maybe<Scalars['Float']>;
+  filename?: Maybe<Scalars['String']>;
+  height?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['ID']>;
+  mimetype?: Maybe<Scalars['String']>;
+  path?: Maybe<Scalars['String']>;
+  preloadUrl?: Maybe<Scalars['String']>;
+  type?: Maybe<MediaType>;
+  width?: Maybe<Scalars['Float']>;
 }
 
 export interface MediaDtoEdge {
@@ -419,26 +424,26 @@ export interface MediaDtoEdge {
 }
 
 export interface MediaDtoFilter {
-  and: Maybe<Array<MediaDtoFilter>>;
-  filename: Maybe<StringFieldComparison>;
-  id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<MediaDtoFilter>>;
+  and?: Maybe<Array<MediaDtoFilter>>;
+  filename?: Maybe<StringFieldComparison>;
+  id?: Maybe<IdFilterComparison>;
+  or?: Maybe<Array<MediaDtoFilter>>;
 }
 
 export interface MediaDtoMaxAggregate {
-  filename: Maybe<Scalars['String']>;
-  id: Maybe<Scalars['ID']>;
+  filename?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface MediaDtoMinAggregate {
-  filename: Maybe<Scalars['String']>;
-  id: Maybe<Scalars['ID']>;
+  filename?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface MediaDtoSort {
   direction: SortDirection;
   field: MediaDtoSortFields;
-  nulls: Maybe<SortNulls>;
+  nulls?: Maybe<SortNulls>;
 }
 
 export enum MediaDtoSortFields {
@@ -447,20 +452,20 @@ export enum MediaDtoSortFields {
 }
 
 export interface MediaDtoUpdateFilter {
-  and: Maybe<Array<MediaDtoUpdateFilter>>;
-  filename: Maybe<StringFieldComparison>;
-  id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<MediaDtoUpdateFilter>>;
+  and?: Maybe<Array<MediaDtoUpdateFilter>>;
+  filename?: Maybe<StringFieldComparison>;
+  id?: Maybe<IdFilterComparison>;
+  or?: Maybe<Array<MediaDtoUpdateFilter>>;
 }
 
 export interface MediaInput {
   filename: Scalars['String'];
-  height: Maybe<Scalars['Float']>;
+  height?: Maybe<Scalars['Float']>;
   mimetype: Scalars['String'];
   path: Scalars['String'];
-  preloadUrl: Maybe<Scalars['String']>;
-  type: Maybe<MediaType>;
-  width: Maybe<Scalars['Float']>;
+  preloadUrl?: Maybe<Scalars['String']>;
+  type?: Maybe<MediaType>;
+  width?: Maybe<Scalars['Float']>;
 }
 
 export enum MediaType {
@@ -786,20 +791,20 @@ export interface MutationUpdateOneUserArgs {
 }
 
 export interface OffsetPageInfo {
-  hasNextPage: Maybe<Scalars['Boolean']>;
-  hasPreviousPage: Maybe<Scalars['Boolean']>;
+  hasNextPage?: Maybe<Scalars['Boolean']>;
+  hasPreviousPage?: Maybe<Scalars['Boolean']>;
 }
 
 export interface OffsetPaging {
-  limit: Maybe<Scalars['Int']>;
-  offset: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 }
 
 export interface PageInfo {
-  endCursor: Maybe<Scalars['ConnectionCursor']>;
-  hasNextPage: Maybe<Scalars['Boolean']>;
-  hasPreviousPage: Maybe<Scalars['Boolean']>;
-  startCursor: Maybe<Scalars['ConnectionCursor']>;
+  endCursor?: Maybe<Scalars['ConnectionCursor']>;
+  hasNextPage?: Maybe<Scalars['Boolean']>;
+  hasPreviousPage?: Maybe<Scalars['Boolean']>;
+  startCursor?: Maybe<Scalars['ConnectionCursor']>;
 }
 
 export interface PrjUpdateCreateDto {
@@ -813,21 +818,21 @@ export interface PrjUpdateDto {
 }
 
 export interface PrjUpdateDtoAggregateGroupBy {
-  id: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface PrjUpdateDtoAvgAggregate {
-  id: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
 }
 
 export interface PrjUpdateDtoCountAggregate {
-  id: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
 }
 
 export interface PrjUpdateDtoDeleteResponse {
-  content: Maybe<Scalars['String']>;
-  createdAt: Maybe<Scalars['DateTime']>;
-  id: Maybe<Scalars['ID']>;
+  content?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface PrjUpdateDtoEdge {
@@ -836,23 +841,23 @@ export interface PrjUpdateDtoEdge {
 }
 
 export interface PrjUpdateDtoFilter {
-  and: Maybe<Array<PrjUpdateDtoFilter>>;
-  id: Maybe<IdFilterComparison>;
-  or: Maybe<Array<PrjUpdateDtoFilter>>;
+  and?: Maybe<Array<PrjUpdateDtoFilter>>;
+  id?: Maybe<IdFilterComparison>;
+  or?: Maybe<Array<PrjUpdateDtoFilter>>;
 }
 
 export interface PrjUpdateDtoMaxAggregate {
-  id: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface PrjUpdateDtoMinAggregate {
-  id: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface PrjUpdateDtoSort {
   direction: SortDirection;
   field: PrjUpdateDtoSortFields;
-  nulls: Maybe<SortNulls>;
+  nulls?: Maybe<SortNulls>;
 }
 
 export enum PrjUpdateDtoSortFields {
@@ -860,7 +865,7 @@ export enum PrjUpdateDtoSortFields {
 }
 
 export interface PrjUpdateDtoSumAggregate {
-  id: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
 }
 
 export enum PublishStatus {
@@ -869,36 +874,36 @@ export enum PublishStatus {
 }
 
 export interface PublishStatusFilterComparison {
-  eq: Maybe<PublishStatus>;
-  gt: Maybe<PublishStatus>;
-  gte: Maybe<PublishStatus>;
-  iLike: Maybe<PublishStatus>;
-  in: Maybe<Array<PublishStatus>>;
-  is: Maybe<Scalars['Boolean']>;
-  isNot: Maybe<Scalars['Boolean']>;
-  like: Maybe<PublishStatus>;
-  lt: Maybe<PublishStatus>;
-  lte: Maybe<PublishStatus>;
-  neq: Maybe<PublishStatus>;
-  notILike: Maybe<PublishStatus>;
-  notIn: Maybe<Array<PublishStatus>>;
-  notLike: Maybe<PublishStatus>;
+  eq?: Maybe<PublishStatus>;
+  gt?: Maybe<PublishStatus>;
+  gte?: Maybe<PublishStatus>;
+  iLike?: Maybe<PublishStatus>;
+  in?: Maybe<Array<PublishStatus>>;
+  is?: Maybe<Scalars['Boolean']>;
+  isNot?: Maybe<Scalars['Boolean']>;
+  like?: Maybe<PublishStatus>;
+  lt?: Maybe<PublishStatus>;
+  lte?: Maybe<PublishStatus>;
+  neq?: Maybe<PublishStatus>;
+  notILike?: Maybe<PublishStatus>;
+  notIn?: Maybe<Array<PublishStatus>>;
+  notLike?: Maybe<PublishStatus>;
 }
 
 export interface Query {
   currentUser: User;
   getAllUsers: Array<User>;
   getOneUser: User;
-  imageList: Maybe<ImageList>;
-  investmentPackageDto: Maybe<InvestmentPackageDto>;
+  imageList?: Maybe<ImageList>;
+  investmentPackageDto?: Maybe<InvestmentPackageDto>;
   investmentPackageDtos: InvestmentPackageDtoConnection;
-  mediaDto: Maybe<MediaDto>;
+  mediaDto?: Maybe<MediaDto>;
   mediaDtos: MediaDtoConnection;
-  prjUpdateDto: Maybe<PrjUpdateDto>;
-  setting: Maybe<SettingDto>;
+  prjUpdateDto?: Maybe<PrjUpdateDto>;
+  setting?: Maybe<SettingDto>;
   settings: Array<SettingDto>;
   showcase: Showcase;
-  showcaseHighlightFeature: Maybe<ShowcaseHighlightFeature>;
+  showcaseHighlightFeature?: Maybe<ShowcaseHighlightFeature>;
   showcases: ShowcaseConnection;
   slugs: Array<Scalars['String']>;
 }
@@ -1066,16 +1071,17 @@ export interface Showcase {
   comments: ShowcaseCommentsConnection;
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
-  expectedQuantity: Maybe<ShowcasePrice>;
-  expectedSaleAt: Maybe<Scalars['DateTime']>;
-  expectedSaleEndAt: Maybe<Scalars['DateTime']>;
-  expectedSalePrice: Maybe<ShowcasePrice>;
+  expectedQuantity?: Maybe<ShowcasePrice>;
+  expectedSaleAt?: Maybe<Scalars['DateTime']>;
+  expectedSaleEndAt?: Maybe<Scalars['DateTime']>;
+  expectedSalePrice?: Maybe<ShowcasePrice>;
   highlightFeatures: Array<ShowcaseHighlightFeature>;
   id: Scalars['ID'];
   image: MediaDto;
   imageLists: Array<ImageList>;
-  inventory: Maybe<ShowcaseInventoryDto>;
-  investorStat: Maybe<ShowcaseInvestorStatDto>;
+  inventory?: Maybe<ShowcaseInventoryDto>;
+  investorStat?: Maybe<ShowcaseInvestorStatDto>;
+  isFeatured?: Maybe<Scalars['Boolean']>;
   name: Scalars['String'];
   publishStatus: PublishStatus;
   slug: Scalars['String'];
@@ -1110,13 +1116,14 @@ export interface ShowcaseUpdatesArgs {
 }
 
 export interface ShowcaseAggregateGroupBy {
-  expectedSaleAt: Maybe<Scalars['DateTime']>;
-  expectedSaleEndAt: Maybe<Scalars['DateTime']>;
-  name: Maybe<Scalars['String']>;
-  publishStatus: Maybe<PublishStatus>;
-  slug: Maybe<Scalars['String']>;
-  status: Maybe<ShowcaseStatus>;
-  updatedAt: Maybe<Scalars['DateTime']>;
+  expectedSaleAt?: Maybe<Scalars['DateTime']>;
+  expectedSaleEndAt?: Maybe<Scalars['DateTime']>;
+  isFeatured?: Maybe<Scalars['Boolean']>;
+  name?: Maybe<Scalars['String']>;
+  publishStatus?: Maybe<PublishStatus>;
+  slug?: Maybe<Scalars['String']>;
+  status?: Maybe<ShowcaseStatus>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 }
 
 export interface ShowcaseBrand {
@@ -1141,43 +1148,46 @@ export interface ShowcaseConnection {
 }
 
 export interface ShowcaseCountAggregate {
-  expectedSaleAt: Maybe<Scalars['Int']>;
-  expectedSaleEndAt: Maybe<Scalars['Int']>;
-  name: Maybe<Scalars['Int']>;
-  publishStatus: Maybe<Scalars['Int']>;
-  slug: Maybe<Scalars['Int']>;
-  status: Maybe<Scalars['Int']>;
-  updatedAt: Maybe<Scalars['Int']>;
+  expectedSaleAt?: Maybe<Scalars['Int']>;
+  expectedSaleEndAt?: Maybe<Scalars['Int']>;
+  isFeatured?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['Int']>;
+  publishStatus?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
 }
 
 export interface ShowcaseCreateInputDto {
   brand: ShowcaseBrandInput;
   description: Scalars['String'];
-  expectedQuantity: Maybe<ShowcasePriceInput>;
-  expectedSaleAt: Maybe<Scalars['DateTime']>;
-  expectedSaleEndAt: Maybe<Scalars['DateTime']>;
-  expectedSalePrice: Maybe<ShowcasePriceInput>;
-  highlightFeatures: Maybe<Array<ShowcaseHfCreateInputDto>>;
-  id: Maybe<Scalars['String']>;
+  expectedQuantity?: Maybe<ShowcasePriceInput>;
+  expectedSaleAt?: Maybe<Scalars['DateTime']>;
+  expectedSaleEndAt?: Maybe<Scalars['DateTime']>;
+  expectedSalePrice?: Maybe<ShowcasePriceInput>;
+  highlightFeatures?: Maybe<Array<ShowcaseHfCreateInputDto>>;
+  id?: Maybe<Scalars['String']>;
   image: MediaInput;
-  imageLists: Maybe<Array<CreateImageListInputDto>>;
-  inventory: Maybe<ShowcaseInventoryDtoInput>;
+  imageLists?: Maybe<Array<CreateImageListInputDto>>;
+  inventory?: Maybe<ShowcaseInventoryDtoInput>;
+  isFeatured?: Maybe<Scalars['Boolean']>;
   name: Scalars['String'];
-  publishStatus: Maybe<PublishStatus>;
+  publishStatus?: Maybe<PublishStatus>;
   status: ShowcaseStatus;
-  updates: Maybe<Array<PrjUpdateCreateDto>>;
+  updates?: Maybe<Array<PrjUpdateCreateDto>>;
 }
 
 export interface ShowcaseDeleteFilter {
-  and: Maybe<Array<ShowcaseDeleteFilter>>;
-  expectedSaleAt: Maybe<DateFieldComparison>;
-  expectedSaleEndAt: Maybe<DateFieldComparison>;
-  name: Maybe<StringFieldComparison>;
-  or: Maybe<Array<ShowcaseDeleteFilter>>;
-  publishStatus: Maybe<PublishStatusFilterComparison>;
-  slug: Maybe<StringFieldComparison>;
-  status: Maybe<ShowcaseStatusFilterComparison>;
-  updatedAt: Maybe<DateFieldComparison>;
+  and?: Maybe<Array<ShowcaseDeleteFilter>>;
+  expectedSaleAt?: Maybe<DateFieldComparison>;
+  expectedSaleEndAt?: Maybe<DateFieldComparison>;
+  isFeatured?: Maybe<BooleanFieldComparison>;
+  name?: Maybe<StringFieldComparison>;
+  or?: Maybe<Array<ShowcaseDeleteFilter>>;
+  publishStatus?: Maybe<PublishStatusFilterComparison>;
+  slug?: Maybe<StringFieldComparison>;
+  status?: Maybe<ShowcaseStatusFilterComparison>;
+  updatedAt?: Maybe<DateFieldComparison>;
 }
 
 export interface ShowcaseEdge {
@@ -1186,28 +1196,29 @@ export interface ShowcaseEdge {
 }
 
 export interface ShowcaseFilter {
-  and: Maybe<Array<ShowcaseFilter>>;
-  expectedSaleAt: Maybe<DateFieldComparison>;
-  expectedSaleEndAt: Maybe<DateFieldComparison>;
-  name: Maybe<StringFieldComparison>;
-  or: Maybe<Array<ShowcaseFilter>>;
-  publishStatus: Maybe<PublishStatusFilterComparison>;
-  slug: Maybe<StringFieldComparison>;
-  status: Maybe<ShowcaseStatusFilterComparison>;
-  updatedAt: Maybe<DateFieldComparison>;
+  and?: Maybe<Array<ShowcaseFilter>>;
+  expectedSaleAt?: Maybe<DateFieldComparison>;
+  expectedSaleEndAt?: Maybe<DateFieldComparison>;
+  isFeatured?: Maybe<BooleanFieldComparison>;
+  name?: Maybe<StringFieldComparison>;
+  or?: Maybe<Array<ShowcaseFilter>>;
+  publishStatus?: Maybe<PublishStatusFilterComparison>;
+  slug?: Maybe<StringFieldComparison>;
+  status?: Maybe<ShowcaseStatusFilterComparison>;
+  updatedAt?: Maybe<DateFieldComparison>;
 }
 
 export interface ShowcaseHfCreateInputDto {
   description: Scalars['String'];
-  id: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   image: MediaInput;
   name: Scalars['String'];
 }
 
 export interface ShowcaseHfUpdateInputDto {
-  description: Maybe<Scalars['String']>;
-  image: Maybe<MediaInput>;
-  name: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  image?: Maybe<MediaInput>;
+  name?: Maybe<Scalars['String']>;
 }
 
 export interface ShowcaseHighlightFeature {
@@ -1218,19 +1229,19 @@ export interface ShowcaseHighlightFeature {
 }
 
 export interface ShowcaseHighlightFeatureAggregateGroupBy {
-  id: Maybe<Scalars['ID']>;
-  name: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
 }
 
 export interface ShowcaseHighlightFeatureCountAggregate {
-  id: Maybe<Scalars['Int']>;
-  name: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['Int']>;
 }
 
 export interface ShowcaseHighlightFeatureDeleteResponse {
-  description: Maybe<Scalars['String']>;
-  id: Maybe<Scalars['ID']>;
-  name: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
 }
 
 export interface ShowcaseHighlightFeatureEdge {
@@ -1239,26 +1250,26 @@ export interface ShowcaseHighlightFeatureEdge {
 }
 
 export interface ShowcaseHighlightFeatureFilter {
-  and: Maybe<Array<ShowcaseHighlightFeatureFilter>>;
-  id: Maybe<IdFilterComparison>;
-  name: Maybe<StringFieldComparison>;
-  or: Maybe<Array<ShowcaseHighlightFeatureFilter>>;
+  and?: Maybe<Array<ShowcaseHighlightFeatureFilter>>;
+  id?: Maybe<IdFilterComparison>;
+  name?: Maybe<StringFieldComparison>;
+  or?: Maybe<Array<ShowcaseHighlightFeatureFilter>>;
 }
 
 export interface ShowcaseHighlightFeatureMaxAggregate {
-  id: Maybe<Scalars['ID']>;
-  name: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
 }
 
 export interface ShowcaseHighlightFeatureMinAggregate {
-  id: Maybe<Scalars['ID']>;
-  name: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
 }
 
 export interface ShowcaseHighlightFeatureSort {
   direction: SortDirection;
   field: ShowcaseHighlightFeatureSortFields;
-  nulls: Maybe<SortNulls>;
+  nulls?: Maybe<SortNulls>;
 }
 
 export enum ShowcaseHighlightFeatureSortFields {
@@ -1307,23 +1318,23 @@ export interface ShowcaseInvestorStatDto {
 }
 
 export interface ShowcaseMaxAggregate {
-  expectedSaleAt: Maybe<Scalars['DateTime']>;
-  expectedSaleEndAt: Maybe<Scalars['DateTime']>;
-  name: Maybe<Scalars['String']>;
-  publishStatus: Maybe<PublishStatus>;
-  slug: Maybe<Scalars['String']>;
-  status: Maybe<ShowcaseStatus>;
-  updatedAt: Maybe<Scalars['DateTime']>;
+  expectedSaleAt?: Maybe<Scalars['DateTime']>;
+  expectedSaleEndAt?: Maybe<Scalars['DateTime']>;
+  name?: Maybe<Scalars['String']>;
+  publishStatus?: Maybe<PublishStatus>;
+  slug?: Maybe<Scalars['String']>;
+  status?: Maybe<ShowcaseStatus>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 }
 
 export interface ShowcaseMinAggregate {
-  expectedSaleAt: Maybe<Scalars['DateTime']>;
-  expectedSaleEndAt: Maybe<Scalars['DateTime']>;
-  name: Maybe<Scalars['String']>;
-  publishStatus: Maybe<PublishStatus>;
-  slug: Maybe<Scalars['String']>;
-  status: Maybe<ShowcaseStatus>;
-  updatedAt: Maybe<Scalars['DateTime']>;
+  expectedSaleAt?: Maybe<Scalars['DateTime']>;
+  expectedSaleEndAt?: Maybe<Scalars['DateTime']>;
+  name?: Maybe<Scalars['String']>;
+  publishStatus?: Maybe<PublishStatus>;
+  slug?: Maybe<Scalars['String']>;
+  status?: Maybe<ShowcaseStatus>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 }
 
 export interface ShowcasePrice {
@@ -1343,12 +1354,13 @@ export interface ShowcasePriceInput {
 export interface ShowcaseSort {
   direction: SortDirection;
   field: ShowcaseSortFields;
-  nulls: Maybe<SortNulls>;
+  nulls?: Maybe<SortNulls>;
 }
 
 export enum ShowcaseSortFields {
   ExpectedSaleAt = 'expectedSaleAt',
   ExpectedSaleEndAt = 'expectedSaleEndAt',
+  IsFeatured = 'isFeatured',
   Name = 'name',
   PublishStatus = 'publishStatus',
   Slug = 'slug',
@@ -1363,38 +1375,39 @@ export enum ShowcaseStatus {
 }
 
 export interface ShowcaseStatusFilterComparison {
-  eq: Maybe<ShowcaseStatus>;
-  gt: Maybe<ShowcaseStatus>;
-  gte: Maybe<ShowcaseStatus>;
-  iLike: Maybe<ShowcaseStatus>;
-  in: Maybe<Array<ShowcaseStatus>>;
-  is: Maybe<Scalars['Boolean']>;
-  isNot: Maybe<Scalars['Boolean']>;
-  like: Maybe<ShowcaseStatus>;
-  lt: Maybe<ShowcaseStatus>;
-  lte: Maybe<ShowcaseStatus>;
-  neq: Maybe<ShowcaseStatus>;
-  notILike: Maybe<ShowcaseStatus>;
-  notIn: Maybe<Array<ShowcaseStatus>>;
-  notLike: Maybe<ShowcaseStatus>;
+  eq?: Maybe<ShowcaseStatus>;
+  gt?: Maybe<ShowcaseStatus>;
+  gte?: Maybe<ShowcaseStatus>;
+  iLike?: Maybe<ShowcaseStatus>;
+  in?: Maybe<Array<ShowcaseStatus>>;
+  is?: Maybe<Scalars['Boolean']>;
+  isNot?: Maybe<Scalars['Boolean']>;
+  like?: Maybe<ShowcaseStatus>;
+  lt?: Maybe<ShowcaseStatus>;
+  lte?: Maybe<ShowcaseStatus>;
+  neq?: Maybe<ShowcaseStatus>;
+  notILike?: Maybe<ShowcaseStatus>;
+  notIn?: Maybe<Array<ShowcaseStatus>>;
+  notLike?: Maybe<ShowcaseStatus>;
 }
 
 export interface ShowcaseUpdateInputDto {
-  brand: Maybe<ShowcaseBrandInput>;
-  description: Maybe<Scalars['String']>;
-  expectedQuantity: Maybe<ShowcasePriceInput>;
-  expectedSaleAt: Maybe<Scalars['DateTime']>;
-  expectedSaleEndAt: Maybe<Scalars['DateTime']>;
-  expectedSalePrice: Maybe<ShowcasePriceInput>;
-  highlightFeatures: Maybe<Array<ShowcaseHfCreateInputDto>>;
-  id: Maybe<Scalars['String']>;
-  image: Maybe<MediaInput>;
-  imageLists: Maybe<Array<CreateImageListInputDto>>;
-  inventory: Maybe<ShowcaseInventoryDtoInput>;
-  name: Maybe<Scalars['String']>;
-  publishStatus: Maybe<PublishStatus>;
-  status: Maybe<ShowcaseStatus>;
-  updates: Maybe<Array<PrjUpdateCreateDto>>;
+  brand?: Maybe<ShowcaseBrandInput>;
+  description?: Maybe<Scalars['String']>;
+  expectedQuantity?: Maybe<ShowcasePriceInput>;
+  expectedSaleAt?: Maybe<Scalars['DateTime']>;
+  expectedSaleEndAt?: Maybe<Scalars['DateTime']>;
+  expectedSalePrice?: Maybe<ShowcasePriceInput>;
+  highlightFeatures?: Maybe<Array<ShowcaseHfCreateInputDto>>;
+  id?: Maybe<Scalars['String']>;
+  image?: Maybe<MediaInput>;
+  imageLists?: Maybe<Array<CreateImageListInputDto>>;
+  inventory?: Maybe<ShowcaseInventoryDtoInput>;
+  isFeatured?: Maybe<Scalars['Boolean']>;
+  name?: Maybe<Scalars['String']>;
+  publishStatus?: Maybe<PublishStatus>;
+  status?: Maybe<ShowcaseStatus>;
+  updates?: Maybe<Array<PrjUpdateCreateDto>>;
 }
 
 export enum SortDirection {
@@ -1408,20 +1421,20 @@ export enum SortNulls {
 }
 
 export interface StringFieldComparison {
-  eq: Maybe<Scalars['String']>;
-  gt: Maybe<Scalars['String']>;
-  gte: Maybe<Scalars['String']>;
-  iLike: Maybe<Scalars['String']>;
-  in: Maybe<Array<Scalars['String']>>;
-  is: Maybe<Scalars['Boolean']>;
-  isNot: Maybe<Scalars['Boolean']>;
-  like: Maybe<Scalars['String']>;
-  lt: Maybe<Scalars['String']>;
-  lte: Maybe<Scalars['String']>;
-  neq: Maybe<Scalars['String']>;
-  notILike: Maybe<Scalars['String']>;
-  notIn: Maybe<Array<Scalars['String']>>;
-  notLike: Maybe<Scalars['String']>;
+  eq?: Maybe<Scalars['String']>;
+  gt?: Maybe<Scalars['String']>;
+  gte?: Maybe<Scalars['String']>;
+  iLike?: Maybe<Scalars['String']>;
+  in?: Maybe<Array<Scalars['String']>>;
+  is?: Maybe<Scalars['Boolean']>;
+  isNot?: Maybe<Scalars['Boolean']>;
+  like?: Maybe<Scalars['String']>;
+  lt?: Maybe<Scalars['String']>;
+  lte?: Maybe<Scalars['String']>;
+  neq?: Maybe<Scalars['String']>;
+  notILike?: Maybe<Scalars['String']>;
+  notIn?: Maybe<Array<Scalars['String']>>;
+  notLike?: Maybe<Scalars['String']>;
 }
 
 export interface SubmitInvestorInputDto {
@@ -1434,15 +1447,15 @@ export interface SubmitInvestorInputDto {
 }
 
 export interface UpdateImageList {
-  id: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface UpdateInvestmentPackageDto {
-  benefitRate: Maybe<Scalars['Float']>;
-  count: Maybe<Scalars['Float']>;
-  displayName: Maybe<Scalars['String']>;
-  fundedRate: Maybe<Scalars['Float']>;
-  id: Maybe<Scalars['ID']>;
+  benefitRate?: Maybe<Scalars['Float']>;
+  count?: Maybe<Scalars['Float']>;
+  displayName?: Maybe<Scalars['String']>;
+  fundedRate?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface UpdateManyInvestmentPackageDtosInput {
@@ -1460,14 +1473,14 @@ export interface UpdateManyResponse {
 }
 
 export interface UpdateMediaDto {
-  filename: Maybe<Scalars['String']>;
-  height: Maybe<Scalars['Float']>;
-  id: Maybe<Scalars['ID']>;
-  mimetype: Maybe<Scalars['String']>;
-  path: Maybe<Scalars['String']>;
-  preloadUrl: Maybe<Scalars['String']>;
-  type: Maybe<MediaType>;
-  width: Maybe<Scalars['Float']>;
+  filename?: Maybe<Scalars['String']>;
+  height?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['ID']>;
+  mimetype?: Maybe<Scalars['String']>;
+  path?: Maybe<Scalars['String']>;
+  preloadUrl?: Maybe<Scalars['String']>;
+  type?: Maybe<MediaType>;
+  width?: Maybe<Scalars['Float']>;
 }
 
 export interface UpdateOneImageListInput {
@@ -1491,9 +1504,9 @@ export interface UpdateOnePrjUpdateDtoInput {
 }
 
 export interface UpdatePrjUpdateDto {
-  content: Maybe<Scalars['String']>;
-  createdAt: Maybe<Scalars['DateTime']>;
-  id: Maybe<Scalars['ID']>;
+  content?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
 }
 
 export interface User {
@@ -1532,7 +1545,7 @@ export type DeleteMediaMutationVariables = Exact<{
 }>;
 
 
-export type DeleteMediaMutation = { deleteOneMediaDto: { id: string | null } };
+export type DeleteMediaMutation = { deleteOneMediaDto: { id?: string | null | undefined } };
 
 export type AllUpdatesInShowcaseQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -1546,7 +1559,7 @@ export type OneUpdateInShowcaseQueryVariables = Exact<{
 }>;
 
 
-export type OneUpdateInShowcaseQuery = { update: { id: string, content: string, createdAt: any } | null };
+export type OneUpdateInShowcaseQuery = { update?: { id: string, content: string, createdAt: any } | null | undefined };
 
 export type PostAnUpdateInShowcaseMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -1564,15 +1577,28 @@ export type UpdateOneUpdateInShowcaseMutationVariables = Exact<{
 
 export type UpdateOneUpdateInShowcaseMutation = { updateOnePrjUpdateDto: { id: string } };
 
-export type MediaFragment = { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null };
+export type MediaFragment = { id: string, path: string, preloadUrl: string, width: number, height: number };
 
-export type HighlightFeatureFragment = { id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } };
+export type HighlightFeatureFragment = { id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } };
 
-export type ShowcaseHfFragment = { highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } }> };
+export type ShowcaseHfFragment = { highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }> };
 
-export type ShowcaseInvestorStatFragment = { investorStat: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null };
+export type ShowcaseInvestorStatFragment = { investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null | undefined };
 
-export type ShowcaseDetailFragment = { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }> }> };
+export type ShowcaseDetailFragment = { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> };
+
+export type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type IndexPageQuery = { banner?: { value: any } | null | undefined, featured: { edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, expectedSaleAt?: any | null | undefined, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> }, showcases: { pageInfo: { hasNextPage?: boolean | null | undefined, endCursor?: any | null | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
+
+export type IndexPageClientQueryVariables = Exact<{
+  filter: ShowcaseFilter;
+  cursor?: Maybe<Scalars['ConnectionCursor']>;
+}>;
+
+
+export type IndexPageClientQuery = { showcases: { pageInfo: { hasNextPage?: boolean | null | undefined, endCursor?: any | null | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type PostAnonymousCommentMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -1593,14 +1619,14 @@ export type PostAuthorizedCommentMutation = { postAuthorizedComment: { id: strin
 export type QueryBannerQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type QueryBannerQuery = { banner: { value: any } | null };
+export type QueryBannerQuery = { banner?: { value: any } | null | undefined };
 
 export type QueryCommentsQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type QueryCommentsQuery = { showcase: { slug: string, comments: { nodes: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author: { email: string, name: string } | null }> } } };
+export type QueryCommentsQuery = { showcase: { slug: string, comments: { nodes: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author?: { email: string, name: string } | null | undefined }> } } };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1622,15 +1648,15 @@ export type ShowcasePreviewQueryVariables = Exact<{
 }>;
 
 
-export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, brand: { name: string }, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } } }> } };
+export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, brand: { name: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type ShowcasesQueryVariables = Exact<{
-  filter: Maybe<ShowcaseFilter>;
+  filter?: Maybe<ShowcaseFilter>;
   paging: CursorPaging;
 }>;
 
 
-export type ShowcasesQuery = { showcases: { pageInfo: { hasNextPage: boolean | null, endCursor: any | null }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } } }> } };
+export type ShowcasesQuery = { showcases: { pageInfo: { hasNextPage?: boolean | null | undefined, endCursor?: any | null | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type SlugsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1642,28 +1668,28 @@ export type ShowcaseDetailQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }> }>, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } }>, investorStat: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } } }> } };
+export type ShowcaseDetailQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }>, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null | undefined }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type ShowcaseForUpdateQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type ShowcaseForUpdateQuery = { showcase: { slug: string, id: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | null, expectedSaleEndAt: any | null, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | null, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | null, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null }> }> } };
+export type ShowcaseForUpdateQuery = { showcase: { slug: string, id: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> } };
 
 export type GetHighlightFeaturesOnShowcaseQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type GetHighlightFeaturesOnShowcaseQuery = { showcase: { slug: string, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } }> } };
+export type GetHighlightFeaturesOnShowcaseQuery = { showcase: { slug: string, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }> } };
 
 export type GetOneHighlightFeatureQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetOneHighlightFeatureQuery = { showcaseHighlightFeature: { id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | null, width: number | null, height: number | null } } | null };
+export type GetOneHighlightFeatureQuery = { showcaseHighlightFeature?: { id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } | null | undefined };
 
 export type CreateOneHighlightFeatureMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -1686,7 +1712,7 @@ export type DeleteOneHighlightFeatureMutationVariables = Exact<{
 }>;
 
 
-export type DeleteOneHighlightFeatureMutation = { deleteOneShowcaseHighlightFeature: { id: string | null } };
+export type DeleteOneHighlightFeatureMutation = { deleteOneShowcaseHighlightFeature: { id?: string | null | undefined } };
 
 export const MediaFragmentDoc = gql`
     fragment Media on MediaDto {
@@ -2040,6 +2066,133 @@ export function useUpdateOneUpdateInShowcaseMutation(baseOptions?: Apollo.Mutati
 export type UpdateOneUpdateInShowcaseMutationHookResult = ReturnType<typeof useUpdateOneUpdateInShowcaseMutation>;
 export type UpdateOneUpdateInShowcaseMutationResult = Apollo.MutationResult<UpdateOneUpdateInShowcaseMutation>;
 export type UpdateOneUpdateInShowcaseMutationOptions = Apollo.BaseMutationOptions<UpdateOneUpdateInShowcaseMutation, UpdateOneUpdateInShowcaseMutationVariables>;
+export const IndexPageDocument = gql`
+    query IndexPage {
+  banner: setting(key: "common:banner") {
+    value
+  }
+  featured: showcases(filter: {isFeatured: {is: true}}) {
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          ...Media
+        }
+        createdAt
+        expectedSaleAt
+      }
+    }
+  }
+  showcases(paging: {first: 10}, filter: {isFeatured: {is: false}}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          ...Media
+        }
+        createdAt
+      }
+    }
+  }
+}
+    ${MediaFragmentDoc}`;
+
+/**
+ * __useIndexPageQuery__
+ *
+ * To run a query within a React component, call `useIndexPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIndexPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useIndexPageQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useIndexPageQuery(baseOptions?: Apollo.QueryHookOptions<IndexPageQuery, IndexPageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<IndexPageQuery, IndexPageQueryVariables>(IndexPageDocument, options);
+      }
+export function useIndexPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IndexPageQuery, IndexPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<IndexPageQuery, IndexPageQueryVariables>(IndexPageDocument, options);
+        }
+export type IndexPageQueryHookResult = ReturnType<typeof useIndexPageQuery>;
+export type IndexPageLazyQueryHookResult = ReturnType<typeof useIndexPageLazyQuery>;
+export type IndexPageQueryResult = Apollo.QueryResult<IndexPageQuery, IndexPageQueryVariables>;
+export function refetchIndexPageQuery(variables?: IndexPageQueryVariables) {
+      return { query: IndexPageDocument, variables: variables }
+    }
+export const IndexPageClientDocument = gql`
+    query IndexPageClient($filter: ShowcaseFilter!, $cursor: ConnectionCursor) {
+  showcases(
+    filter: {and: [$filter, {isFeatured: {is: false}}]}
+    paging: {first: 10, after: $cursor}
+  ) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          ...Media
+        }
+        createdAt
+      }
+    }
+  }
+}
+    ${MediaFragmentDoc}`;
+
+/**
+ * __useIndexPageClientQuery__
+ *
+ * To run a query within a React component, call `useIndexPageClientQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIndexPageClientQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useIndexPageClientQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useIndexPageClientQuery(baseOptions: Apollo.QueryHookOptions<IndexPageClientQuery, IndexPageClientQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<IndexPageClientQuery, IndexPageClientQueryVariables>(IndexPageClientDocument, options);
+      }
+export function useIndexPageClientLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IndexPageClientQuery, IndexPageClientQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<IndexPageClientQuery, IndexPageClientQueryVariables>(IndexPageClientDocument, options);
+        }
+export type IndexPageClientQueryHookResult = ReturnType<typeof useIndexPageClientQuery>;
+export type IndexPageClientLazyQueryHookResult = ReturnType<typeof useIndexPageClientLazyQuery>;
+export type IndexPageClientQueryResult = Apollo.QueryResult<IndexPageClientQuery, IndexPageClientQueryVariables>;
+export function refetchIndexPageClientQuery(variables: IndexPageClientQueryVariables) {
+      return { query: IndexPageClientDocument, variables: variables }
+    }
 export const PostAnonymousCommentDocument = gql`
     mutation postAnonymousComment($slug: String!, $input: CommentCreateDto!) {
   postAnonymousComment(slug: $slug, input: $input) {
@@ -2495,7 +2648,7 @@ export const ShowcaseDetailDocument = gql`
       createdAt
     }
   }
-  showcases(filter: {slug: {neq: $slug, notLike: "ci-test%"}}) {
+  showcases(filter: {and: [{slug: {neq: $slug}}, {slug: {notLike: "ci-test%"}}]}) {
     edges {
       node {
         slug

@@ -11,15 +11,16 @@ generates:
       - fragment-matcher
     config:
       module: commonjs
-  ./src/types/graphql.ts:
+  ./src/types/graphql.tsx:
     plugins:
       - typescript
       - typescript-operations
       - typescript-react-apollo
     config:
+      reactApolloVersion: 3
       withHooks: true
       withRefetchFn: true
-      avoidOptionals: true
+      avoidOptionals: false
       dedupeFragments: true
       declarationKind: interface
       disableDescriptions: true
@@ -30,3 +31,17 @@ generates:
     hooks:
       afterAllFileWrite:
         - prettier --write
+  ./src/types/graphql.ssr.tsx:
+    plugins:
+      - graphql-codegen-apollo-next-ssr
+    config:
+      documentMode: external
+      importDocumentNodeExternallyFrom: ./graphql
+      reactApolloVersion: 3
+      withHooks: true
+      contextType: 'ApolloClientContext'
+      contextTypeRequired: true
+      apolloClientInstanceImport: '../api/apollo'
+    preset: import-types
+    presetConfig:
+      typesPath: ./graphql

@@ -1,4 +1,4 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { GetStaticProps } from "next";
 import {
   Box,
   Container,
@@ -10,13 +10,12 @@ import ShowcaseList from "../src/components/ShowcaseList";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 import { MotionBox, ProductInfoSecond } from "../src/components/commons";
-import { range } from "lodash";
 import { AspectRatio, VthCountdown } from "../src/components";
 import Banner from "../src/components/Banner";
-import { apiService, apolloClient, queryBanner } from "../src/api";
+import { withApollo } from "../src/api";
 import {
+  IndexPageQuery,
   Maybe,
-  QueryBannerQuery,
   ShowcaseEdge,
   ShowcaseFilter,
   ShowcaseStatus,
@@ -27,16 +26,35 @@ import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { NextSeo } from "next-seo";
+import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
+import { FnsDate } from "@hungphongbk/vth-sdk";
 
 const FilterPanel = dynamic(() => import("../src/components/FilterPanel"), {
   ssr: false,
 });
 
-function Home({
-  posts: _posts,
-  pageInfo: _pageInfo,
-  banner,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+const Home = () => {
+  const ssrData = ssrIndex.usePage().data,
+    {
+      data: clientData,
+      fetchMore,
+      refetch,
+    } = ssrIndexClient.usePage(() => ({
+      variables: {
+        filter: {},
+      },
+    }));
+  const data = useMemo(() => {
+    return {
+      ...ssrData,
+      ...clientData,
+    } as unknown as IndexPageQuery;
+  }, [ssrData, clientData]);
+  const posts = data!.showcases.edges,
+    featured = data!.featured.edges,
+    pageInfo = data!.showcases.pageInfo,
+    banner = data!.banner;
+
   const [openFilter, setOpenFilter] = useState(false);
   const [statusFilter, setStatusFilter] = useState<
       ShowcaseStatus | undefined
@@ -46,8 +64,8 @@ function Home({
     >();
 
   const [calculatedFilter, setCalculatedFilter] = useState<
-    Maybe<ShowcaseFilter> | undefined
-  >(undefined);
+    Maybe<ShowcaseFilter>
+  >({});
 
   /**
    * Calculate final filter
@@ -57,10 +75,12 @@ function Home({
       typeof statusFilter === "undefined" &&
       typeof calculatedFilter !== "undefined"
     )
-      setCalculatedFilter(undefined);
+      setCalculatedFilter({});
     if (typeof statusFilter !== "undefined") {
       // @ts-ignore
-      setCalculatedFilter({ status: { eq: statusFilter } });
+      setCalculatedFilter({
+        status: { eq: statusFilter },
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
@@ -69,25 +89,21 @@ function Home({
    * Trigger reload API
    */
   useEffect(() => {
-    apiService.getAllShowcases(calculatedFilter).then((data) => {
-      setStatusFiltered(statusFilter);
-      setPosts(data.edges);
-      setPageInfo(data.pageInfo);
-    });
+    if (typeof calculatedFilter !== "undefined")
+      refetch({ filter: calculatedFilter }).then(() => {
+        setStatusFiltered(statusFilter);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [calculatedFilter]);
 
-  const [posts, setPosts] = useState(() => _posts),
-    [pageInfo, setPageInfo] = useState(() => _pageInfo);
-
   const loadMore = async () => {
     if (!pageInfo.hasNextPage) return;
-    const data = await apiService.getAllShowcases(
-      calculatedFilter,
-      pageInfo.endCursor
-    );
-    setPosts([...posts, ...data.edges]);
-    setPageInfo(data.pageInfo);
+    await fetchMore({
+      variables: {
+        filter: calculatedFilter,
+        cursor: pageInfo.endCursor,
+      },
+    });
   };
 
   const restPost = useMemo(() => {
@@ -112,9 +128,9 @@ function Home({
         Dự án đang chuẩn bị &quot;rời bệ phóng&quot;
       </Typography>
       <ImageList variant={"standard"} cols={2} gap={8}>
-        {range(0, 2).map((index) => (
+        {featured.map(({ node }, index) => (
           <ImageListItem
-            key={index}
+            key={node.id}
             sx={{
               borderRadius: 3,
               overflow: "hidden",
@@ -126,13 +142,13 @@ function Home({
             <AspectRatio>
               <Box sx={{ zIndex: -1 }}>
                 <Image
-                  src={
-                    "https://product.hstatic.net/1000069970/product/carpio22_fcc7132be79748e08ffabac9bd65aa4f_large.png"
-                  }
-                  alt={"ke co tay cong thai hoc"}
+                  src={node.image.path}
+                  alt={node.name}
                   layout={"fill"}
                   objectFit={"cover"}
                   sizes={"50vw"}
+                  placeholder={"blur"}
+                  blurDataURL={node.image.preloadUrl}
                 />
               </Box>
             </AspectRatio>
@@ -140,6 +156,7 @@ function Home({
               <Box
                 sx={{
                   height: 35,
+                  width: "100%",
                   borderRadius: 17.5,
                   bgcolor: "yellow.main",
                   border: "3px solid white",
@@ -159,11 +176,14 @@ function Home({
                   }}
                   component={"div"}
                 >
-                  Kê cổ tay công thái học Carpio 2.0 - DeltaHub
+                  {node.name}
                 </Typography>
               </Box>
               <Typography sx={{ fontSize: 10, my: 0.5 }}>
-                Dự kiến ra mắt: <strong>15/11/2021</strong>
+                Dự kiến ra mắt:{" "}
+                <strong>
+                  <FnsDate value={node.expectedSaleAt} format={"dd/MM/yyyy"} />
+                </strong>
               </Typography>
               <Box sx={{ width: "100%", my: 0.5 }}>
                 <VthCountdown />
@@ -239,23 +259,14 @@ function Home({
       </Box>
     </Container>
   );
-}
+};
 
 // noinspection JSUnusedGlobalSymbols
-export default Home;
+export default withApollo(ssrIndex.withPage(() => ({}))(Home));
 
-export const getStaticProps: GetStaticProps = async () => {
-  const [
-    { edges, pageInfo },
-    {
-      data: { banner },
-    },
-  ] = await Promise.all([
-    apiService.getAllShowcases(),
-    apolloClient.query<QueryBannerQuery>({ query: queryBanner }),
-  ]);
+export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
-    props: { posts: edges, pageInfo, banner },
-    revalidate: 60,
+    ...(await ssrIndex.getServerPage({}, ctx)),
+    revalidate: 45,
   };
 };

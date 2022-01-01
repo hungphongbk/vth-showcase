@@ -1,0 +1,58 @@
+query IndexPage {
+  banner: setting(key: "common:banner"){
+    value
+  }
+  featured: showcases(filter: {isFeatured: {is: true}}){
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          ...Media
+        }
+        createdAt
+        expectedSaleAt
+      }
+    }
+  }
+  showcases(paging: {first: 10},filter: {isFeatured: {is: false}}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          ...Media
+        }
+        createdAt
+      }
+    }
+  }
+}
+query IndexPageClient($filter: ShowcaseFilter!, $cursor: ConnectionCursor){
+  showcases(filter: {and:[$filter,{isFeatured: {is: false}}]}, paging: {first:10,after: $cursor}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          ...Media
+        }
+        createdAt
+      }
+    }
+  }
+}

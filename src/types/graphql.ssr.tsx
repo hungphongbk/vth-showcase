@@ -469,6 +469,41 @@ export const ssrShowcasePreview = {
       withPage: withPageShowcasePreview,
       usePage: useShowcasePreview,
     }
+export async function getServerPageShowcaseRelateds
+    (options: Omit<Apollo.QueryOptions<Types.ShowcaseRelatedsQueryVariables>, 'query'>, ctx: ApolloClientContext ){
+        const apolloClient = getApolloClient(ctx);
+        
+        const data = await apolloClient.query<Types.ShowcaseRelatedsQuery>({ ...options, query: Operations.ShowcaseRelatedsDocument });
+        
+        const apolloState = apolloClient.cache.extract();
+
+        return {
+            props: {
+                apolloState: apolloState,
+                data: data?.data,
+                error: data?.error ?? data?.errors ?? null,
+            },
+        };
+      }
+export const useShowcaseRelateds = (
+  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.ShowcaseRelatedsQuery, Types.ShowcaseRelatedsQueryVariables>) => {
+  const router = useRouter();
+  const options = optionsFunc ? optionsFunc(router) : {};
+  return useQuery(Operations.ShowcaseRelatedsDocument, options);
+};
+export type PageShowcaseRelatedsComp = React.FC<{data?: Types.ShowcaseRelatedsQuery, error?: Apollo.ApolloError}>;
+export const withPageShowcaseRelateds = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.ShowcaseRelatedsQuery, Types.ShowcaseRelatedsQueryVariables>) => (WrappedComponent:PageShowcaseRelatedsComp) : NextPage  => (props) => {
+                const router = useRouter()
+                const options = optionsFunc ? optionsFunc(router) : {};
+                const {data, error } = useQuery(Operations.ShowcaseRelatedsDocument, options)    
+                return <WrappedComponent {...props} data={data} error={error} /> ;
+                   
+            }; 
+export const ssrShowcaseRelateds = {
+      getServerPage: getServerPageShowcaseRelateds,
+      withPage: withPageShowcaseRelateds,
+      usePage: useShowcaseRelateds,
+    }
 export async function getServerPageShowcaseForUpdate
     (options: Omit<Apollo.QueryOptions<Types.ShowcaseForUpdateQueryVariables>, 'query'>, ctx: ApolloClientContext ){
         const apolloClient = getApolloClient(ctx);

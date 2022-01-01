@@ -3,20 +3,15 @@ import { Box, Button, ButtonProps } from "@mui/material";
 import ShowcaseDetailed from "../../src/components/ShowcaseDetailed";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
-import { apiService } from "../../src/api";
+import { apiService, withApollo } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
 import BookmarkIcon from "../../src/assets/icons/BookmarkIcon";
 import dynamic from "next/dynamic";
-import {
-  Showcase,
-  ShowcaseEdge,
-  ShowcaseStatus,
-} from "../../src/types/graphql";
+import { Showcase, ShowcaseStatus } from "../../src/types/graphql";
 import { InvestorInformation } from "../../src/components/PostPage";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
 import { ssrShowcaseDetail } from "../../src/types/graphql.ssr";
-import { withApollo } from "@apollo/client/react/hoc";
 
 const PreorderDialog = dynamic(
   () => import("../../src/components/system/preorder-dialog"),
@@ -78,18 +73,18 @@ const BottomButton = ({
   );
 
 function PostDetailedPage() {
-  const router = useRouter();
+  const router = useRouter(),
+    slug = router.query.slug as string;
   useEffect(() => {
     // noinspection JSIgnoredPromiseFromCall
     router.prefetch("/");
   }, [router]);
   const [open, setOpen] = useState(false);
   const { loading, error, data } = useAuthQuery(ssrShowcaseDetail.usePage, {
-    variables: { slug: router.query.slug as string },
+    variables: { slug },
   });
 
-  const showcase = data?.showcase as Showcase,
-    showcases = data?.showcases.edges as ShowcaseEdge[];
+  const showcase = data?.showcase as Showcase;
 
   if (!showcase) return null;
 
@@ -102,11 +97,7 @@ function PostDetailedPage() {
       />
       <Box sx={{ bgcolor: "#f0f0f0" }}>
         <InvestorInformation stat={data!.showcase.investorStat as any} />
-        <ShowcaseDetailed
-          item={showcase}
-          onClick={() => router.push("/")}
-          posts={showcases}
-        />
+        <ShowcaseDetailed item={showcase} onClick={() => router.push("/")} />
         <Box
           sx={{
             position: "fixed",

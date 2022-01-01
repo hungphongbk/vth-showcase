@@ -43,14 +43,14 @@ const apolloClient = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache({
     ...introspection,
-    ...(typeof window !== "undefined"
-      ? {
-          typePolicies: {
-            Showcase: { keyFields: ["slug"] },
-            User: { keyFields: ["email"] },
-          },
-        }
-      : {}),
+    // ...(typeof window !== "undefined"
+    //   ? {
+    typePolicies: {
+      Showcase: { keyFields: ["slug"] },
+      User: { keyFields: ["email"] },
+    },
+    // }
+    // : {}),
   }),
 });
 

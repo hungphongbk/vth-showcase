@@ -1666,14 +1666,21 @@ export type ShowcaseDetailQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }>, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null | undefined }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
+export type ShowcaseDetailQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }>, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null | undefined } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type ShowcasePreviewQuery = { showcase: { slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, brand: { name: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined }, showcases: { edges: Array<{ node: { slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
+export type ShowcasePreviewQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, brand: { name: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined } };
+
+export type ShowcaseRelatedsQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type ShowcaseRelatedsQuery = { showcases: { edges: Array<{ node: { id: string, slug: string, name: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type ShowcaseForUpdateQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -2583,19 +2590,6 @@ export const ShowcaseDetailDocument = gql`
       createdAt
     }
   }
-  showcases(filter: {and: [{slug: {neq: $slug}}, {slug: {notLike: "ci-test%"}}]}) {
-    edges {
-      node {
-        slug
-        name
-        status
-        image {
-          ...Media
-        }
-        createdAt
-      }
-    }
-  }
 }
     ${ShowcaseDetailFragmentDoc}
 ${MediaFragmentDoc}
@@ -2636,6 +2630,7 @@ export function refetchShowcaseDetailQuery(variables: ShowcaseDetailQueryVariabl
 export const ShowcasePreviewDocument = gql`
     query ShowcasePreview($slug: String!) {
   showcase(slug: $slug) {
+    id
     slug
     name
     author {
@@ -2655,19 +2650,6 @@ export const ShowcasePreviewDocument = gql`
       pioneer
       preorder
       promo
-    }
-  }
-  showcases(filter: {and: [{slug: {neq: $slug}}, {slug: {notLike: "ci-test%"}}]}) {
-    edges {
-      node {
-        slug
-        name
-        status
-        image {
-          ...Media
-        }
-        createdAt
-      }
     }
   }
 }
@@ -2702,6 +2684,55 @@ export type ShowcasePreviewLazyQueryHookResult = ReturnType<typeof useShowcasePr
 export type ShowcasePreviewQueryResult = Apollo.QueryResult<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>;
 export function refetchShowcasePreviewQuery(variables: ShowcasePreviewQueryVariables) {
       return { query: ShowcasePreviewDocument, variables: variables }
+    }
+export const ShowcaseRelatedsDocument = gql`
+    query ShowcaseRelateds($slug: String!) {
+  showcases(filter: {and: [{slug: {neq: $slug}}, {slug: {notLike: "ci-test%"}}]}) {
+    edges {
+      node {
+        id
+        slug
+        name
+        status
+        image {
+          ...Media
+        }
+        createdAt
+      }
+    }
+  }
+}
+    ${MediaFragmentDoc}`;
+
+/**
+ * __useShowcaseRelatedsQuery__
+ *
+ * To run a query within a React component, call `useShowcaseRelatedsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShowcaseRelatedsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShowcaseRelatedsQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useShowcaseRelatedsQuery(baseOptions: Apollo.QueryHookOptions<ShowcaseRelatedsQuery, ShowcaseRelatedsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ShowcaseRelatedsQuery, ShowcaseRelatedsQueryVariables>(ShowcaseRelatedsDocument, options);
+      }
+export function useShowcaseRelatedsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShowcaseRelatedsQuery, ShowcaseRelatedsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ShowcaseRelatedsQuery, ShowcaseRelatedsQueryVariables>(ShowcaseRelatedsDocument, options);
+        }
+export type ShowcaseRelatedsQueryHookResult = ReturnType<typeof useShowcaseRelatedsQuery>;
+export type ShowcaseRelatedsLazyQueryHookResult = ReturnType<typeof useShowcaseRelatedsLazyQuery>;
+export type ShowcaseRelatedsQueryResult = Apollo.QueryResult<ShowcaseRelatedsQuery, ShowcaseRelatedsQueryVariables>;
+export function refetchShowcaseRelatedsQuery(variables: ShowcaseRelatedsQueryVariables) {
+      return { query: ShowcaseRelatedsDocument, variables: variables }
     }
 export const ShowcaseForUpdateDocument = gql`
     query ShowcaseForUpdate($slug: String!) {

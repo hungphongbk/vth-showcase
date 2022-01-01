@@ -19,7 +19,7 @@ import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
-import { Showcase, ShowcaseEdge } from "../types/graphql";
+import { Showcase, useShowcaseRelatedsQuery } from "../types/graphql";
 import { CommentSection } from "./PostPage";
 import Image from "next/image";
 import { AspectRatio } from "@hungphongbk/vth-sdk";
@@ -31,8 +31,7 @@ const testPreview = (str: string) => /^\/preview/.test(str),
 export default function ShowcaseDetailed({
   item,
   onClick,
-  posts,
-}: { item: Showcase; posts: ShowcaseEdge[] } & HTMLProps<HTMLElement>) {
+}: { item: Showcase } & HTMLProps<HTMLElement>) {
   const router = useRouter();
   const currentPage = testPreview(router.pathname)
     ? "preview"
@@ -40,7 +39,11 @@ export default function ShowcaseDetailed({
     ? "post"
     : undefined;
   const wrapper = useRef<HTMLElement>(),
-    scrollHandler = useRef<any>();
+    scrollHandler = useRef<any>(),
+    { data: relateds } = useShowcaseRelatedsQuery({
+      variables: { slug: router.query.slug as string },
+      ssr: false,
+    });
 
   const routeChangeStart = useCallback(
       (url) => {
@@ -284,7 +287,10 @@ export default function ShowcaseDetailed({
           >
             DỰ ÁN LIÊN QUAN
           </Typography>
-          <ShowcaseList posts={posts} />
+          {relateds?.showcases && (
+            // @ts-ignore
+            <ShowcaseList posts={relateds.showcases.edges} />
+          )}
         </MotionBox>
       </MotionBox>
     </>

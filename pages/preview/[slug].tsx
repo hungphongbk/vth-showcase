@@ -4,12 +4,11 @@ import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { MotionBox } from "../../src/components/commons";
-import { apiService } from "../../src/api";
-import { Showcase, ShowcaseEdge } from "../../src/types/graphql";
+import { apiService, withApollo } from "../../src/api";
+import { Showcase } from "../../src/types/graphql";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
 import { ssrShowcasePreview } from "../../src/types/graphql.ssr";
-import { withApollo } from "@apollo/client/react/hoc";
 
 function PreviewPage() {
   const router = useRouter(),
@@ -26,8 +25,7 @@ function PreviewPage() {
     variables: { slug },
   });
 
-  const showcase = data?.showcase as Showcase,
-    showcases = data?.showcases.edges as ShowcaseEdge[];
+  const showcase = data?.showcase as Showcase;
 
   if (!showcase) return null;
 
@@ -44,11 +42,7 @@ function PreviewPage() {
       }}
     >
       <NextSeo canonical={"https://showcase.vaithuhay.com"} />
-      <ShowcaseDetailed
-        item={showcase}
-        onClick={() => router.back()}
-        posts={showcases}
-      />
+      <ShowcaseDetailed item={showcase} onClick={() => router.back()} />
       <MotionBox
         data-testid={"backdrop"}
         sx={{

@@ -10,13 +10,8 @@ import {
   DeleteMediaMutation,
   DeleteMediaMutationVariables,
   Maybe,
-  Showcase,
   ShowcaseCreateInputDto,
-  ShowcaseEdge,
   ShowcaseFilter,
-  ShowcasePreviewDocument,
-  ShowcasePreviewQuery,
-  ShowcasePreviewQueryVariables,
   ShowcasesDocument,
   ShowcasesQuery,
   ShowcasesQueryVariables,
@@ -54,23 +49,6 @@ export const getAllShowcases = async (
     variables: { paging, filter },
   });
   return data.showcases;
-};
-
-export const getShowcasePreview = async (slug: string) => {
-  const { data } = await apolloClient.query<
-    ShowcasePreviewQuery,
-    ShowcasePreviewQueryVariables
-  >({
-    query: ShowcasePreviewDocument,
-    variables: {
-      slug,
-    },
-  });
-
-  return {
-    post: data.showcase as Showcase,
-    posts: data.showcases.edges as ShowcaseEdge[],
-  };
 };
 
 export const deleteMedia = async (id: string): Promise<void> => {

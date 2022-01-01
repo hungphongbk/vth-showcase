@@ -1,0 +1,16 @@
+query ShowcaseRelateds($slug: String!) {
+  showcases(filter: {and:[{ slug: { neq: $slug } },{slug:{notLike: "ci-test%"}}]}) {
+    edges {
+      node {
+        id
+        slug
+        name
+        status
+        image {
+          ...Media
+        }
+        createdAt
+      }
+    }
+  }
+}

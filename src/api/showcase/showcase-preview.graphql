@@ -1,5 +1,6 @@
 query ShowcasePreview($slug: String!) {
   showcase(slug: $slug) {
+    id
     slug
     name
     author{
@@ -19,19 +20,6 @@ query ShowcasePreview($slug: String!) {
       pioneer
       preorder
       promo
-    }
-  }
-  showcases(filter: {and:[{ slug: { neq: $slug } },{slug:{notLike: "ci-test%"}}]}) {
-    edges {
-      node {
-        slug
-        name
-        status
-        image {
-          ...Media
-        }
-        createdAt
-      }
     }
   }
 }

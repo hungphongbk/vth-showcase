@@ -1,7 +1,6 @@
 import * as React from "react";
 import { ReactElement, ReactNode } from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import { ThemeProvider } from "@mui/material/styles";
+import { Box, CssBaseline, TextField, ThemeProvider } from "@mui/material";
 import type { AppProps } from "next/app";
 import theme from "../src/theme";
 import Header from "../src/components/Header";
@@ -9,7 +8,6 @@ import { LayoutGroup } from "framer-motion";
 import "intersection-observer";
 import { DefaultSeo } from "next-seo";
 import { NextPage } from "next";
-import { Box, TextField } from "@mui/material";
 import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import Image from "next/image";
 import Head from "next/head";
@@ -18,11 +16,14 @@ import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { SnackbarProvider } from "notistack";
-import { AuthLoginHandler, InvestorRegDialog } from "../src/components/system";
+import {
+  AuthLoginHandler,
+  CreatorAndInvestorActions,
+  InvestorRegDialog,
+} from "../src/components/system";
 import { StyledDialog } from "../src/components/commons";
 import { UploadService } from "../src/service";
 import { VthThemeProvider } from "@hungphongbk/vth-sdk";
-import CreatorAndInvestorActions from "../src/components/CreatorAndInvestorActions";
 import { LocalizationProvider } from "@mui/lab";
 import DateAdapter from "@mui/lab/AdapterDateFns";
 import { ApolloProvider } from "@apollo/client";

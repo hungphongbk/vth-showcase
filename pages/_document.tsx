@@ -58,7 +58,12 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
         </Head>
-        <body style={{ paddingTop: theme.variables.appBarHeight }}>
+        <body
+          style={{
+            paddingTop: theme.variables.appBarHeight,
+            overflowX: "hidden",
+          }}
+        >
           <Main />
           <NextScript />
         </body>

@@ -4,20 +4,16 @@ import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { MotionBox } from "../../src/components/commons";
-import { addApolloState, apiService, apolloClient } from "../../src/api";
-import {
-  Showcase,
-  ShowcaseEdge,
-  ShowcasePreviewDocument,
-  ShowcasePreviewQuery,
-  ShowcasePreviewQueryVariables,
-  useShowcasePreviewQuery,
-} from "../../src/types/graphql";
+import { apiService } from "../../src/api";
+import { Showcase, ShowcaseEdge } from "../../src/types/graphql";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
+import { ssrShowcasePreview } from "../../src/types/graphql.ssr";
+import { withApollo } from "@apollo/client/react/hoc";
 
-export default function PreviewPage({ slug }: { slug: string }) {
-  const router = useRouter();
+function PreviewPage() {
+  const router = useRouter(),
+    slug = router.query.slug as string;
 
   useEffect(() => {
     // noinspection JSIgnoredPromiseFromCall
@@ -26,7 +22,7 @@ export default function PreviewPage({ slug }: { slug: string }) {
     router.prefetch(`/post/${slug}`);
   }, [slug, router]);
 
-  const { loading, error, data } = useAuthQuery(useShowcasePreviewQuery, {
+  const { loading, error, data } = useAuthQuery(ssrShowcasePreview.usePage, {
     variables: { slug },
   });
 
@@ -74,21 +70,22 @@ export default function PreviewPage({ slug }: { slug: string }) {
   );
 }
 
+export default withApollo(
+  ssrShowcasePreview.withPage((r) => ({
+    variables: { slug: r.query.slug as string },
+  }))(PreviewPage)
+);
+
 export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context.params!.slug as string;
-  await apolloClient.query<ShowcasePreviewQuery, ShowcasePreviewQueryVariables>(
-    {
-      query: ShowcasePreviewDocument,
-      variables: {
-        slug,
-      },
-      errorPolicy: "ignore",
-    }
-  );
-  return addApolloState(apolloClient, {
-    props: { slug },
-    revalidate: 60,
-  });
+
+  return {
+    ...(await ssrShowcasePreview.getServerPage(
+      { variables: { slug } },
+      context
+    )),
+    revalidate: 45,
+  };
 };
 
 // noinspection JSUnusedGlobalSymbols

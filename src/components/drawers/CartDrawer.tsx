@@ -14,10 +14,10 @@ import {
 import { MotionBox } from "../commons";
 import CloseIcon from "../../assets/icons/CloseIcon";
 import { useAppSelector } from "../../store";
-import { AspectRatio } from "../index";
 import { Showcase } from "../../types/graphql";
 import StatusBadge from "../StatusBadge";
 import { vndCurrency } from "../../utils/string";
+import { AspectRatio } from "@hungphongbk/vth-sdk";
 
 const MotionBookmarkIcon = motion(BookmarkIcon);
 

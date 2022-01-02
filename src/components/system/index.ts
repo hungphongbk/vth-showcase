@@ -10,7 +10,7 @@ export const InvestorRegDialog = dynamic(
 );
 
 export const CreatorAndInvestorActions = dynamic(
-  () => import("../CreatorAndInvestorActions"),
+  () => import("../creator-and-investor-actions"),
   {
     ssr: false,
   }

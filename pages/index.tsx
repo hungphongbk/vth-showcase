@@ -1,48 +1,45 @@
 import type { GetStaticProps } from "next";
-import {
-  Box,
-  Container,
-  ImageList,
-  ImageListItem,
-  Typography,
-} from "@mui/material";
-import ShowcaseList from "../src/components/ShowcaseList";
+import { Box, Container, Fade, ImageList, Typography } from "@mui/material";
+import ShowcaseList from "../src/components/showcase-list";
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
-import { MotionBox, ProductInfoSecond } from "../src/components/commons";
-import { AspectRatio, VthCountdown } from "../src/components";
+import { MotionBox } from "../src/components/commons";
 import Banner from "../src/components/Banner";
 import { withApollo } from "../src/api";
 import {
   IndexPageQuery,
-  Maybe,
   ShowcaseEdge,
-  ShowcaseFilter,
   ShowcaseStatus,
 } from "../src/types/graphql";
 import SimpleFilter from "../src/components/indexPage/SimpleFilter";
 import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import { NextSeo } from "next-seo";
 import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
-import { FnsDate } from "@hungphongbk/vth-sdk";
+import { LoadingIndicator } from "@hungphongbk/vth-sdk";
+import { NetworkStatus } from "@apollo/client";
+import ShowcaseFeaturedItem from "../src/components/showcase-featured-item";
 
-const FilterPanel = dynamic(() => import("../src/components/FilterPanel"), {
+const FilterPanel = dynamic(() => import("../src/components/filter-panel"), {
   ssr: false,
 });
 
 const Home = () => {
-  const ssrData = ssrIndex.usePage(() => ({ fetchPolicy: "cache-only" })).data,
+  const { data: ssrData } = ssrIndex.usePage(() => ({
+      fetchPolicy: "cache-only",
+    })),
     {
       data: clientData,
+      networkStatus,
+      loading,
       fetchMore,
       refetch,
     } = ssrIndexClient.usePage(() => ({
       variables: {
         filter: {},
       },
+      notifyOnNetworkStatusChange: true,
     }));
   const data = useMemo(() => {
     return {
@@ -63,44 +60,34 @@ const Home = () => {
       ShowcaseStatus | undefined
     >();
 
-  const [calculatedFilter, setCalculatedFilter] = useState<
-    Maybe<ShowcaseFilter>
-  >({});
+  console.log(networkStatus, loading, statusFilter);
 
   /**
    * Calculate final filter
    */
   useEffect(() => {
-    if (
-      typeof statusFilter === "undefined" &&
-      typeof calculatedFilter !== "undefined"
-    )
-      setCalculatedFilter({});
-    if (typeof statusFilter !== "undefined") {
-      // @ts-ignore
-      setCalculatedFilter({
-        status: { eq: statusFilter },
-      });
-    }
+    refetch({
+      filter: { status: { eq: statusFilter } },
+    }).then(() => setStatusFiltered(statusFilter));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
   /**
    * Trigger reload API
    */
-  useEffect(() => {
-    console.log(calculatedFilter);
-    if (typeof calculatedFilter !== "undefined")
-      refetch({ filter: calculatedFilter }).then(() => {
-        setStatusFiltered(statusFilter);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [calculatedFilter]);
+  // useEffect(() => {
+  //   console.log(calculatedFilter);
+  //   if (typeof calculatedFilter !== "undefined")
+  //     refetch({ filter: calculatedFilter }).then(() => {
+  //       setStatusFiltered(statusFilter);
+  //     });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [calculatedFilter]);
 
   const loadMore = async () => {
     if (!pageInfo.hasNextPage) return;
     await fetchMore({
       variables: {
-        filter: calculatedFilter,
+        filter: { status: { eq: statusFilter } },
         cursor: pageInfo.endCursor,
       },
     });
@@ -122,70 +109,9 @@ const Home = () => {
       >
         Dự án đang chuẩn bị &quot;rời bệ phóng&quot;
       </Typography>
-      <ImageList variant={"standard"} cols={2} gap={8}>
+      <ImageList variant={"standard"} cols={2} gap={8} component={"section"}>
         {featured.map(({ node }, index) => (
-          <ImageListItem
-            key={node.id}
-            sx={{
-              borderRadius: 3,
-              overflow: "hidden",
-              cursor: "pointer",
-              mb: 2,
-              boxShadow: "4px 4px 16px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <AspectRatio>
-              <Box sx={{ zIndex: -1 }}>
-                <Image
-                  src={node.image.path}
-                  alt={node.name}
-                  layout={"fill"}
-                  objectFit={"cover"}
-                  sizes={"50vw"}
-                  placeholder={"blur"}
-                  blurDataURL={node.image.preloadUrl}
-                  priority={true}
-                />
-              </Box>
-            </AspectRatio>
-            <ProductInfoSecond>
-              <Box
-                sx={{
-                  height: 35,
-                  width: "100%",
-                  borderRadius: 17.5,
-                  bgcolor: "yellow.main",
-                  border: "3px solid white",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  mt: "-26px",
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: "black",
-                    fontWeight: 600,
-                    fontSize: 10,
-                    textAlign: "center",
-                    lineHeight: "11.74px",
-                  }}
-                  component={"div"}
-                >
-                  {node.name}
-                </Typography>
-              </Box>
-              <Typography sx={{ fontSize: 10, my: 0.5 }}>
-                Dự kiến ra mắt:{" "}
-                <strong>
-                  <FnsDate value={node.expectedSaleAt} format={"dd/MM/yyyy"} />
-                </strong>
-              </Typography>
-              <Box sx={{ width: "100%", my: 0.5 }}>
-                <VthCountdown />
-              </Box>
-            </ProductInfoSecond>
-          </ImageListItem>
+          <ShowcaseFeaturedItem item={node} key={node.id} />
         ))}
       </ImageList>
       <Box
@@ -219,22 +145,28 @@ const Home = () => {
           />
         </Box>
       </Box>
-      <AnimatePresence>
-        <MotionBox
-          key={statusFiltered ?? "none"}
-          animate={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 20 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.15 }}
-          sx={{ minHeight: "75vh" }}
-        >
-          <ShowcaseList
-            posts={posts as unknown as ShowcaseEdge[]}
-            variant={"standard"}
-            onLoadMore={loadMore}
-          />
-        </MotionBox>
-      </AnimatePresence>
+      <Box sx={{ minHeight: "75vh", position: "relative" }}>
+        <Fade in={networkStatus !== NetworkStatus.ready}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              pt: 3,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <LoadingIndicator />
+          </Box>
+        </Fade>
+        <ShowcaseList
+          posts={posts as unknown as ShowcaseEdge[]}
+          variant={"standard"}
+          onLoadMore={loadMore}
+        />
+      </Box>
       <Box sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 99 }}>
         <AnimatePresence>
           {openFilter && (

@@ -4,7 +4,7 @@ import { SxProps } from "@mui/system";
 import { MediaDto, QueryBannerQuery } from "../types/graphql";
 import { AspectRatio } from "@hungphongbk/vth-sdk";
 import { sxFlexCenter, sxFullSize } from "../utils/predefinedSx";
-import SlickSlider from "./SlickSlider";
+import SlickSlider from "./slick-slider";
 import NextImage from "./NextImage";
 
 type BannerProps = {
@@ -18,7 +18,10 @@ export default function Banner({ sx, banner }: BannerProps): JSX.Element {
       {bannerCount === 0 ? (
         <Typography>Banner (updating...)</Typography>
       ) : (
-        <SlickSlider>
+        <SlickSlider
+          sx={{ "& .slick-dots": { bottom: "10px" } }}
+          indicatorColor={"#fff"}
+        >
           {banner!.value!.images!.map((item: MediaDto, index: number) => (
             <Box key={item.path}>
               <AspectRatio ratio={"5/4"} sx={{ ...sx, ...sxFlexCenter }}>

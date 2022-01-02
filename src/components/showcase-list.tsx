@@ -1,5 +1,5 @@
 import React, { createContext, memo } from "react";
-import ShowcaseItem from "./ShowcaseItem";
+import ShowcaseItem from "./showcase-item";
 import { ImageList, ImageListProps } from "@mui/material";
 import { useRouter } from "next/router";
 import { ShowcaseEdge } from "../types/graphql";
@@ -28,7 +28,12 @@ const ShowcaseList = memo(function ShowcaseList(
   const router = useRouter();
   return (
     <LayoutIdContext.Provider value={props.context ?? "main"}>
-      <ImageList variant={props.variant ?? "masonry"} cols={2} gap={8}>
+      <ImageList
+        variant={props.variant ?? "masonry"}
+        cols={2}
+        gap={8}
+        component={"section"}
+      >
         {props.posts.map((item, index) => (
           <ShowcaseItem
             key={item.node.slug}

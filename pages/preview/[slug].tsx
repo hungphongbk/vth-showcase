@@ -1,5 +1,5 @@
 import { GetStaticProps } from "next";
-import ShowcaseDetailed from "../../src/components/ShowcaseDetailed";
+import ShowcaseDetailed from "../../src/components/showcase-detailed";
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";

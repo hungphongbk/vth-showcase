@@ -57,8 +57,6 @@ export default function ShowcaseItem({
     onClick?.(e);
   };
 
-  if (item.id === "3847") console.log(item.image.path);
-
   useEffect(() => {
     if (inViewport && !prefetched.current) {
       prefetched.current = router.prefetch(`/preview/${item.slug}`);
@@ -82,6 +80,7 @@ export default function ShowcaseItem({
         mb: "0 !important",
       }}
       transition={{ type: "spring", stiffness: 350, damping: 25 }}
+      component={"article"}
     >
       <MotionBox
         // layoutId={getLayoutId("/thumb-wrapper")}
@@ -117,6 +116,8 @@ export default function ShowcaseItem({
       <ProductInfo>
         <MotionTypo
           variant="h6"
+          //@ts-ignore
+          component={"h2"}
           sx={{
             textTransform: "uppercase",
             fontWeight: 600,

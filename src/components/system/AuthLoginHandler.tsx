@@ -1,22 +1,21 @@
 import React, { useCallback, useEffect } from "react";
 import { useAppDispatch } from "../../store";
 import { afterSignInFirebase, loadUserInfo } from "../../store/auth.reducer";
-import { getPersistAuth } from "../../service/auth";
 import { useCurrentUserLazyQuery } from "../../types/graphql";
+import { FirebaseAuthService } from "../../service";
 
 export default function AuthLoginHandler(): JSX.Element {
   const dispatch = useAppDispatch(),
     [fetchCurrentUser, { loading, data, error }] = useCurrentUserLazyQuery();
 
   const completeHandler = useCallback(
-    (event: DocumentEventMap["readystatechange"]) => {
+    async (event: DocumentEventMap["readystatechange"]) => {
       // @ts-ignore
       if (event.target!.readyState === "complete") {
-        getPersistAuth().then((payload) => {
-          console.log(payload);
-          dispatch(afterSignInFirebase(payload));
-          if (payload.token) fetchCurrentUser();
-        });
+        const { getPersistAuth } = await FirebaseAuthService();
+        const payload = await getPersistAuth();
+        dispatch(afterSignInFirebase(payload));
+        if (payload.token) await fetchCurrentUser();
       }
     },
     [dispatch, fetchCurrentUser]

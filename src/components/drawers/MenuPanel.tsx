@@ -10,7 +10,6 @@ import {
 import { useAppDispatch, useAppSelector } from "../../store";
 import { isLoggedInSelector } from "../../store/auth.selectors";
 import GoogleColoredIcon from "../../assets/icons/GoogleColoredIcon";
-import { signInWithGoogle } from "../../service/auth";
 import { afterSignInFirebase, afterSignOut } from "../../store/auth.reducer";
 import { FirebaseAuthService } from "../../service";
 import { RoleIcon, StyledUpper } from "./menu/styled";

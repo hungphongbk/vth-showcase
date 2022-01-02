@@ -90,6 +90,9 @@ export default function ShowcaseItem({
           right: 0,
           bottom: "30%",
           zIndex: -1,
+          borderTopLeftRadius: 12,
+          borderTopRightRadius: 12,
+          overflow: "hidden",
           // "& img": {
           //   objectFit: "cover",
           //   width: "100%",

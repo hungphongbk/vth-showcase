@@ -29,6 +29,8 @@ const StyledSpeedDial = styled(SpeedDial)(
       }
     }
     .MuiSpeedDial-actions {
+      display: grid;
+      grid-gap: 12px;
       gap: 12px;
     }
     .MuiSpeedDialAction {

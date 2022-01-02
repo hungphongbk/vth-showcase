@@ -1,17 +1,9 @@
 import type { GetStaticProps } from "next";
-import {
-  Box,
-  Container,
-  Fade,
-  ImageList,
-  ImageListItem,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Fade, ImageList, Typography } from "@mui/material";
 import ShowcaseList from "../src/components/ShowcaseList";
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
-import { MotionBox, ProductInfoSecond } from "../src/components/commons";
-import { VthCountdown } from "../src/components";
+import { MotionBox } from "../src/components/commons";
 import Banner from "../src/components/Banner";
 import { withApollo } from "../src/api";
 import {
@@ -23,11 +15,11 @@ import SimpleFilter from "../src/components/indexPage/SimpleFilter";
 import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import { NextSeo } from "next-seo";
 import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
-import { AspectRatio, FnsDate, LoadingIndicator } from "@hungphongbk/vth-sdk";
+import { LoadingIndicator } from "@hungphongbk/vth-sdk";
 import { NetworkStatus } from "@apollo/client";
+import ShowcaseFeaturedItem from "../src/components/showcase-featured-item";
 
 const FilterPanel = dynamic(() => import("../src/components/FilterPanel"), {
   ssr: false,
@@ -117,70 +109,9 @@ const Home = () => {
       >
         Dự án đang chuẩn bị &quot;rời bệ phóng&quot;
       </Typography>
-      <ImageList variant={"standard"} cols={2} gap={8}>
+      <ImageList variant={"standard"} cols={2} gap={8} component={"section"}>
         {featured.map(({ node }, index) => (
-          <ImageListItem
-            key={node.id}
-            sx={{
-              borderRadius: 3,
-              overflow: "hidden",
-              cursor: "pointer",
-              mb: 2,
-              boxShadow: "4px 4px 16px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <AspectRatio>
-              <Box sx={{ zIndex: -1 }}>
-                <Image
-                  src={node.image.path}
-                  alt={node.name}
-                  layout={"fill"}
-                  objectFit={"cover"}
-                  sizes={"50vw"}
-                  placeholder={"blur"}
-                  blurDataURL={node.image.preloadUrl}
-                  priority={true}
-                />
-              </Box>
-            </AspectRatio>
-            <ProductInfoSecond>
-              <Box
-                sx={{
-                  height: 35,
-                  width: "100%",
-                  borderRadius: 17.5,
-                  bgcolor: "yellow.main",
-                  border: "3px solid white",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  mt: "-26px",
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: "black",
-                    fontWeight: 600,
-                    fontSize: 10,
-                    textAlign: "center",
-                    lineHeight: "11.74px",
-                  }}
-                  component={"div"}
-                >
-                  {node.name}
-                </Typography>
-              </Box>
-              <Typography sx={{ fontSize: 10, my: 0.5 }}>
-                Dự kiến ra mắt:{" "}
-                <strong>
-                  <FnsDate value={node.expectedSaleAt} format={"dd/MM/yyyy"} />
-                </strong>
-              </Typography>
-              <Box sx={{ width: "100%", my: 0.5 }}>
-                <VthCountdown />
-              </Box>
-            </ProductInfoSecond>
-          </ImageListItem>
+          <ShowcaseFeaturedItem item={node} key={node.id} />
         ))}
       </ImageList>
       <Box

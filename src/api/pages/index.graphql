@@ -1,8 +1,10 @@
 query IndexPage {
-  banner: setting(key: "common:banner"){
+  banner: setting(key: "common:banner") {
     value
   }
-  featured: showcases(filter: {isFeatured: {is: true}}){
+  featured: showcases(
+    filter: { isFeatured: { is: true }, publishStatus: { eq: PUBLISHED } }
+  ) {
     edges {
       node {
         id
@@ -17,7 +19,10 @@ query IndexPage {
       }
     }
   }
-  showcases(paging: {first: 10},filter: {isFeatured: {is: false}}) {
+  showcases(
+    paging: { first: 10 }
+    filter: { isFeatured: { is: false }, publishStatus: { eq: PUBLISHED } }
+  ) {
     pageInfo {
       hasNextPage
       endCursor
@@ -36,8 +41,16 @@ query IndexPage {
     }
   }
 }
-query IndexPageClient($filter: ShowcaseFilter!, $cursor: ConnectionCursor){
-  showcases(filter: {and:[$filter,{isFeatured: {is: false}}]}, paging: {first:10,after: $cursor}) {
+query IndexPageClient($filter: ShowcaseFilter!, $cursor: ConnectionCursor) {
+  showcases(
+    filter: {
+      and: [
+        $filter
+        { isFeatured: { is: false }, publishStatus: { eq: PUBLISHED } }
+      ]
+    }
+    paging: { first: 10, after: $cursor }
+  ) {
     pageInfo {
       hasNextPage
       endCursor

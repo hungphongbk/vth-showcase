@@ -2083,7 +2083,9 @@ export const IndexPageDocument = gql`
   banner: setting(key: "common:banner") {
     value
   }
-  featured: showcases(filter: {isFeatured: {is: true}}) {
+  featured: showcases(
+    filter: {isFeatured: {is: true}, publishStatus: {eq: PUBLISHED}}
+  ) {
     edges {
       node {
         id
@@ -2098,7 +2100,10 @@ export const IndexPageDocument = gql`
       }
     }
   }
-  showcases(paging: {first: 10}, filter: {isFeatured: {is: false}}) {
+  showcases(
+    paging: {first: 10}
+    filter: {isFeatured: {is: false}, publishStatus: {eq: PUBLISHED}}
+  ) {
     pageInfo {
       hasNextPage
       endCursor
@@ -2151,7 +2156,7 @@ export function refetchIndexPageQuery(variables?: IndexPageQueryVariables) {
 export const IndexPageClientDocument = gql`
     query IndexPageClient($filter: ShowcaseFilter!, $cursor: ConnectionCursor) {
   showcases(
-    filter: {and: [$filter, {isFeatured: {is: false}}]}
+    filter: {and: [$filter, {isFeatured: {is: false}, publishStatus: {eq: PUBLISHED}}]}
     paging: {first: 10, after: $cursor}
   ) {
     pageInfo {
@@ -2687,7 +2692,9 @@ export function refetchShowcasePreviewQuery(variables: ShowcasePreviewQueryVaria
     }
 export const ShowcaseRelatedsDocument = gql`
     query ShowcaseRelateds($slug: String!) {
-  showcases(filter: {and: [{slug: {neq: $slug}}, {slug: {notLike: "ci-test%"}}]}) {
+  showcases(
+    filter: {and: [{slug: {neq: $slug}}, {slug: {notLike: "ci-test%"}}, {publishStatus: {eq: PUBLISHED}}]}
+  ) {
     edges {
       node {
         id

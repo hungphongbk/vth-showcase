@@ -266,6 +266,7 @@ const Home = () => {
 export default withApollo(ssrIndex.withPage(() => ({}))(Home));
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
+  console.log(await ssrIndex.getServerPage({}, ctx));
   return {
     ...(await ssrIndex.getServerPage({}, ctx)),
     revalidate: 45,

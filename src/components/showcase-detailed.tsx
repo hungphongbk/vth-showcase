@@ -10,7 +10,7 @@ import UserIcon from "../assets/icons/UserIcon";
 import CollapseDetail from "./CollapseDetail";
 import StatusBadge from "./StatusBadge";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import ShowcaseList from "./ShowcaseList";
+import ShowcaseList from "./showcase-list";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { CollapseCard, SlickSlider } from "./index";

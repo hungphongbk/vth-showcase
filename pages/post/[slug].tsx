@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next";
 import { Box, Button, ButtonProps } from "@mui/material";
-import ShowcaseDetailed from "../../src/components/ShowcaseDetailed";
+import ShowcaseDetailed from "../../src/components/showcase-detailed";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { apiService, withApollo } from "../../src/api";

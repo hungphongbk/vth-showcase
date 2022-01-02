@@ -1,6 +1,6 @@
 import type { GetStaticProps } from "next";
 import { Box, Container, Fade, ImageList, Typography } from "@mui/material";
-import ShowcaseList from "../src/components/ShowcaseList";
+import ShowcaseList from "../src/components/showcase-list";
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 import { MotionBox } from "../src/components/commons";
@@ -21,7 +21,7 @@ import { LoadingIndicator } from "@hungphongbk/vth-sdk";
 import { NetworkStatus } from "@apollo/client";
 import ShowcaseFeaturedItem from "../src/components/showcase-featured-item";
 
-const FilterPanel = dynamic(() => import("../src/components/FilterPanel"), {
+const FilterPanel = dynamic(() => import("../src/components/filter-panel"), {
   ssr: false,
 });
 

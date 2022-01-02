@@ -1646,6 +1646,11 @@ export type InvestmentPackagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type InvestmentPackagesQuery = { investmentPackageDtos: { edges: Array<{ node: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } };
 
+export type ShowcasePortalQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ShowcasePortalQuery = { showcases: { pageInfo: { hasNextPage?: boolean | null | undefined, endCursor?: any | null | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { path: string, preloadUrl: string, height: number, width: number } } }> } };
+
 export type ShowcasesQueryVariables = Exact<{
   filter?: InputMaybe<ShowcaseFilter>;
   paging: CursorPaging;
@@ -2271,6 +2276,61 @@ export type InvestmentPackagesLazyQueryHookResult = ReturnType<typeof useInvestm
 export type InvestmentPackagesQueryResult = Apollo.QueryResult<InvestmentPackagesQuery, InvestmentPackagesQueryVariables>;
 export function refetchInvestmentPackagesQuery(variables?: InvestmentPackagesQueryVariables) {
       return { query: InvestmentPackagesDocument, variables: variables }
+    }
+export const ShowcasePortalDocument = gql`
+    query ShowcasePortal {
+  showcases(paging: {first: 10}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          path
+          preloadUrl
+          height
+          width
+        }
+        createdAt
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useShowcasePortalQuery__
+ *
+ * To run a query within a React component, call `useShowcasePortalQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShowcasePortalQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShowcasePortalQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useShowcasePortalQuery(baseOptions?: Apollo.QueryHookOptions<ShowcasePortalQuery, ShowcasePortalQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ShowcasePortalQuery, ShowcasePortalQueryVariables>(ShowcasePortalDocument, options);
+      }
+export function useShowcasePortalLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShowcasePortalQuery, ShowcasePortalQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ShowcasePortalQuery, ShowcasePortalQueryVariables>(ShowcasePortalDocument, options);
+        }
+export type ShowcasePortalQueryHookResult = ReturnType<typeof useShowcasePortalQuery>;
+export type ShowcasePortalLazyQueryHookResult = ReturnType<typeof useShowcasePortalLazyQuery>;
+export type ShowcasePortalQueryResult = Apollo.QueryResult<ShowcasePortalQuery, ShowcasePortalQueryVariables>;
+export function refetchShowcasePortalQuery(variables?: ShowcasePortalQueryVariables) {
+      return { query: ShowcasePortalDocument, variables: variables }
     }
 export const ShowcasesDocument = gql`
     query Showcases($filter: ShowcaseFilter, $paging: CursorPaging!) {

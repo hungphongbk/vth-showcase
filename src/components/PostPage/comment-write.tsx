@@ -8,9 +8,10 @@ import {
   ToggleButtonGroup,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { CommentCreateDto, CommentRateEnum } from "../../types/graphql";
+import { CommentCreateDto } from "../../types/graphql";
 import { FormInput } from "@hungphongbk/vth-sdk";
 import React from "react";
+import { CommentRateMaps } from "./styled";
 
 const CommentBox = styled(Box)`
     /* Neutral/Dark White */
@@ -97,24 +98,11 @@ export default function CommentWrite(props: CommentWriteProps): JSX.Element {
           component={StyledToggleButtonGroup}
           sx={{ p: 0.5 }}
         >
-          <StyledToggleButton
-            selectedColor={"#FF9900"}
-            value={CommentRateEnum.CoTiemNang}
-          >
-            Có tiềm năng
-          </StyledToggleButton>
-          <StyledToggleButton
-            selectedColor={"#FFD211"}
-            value={CommentRateEnum.DangTien}
-          >
-            Đáng tiền
-          </StyledToggleButton>
-          <StyledToggleButton
-            selectedColor={"#FF0000"}
-            value={CommentRateEnum.SieuPham}
-          >
-            Siêu phẩm
-          </StyledToggleButton>
+          {Object.entries(CommentRateMaps).map(([_enum, { label, color }]) => (
+            <StyledToggleButton key={_enum} selectedColor={color} value={_enum}>
+              {label}
+            </StyledToggleButton>
+          ))}
         </FormInput>
       </CommentBox>
       <Button

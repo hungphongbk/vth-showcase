@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, memo } from "react";
 import ShowcaseItem from "./ShowcaseItem";
 import { ImageList, ImageListProps } from "@mui/material";
 import { useRouter } from "next/router";
@@ -14,7 +14,17 @@ type ProductListProps = {
   context?: IdContextType;
   onLoadMore?: () => void | Promise<void>;
 };
-export default function ShowcaseList(props: ProductListProps): JSX.Element {
+
+const compare = (prev: ProductListProps, next: ProductListProps) => {
+  if (prev.posts.length !== next.posts.length) return false;
+  for (let i = 0; i < prev.posts.length; i++)
+    if (prev.posts[i].node.id !== next.posts[i].node.id) return false;
+  return true;
+};
+
+const ShowcaseList = memo(function ShowcaseList(
+  props: ProductListProps
+): JSX.Element {
   const router = useRouter();
   return (
     <LayoutIdContext.Provider value={props.context ?? "main"}>
@@ -31,4 +41,6 @@ export default function ShowcaseList(props: ProductListProps): JSX.Element {
       </ImageList>
     </LayoutIdContext.Provider>
   );
-}
+},
+compare);
+export default ShowcaseList;

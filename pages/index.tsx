@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import ShowcaseList from "../src/components/ShowcaseList";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 import { MotionBox, ProductInfoSecond } from "../src/components/commons";
 import { AspectRatio, VthCountdown } from "../src/components";
@@ -84,11 +84,11 @@ const Home = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
-
   /**
    * Trigger reload API
    */
   useEffect(() => {
+    console.log(calculatedFilter);
     if (typeof calculatedFilter !== "undefined")
       refetch({ filter: calculatedFilter }).then(() => {
         setStatusFiltered(statusFilter);
@@ -105,11 +105,6 @@ const Home = () => {
       },
     });
   };
-
-  const restPost = useMemo(() => {
-    if (!statusFilter) return posts;
-    return posts.filter((i: any) => i.node.status === statusFilter);
-  }, [statusFilter, posts]);
 
   return (
     <Container sx={{ mt: 2, pl: 1, pr: 1 }}>
@@ -225,19 +220,20 @@ const Home = () => {
         </Box>
       </Box>
       <AnimatePresence>
-        <motion.div
+        <MotionBox
           key={statusFiltered ?? "none"}
           animate={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 20 }}
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.15 }}
+          sx={{ minHeight: "75vh" }}
         >
           <ShowcaseList
-            posts={restPost as unknown as ShowcaseEdge[]}
+            posts={posts as unknown as ShowcaseEdge[]}
             variant={"standard"}
             onLoadMore={loadMore}
           />
-        </motion.div>
+        </MotionBox>
       </AnimatePresence>
       <Box sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 99 }}>
         <AnimatePresence>

@@ -41,11 +41,18 @@ export default function Header(): JSX.Element {
           gridColumn: 2,
           width: "28.8vw",
           height: (theme) => theme.variables.appBarHeight,
+          display: "flex",
+          alignItems: "center",
         }}
         component={Link}
         href={"/"}
       >
-        <Image src={logo} alt={"logo"} objectFit={"contain"} priority />
+        <Image
+          src={logo}
+          alt={"vaithuhay showcase"}
+          objectFit={"contain"}
+          priority
+        />
       </Box>
       <Box sx={{ gridColumn: 3, justifySelf: "end" }}>
         <NoSsr>

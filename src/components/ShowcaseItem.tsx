@@ -11,7 +11,7 @@ import { SystemStyleObject } from "@mui/system";
 import { usingShowcaseStatusColor } from "../utils/colors";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Showcase } from "../types/graphql";
-import Image from "next/image";
+import NextImage from "./NextImage";
 
 const MotionImageListItem = motion(ImageListItem);
 
@@ -57,6 +57,8 @@ export default function ShowcaseItem({
     onClick?.(e);
   };
 
+  if (item.id === "3847") console.log(item.image.path);
+
   useEffect(() => {
     if (inViewport && !prefetched.current) {
       prefetched.current = router.prefetch(`/preview/${item.slug}`);
@@ -100,7 +102,7 @@ export default function ShowcaseItem({
           // },
         }}
       >
-        <Image
+        <NextImage
           // layoutId={getLayoutId("/thumb")}
           src={item.image.path}
           alt={item.name}

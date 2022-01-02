@@ -5,7 +5,7 @@ import { MediaDto, QueryBannerQuery } from "../types/graphql";
 import { AspectRatio } from "@hungphongbk/vth-sdk";
 import { sxFlexCenter, sxFullSize } from "../utils/predefinedSx";
 import SlickSlider from "./SlickSlider";
-import Image from "next/image";
+import NextImage from "./NextImage";
 
 type BannerProps = {
   sx?: SxProps;
@@ -24,7 +24,7 @@ export default function Banner({ sx, banner }: BannerProps): JSX.Element {
               <AspectRatio ratio={"5/4"} sx={{ ...sx, ...sxFlexCenter }}>
                 <Box sx={{ borderRadius: 3, overflow: "hidden" }}>
                   <Box sx={{ position: "relative", ...sxFullSize }}>
-                    <Image
+                    <NextImage
                       src={item.path}
                       alt={"ke co tay cong thai hoc"}
                       layout={"fill"}

@@ -21,9 +21,9 @@ import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import { Showcase, useShowcaseRelatedsQuery } from "../types/graphql";
 import { CommentSection } from "./PostPage";
-import Image from "next/image";
 import { AspectRatio } from "@hungphongbk/vth-sdk";
 import { format } from "date-fns";
+import NextImage from "./NextImage";
 
 const testPreview = (str: string) => /^\/preview/.test(str),
   testPost = (str: string) => /^\/post/.test(str);
@@ -122,7 +122,7 @@ export default function ShowcaseDetailed({
             }}
             layoutId={"main-image"}
           >
-            <Image
+            <NextImage
               src={item.image.path}
               alt={item.image.path}
               width={item.image.width}
@@ -244,7 +244,7 @@ export default function ShowcaseDetailed({
                       <AspectRatio ratio={"307/146"} sx={{ mt: "auto" }}>
                         <Box sx={{ borderRadius: 2, overflow: "hidden" }}>
                           <Box sx={{ position: "relative" }}>
-                            <Image
+                            <NextImage
                               src={hf.image.path}
                               alt={hf.name}
                               width={hf.image.width}

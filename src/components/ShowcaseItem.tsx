@@ -57,8 +57,6 @@ export default function ShowcaseItem({
     onClick?.(e);
   };
 
-  if (item.id === "3847") console.log(item.image.path);
-
   useEffect(() => {
     if (inViewport && !prefetched.current) {
       prefetched.current = router.prefetch(`/preview/${item.slug}`);

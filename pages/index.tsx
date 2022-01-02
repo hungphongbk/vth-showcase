@@ -2,6 +2,7 @@ import type { GetStaticProps } from "next";
 import {
   Box,
   Container,
+  Fade,
   ImageList,
   ImageListItem,
   Typography,
@@ -10,14 +11,12 @@ import ShowcaseList from "../src/components/ShowcaseList";
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 import { MotionBox, ProductInfoSecond } from "../src/components/commons";
-import { AspectRatio, VthCountdown } from "../src/components";
+import { VthCountdown } from "../src/components";
 import Banner from "../src/components/Banner";
 import { withApollo } from "../src/api";
 import {
   IndexPageQuery,
-  Maybe,
   ShowcaseEdge,
-  ShowcaseFilter,
   ShowcaseStatus,
 } from "../src/types/graphql";
 import SimpleFilter from "../src/components/indexPage/SimpleFilter";
@@ -27,22 +26,28 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { NextSeo } from "next-seo";
 import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
-import { FnsDate } from "@hungphongbk/vth-sdk";
+import { AspectRatio, FnsDate, LoadingIndicator } from "@hungphongbk/vth-sdk";
+import { NetworkStatus } from "@apollo/client";
 
 const FilterPanel = dynamic(() => import("../src/components/FilterPanel"), {
   ssr: false,
 });
 
 const Home = () => {
-  const ssrData = ssrIndex.usePage(() => ({ fetchPolicy: "cache-only" })).data,
+  const { data: ssrData } = ssrIndex.usePage(() => ({
+      fetchPolicy: "cache-only",
+    })),
     {
       data: clientData,
+      networkStatus,
+      loading,
       fetchMore,
       refetch,
     } = ssrIndexClient.usePage(() => ({
       variables: {
         filter: {},
       },
+      notifyOnNetworkStatusChange: true,
     }));
   const data = useMemo(() => {
     return {
@@ -63,44 +68,34 @@ const Home = () => {
       ShowcaseStatus | undefined
     >();
 
-  const [calculatedFilter, setCalculatedFilter] = useState<
-    Maybe<ShowcaseFilter>
-  >({});
+  console.log(networkStatus, loading, statusFilter);
 
   /**
    * Calculate final filter
    */
   useEffect(() => {
-    if (
-      typeof statusFilter === "undefined" &&
-      typeof calculatedFilter !== "undefined"
-    )
-      setCalculatedFilter({});
-    if (typeof statusFilter !== "undefined") {
-      // @ts-ignore
-      setCalculatedFilter({
-        status: { eq: statusFilter },
-      });
-    }
+    refetch({
+      filter: { status: { eq: statusFilter } },
+    }).then(() => setStatusFiltered(statusFilter));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
   /**
    * Trigger reload API
    */
-  useEffect(() => {
-    console.log(calculatedFilter);
-    if (typeof calculatedFilter !== "undefined")
-      refetch({ filter: calculatedFilter }).then(() => {
-        setStatusFiltered(statusFilter);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [calculatedFilter]);
+  // useEffect(() => {
+  //   console.log(calculatedFilter);
+  //   if (typeof calculatedFilter !== "undefined")
+  //     refetch({ filter: calculatedFilter }).then(() => {
+  //       setStatusFiltered(statusFilter);
+  //     });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [calculatedFilter]);
 
   const loadMore = async () => {
     if (!pageInfo.hasNextPage) return;
     await fetchMore({
       variables: {
-        filter: calculatedFilter,
+        filter: { status: { eq: statusFilter } },
         cursor: pageInfo.endCursor,
       },
     });
@@ -219,22 +214,28 @@ const Home = () => {
           />
         </Box>
       </Box>
-      <AnimatePresence>
-        <MotionBox
-          key={statusFiltered ?? "none"}
-          animate={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 20 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.15 }}
-          sx={{ minHeight: "75vh" }}
-        >
-          <ShowcaseList
-            posts={posts as unknown as ShowcaseEdge[]}
-            variant={"standard"}
-            onLoadMore={loadMore}
-          />
-        </MotionBox>
-      </AnimatePresence>
+      <Box sx={{ minHeight: "75vh", position: "relative" }}>
+        <Fade in={networkStatus !== NetworkStatus.ready}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              pt: 3,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <LoadingIndicator />
+          </Box>
+        </Fade>
+        <ShowcaseList
+          posts={posts as unknown as ShowcaseEdge[]}
+          variant={"standard"}
+          onLoadMore={loadMore}
+        />
+      </Box>
       <Box sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 99 }}>
         <AnimatePresence>
           {openFilter && (

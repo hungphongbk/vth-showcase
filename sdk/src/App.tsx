@@ -1,7 +1,7 @@
 import { useShowcasePortalQuery } from "../../src/types/graphql";
 import { StyledSection, StyledTitle } from "./styled";
 import ShowcaseItem from "./ShowcaseItem";
-import SlickSlider from "../../src/components/SlickSlider";
+import SlickSlider from "../../src/components/slick-slider";
 
 export default function App() {
   const { data } = useShowcasePortalQuery();

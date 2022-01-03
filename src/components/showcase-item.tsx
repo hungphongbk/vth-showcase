@@ -78,6 +78,7 @@ export default function ShowcaseItem({
         overflow: "hidden",
         cursor: "pointer",
         mb: "0 !important",
+        width: "100%",
       }}
       transition={{ type: "spring", stiffness: 350, damping: 25 }}
       component={"article"}

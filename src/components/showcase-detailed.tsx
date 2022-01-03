@@ -10,7 +10,6 @@ import UserIcon from "../assets/icons/UserIcon";
 import CollapseDetail from "./CollapseDetail";
 import StatusBadge from "./StatusBadge";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import ShowcaseList from "./showcase-list";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { CollapseCard, SlickSlider } from "./index";
@@ -19,11 +18,12 @@ import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
-import { Showcase, useShowcaseRelatedsQuery } from "../types/graphql";
+import { Showcase } from "../types/graphql";
 import { CommentSection } from "./PostPage";
 import { AspectRatio } from "@hungphongbk/vth-sdk";
 import { format } from "date-fns";
 import NextImage from "./NextImage";
+import ShowcaseRelateds from "./showcase-relateds";
 
 const testPreview = (str: string) => /^\/preview/.test(str),
   testPost = (str: string) => /^\/post/.test(str);
@@ -39,11 +39,7 @@ export default function ShowcaseDetailed({
     ? "post"
     : undefined;
   const wrapper = useRef<HTMLElement>(),
-    scrollHandler = useRef<any>(),
-    { data: relateds } = useShowcaseRelatedsQuery({
-      variables: { slug: router.query.slug as string },
-      ssr: false,
-    });
+    scrollHandler = useRef<any>();
 
   const routeChangeStart = useCallback(
       (url) => {
@@ -275,24 +271,7 @@ export default function ShowcaseDetailed({
             <CommentSection slug={item.slug} />
           </motion.div>
         )}
-        <MotionBox
-          layoutId={"detail-relateds"}
-          // initial={{ opacity: 0 }}
-          // animate={{ opacity: 1 }}
-          // exit={{ opacity: 0 }}
-        >
-          <Typography
-            component={"h3"}
-            variant={"h5"}
-            sx={{ my: 2, textAlign: "center", fontWeight: 700, fontSize: 20 }}
-          >
-            DỰ ÁN LIÊN QUAN
-          </Typography>
-          {relateds?.showcases && (
-            // @ts-ignore
-            <ShowcaseList posts={relateds.showcases.edges} />
-          )}
-        </MotionBox>
+        <ShowcaseRelateds slug={item.slug} />
       </MotionBox>
     </>
   );

@@ -1,5 +1,5 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
-import { HTMLProps, useCallback, useEffect, useRef } from "react";
+import { HTMLProps, useCallback, useEffect, useRef, useState } from "react";
 import {
   MotionBox,
   MotionTypo,
@@ -29,6 +29,7 @@ import NextImage from "./NextImage";
 import ShowcaseRelateds from "./showcase-relateds";
 import DetailedUserIcon from "../assets/icons/DetailedUserIcon";
 import VthIconButton from "./vth-icon-button";
+import PreorderDialog from "./system/preorder-dialog";
 
 const testPreview = (str: string) => /^\/preview/.test(str),
   testPost = (str: string) => /^\/post/.test(str);
@@ -71,6 +72,8 @@ export default function ShowcaseDetailed({
       router.events.off("routeChangeComplete", routeChangeEnd);
     };
   }, [routeChangeEnd, routeChangeStart, router.events]);
+
+  const [open, setOpen] = useState(false);
 
   // @ts-ignore
   return (
@@ -217,9 +220,15 @@ export default function ShowcaseDetailed({
                     <PreorderFilledPrimaryIcon sx={{ width: 22, height: 22 }} />
                   }
                   fullWidth
+                  onClick={() => setOpen(true)}
                 >
                   ĐĂNG KÝ ĐẶT TRƯỚC
                 </VthIconButton>
+                <PreorderDialog
+                  open={open}
+                  showcase={item}
+                  onClose={() => setOpen(false)}
+                />
               </Box>
             )}
           </MotionBox>

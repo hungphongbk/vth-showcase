@@ -15,3 +15,7 @@ export const CreatorAndInvestorActions = dynamic(
     ssr: false,
   }
 );
+
+export const PreorderDialog = dynamic(() => import("./preorder-dialog"), {
+  ssr: false,
+});

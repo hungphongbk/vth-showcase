@@ -6,17 +6,12 @@ import { PropsWithChildren, useEffect, useState } from "react";
 import { apiService, withApollo } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
 import BookmarkIcon from "../../src/assets/icons/BookmarkIcon";
-import dynamic from "next/dynamic";
 import { Showcase, ShowcaseStatus } from "../../src/types/graphql";
 import { InvestorInformation } from "../../src/components/PostPage";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
 import { ssrShowcaseDetail } from "../../src/types/graphql.ssr";
-
-const PreorderDialog = dynamic(
-  () => import("../../src/components/system/preorder-dialog"),
-  { ssr: false }
-);
+import { PreorderDialog } from "../../src/components/system";
 
 const BottomButton = ({
     children,

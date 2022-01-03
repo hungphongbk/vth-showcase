@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, Button, DialogContent, Stack, Typography } from "@mui/material";
-import { Showcase } from "../../types/graphql";
-import { vndCurrency } from "../../utils/string";
+import { Showcase, ShowcaseStatus } from "../../types/graphql";
 import { TextInput } from "../TextInput";
 import { StyledDialog } from "../commons";
 import { useAppDispatch } from "../../store";
 import { addShowcaseToCart } from "../../store/cart/reducer";
+import { vndCurrency } from "../../utils/string";
 
 type PreorderDialogProps = {
   open: boolean;
@@ -26,28 +26,62 @@ export default function PreorderDialog(
   return (
     <StyledDialog open={props.open} onClose={props.onClose}>
       <DialogContent>
-        <Box
-          sx={{
-            borderRadius: "13px",
-            marginTop: "-60px",
-            bgcolor: "yellow.main",
-            p: 1,
-            mb: 2,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 1,
-          }}
-        >
-          <Typography sx={{ fontSize: 13 }}>
-            Giá bán dự kiến: <strong>{vndCurrency(price!.regular)}</strong>
-          </Typography>
-          <Typography sx={{ fontSize: 15 }}>
-            Giá Tiên Phong: <strong>{vndCurrency(price!.pioneer)}</strong>
-          </Typography>
-        </Box>
+        {props.showcase.status === ShowcaseStatus.Coming && (
+          <Box
+            sx={{
+              borderRadius: "13px",
+              marginTop: "-60px",
+              bgcolor: "yellow.main",
+              p: 1,
+              mb: 3,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 0.4,
+            }}
+          >
+            <Typography sx={{ fontSize: 13 }}>
+              Giá bán dự kiến:{" "}
+              <Typography sx={{ fontWeight: 600 }} component={"span"}>
+                {vndCurrency(price!.regular)}
+              </Typography>
+            </Typography>
+            <Typography sx={{ fontSize: 15 }}>
+              Giá Tiên Phong:{" "}
+              <Typography
+                sx={{ fontWeight: 600, fontSize: 18 }}
+                component={"span"}
+              >
+                {vndCurrency(price!.pioneer)}
+              </Typography>
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: 13,
+                height: 25,
+                lineHeight: "25px",
+                bgcolor: "black",
+                color: "white",
+                px: 2,
+                borderRadius: "12.5px",
+                mb: "-8px",
+                transform: "translateY(50%)",
+                "& strong": { fontWeight: 600 },
+                mt: "-8px",
+              }}
+            >
+              Saving{" "}
+              <strong>
+                {Math.round(
+                  ((price!.regular - price!.pioneer) * 100.0) / price!.regular
+                )}
+                %
+              </strong>
+            </Typography>
+          </Box>
+        )}
         <Typography
-          sx={{ textAlign: "center", fontWeight: 700, fontSize: 13, mb: 1 }}
+          sx={{ textAlign: "center", fontWeight: 600, fontSize: 13, mb: 1 }}
         >
           Đăng ký đặt trước để nhận ngay gói giá Tiên Phong hấp dẫn
         </Typography>
@@ -59,6 +93,7 @@ export default function PreorderDialog(
             variant={"contained"}
             color={"primary"}
             onClick={handlePreorder}
+            sx={{ fontWeight: 600 }}
           >
             Đăng ký
           </Button>

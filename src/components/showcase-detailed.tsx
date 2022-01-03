@@ -6,7 +6,6 @@ import {
   ProductInfoDetailed,
   StyledTimeline,
 } from "./commons";
-import UserIcon from "../assets/icons/UserIcon";
 import CollapseDetail from "./CollapseDetail";
 import StatusBadge from "./StatusBadge";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
@@ -20,10 +19,16 @@ import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import { Showcase } from "../types/graphql";
 import { CommentSection } from "./PostPage";
-import { AspectRatio } from "@hungphongbk/vth-sdk";
+import {
+  AspectRatio,
+  LookupFilledPrimaryIcon,
+  PreorderFilledPrimaryIcon,
+} from "@hungphongbk/vth-sdk";
 import { format } from "date-fns";
 import NextImage from "./NextImage";
 import ShowcaseRelateds from "./showcase-relateds";
+import DetailedUserIcon from "../assets/icons/DetailedUserIcon";
+import VthIconButton from "./vth-icon-button";
 
 const testPreview = (str: string) => /^\/preview/.test(str),
   testPost = (str: string) => /^\/post/.test(str);
@@ -33,7 +38,9 @@ export default function ShowcaseDetailed({
   onClick,
 }: { item: Showcase } & HTMLProps<HTMLElement>) {
   const router = useRouter();
-  const currentPage = testPreview(router.pathname)
+  const currentPage: "preview" | "post" | undefined = testPreview(
+    router.pathname
+  )
     ? "preview"
     : testPost(router.pathname)
     ? "post"
@@ -152,18 +159,6 @@ export default function ShowcaseDetailed({
                     large
                   />
                 </motion.div>
-                <Divider sx={{ mt: 0.5, mb: 0.5 }} />
-                <MotionBox
-                  layoutId={"user"}
-                  sx={{
-                    display: "grid",
-                    gridTemplateColumns: "auto 1fr",
-                    gridGap: 1,
-                  }}
-                >
-                  <UserIcon sx={{ width: 16, height: 16, mr: 1 }} />
-                  <MotionTypo>{item.author.name}</MotionTypo>
-                </MotionBox>
               </ProductInfoDetailed>
             </motion.div>
           </MotionBox>
@@ -173,13 +168,63 @@ export default function ShowcaseDetailed({
               bgcolor: "white",
             }}
           >
-            <Typography sx={{ mb: 1 }}>
+            <Typography sx={{ mb: 1, fontSize: 15 }}>
               Thương hiệu: <strong>{item.brand.name}</strong>
             </Typography>
             <CollapseDetail>{item.description}</CollapseDetail>
+            <Divider sx={{ mt: 1.2, mb: 1.2 }} />
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateAreas: "'user count' 'user release'",
+                gridGap: 1,
+              }}
+            >
+              <Stack
+                direction={"row"}
+                gap={1}
+                alignItems={"center"}
+                sx={{ gridArea: "user" }}
+              >
+                <DetailedUserIcon />
+                <Typography sx={{ fontSize: "15px", lineHeight: "18px" }}>
+                  {item.author.name}
+                </Typography>
+              </Stack>
+            </Box>
+            {currentPage === "preview" && (
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: "auto auto",
+                  gridGap: 12,
+                  mt: 2,
+                }}
+              >
+                <VthIconButton
+                  sx={{ flexGrow: 1 }}
+                  startIcon={
+                    <LookupFilledPrimaryIcon sx={{ width: 22, height: 22 }} />
+                  }
+                  fullWidth
+                  onClick={() => router.push(`/post/${item.slug}`)}
+                >
+                  XEM THÊM
+                </VthIconButton>
+                <VthIconButton
+                  sx={{ flexGrow: 1 }}
+                  startIcon={
+                    <PreorderFilledPrimaryIcon sx={{ width: 22, height: 22 }} />
+                  }
+                  fullWidth
+                >
+                  ĐĂNG KÝ ĐẶT TRƯỚC
+                </VthIconButton>
+              </Box>
+            )}
           </MotionBox>
         </MotionBox>
-        {currentPage === "post" && (
+        {currentPage === "post" && item.updates.length > 0 && (
           <motion.div layoutId={"main content"}>
             <CollapseCard header={"cập nhật dự án"} sx={{ mt: 1 }} defaultOpen>
               <StyledTimeline sx={{ px: 0 }}>

@@ -37,7 +37,7 @@ export const ProductInfoDetailed = styled(ProductInfoBase)`
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 8px;
+  padding: 4em 8px 8px;
 `;
 export const ProductInfoSecond = styled("div")`
   padding: 8px;

@@ -233,37 +233,43 @@ export default function ShowcaseDetailed({
             )}
           </MotionBox>
         </MotionBox>
-        {currentPage === "post" && item.updates.length > 0 && (
+        {currentPage === "post" && (
           <motion.div layoutId={"main content"}>
-            <CollapseCard header={"cập nhật dự án"} sx={{ mt: 1 }} defaultOpen>
-              <StyledTimeline sx={{ px: 0 }}>
-                {item.updates.map((update) => (
-                  <TimelineItem key={update.id}>
-                    <TimelineSeparator>
-                      <TimelineDot />
-                      <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Box>
+            {item.updates.length > 0 && (
+              <CollapseCard
+                header={"cập nhật dự án"}
+                sx={{ mt: 1 }}
+                defaultOpen
+              >
+                <StyledTimeline sx={{ px: 0 }}>
+                  {item.updates.map((update) => (
+                    <TimelineItem key={update.id}>
+                      <TimelineSeparator>
+                        <TimelineDot />
+                        <TimelineConnector />
+                      </TimelineSeparator>
+                      <TimelineContent>
                         <Box>
-                          <Typography sx={{ fontWeight: 600 }}>
-                            <strong>
-                              {format(new Date(update.createdAt), "hh:mm aa")}
-                            </strong>{" "}
-                            | Thứ Sáu, ngày 15/10/2021
+                          <Box>
+                            <Typography sx={{ fontWeight: 600 }}>
+                              <strong>
+                                {format(new Date(update.createdAt), "hh:mm aa")}
+                              </strong>{" "}
+                              | Thứ Sáu, ngày 15/10/2021
+                            </Typography>
+                          </Box>
+                          <Typography>
+                            Earth is the third planet from the Sun and the only
+                            astronomical object known to harbor life. According
+                            to radiometric dating estimation.
                           </Typography>
                         </Box>
-                        <Typography>
-                          Earth is the third planet from the Sun and the only
-                          astronomical object known to harbor life. According to
-                          radiometric dating estimation.
-                        </Typography>
-                      </Box>
-                    </TimelineContent>
-                  </TimelineItem>
-                ))}
-              </StyledTimeline>
-            </CollapseCard>
+                      </TimelineContent>
+                    </TimelineItem>
+                  ))}
+                </StyledTimeline>
+              </CollapseCard>
+            )}
             <CollapseCard
               header={"tính năng nổi bật"}
               sx={{ mt: 1 }}
@@ -291,7 +297,10 @@ export default function ShowcaseDetailed({
                       <Typography sx={{ fontSize: 13 }}>
                         {hf.description}
                       </Typography>
-                      <AspectRatio ratio={"307/146"} sx={{ mt: "auto" }}>
+                      <AspectRatio
+                        ratio={`${hf.image.width}/${hf.image.height}`}
+                        sx={{ mt: "auto" }}
+                      >
                         <Box sx={{ borderRadius: 2, overflow: "hidden" }}>
                           <Box sx={{ position: "relative" }}>
                             <NextImage

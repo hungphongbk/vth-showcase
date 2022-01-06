@@ -116,10 +116,6 @@ enum CommentRateEnum {
 """Cursor for paging through collections"""
 scalar ConnectionCursor
 
-input CreateImageListInputDto {
-  images: [MediaInput!]
-}
-
 input CreateInvestmentPackageDto {
   benefitRate: Float
   count: Float
@@ -136,11 +132,6 @@ input CreateManyInvestmentPackageDtosInput {
 input CreateManyMediaDtosInput {
   """Array of records to create"""
   mediaDtos: [MediaInput!]!
-}
-
-input CreateOneImageListInput {
-  """The record to create"""
-  imageList: CreateImageListInputDto!
 }
 
 input CreateOneInvestmentPackageDtoInput {
@@ -275,6 +266,10 @@ type ImageListAggregateGroupBy {
 
 type ImageListCountAggregate {
   id: Int
+}
+
+input ImageListCreateDto {
+  images: [MediaInput!]
 }
 
 type ImageListDeleteResponse {
@@ -523,7 +518,7 @@ type Mutation {
   addImagesToImageList(input: AddImagesToImageListInput!): ImageList!
   createManyInvestmentPackageDtos(input: CreateManyInvestmentPackageDtosInput!): [InvestmentPackageDto!]!
   createManyMediaDtos(input: CreateManyMediaDtosInput!): [MediaDto!]!
-  createOneImageList(input: CreateOneImageListInput!): ImageList!
+  createOneImageList(slug: String!): ImageList!
   createOneInvestmentPackageDto(input: CreateOneInvestmentPackageDtoInput!): InvestmentPackageDto!
   createOneMediaDto(input: CreateOneMediaDtoInput!): MediaDto!
   createOneSetting(input: SettingCreateDto!): Boolean!
@@ -535,9 +530,11 @@ type Mutation {
   deleteOneImageList(input: DeleteOneImageListInput!): ImageListDeleteResponse!
   deleteOneInvestmentPackageDto(input: DeleteOneInvestmentPackageDtoInput!): InvestmentPackageDtoDeleteResponse!
   deleteOneMediaDto(input: DeleteOneMediaDtoInput!): MediaDtoDeleteResponse!
+  deleteOneMediaFromImageList(id: ID!, mediaId: ID!): ImageList!
   deleteOnePrjUpdateDto(input: DeleteOnePrjUpdateDtoInput!): PrjUpdateDtoDeleteResponse!
   deleteOneShowcase(slug: String!): Boolean!
   deleteOneShowcaseHighlightFeature(input: DeleteOneShowcaseHighlightFeatureInput!): ShowcaseHighlightFeatureDeleteResponse!
+  insertOneMediaToImageList(id: ID!, input: MediaInput!): ImageList!
   postAnonymousComment(input: CommentCreateDto!, slug: String!): CommentDto!
   postAuthorizedComment(input: CommentCreateDto!, slug: String!): CommentDto!
   postProjectUpdate(input: PrjUpdateCreateDto!, slug: String!): PrjUpdateDto!
@@ -999,7 +996,7 @@ input ShowcaseCreateInputDto {
   highlightFeatures: [ShowcaseHFCreateInputDto!]
   id: String
   image: MediaInput!
-  imageLists: [CreateImageListInputDto!]
+  imageLists: [ImageListCreateDto!]
   inventory: ShowcaseInventoryDtoInput
   isFeatured: Boolean
   name: String!
@@ -1266,7 +1263,7 @@ input ShowcaseUpdateInputDto {
   highlightFeatures: [ShowcaseHFCreateInputDto!]
   id: String
   image: MediaInput
-  imageLists: [CreateImageListInputDto!]
+  imageLists: [ImageListCreateDto!]
   inventory: ShowcaseInventoryDtoInput
   isFeatured: Boolean
   name: String

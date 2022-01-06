@@ -118,10 +118,6 @@ export enum CommentRateEnum {
 }
 
 
-export interface CreateImageListInputDto {
-  images?: Maybe<Array<MediaInput>>;
-}
-
 export interface CreateInvestmentPackageDto {
   benefitRate?: Maybe<Scalars['Float']>;
   count?: Maybe<Scalars['Float']>;
@@ -136,10 +132,6 @@ export interface CreateManyInvestmentPackageDtosInput {
 
 export interface CreateManyMediaDtosInput {
   mediaDtos: Array<MediaInput>;
-}
-
-export interface CreateOneImageListInput {
-  imageList: CreateImageListInputDto;
 }
 
 export interface CreateOneInvestmentPackageDtoInput {
@@ -252,6 +244,10 @@ export interface ImageListAggregateGroupBy {
 
 export interface ImageListCountAggregate {
   id?: Maybe<Scalars['Int']>;
+}
+
+export interface ImageListCreateDto {
+  images?: Maybe<Array<MediaInput>>;
 }
 
 export interface ImageListDeleteResponse {
@@ -493,9 +489,11 @@ export interface Mutation {
   deleteOneImageList: ImageListDeleteResponse;
   deleteOneInvestmentPackageDto: InvestmentPackageDtoDeleteResponse;
   deleteOneMediaDto: MediaDtoDeleteResponse;
+  deleteOneMediaFromImageList: ImageList;
   deleteOnePrjUpdateDto: PrjUpdateDtoDeleteResponse;
   deleteOneShowcase: Scalars['Boolean'];
   deleteOneShowcaseHighlightFeature: ShowcaseHighlightFeatureDeleteResponse;
+  insertOneMediaToImageList: ImageList;
   postAnonymousComment: CommentDto;
   postAuthorizedComment: CommentDto;
   postProjectUpdate: PrjUpdateDto;
@@ -560,7 +558,7 @@ export interface MutationCreateManyMediaDtosArgs {
 
 
 export interface MutationCreateOneImageListArgs {
-  input: CreateOneImageListInput;
+  slug: Scalars['String'];
 }
 
 
@@ -620,6 +618,12 @@ export interface MutationDeleteOneMediaDtoArgs {
 }
 
 
+export interface MutationDeleteOneMediaFromImageListArgs {
+  id: Scalars['ID'];
+  mediaId: Scalars['ID'];
+}
+
+
 export interface MutationDeleteOnePrjUpdateDtoArgs {
   input: DeleteOnePrjUpdateDtoInput;
 }
@@ -632,6 +636,12 @@ export interface MutationDeleteOneShowcaseArgs {
 
 export interface MutationDeleteOneShowcaseHighlightFeatureArgs {
   input: DeleteOneShowcaseHighlightFeatureInput;
+}
+
+
+export interface MutationInsertOneMediaToImageListArgs {
+  id: Scalars['ID'];
+  input: MediaInput;
 }
 
 
@@ -1169,7 +1179,7 @@ export interface ShowcaseCreateInputDto {
   highlightFeatures?: Maybe<Array<ShowcaseHfCreateInputDto>>;
   id?: Maybe<Scalars['String']>;
   image: MediaInput;
-  imageLists?: Maybe<Array<CreateImageListInputDto>>;
+  imageLists?: Maybe<Array<ImageListCreateDto>>;
   inventory?: Maybe<ShowcaseInventoryDtoInput>;
   isFeatured?: Maybe<Scalars['Boolean']>;
   name: Scalars['String'];
@@ -1406,7 +1416,7 @@ export interface ShowcaseUpdateInputDto {
   highlightFeatures?: Maybe<Array<ShowcaseHfCreateInputDto>>;
   id?: Maybe<Scalars['String']>;
   image?: Maybe<MediaInput>;
-  imageLists?: Maybe<Array<CreateImageListInputDto>>;
+  imageLists?: Maybe<Array<ImageListCreateDto>>;
   inventory?: Maybe<ShowcaseInventoryDtoInput>;
   isFeatured?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;

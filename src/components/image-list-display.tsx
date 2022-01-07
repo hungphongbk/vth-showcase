@@ -68,7 +68,7 @@ export default class ImageListDisplay extends Component<
           ref={(el) => (this.#childRef = el)}
           slidesToShow={5}
           asNavFor={this.state.mainRef}
-          // sx={{ pb: 3 }}
+          sx={{ pb: 3 }}
         >
           {this.props.imageList.images.map((image, index) => (
             <AspectRatio

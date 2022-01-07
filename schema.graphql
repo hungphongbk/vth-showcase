@@ -14,14 +14,6 @@ input AddHighlightFeaturesToShowcaseInput {
   relationIds: [ID!]!
 }
 
-input AddImageListsToShowcaseInput {
-  """The id of the record."""
-  id: String!
-
-  """The ids of the relations."""
-  relationIds: [ID!]!
-}
-
 input AddImagesToImageListInput {
   """The id of the record."""
   id: ID!
@@ -284,28 +276,12 @@ type ImageListEdge {
   node: ImageList!
 }
 
-input ImageListFilter {
-  and: [ImageListFilter!]
-  id: IDFilterComparison
-  or: [ImageListFilter!]
-}
-
 type ImageListMaxAggregate {
   id: ID
 }
 
 type ImageListMinAggregate {
   id: ID
-}
-
-input ImageListSort {
-  direction: SortDirection!
-  field: ImageListSortFields!
-  nulls: SortNulls
-}
-
-enum ImageListSortFields {
-  id
 }
 
 type InvestmentPackageDto {
@@ -514,7 +490,6 @@ enum MediaType {
 type Mutation {
   addCommentsToShowcase(input: AddCommentsToShowcaseInput!): Showcase!
   addHighlightFeaturesToShowcase(input: AddHighlightFeaturesToShowcaseInput!): Showcase!
-  addImageListsToShowcase(input: AddImageListsToShowcaseInput!): Showcase!
   addImagesToImageList(input: AddImagesToImageListInput!): ImageList!
   createManyInvestmentPackageDtos(input: CreateManyInvestmentPackageDtosInput!): [InvestmentPackageDto!]!
   createManyMediaDtos(input: CreateManyMediaDtosInput!): [MediaDto!]!
@@ -544,13 +519,11 @@ type Mutation {
   removeHighlightFeaturesFromShowcase(input: RemoveHighlightFeaturesFromShowcaseInput!): Showcase!
   removeImageFromShowcase(input: RemoveImageFromShowcaseInput!): Showcase!
   removeImageFromShowcaseHighlightFeature(input: RemoveImageFromShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
-  removeImageListsFromShowcase(input: RemoveImageListsFromShowcaseInput!): Showcase!
   removeImagesFromImageList(input: RemoveImagesFromImageListInput!): ImageList!
   setAuthorOnCommentDto(input: SetAuthorOnCommentDtoInput!): CommentDto!
   setAuthorOnShowcase(input: SetAuthorOnShowcaseInput!): Showcase!
   setCommentsOnShowcase(input: SetCommentsOnShowcaseInput!): Showcase!
   setHighlightFeaturesOnShowcase(input: SetHighlightFeaturesOnShowcaseInput!): Showcase!
-  setImageListsOnShowcase(input: SetImageListsOnShowcaseInput!): Showcase!
   setImageOnShowcase(input: SetImageOnShowcaseInput!): Showcase!
   setImageOnShowcaseHighlightFeature(input: SetImageOnShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
   setImagesOnImageList(input: SetImagesOnImageListInput!): ImageList!
@@ -687,10 +660,6 @@ type Query {
   currentUser: User!
   getAllUsers: [User!]!
   getOneUser(uid: String!): User!
-  imageList(
-    """The id of the record to find."""
-    id: ID!
-  ): ImageList
   investmentPackageDto(
     """The id of the record to find."""
     id: ID!
@@ -791,14 +760,6 @@ input RemoveImageFromShowcaseInput {
   relationId: ID!
 }
 
-input RemoveImageListsFromShowcaseInput {
-  """The id of the record."""
-  id: String!
-
-  """The ids of the relations."""
-  relationIds: [ID!]!
-}
-
 input RemoveImagesFromImageListInput {
   """The id of the record."""
   id: ID!
@@ -832,14 +793,6 @@ input SetCommentsOnShowcaseInput {
 }
 
 input SetHighlightFeaturesOnShowcaseInput {
-  """The id of the record."""
-  id: String!
-
-  """The ids of the relations."""
-  relationIds: [ID!]!
-}
-
-input SetImageListsOnShowcaseInput {
   """The id of the record."""
   id: String!
 
@@ -911,13 +864,7 @@ type Showcase {
   ): [ShowcaseHighlightFeature!]!
   id: ID!
   image: MediaDto!
-  imageLists(
-    """Specify to filter the records returned."""
-    filter: ImageListFilter = {}
-
-    """Specify to sort results."""
-    sorting: [ImageListSort!] = []
-  ): [ImageList!]!
+  imageLists: [ImageList!]
   inventory: ShowcaseInventoryDto
   investorStat: ShowcaseInvestorStatDto
   isFeatured: Boolean

@@ -30,6 +30,7 @@ import ShowcaseRelateds from "./showcase-relateds";
 import DetailedUserIcon from "../assets/icons/DetailedUserIcon";
 import VthIconButton from "./vth-icon-button";
 import PreorderDialog from "./system/preorder-dialog";
+import ImageListDisplay from "./image-list-display";
 
 const testPreview = (str: string) => /^\/preview/.test(str),
   testPost = (str: string) => /^\/post/.test(str);
@@ -321,6 +322,18 @@ export default function ShowcaseDetailed({
                 ))}
               </SlickSlider>
             </CollapseCard>
+            {(item.imageLists?.[0]?.images.length ?? 0) > 0 && (
+              <CollapseCard
+                header={"Video / hình ảnh"}
+                disableCardStyle
+                defaultOpen
+              >
+                <ImageListDisplay
+                  showcase={item}
+                  imageList={item.imageLists![0]}
+                />
+              </CollapseCard>
+            )}
             <CollapseCard
               header={"câu chuyện chưa kể"}
               sx={{ mt: 1 }}

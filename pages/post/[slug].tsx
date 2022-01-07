@@ -75,9 +75,12 @@ function PostDetailedPage() {
     router.prefetch("/");
   }, [router]);
   const [open, setOpen] = useState(false);
-  const { loading, error, data } = useAuthQuery(ssrShowcaseDetail.usePage, {
-    variables: { slug },
-  });
+  const { loading, error, data } = useAuthQuery(
+    ssrShowcaseDetail.usePage(() => ({
+      fetchPolicy: "cache-and-network",
+      variables: { slug },
+    }))
+  );
 
   const showcase = data?.showcase as Showcase;
 

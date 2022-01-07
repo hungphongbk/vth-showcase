@@ -27,11 +27,6 @@ export interface AddHighlightFeaturesToShowcaseInput {
   relationIds: Array<Scalars['ID']>;
 }
 
-export interface AddImageListsToShowcaseInput {
-  id: Scalars['String'];
-  relationIds: Array<Scalars['ID']>;
-}
-
 export interface AddImagesToImageListInput {
   id: Scalars['ID'];
   relationIds: Array<Scalars['ID']>;
@@ -259,28 +254,12 @@ export interface ImageListEdge {
   node: ImageList;
 }
 
-export interface ImageListFilter {
-  and?: Maybe<Array<ImageListFilter>>;
-  id?: Maybe<IdFilterComparison>;
-  or?: Maybe<Array<ImageListFilter>>;
-}
-
 export interface ImageListMaxAggregate {
   id?: Maybe<Scalars['ID']>;
 }
 
 export interface ImageListMinAggregate {
   id?: Maybe<Scalars['ID']>;
-}
-
-export interface ImageListSort {
-  direction: SortDirection;
-  field: ImageListSortFields;
-  nulls?: Maybe<SortNulls>;
-}
-
-export enum ImageListSortFields {
-  Id = 'id'
 }
 
 export interface InvestmentPackageDto {
@@ -473,7 +452,6 @@ export enum MediaType {
 export interface Mutation {
   addCommentsToShowcase: Showcase;
   addHighlightFeaturesToShowcase: Showcase;
-  addImageListsToShowcase: Showcase;
   addImagesToImageList: ImageList;
   createManyInvestmentPackageDtos: Array<InvestmentPackageDto>;
   createManyMediaDtos: Array<MediaDto>;
@@ -503,13 +481,11 @@ export interface Mutation {
   removeHighlightFeaturesFromShowcase: Showcase;
   removeImageFromShowcase: Showcase;
   removeImageFromShowcaseHighlightFeature: ShowcaseHighlightFeature;
-  removeImageListsFromShowcase: Showcase;
   removeImagesFromImageList: ImageList;
   setAuthorOnCommentDto: CommentDto;
   setAuthorOnShowcase: Showcase;
   setCommentsOnShowcase: Showcase;
   setHighlightFeaturesOnShowcase: Showcase;
-  setImageListsOnShowcase: Showcase;
   setImageOnShowcase: Showcase;
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
@@ -534,11 +510,6 @@ export interface MutationAddCommentsToShowcaseArgs {
 
 export interface MutationAddHighlightFeaturesToShowcaseArgs {
   input: AddHighlightFeaturesToShowcaseInput;
-}
-
-
-export interface MutationAddImageListsToShowcaseArgs {
-  input: AddImageListsToShowcaseInput;
 }
 
 
@@ -693,11 +664,6 @@ export interface MutationRemoveImageFromShowcaseHighlightFeatureArgs {
 }
 
 
-export interface MutationRemoveImageListsFromShowcaseArgs {
-  input: RemoveImageListsFromShowcaseInput;
-}
-
-
 export interface MutationRemoveImagesFromImageListArgs {
   input: RemoveImagesFromImageListInput;
 }
@@ -720,11 +686,6 @@ export interface MutationSetCommentsOnShowcaseArgs {
 
 export interface MutationSetHighlightFeaturesOnShowcaseArgs {
   input: SetHighlightFeaturesOnShowcaseInput;
-}
-
-
-export interface MutationSetImageListsOnShowcaseArgs {
-  input: SetImageListsOnShowcaseInput;
 }
 
 
@@ -904,7 +865,6 @@ export interface Query {
   currentUser: User;
   getAllUsers: Array<User>;
   getOneUser: User;
-  imageList?: Maybe<ImageList>;
   investmentPackageDto?: Maybe<InvestmentPackageDto>;
   investmentPackageDtos: InvestmentPackageDtoConnection;
   mediaDto?: Maybe<MediaDto>;
@@ -921,11 +881,6 @@ export interface Query {
 
 export interface QueryGetOneUserArgs {
   uid: Scalars['String'];
-}
-
-
-export interface QueryImageListArgs {
-  id: Scalars['ID'];
 }
 
 
@@ -1014,11 +969,6 @@ export interface RemoveImageFromShowcaseInput {
   relationId: Scalars['ID'];
 }
 
-export interface RemoveImageListsFromShowcaseInput {
-  id: Scalars['String'];
-  relationIds: Array<Scalars['ID']>;
-}
-
 export interface RemoveImagesFromImageListInput {
   id: Scalars['ID'];
   relationIds: Array<Scalars['ID']>;
@@ -1040,11 +990,6 @@ export interface SetCommentsOnShowcaseInput {
 }
 
 export interface SetHighlightFeaturesOnShowcaseInput {
-  id: Scalars['String'];
-  relationIds: Array<Scalars['ID']>;
-}
-
-export interface SetImageListsOnShowcaseInput {
   id: Scalars['String'];
   relationIds: Array<Scalars['ID']>;
 }
@@ -1089,7 +1034,7 @@ export interface Showcase {
   highlightFeatures: Array<ShowcaseHighlightFeature>;
   id: Scalars['ID'];
   image: MediaDto;
-  imageLists: Array<ImageList>;
+  imageLists?: Maybe<Array<ImageList>>;
   inventory?: Maybe<ShowcaseInventoryDto>;
   investorStat?: Maybe<ShowcaseInvestorStatDto>;
   isFeatured?: Maybe<Scalars['Boolean']>;
@@ -1112,12 +1057,6 @@ export interface ShowcaseCommentsArgs {
 export interface ShowcaseHighlightFeaturesArgs {
   filter?: Maybe<ShowcaseHighlightFeatureFilter>;
   sorting?: Maybe<Array<ShowcaseHighlightFeatureSort>>;
-}
-
-
-export interface ShowcaseImageListsArgs {
-  filter?: Maybe<ImageListFilter>;
-  sorting?: Maybe<Array<ImageListSort>>;
 }
 
 
@@ -1600,7 +1539,7 @@ export type ShowcaseHfFragment = { highlightFeatures: Array<{ id: string, name: 
 
 export type ShowcaseInvestorStatFragment = { investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null | undefined };
 
-export type ShowcaseDetailFragment = { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> };
+export type ShowcaseDetailFragment = { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists?: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> | null | undefined };
 
 export type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1676,7 +1615,7 @@ export type ShowcaseDetailQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }>, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null | undefined } };
+export type ShowcaseDetailQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists?: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> | null | undefined, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null | undefined } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -1697,7 +1636,7 @@ export type ShowcaseForUpdateQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseForUpdateQuery = { showcase: { slug: string, id: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> } };
+export type ShowcaseForUpdateQuery = { showcase: { slug: string, id: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists?: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> | null | undefined } };
 
 export type GetHighlightFeaturesOnShowcaseQueryVariables = Exact<{
   slug: Scalars['String'];

@@ -2,8 +2,7 @@ import Slider, { Settings } from "react-slick";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { PropsWithChildren } from "react";
-import deepmerge from "deepmerge";
+import { forwardRef, PropsWithChildren } from "react";
 import { Box, styled } from "@mui/material";
 import { SxProps } from "@mui/system";
 
@@ -72,20 +71,21 @@ const StyledSlider = styled(Slider)<{ indicatorColor?: string }>`
   }
 `;
 
-export default function SlickSlider({
-  children,
-  sx,
-  indicatorColor,
-  ...props
-}: SlickSliderProps): JSX.Element {
+const SlickSlider = forwardRef<Slider, SlickSliderProps>(function SlickSlider(
+  { children, sx, indicatorColor, ...props },
+  ref
+): JSX.Element {
   return (
     <Box sx={sx}>
       <StyledSlider
+        ref={ref}
         indicatorColor={indicatorColor}
-        {...deepmerge(defaultSettings, props)}
+        {...{ ...defaultSettings, ...props }}
       >
         {children}
       </StyledSlider>
     </Box>
   );
-}
+});
+
+export default SlickSlider;

@@ -8,8 +8,6 @@ import * as Apollo from '@apollo/client';
 import type React from 'react';
 import { getApolloClient , ApolloClientContext} from '../api/apollo';
 
-
-
 export async function getServerPageAllUpdatesInShowcase
     (options: Omit<Apollo.QueryOptions<Types.AllUpdatesInShowcaseQueryVariables>, 'query'>, ctx: ApolloClientContext ){
         const apolloClient = getApolloClient(ctx);
@@ -154,41 +152,6 @@ export const ssrIndexClient = {
     }
 
 
-export async function getServerPageBanner
-    (options: Omit<Apollo.QueryOptions<Types.QueryBannerQueryVariables>, 'query'>, ctx: ApolloClientContext ){
-        const apolloClient = getApolloClient(ctx);
-        
-        const data = await apolloClient.query<Types.QueryBannerQuery>({ ...options, query: Operations.QueryBannerDocument });
-        
-        const apolloState = apolloClient.cache.extract();
-
-        return {
-            props: {
-                apolloState: apolloState,
-                data: data?.data,
-                error: data?.error ?? data?.errors ?? null,
-            },
-        };
-      }
-export const useBanner = (
-  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.QueryBannerQuery, Types.QueryBannerQueryVariables>) => {
-  const router = useRouter();
-  const options = optionsFunc ? optionsFunc(router) : {};
-  return useQuery(Operations.QueryBannerDocument, options);
-};
-export type PageBannerComp = React.FC<{data?: Types.QueryBannerQuery, error?: Apollo.ApolloError}>;
-export const withPageBanner = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.QueryBannerQuery, Types.QueryBannerQueryVariables>) => (WrappedComponent:PageBannerComp) : NextPage  => (props) => {
-                const router = useRouter()
-                const options = optionsFunc ? optionsFunc(router) : {};
-                const {data, error } = useQuery(Operations.QueryBannerDocument, options)    
-                return <WrappedComponent {...props} data={data} error={error} /> ;
-                   
-            }; 
-export const ssrBanner = {
-      getServerPage: getServerPageBanner,
-      withPage: withPageBanner,
-      usePage: useBanner,
-    }
 export async function getServerPageComments
     (options: Omit<Apollo.QueryOptions<Types.QueryCommentsQueryVariables>, 'query'>, ctx: ApolloClientContext ){
         const apolloClient = getApolloClient(ctx);
@@ -609,5 +572,6 @@ export const ssrGetOneHighlightFeature = {
       withPage: withPageGetOneHighlightFeature,
       usePage: useGetOneHighlightFeature,
     }
+
 
 

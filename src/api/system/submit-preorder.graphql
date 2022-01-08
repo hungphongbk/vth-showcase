@@ -1,0 +1,5 @@
+mutation SubmitPreorder($slug: String!) {
+  createOnePreorder(slug: $slug) {
+    id
+  }
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
-import { MediaDto, QueryBannerQuery } from "../types/graphql";
+import { IndexPageQuery, MediaDto } from "../types/graphql";
 import { AspectRatio } from "@hungphongbk/vth-sdk";
 import { sxFlexCenter, sxFullSize } from "../utils/predefinedSx";
 import SlickSlider from "./slick-slider";
@@ -9,7 +9,7 @@ import NextImage from "./NextImage";
 
 type BannerProps = {
   sx?: SxProps;
-  banner: QueryBannerQuery["banner"];
+  banner: IndexPageQuery["banner"];
 };
 export default function Banner({ sx, banner }: BannerProps): JSX.Element {
   const bannerCount = banner?.value?.images?.length ?? 0;

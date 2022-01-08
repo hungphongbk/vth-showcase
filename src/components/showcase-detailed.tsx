@@ -1,35 +1,20 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import { HTMLProps, useCallback, useEffect, useRef, useState } from "react";
-import {
-  MotionBox,
-  MotionTypo,
-  ProductInfoDetailed,
-  StyledTimeline,
-} from "./commons";
+import { MotionBox, MotionTypo, ProductInfoDetailed } from "./commons";
 import CollapseDetail from "./CollapseDetail";
 import StatusBadge from "./StatusBadge";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { CollapseCard, SlickSlider } from "./index";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
-import TimelineConnector from "@mui/lab/TimelineConnector";
-import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineDot from "@mui/lab/TimelineDot";
 import { Showcase } from "../types/graphql";
-import { CommentSection } from "./PostPage";
-import {
-  AspectRatio,
-  LookupFilledPrimaryIcon,
-  PreorderFilledPrimaryIcon,
-} from "@hungphongbk/vth-sdk";
-import { format } from "date-fns";
+import { CommentSection, PrjUpdateDisplay } from "./post-page";
+import { AspectRatio, LookupFilledPrimaryIcon } from "@hungphongbk/vth-sdk";
 import NextImage from "./NextImage";
 import ShowcaseRelateds from "./showcase-relateds";
 import DetailedUserIcon from "../assets/icons/DetailedUserIcon";
 import VthIconButton from "./vth-icon-button";
-import PreorderDialog from "./system/preorder-dialog";
+import { PreorderButton } from "./system";
 import ImageListDisplay from "./image-list-display";
 
 const testPreview = (str: string) => /^\/preview/.test(str),
@@ -215,21 +200,7 @@ export default function ShowcaseDetailed({
                 >
                   XEM THÊM
                 </VthIconButton>
-                <VthIconButton
-                  sx={{ flexGrow: 1 }}
-                  startIcon={
-                    <PreorderFilledPrimaryIcon sx={{ width: 22, height: 22 }} />
-                  }
-                  fullWidth
-                  onClick={() => setOpen(true)}
-                >
-                  ĐĂNG KÝ ĐẶT TRƯỚC
-                </VthIconButton>
-                <PreorderDialog
-                  open={open}
-                  showcase={item}
-                  onClose={() => setOpen(false)}
-                />
+                <PreorderButton showcase={item} />
               </Box>
             )}
           </MotionBox>
@@ -242,33 +213,7 @@ export default function ShowcaseDetailed({
                 sx={{ mt: 1 }}
                 defaultOpen
               >
-                <StyledTimeline sx={{ px: 0 }}>
-                  {item.updates.map((update) => (
-                    <TimelineItem key={update.id}>
-                      <TimelineSeparator>
-                        <TimelineDot />
-                        <TimelineConnector />
-                      </TimelineSeparator>
-                      <TimelineContent>
-                        <Box>
-                          <Box>
-                            <Typography sx={{ fontWeight: 600 }}>
-                              <strong>
-                                {format(new Date(update.createdAt), "hh:mm aa")}
-                              </strong>{" "}
-                              | Thứ Sáu, ngày 15/10/2021
-                            </Typography>
-                          </Box>
-                          <Typography>
-                            Earth is the third planet from the Sun and the only
-                            astronomical object known to harbor life. According
-                            to radiometric dating estimation.
-                          </Typography>
-                        </Box>
-                      </TimelineContent>
-                    </TimelineItem>
-                  ))}
-                </StyledTimeline>
+                <PrjUpdateDisplay updates={item.updates} />
               </CollapseCard>
             )}
             <CollapseCard

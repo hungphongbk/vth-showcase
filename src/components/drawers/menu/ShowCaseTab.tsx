@@ -3,7 +3,7 @@ import { Box, styled } from "@mui/material";
 import bgr1 from "../../../assets/bg-investor-1.png";
 import ShowCaseIcon from "./ShowCaseIcon";
 import ShowCaseSearchIcon from "./ShowCaseSearchIcon";
-import { StyledBox } from "../../PostPage/styled";
+import { StyledBox } from "../../post-page/styled";
 
 const StyledTab1 = styled(Box)`
   font-family: Montserrat;

@@ -7,7 +7,7 @@ import { apiService, withApollo } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
 import BookmarkIcon from "../../src/assets/icons/BookmarkIcon";
 import { Showcase, ShowcaseStatus } from "../../src/types/graphql";
-import { InvestorInformation } from "../../src/components/PostPage";
+import { InvestorInformation } from "../../src/components/post-page";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
 import { ssrShowcaseDetail } from "../../src/types/graphql.ssr";

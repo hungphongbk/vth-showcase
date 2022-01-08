@@ -1,35 +1,19 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Portal } from "@mui/material";
 import MenuBarIcon from "../../assets/icons/MenuBarIcon";
 import { AnimatePresence, motion } from "framer-motion";
-import useWindowDimensions, { useOnClickOutside } from "../../utils/hooks";
+import { useAuthInitialized, useOnClickOutside } from "../../utils/hooks";
 import { MotionBox } from "../commons";
 import MenuPanel from "./MenuPanel";
-import { useAppSelector } from "../../store";
 
 const MENU_BTN_WIDTH = 59,
-  MENU_BTN_HEIGHT = 32,
-  MENU_BTN_TOP = (MENU_BTN_WIDTH - MENU_BTN_HEIGHT) / 2.0,
-  MENU_BTN_LEFT = 12,
-  MENU_BTN_Y_ORIGIN = MENU_BTN_TOP + MENU_BTN_HEIGHT / 2.0,
-  MENU_BTN_X_ORIGIN = MENU_BTN_LEFT + MENU_BTN_WIDTH / 2.0;
+  MENU_BTN_HEIGHT = 32;
 
 const MotionMenuBarIcon = motion(MenuBarIcon);
 
 export default function MenuDrawer(): JSX.Element {
   const [openMenu, setOpenMenu] = useState(false),
-    initialized = useAppSelector((state) => state.auth.initialized);
-
-  const { width: windowWidth, height: windowHeight } = useWindowDimensions();
-
-  const scaleFactor = useMemo(() => {
-    return (
-      Math.sqrt(
-        (windowWidth - MENU_BTN_X_ORIGIN) ** 2 +
-          (windowHeight - MENU_BTN_Y_ORIGIN) ** 2
-      ) * 2
-    );
-  }, [windowHeight, windowWidth]);
+    { initialized } = useAuthInitialized();
 
   const doCloseMenu = () => setOpenMenu(false),
     doOpenMenu = () => setOpenMenu(true);

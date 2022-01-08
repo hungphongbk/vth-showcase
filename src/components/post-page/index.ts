@@ -8,3 +8,7 @@ export const InvestorInformation = dynamic(
 export const CommentSection = dynamic(() => import("./comment-section"), {
   ssr: false,
 });
+
+export const PrjUpdateDisplay = dynamic(() => import("./prj-update-display"), {
+  ssr: false,
+});

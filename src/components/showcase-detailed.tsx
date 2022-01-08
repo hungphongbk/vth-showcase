@@ -19,17 +19,13 @@ import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import { Showcase } from "../types/graphql";
 import { CommentSection } from "./PostPage";
-import {
-  AspectRatio,
-  LookupFilledPrimaryIcon,
-  PreorderFilledPrimaryIcon,
-} from "@hungphongbk/vth-sdk";
+import { AspectRatio, LookupFilledPrimaryIcon } from "@hungphongbk/vth-sdk";
 import { format } from "date-fns";
 import NextImage from "./NextImage";
 import ShowcaseRelateds from "./showcase-relateds";
 import DetailedUserIcon from "../assets/icons/DetailedUserIcon";
 import VthIconButton from "./vth-icon-button";
-import PreorderDialog from "./system/preorder-dialog";
+import { PreorderButton } from "./system";
 import ImageListDisplay from "./image-list-display";
 
 const testPreview = (str: string) => /^\/preview/.test(str),
@@ -215,21 +211,7 @@ export default function ShowcaseDetailed({
                 >
                   XEM THÊM
                 </VthIconButton>
-                <VthIconButton
-                  sx={{ flexGrow: 1 }}
-                  startIcon={
-                    <PreorderFilledPrimaryIcon sx={{ width: 22, height: 22 }} />
-                  }
-                  fullWidth
-                  onClick={() => setOpen(true)}
-                >
-                  ĐĂNG KÝ ĐẶT TRƯỚC
-                </VthIconButton>
-                <PreorderDialog
-                  open={open}
-                  showcase={item}
-                  onClose={() => setOpen(false)}
-                />
+                <PreorderButton showcase={item} />
               </Box>
             )}
           </MotionBox>

@@ -12,6 +12,7 @@ import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
 import { ssrShowcaseDetail } from "../../src/types/graphql.ssr";
 import { PreorderDialog } from "../../src/components/system";
+import Footer from "../../src/components/Footer";
 
 const BottomButton = ({
     children,
@@ -146,6 +147,7 @@ function PostDetailedPage() {
           />
         )}
       </Box>
+      <Footer />
     </>
   );
 }

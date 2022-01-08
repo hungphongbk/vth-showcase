@@ -20,6 +20,7 @@ import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
 import { LoadingIndicator } from "@hungphongbk/vth-sdk";
 import { NetworkStatus } from "@apollo/client";
 import ShowcaseFeaturedItem from "../src/components/showcase-featured-item";
+import Footer from "src/components/Footer";
 
 const FilterPanel = dynamic(() => import("../src/components/filter-panel"), {
   ssr: false,
@@ -94,6 +95,7 @@ const Home = () => {
   };
 
   return (
+    <>
     <Container sx={{ mt: 2, pl: 1, pr: 1 }}>
       <NextSeo canonical={"https://showcase.vaithuhay.com"} />
       <Banner banner={banner} />
@@ -187,6 +189,8 @@ const Home = () => {
         </AnimatePresence>
       </Box>
     </Container>
+    <Footer />
+  </>
   );
 };
 

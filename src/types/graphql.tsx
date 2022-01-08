@@ -458,6 +458,7 @@ export interface Mutation {
   createOneImageList: ImageList;
   createOneInvestmentPackageDto: InvestmentPackageDto;
   createOneMediaDto: MediaDto;
+  createOnePreorder: PreorderDto;
   createOneSetting: Scalars['Boolean'];
   createOneShowcase: Showcase;
   createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
@@ -540,6 +541,11 @@ export interface MutationCreateOneInvestmentPackageDtoArgs {
 
 export interface MutationCreateOneMediaDtoArgs {
   input: CreateOneMediaDtoInput;
+}
+
+
+export interface MutationCreateOnePreorderArgs {
+  slug: Scalars['String'];
 }
 
 
@@ -776,6 +782,11 @@ export interface PageInfo {
   hasNextPage?: Maybe<Scalars['Boolean']>;
   hasPreviousPage?: Maybe<Scalars['Boolean']>;
   startCursor?: Maybe<Scalars['ConnectionCursor']>;
+}
+
+export interface PreorderDto {
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
 }
 
 export interface PrjUpdateCreateDto {

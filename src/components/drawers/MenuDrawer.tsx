@@ -2,10 +2,12 @@ import React, { useMemo, useRef, useState } from "react";
 import { Portal } from "@mui/material";
 import MenuBarIcon from "../../assets/icons/MenuBarIcon";
 import { AnimatePresence, motion } from "framer-motion";
-import useWindowDimensions, { useOnClickOutside } from "../../utils/hooks";
+import useWindowDimensions, {
+  useAuthInitialized,
+  useOnClickOutside,
+} from "../../utils/hooks";
 import { MotionBox } from "../commons";
 import MenuPanel from "./MenuPanel";
-import { useAppSelector } from "../../store";
 
 const MENU_BTN_WIDTH = 59,
   MENU_BTN_HEIGHT = 32,
@@ -18,7 +20,7 @@ const MotionMenuBarIcon = motion(MenuBarIcon);
 
 export default function MenuDrawer(): JSX.Element {
   const [openMenu, setOpenMenu] = useState(false),
-    initialized = useAppSelector((state) => state.auth.initialized);
+    { initialized } = useAuthInitialized();
 
   const { width: windowWidth, height: windowHeight } = useWindowDimensions();
 

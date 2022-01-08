@@ -56,10 +56,20 @@ export function useOnClickOutside(ref: any, handler: any) {
   );
 }
 
+export function useAuthInitialized() {
+  const initialized = useAppSelector((state) => state.auth.initialized),
+    token = useAppSelector((state) => state.auth.token);
+
+  return {
+    initialized,
+    token,
+    isLoggedIn: typeof token !== "undefined",
+  };
+}
+
 export function useLoginRequired() {
   const router = useRouter();
-  const { initialized, token } = useAppSelector((state) => state.auth);
-  const isLoggedIn = typeof token !== "undefined";
+  const { initialized, isLoggedIn } = useAuthInitialized();
 
   useEffect(() => {
     if (initialized && !isLoggedIn) {

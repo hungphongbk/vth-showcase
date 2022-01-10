@@ -27,6 +27,7 @@ import { LocalizationProvider } from "@mui/lab";
 import DateAdapter from "@mui/lab/AdapterDateFns";
 import { useApollo } from "../src/api";
 import { ApolloProvider } from "@apollo/client";
+import Footer from "../src/components/Footer";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -106,6 +107,7 @@ export default function MyApp(props: AppPropsWithLayout) {
                         )}
                         <CreatorAndInvestorActions />
                       </LayoutGroup>
+                      <Footer />
                       <InvestorRegDialog />
                     </LocalizationProvider>
                   </SnackbarProvider>

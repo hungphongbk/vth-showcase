@@ -26,6 +26,7 @@ import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Footer from "../src/components/Footer";
 
 const FilterPanel = dynamic(() => import("../src/components/FilterPanel"), {
   ssr: false,
@@ -95,6 +96,7 @@ function Home({
   }, [statusFilter, posts]);
 
   return (
+    <>
     <Container sx={{ mt: 2, pl: 1, pr: 1 }}>
       <Banner banner={banner} />
       <Typography
@@ -236,6 +238,8 @@ function Home({
         </AnimatePresence>
       </Box>
     </Container>
+    <Footer />
+    </>
   );
 }
 

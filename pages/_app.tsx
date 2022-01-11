@@ -107,7 +107,6 @@ export default function MyApp(props: AppPropsWithLayout) {
                         )}
                         <CreatorAndInvestorActions />
                       </LayoutGroup>
-                      <Footer />
                       <InvestorRegDialog />
                     </LocalizationProvider>
                   </SnackbarProvider>

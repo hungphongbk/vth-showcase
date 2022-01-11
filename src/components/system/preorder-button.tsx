@@ -4,7 +4,7 @@ import {
   PreorderFilledPrimaryIcon,
 } from "@hungphongbk/vth-sdk";
 import VthIconButton from "../vth-icon-button";
-import { Showcase } from "../../types/graphql";
+import { Showcase, useSubmitPreorderMutation } from "../../types/graphql";
 import { useEffect, useMemo, useState } from "react";
 
 type PreorderButtonProps = {
@@ -16,7 +16,10 @@ export default function PreorderButton(
   const { initialized, isLoggedIn } = useAuthInitialized(),
     [open, setOpen] = useState(false),
     [isSubmitting, setIsSubmitting] = useState(false),
-    [isSubmitted, setIsSubmitted] = useState(false);
+    [isSubmitted, setIsSubmitted] = useState(false),
+    [doSubmitPreorder] = useSubmitPreorderMutation({
+      variables: { slug: props.showcase.slug },
+    });
 
   const IconComponent = useMemo(() => {
     if (isSubmitted) return CheckFilledPrimaryIcon;
@@ -34,7 +37,9 @@ export default function PreorderButton(
         startIcon={<IconComponent sx={{ width: 22, height: 22 }} />}
         fullWidth
         onClick={() => {
-          //
+          if (isLoggedIn) {
+            doSubmitPreorder().then(() => setIsSubmitted(true));
+          }
         }}
       >
         ĐĂNG KÝ ĐẶT TRƯỚC

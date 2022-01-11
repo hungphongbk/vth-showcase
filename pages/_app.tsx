@@ -30,6 +30,7 @@ import { ApolloProvider } from "@apollo/client";
 import { useGATrackView } from "../src/utils/hooks";
 import { apolloClient } from "../src/api";
 import "../styles/globals.css";
+import Footer from "../src/components/Footer";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;

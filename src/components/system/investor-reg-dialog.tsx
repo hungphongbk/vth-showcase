@@ -8,10 +8,13 @@ import {
   DialogContent,
   MenuItem,
   Stack,
+  styled,
   Typography,
 } from "@mui/material";
 import Image from "next/image";
 import bg1 from "../../assets/bg-investor-reg-1.png";
+import bg2 from "../../assets/bg-investor-2.png";
+import avtInfo from "../../assets/avt_info.png";
 import {
   sxFullSize,
   sxFullSizeAbsolute,
@@ -29,6 +32,11 @@ import {
 } from "../../types/graphql";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
+import IconUser from "src/assets/icons/IconUser";
+import PhoneIcon from "src/assets/icons/PhoneIcon";
+import Avatar from '@mui/material/Avatar';
+import QuestionMarkIcon from "src/assets/icons/QuestionMarkIcon";
+
 
 type ImageBoxProps = BoxProps;
 // eslint-disable-next-line react/display-name
@@ -38,19 +46,41 @@ const ImageBox = forwardRef(
       <Box sx={sxFullSizeAbsolute}>
         <Box sx={{ position: "relative", ...sxFullSize }}>
           <Image src={bg1} layout={"fill"} objectFit={"cover"} />
+          <Image src={bg2} layout={"fill"} objectFit={"cover"} />
+          <Image src={avtInfo} layout={"fill"} objectFit={"cover"} />
         </Box>
       </Box>
       {children}
     </Box>
   )
 );
-
 const SUBMIT_INVESTOR = gql`
   mutation SubmitInvestor($form: SubmitInvestorInputDto!) {
     submitInvestor(form: $form)
   }
 `;
-
+const ContactBox = styled(Box)`
+  display: flex;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 161.9%;
+  /* or 24px */
+  color: #FFFFFF;
+`
+const Avt = styled(Box)`
+width: 62px;
+height: 62px;
+padding-top: 10%
+`
+const Info = styled(Box)`
+`
+const InfoDetail = styled(Box)`
+display: flex
+`
+const Phone = styled(Box)`
+display: flex
+`
 type InvestorRegDialogProps = {};
 export default function InvestorRegDialog(
   props: InvestorRegDialogProps
@@ -85,6 +115,26 @@ export default function InvestorRegDialog(
   return (
     <StyledDialog open={open} onClose={onClose}>
       <DialogContent sx={{ position: "relative", zIndex: 0 }}>
+        <Box 
+        sx={{
+          position: "absolute", 
+          zIndex: 1, 
+          top: "-3%",
+          left: "50%",
+          width: "263px",
+          transform: "translateX(-50%)",
+          padding: "4px 0",
+          textAlign: "center",
+          backgroundColor: "#575757",
+          borderRadius: "20px",
+          fontFamily: "Montserrat",
+          fontWeight: 600,
+          fontSize: "15px",
+          lineHeight: "161.9%",
+          color: "#FFFFFF",
+          }}>
+          Trở thành Investor cùng chúng tôi
+        </Box>
         <Box
           sx={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: -1 }}
         >
@@ -99,35 +149,58 @@ export default function InvestorRegDialog(
             lineHeight: "18.33px",
             fontWeight: 400,
             color: "#000",
+            marginBottom: "70px"
           }}
         >
           Nếu bạn đang mong muốn tìm hiểu sâu hơn về việc đầu tư cùng Vaithuhay,
           đăng nhập ngay để hiển thị các thông tin về Doanh thu dự kiến, P&L chi
           tiết của từng dự án, phương án kinh doanh & hình thức hợp tác
+          <span 
+            style={{
+              backgroundColor: "#000000",
+              color: "#ffffff",
+              borderRadius: "9.5px",
+              marginLeft: "5px",
+              padding: "3px 20px 3px 6px",
+              fontFamily: "Montserrat",
+              fontStyle: "normal",
+              fontWeight: 500,
+              fontSize: "10px",
+              lineHeight: "161.9%",
+              width: "53px",
+              position: "relative",
+            }}>
+              Ví dụ <QuestionMarkIcon style={{position: "absolute", top: "2px", right: "2.5px"}} /></span>
         </Typography>
         <Stack
           direction={"column"}
           gap={1.5}
           alignItems={"center"}
           sx={{ mt: 3.5 }}
+          
         >
           <FormInput
             control={control}
             component={TextInput}
             name={"email"}
             placeholder={"Email"}
+            style={{border:"1px solid #ABABAB"}}
           />
           <FormInput
             control={control}
             component={TextInput}
             name={"phone"}
             placeholder={"Số điện thoại"}
+            style={{border:"1px solid #ABABAB"}}
+
           />
           <FormInput
             control={control}
             component={TextInput}
             name={"job"}
             placeholder={"Ngành nghề đang hoạt động"}
+            style={{border:"1px solid #ABABAB"}}
+
           />
           <FormInput
             name={"purpose"}
@@ -136,6 +209,8 @@ export default function InvestorRegDialog(
             labelId="purpose-label"
             id="purpose"
             fullWidth
+            style={{border:"1px solid #ABABAB", borderRadius:"15px"}}
+
           >
             <MenuItem value={"-"}>
               <Typography sx={{ color: "neutral.placeholderText" }}>
@@ -155,6 +230,8 @@ export default function InvestorRegDialog(
             labelId="method-label"
             id="method"
             fullWidth
+            style={{border:"1px solid #ABABAB", borderRadius:"15px"}}
+            
           >
             <MenuItem value={"-"}>
               <Typography sx={{ color: "neutral.placeholderText" }}>
@@ -174,6 +251,8 @@ export default function InvestorRegDialog(
             labelId="fund-label"
             id="fund"
             fullWidth
+            style={{border:"1px solid #ABABAB", borderRadius:"15px"}}
+
           >
             <MenuItem value={"-"}>
               <Typography sx={{ color: "neutral.placeholderText" }}>
@@ -196,6 +275,45 @@ export default function InvestorRegDialog(
           </Button>
         </Stack>
       </DialogContent>
+      <Box sx={{ position: "relative", marginTop: "-25px" }}>
+          <AspectRatio ratio={"357/190"}>
+            <Image src={bg2} layout={"fill"} objectFit={"cover"} />
+          </AspectRatio>
+          <Typography
+          sx={{
+            position: "absolute",
+            top: "30px",
+            right: "15%",
+            width: "68%",
+            fontFamily: "Montserrat",
+            fontStyle: "normal",
+            fontWeight: "500",
+            fontSize: "13px",
+            lineHeight: "20px",
+            display: "flex",
+            alignItems: "center",
+            textAlign: "center",
+            color: "#FFFFFF",
+          }}
+          >
+          Liên hệ ngay chúng tôi để cùng nhau 
+          hợp nhau các dự án của Vaithuhay.com
+          </Typography>
+          <Box sx={{
+            position: "absolute",
+            top: "70px",
+            left: "10%"
+          }}>
+            <ContactBox>
+              <Avt><Avatar alt="Remy Sharp" > <Image src={avtInfo} layout={"fill"} objectFit={"cover"} /> </Avatar> </Avt>
+              <Info>
+                <h2 style={{fontSize: "15px", margin:"20px 0 0 0"}}>BÙI SƠN TÂM</h2>
+                <InfoDetail><IconUser /> <p style={{margin:"0 0 0 8px",fontSize: "13px"}}>Founder/CEO | Vaithuhay.com</p></InfoDetail>
+                <Phone><PhoneIcon /><p style={{margin:"0 0 0 8px",fontSize: "13px"}}>0902905808</p></Phone>
+              </Info>
+            </ContactBox>
+          </Box>
+      </Box>
     </StyledDialog>
   );
 }

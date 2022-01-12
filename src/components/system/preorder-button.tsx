@@ -5,11 +5,15 @@ import {
 } from "@hungphongbk/vth-sdk";
 import VthIconButton from "../vth-icon-button";
 import { Showcase, useSubmitPreorderMutation } from "../../types/graphql";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSnackbar } from "notistack";
+import PreorderDialog from "./preorder-dialog";
+import { FirebaseAuthService } from "../../service";
+import { SxProps } from "@mui/system";
 
 type PreorderButtonProps = {
   showcase: Pick<Showcase, "status" | "slug" | "expectedSalePrice">;
+  sx?: SxProps;
 };
 export default function PreorderButton(
   props: PreorderButtonProps
@@ -28,6 +32,26 @@ export default function PreorderButton(
     return PreorderFilledPrimaryIcon;
   }, [isSubmitted]);
 
+  const submitAnonymously = useCallback(
+    async (value) => {
+      setIsSubmitting(true);
+      const [authService, { data }] = await Promise.all([
+        FirebaseAuthService(),
+        doSubmitPreorder({
+          variables: {
+            slug: props.showcase.slug,
+            input: value,
+          },
+        }),
+      ]);
+      await authService.signInWithToken(data!.createOnePreorder.customToken!);
+      setOpen(false);
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    },
+    [doSubmitPreorder, props.showcase.slug]
+  );
+
   useEffect(() => {
     if (isSubmitted) {
       enqueueSnackbar("Đăng ký đặt trước thành công", {
@@ -40,17 +64,22 @@ export default function PreorderButton(
   return (
     <>
       <VthIconButton
-        sx={{ flexGrow: 1, opacity: initialized ? 1 : 0.5 }}
+        sx={{ flexGrow: 1, opacity: initialized ? 1 : 0.5, ...props.sx }}
         startIcon={<IconComponent sx={{ width: 22, height: 22 }} />}
         fullWidth
         onClick={() => {
           if (isLoggedIn) {
             doSubmitPreorder().then(() => setIsSubmitted(true));
-          }
+          } else setOpen(true);
         }}
       >
         ĐĂNG KÝ ĐẶT TRƯỚC
       </VthIconButton>
+      <PreorderDialog
+        open={open}
+        showcase={props.showcase}
+        onClose={submitAnonymously}
+      />
     </>
   );
 }

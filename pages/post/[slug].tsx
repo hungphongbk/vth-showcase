@@ -12,6 +12,7 @@ import { NextSeo } from "next-seo";
 import { ssrShowcaseDetail } from "../../src/types/graphql.ssr";
 import Footer from "../../src/components/Footer";
 import PreorderButton from "../../src/components/system/preorder-button";
+import VthIconButton from "../../src/components/vth-icon-button";
 
 const BottomButton = ({
     children,
@@ -115,7 +116,7 @@ function PostDetailedPage() {
             borderTopRightRadius: "20px",
           }}
         >
-          <BottomButton
+          <VthIconButton
             startIcon={
               <IconWrapper>
                 <HopTacIcon
@@ -123,10 +124,42 @@ function PostDetailedPage() {
                 />
               </IconWrapper>
             }
+            sx={{
+              bgcolor: "yellow.main",
+              border: 3,
+              borderColor: "yellow.light",
+              color: "black",
+              fontWeight: 600,
+              fontSize: 12,
+              lineHeight: 15,
+              boxShadow: "none",
+              height: 35,
+              borderRadius: "17.5px",
+              mt: "-24px",
+              position: "relative",
+              flex: 1,
+            }}
           >
-            Hợp tác
-          </BottomButton>
-          <PreorderButton showcase={data!.showcase as unknown as Showcase} />
+            HỢP TÁC
+          </VthIconButton>
+          <PreorderButton
+            showcase={data!.showcase as unknown as Showcase}
+            sx={{
+              bgcolor: "yellow.main",
+              border: 3,
+              borderColor: "yellow.light",
+              color: "black",
+              fontWeight: 600,
+              fontSize: 12,
+              lineHeight: 15,
+              boxShadow: "none",
+              height: 35,
+              borderRadius: "17.5px",
+              mt: "-24px",
+              position: "relative",
+              flex: 1.5,
+            }}
+          />
         </Box>
       </Box>
       <Footer />

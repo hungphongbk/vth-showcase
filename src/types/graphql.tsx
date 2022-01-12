@@ -458,7 +458,7 @@ export interface Mutation {
   createOneImageList: ImageList;
   createOneInvestmentPackageDto: InvestmentPackageDto;
   createOneMediaDto: MediaDto;
-  createOnePreorder: PreorderDto;
+  createOnePreorder: PreorderResponseDto;
   createOneSetting: Scalars['Boolean'];
   createOneShowcase: Showcase;
   createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
@@ -545,6 +545,7 @@ export interface MutationCreateOneMediaDtoArgs {
 
 
 export interface MutationCreateOnePreorderArgs {
+  input?: Maybe<PreorderRequestInputDto>;
   slug: Scalars['String'];
 }
 
@@ -786,6 +787,34 @@ export interface PageInfo {
 
 export interface PreorderDto {
   createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+}
+
+export interface PreorderDtoFilter {
+  and?: Maybe<Array<PreorderDtoFilter>>;
+  id?: Maybe<IdFilterComparison>;
+  or?: Maybe<Array<PreorderDtoFilter>>;
+}
+
+export interface PreorderDtoSort {
+  direction: SortDirection;
+  field: PreorderDtoSortFields;
+  nulls?: Maybe<SortNulls>;
+}
+
+export enum PreorderDtoSortFields {
+  Id = 'id'
+}
+
+export interface PreorderRequestInputDto {
+  email: Scalars['String'];
+  name: Scalars['String'];
+  phoneNumber: Scalars['String'];
+}
+
+export interface PreorderResponseDto {
+  createdAt: Scalars['DateTime'];
+  customToken?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
 }
 
@@ -1050,6 +1079,7 @@ export interface Showcase {
   investorStat?: Maybe<ShowcaseInvestorStatDto>;
   isFeatured?: Maybe<Scalars['Boolean']>;
   name: Scalars['String'];
+  preorders: ShowcasePreordersConnection;
   publishStatus: PublishStatus;
   slug: Scalars['String'];
   status: ShowcaseStatus;
@@ -1068,6 +1098,13 @@ export interface ShowcaseCommentsArgs {
 export interface ShowcaseHighlightFeaturesArgs {
   filter?: Maybe<ShowcaseHighlightFeatureFilter>;
   sorting?: Maybe<Array<ShowcaseHighlightFeatureSort>>;
+}
+
+
+export interface ShowcasePreordersArgs {
+  filter?: Maybe<PreorderDtoFilter>;
+  paging?: Maybe<OffsetPaging>;
+  sorting?: Maybe<Array<PreorderDtoSort>>;
 }
 
 
@@ -1300,6 +1337,12 @@ export interface ShowcaseMinAggregate {
   slug?: Maybe<Scalars['String']>;
   status?: Maybe<ShowcaseStatus>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+}
+
+export interface ShowcasePreordersConnection {
+  nodes: Array<PreorderDto>;
+  pageInfo: OffsetPageInfo;
+  totalCount: Scalars['Int'];
 }
 
 export interface ShowcasePrice {
@@ -1669,10 +1712,11 @@ export type DeleteOneHighlightFeatureMutation = { deleteOneShowcaseHighlightFeat
 
 export type SubmitPreorderMutationVariables = Exact<{
   slug: Scalars['String'];
+  input?: Maybe<PreorderRequestInputDto>;
 }>;
 
 
-export type SubmitPreorderMutation = { createOnePreorder: { id: string } };
+export type SubmitPreorderMutation = { createOnePreorder: { id: string, customToken?: string | null | undefined } };
 
 export const MediaFragmentDoc = gql`
     fragment Media on MediaDto {
@@ -2805,9 +2849,10 @@ export type DeleteOneHighlightFeatureMutationHookResult = ReturnType<typeof useD
 export type DeleteOneHighlightFeatureMutationResult = Apollo.MutationResult<DeleteOneHighlightFeatureMutation>;
 export type DeleteOneHighlightFeatureMutationOptions = Apollo.BaseMutationOptions<DeleteOneHighlightFeatureMutation, DeleteOneHighlightFeatureMutationVariables>;
 export const SubmitPreorderDocument = gql`
-    mutation SubmitPreorder($slug: String!) {
-  createOnePreorder(slug: $slug) {
+    mutation SubmitPreorder($slug: String!, $input: PreorderRequestInputDto) {
+  createOnePreorder(slug: $slug, input: $input) {
     id
+    customToken
   }
 }
     `;
@@ -2827,6 +2872,7 @@ export type SubmitPreorderMutationFn = Apollo.MutationFunction<SubmitPreorderMut
  * const [submitPreorderMutation, { data, loading, error }] = useSubmitPreorderMutation({
  *   variables: {
  *      slug: // value for 'slug'
+ *      input: // value for 'input'
  *   },
  * });
  */

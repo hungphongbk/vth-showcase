@@ -1,5 +1,6 @@
-mutation SubmitPreorder($slug: String!) {
-  createOnePreorder(slug: $slug) {
+mutation SubmitPreorder($slug: String!, $input: PreorderRequestInputDto) {
+  createOnePreorder(slug: $slug, input: $input) {
     id
+    customToken
   }
 }

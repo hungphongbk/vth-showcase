@@ -496,7 +496,7 @@ type Mutation {
   createOneImageList(slug: String!): ImageList!
   createOneInvestmentPackageDto(input: CreateOneInvestmentPackageDtoInput!): InvestmentPackageDto!
   createOneMediaDto(input: CreateOneMediaDtoInput!): MediaDto!
-  createOnePreorder(slug: String!): PreorderDto!
+  createOnePreorder(input: PreorderRequestInputDto, slug: String!): PreorderResponseDto!
   createOneSetting(input: SettingCreateDto!): Boolean!
   createOneShowcase(input: ShowcaseCreateInputDto!): Showcase!
   createOneShowcaseHighlightFeature(input: ShowcaseHFCreateInputDto!, slug: String!): ShowcaseHighlightFeature!
@@ -573,6 +573,34 @@ type PageInfo {
 
 type PreorderDto {
   createdAt: DateTime!
+  id: ID!
+}
+
+input PreorderDtoFilter {
+  and: [PreorderDtoFilter!]
+  id: IDFilterComparison
+  or: [PreorderDtoFilter!]
+}
+
+input PreorderDtoSort {
+  direction: SortDirection!
+  field: PreorderDtoSortFields!
+  nulls: SortNulls
+}
+
+enum PreorderDtoSortFields {
+  id
+}
+
+input PreorderRequestInputDto {
+  email: String!
+  name: String!
+  phoneNumber: String!
+}
+
+type PreorderResponseDto {
+  createdAt: DateTime!
+  customToken: String
   id: ID!
 }
 
@@ -875,6 +903,16 @@ type Showcase {
   investorStat: ShowcaseInvestorStatDto
   isFeatured: Boolean
   name: String!
+  preorders(
+    """Specify to filter the records returned."""
+    filter: PreorderDtoFilter = {}
+
+    """Limit or page results."""
+    paging: OffsetPaging = {limit: 10}
+
+    """Specify to sort results."""
+    sorting: [PreorderDtoSort!] = []
+  ): ShowcasePreordersConnection!
   publishStatus: PublishStatus!
   slug: String!
   status: ShowcaseStatus!
@@ -1150,6 +1188,17 @@ type ShowcaseMinAggregate {
   slug: String
   status: ShowcaseStatus
   updatedAt: DateTime
+}
+
+type ShowcasePreordersConnection {
+  """Array of nodes."""
+  nodes: [PreorderDto!]!
+
+  """Paging information"""
+  pageInfo: OffsetPageInfo!
+
+  """Fetch total count of records"""
+  totalCount: Int!
 }
 
 type ShowcasePrice {

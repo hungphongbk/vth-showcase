@@ -6,6 +6,7 @@ import {
 import VthIconButton from "../vth-icon-button";
 import { Showcase, useSubmitPreorderMutation } from "../../types/graphql";
 import { useEffect, useMemo, useState } from "react";
+import { useSnackbar } from "notistack";
 
 type PreorderButtonProps = {
   showcase: Pick<Showcase, "status" | "slug" | "expectedSalePrice">;
@@ -19,7 +20,8 @@ export default function PreorderButton(
     [isSubmitted, setIsSubmitted] = useState(false),
     [doSubmitPreorder] = useSubmitPreorderMutation({
       variables: { slug: props.showcase.slug },
-    });
+    }),
+    { enqueueSnackbar } = useSnackbar();
 
   const IconComponent = useMemo(() => {
     if (isSubmitted) return CheckFilledPrimaryIcon;
@@ -27,8 +29,13 @@ export default function PreorderButton(
   }, [isSubmitted]);
 
   useEffect(() => {
-    if (isSubmitted) setTimeout(() => setIsSubmitted(false), 1300);
-  }, [isSubmitted]);
+    if (isSubmitted) {
+      enqueueSnackbar("Đăng ký đặt trước thành công", {
+        variant: "success",
+      });
+      setTimeout(() => setIsSubmitted(false), 1300);
+    }
+  }, [enqueueSnackbar, isSubmitted]);
 
   return (
     <>

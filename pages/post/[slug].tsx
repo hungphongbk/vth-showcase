@@ -5,14 +5,13 @@ import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { apiService, withApollo } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
-import BookmarkIcon from "../../src/assets/icons/BookmarkIcon";
-import { Showcase, ShowcaseStatus } from "../../src/types/graphql";
+import { Showcase } from "../../src/types/graphql";
 import { InvestorInformation } from "../../src/components/post-page";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
 import { ssrShowcaseDetail } from "../../src/types/graphql.ssr";
-import { PreorderDialog } from "../../src/components/system";
 import Footer from "../../src/components/Footer";
+import PreorderButton from "../../src/components/system/preorder-button";
 
 const BottomButton = ({
     children,
@@ -127,25 +126,8 @@ function PostDetailedPage() {
           >
             Hợp tác
           </BottomButton>
-          <BottomButton
-            onClick={() => setOpen(true)}
-            startIcon={
-              <IconWrapper>
-                <BookmarkIcon sx={{ color: "yellow.main", width: 10 }} />
-              </IconWrapper>
-            }
-            disabled={data!.showcase.status !== ShowcaseStatus.Coming}
-          >
-            Đăng ký đặt trước
-          </BottomButton>
+          <PreorderButton showcase={data!.showcase as unknown as Showcase} />
         </Box>
-        {data!.showcase.status === ShowcaseStatus.Coming && (
-          <PreorderDialog
-            open={open}
-            showcase={showcase}
-            onClose={() => setOpen(false)}
-          />
-        )}
       </Box>
       <Footer />
     </>

@@ -3,10 +3,6 @@ import * as apiService from "../service/graphql.service";
 
 export { apiService };
 
-export { default as queryBanner } from "./queryBanner.graphql";
-
-export { default as mutationCreateMedia } from "./createMedia.graphql";
-export { default as mutationDeleteMedia } from "./deleteMedia.graphql";
 export { default as mutationCreateShowcase } from "./createShowcase.graphql";
 
 export { default as postAnonymousComment } from "./postAnonymousComment.graphql";

@@ -1,27 +1,31 @@
 import React from "react";
-import { Box, Button, DialogContent, Stack, Typography } from "@mui/material";
-import { Showcase, ShowcaseStatus } from "../../types/graphql";
+import { Box, DialogContent, Stack, Typography } from "@mui/material";
+import {
+  PreorderRequestInputDto,
+  Showcase,
+  ShowcaseStatus,
+} from "../../types/graphql";
 import { TextInput } from "../TextInput";
 import { StyledDialog } from "../commons";
-import { useAppDispatch } from "../../store";
-import { addShowcaseToCart } from "../../store/cart/reducer";
 import { vndCurrency } from "../../utils/string";
+import { useForm } from "react-hook-form";
+import { FormInput } from "@hungphongbk/vth-sdk";
+import { LoadingButton } from "@mui/lab";
 
 type PreorderDialogProps = {
   open: boolean;
-  showcase: Showcase;
-  onClose: () => void;
+  showcase: Pick<Showcase, "status" | "slug" | "expectedSalePrice">;
+  onClose: (value: PreorderRequestInputDto) => Promise<void>;
 };
 export default function PreorderDialog(
   props: PreorderDialogProps
 ): JSX.Element {
-  const dispatch = useAppDispatch();
   const price = props.showcase.expectedSalePrice;
 
-  const handlePreorder = () => {
-    dispatch(addShowcaseToCart(props.showcase));
-    props.onClose();
-  };
+  const form = useForm<PreorderRequestInputDto>({
+      defaultValues: { name: "", email: "", phoneNumber: "" },
+    }),
+    { control, formState, handleSubmit } = form;
 
   return (
     <StyledDialog open={props.open} onClose={props.onClose}>
@@ -86,17 +90,33 @@ export default function PreorderDialog(
           Đăng ký đặt trước để nhận ngay gói giá Tiên Phong hấp dẫn
         </Typography>
         <Stack direction={"column"} gap={1.5} alignItems={"center"}>
-          <TextInput placeholder={"Họ tên"} />
-          <TextInput placeholder={"Email"} />
-          <TextInput placeholder={"Số điện thoại"} />
-          <Button
+          <FormInput
+            control={control}
+            component={TextInput}
+            name={"name"}
+            placeholder={"Họ tên"}
+          />
+          <FormInput
+            control={control}
+            component={TextInput}
+            name={"email"}
+            placeholder={"Email"}
+          />
+          <FormInput
+            control={control}
+            component={TextInput}
+            name={"phoneNumber"}
+            placeholder={"Số điện thoại"}
+          />
+          <LoadingButton
+            loading={formState.isSubmitting}
             variant={"contained"}
             color={"primary"}
-            onClick={handlePreorder}
+            onClick={handleSubmit(props.onClose)}
             sx={{ fontWeight: 600 }}
           >
             Đăng ký
-          </Button>
+          </LoadingButton>
         </Stack>
       </DialogContent>
     </StyledDialog>

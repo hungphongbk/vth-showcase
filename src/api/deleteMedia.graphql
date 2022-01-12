@@ -1,5 +1,0 @@
-mutation deleteMedia($id: ID!) {
-  deleteOneMediaDto(input: { id: $id }) {
-    id
-  }
-}

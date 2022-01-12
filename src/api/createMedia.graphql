@@ -1,8 +1,0 @@
-mutation createMedia($input: MediaInput!){
-  createOneMediaDto(input: {mediaDto: $input }){
-    id
-    filename
-    mimetype
-    path
-  }
-}

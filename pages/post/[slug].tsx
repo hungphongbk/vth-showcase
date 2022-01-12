@@ -5,14 +5,14 @@ import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { apiService, withApollo } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
-import BookmarkIcon from "../../src/assets/icons/BookmarkIcon";
-import { Showcase, ShowcaseStatus } from "../../src/types/graphql";
+import { Showcase } from "../../src/types/graphql";
 import { InvestorInformation } from "../../src/components/post-page";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
 import { ssrShowcaseDetail } from "../../src/types/graphql.ssr";
-import { PreorderDialog } from "../../src/components/system";
 import Footer from "../../src/components/Footer";
+import PreorderButton from "../../src/components/system/preorder-button";
+import VthIconButton from "../../src/components/vth-icon-button";
 
 const BottomButton = ({
     children,
@@ -116,7 +116,7 @@ function PostDetailedPage() {
             borderTopRightRadius: "20px",
           }}
         >
-          <BottomButton
+          <VthIconButton
             startIcon={
               <IconWrapper>
                 <HopTacIcon
@@ -124,28 +124,43 @@ function PostDetailedPage() {
                 />
               </IconWrapper>
             }
+            sx={{
+              bgcolor: "yellow.main",
+              border: 3,
+              borderColor: "yellow.light",
+              color: "black",
+              fontWeight: 600,
+              fontSize: 12,
+              lineHeight: 15,
+              boxShadow: "none",
+              height: 35,
+              borderRadius: "17.5px",
+              mt: "-24px",
+              position: "relative",
+              flex: 1,
+            }}
           >
-            Hợp tác
-          </BottomButton>
-          <BottomButton
-            onClick={() => setOpen(true)}
-            startIcon={
-              <IconWrapper>
-                <BookmarkIcon sx={{ color: "yellow.main", width: 10 }} />
-              </IconWrapper>
-            }
-            disabled={data!.showcase.status !== ShowcaseStatus.Coming}
-          >
-            Đăng ký đặt trước
-          </BottomButton>
-        </Box>
-        {data!.showcase.status === ShowcaseStatus.Coming && (
-          <PreorderDialog
-            open={open}
-            showcase={showcase}
-            onClose={() => setOpen(false)}
+            HỢP TÁC
+          </VthIconButton>
+          <PreorderButton
+            showcase={data!.showcase as unknown as Showcase}
+            sx={{
+              bgcolor: "yellow.main",
+              border: 3,
+              borderColor: "yellow.light",
+              color: "black",
+              fontWeight: 600,
+              fontSize: 12,
+              lineHeight: 15,
+              boxShadow: "none",
+              height: 35,
+              borderRadius: "17.5px",
+              mt: "-24px",
+              position: "relative",
+              flex: 1.5,
+            }}
           />
-        )}
+        </Box>
       </Box>
       <Footer />
     </>

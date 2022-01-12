@@ -1,14 +1,8 @@
-import {
-  apolloClient,
-  mutationCreateShowcase,
-  mutationDeleteMedia,
-} from "../api";
+import { apolloClient, mutationCreateShowcase } from "../api";
 import {
   CreateShowcaseMutation,
   CreateShowcaseMutationVariables,
   CursorPaging,
-  DeleteMediaMutation,
-  DeleteMediaMutationVariables,
   Maybe,
   ShowcaseCreateInputDto,
   ShowcaseFilter,
@@ -49,13 +43,6 @@ export const getAllShowcases = async (
     variables: { paging, filter },
   });
   return data.showcases;
-};
-
-export const deleteMedia = async (id: string): Promise<void> => {
-  await apolloClient.mutate<DeleteMediaMutation, DeleteMediaMutationVariables>({
-    mutation: mutationDeleteMedia,
-    variables: { id },
-  });
 };
 
 export const createShowcase = async (

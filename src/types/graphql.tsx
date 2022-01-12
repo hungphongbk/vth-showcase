@@ -458,7 +458,7 @@ export interface Mutation {
   createOneImageList: ImageList;
   createOneInvestmentPackageDto: InvestmentPackageDto;
   createOneMediaDto: MediaDto;
-  createOnePreorder: PreorderDto;
+  createOnePreorder: PreorderResponseDto;
   createOneSetting: Scalars['Boolean'];
   createOneShowcase: Showcase;
   createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
@@ -545,6 +545,7 @@ export interface MutationCreateOneMediaDtoArgs {
 
 
 export interface MutationCreateOnePreorderArgs {
+  input?: Maybe<PreorderRequestInputDto>;
   slug: Scalars['String'];
 }
 
@@ -786,6 +787,34 @@ export interface PageInfo {
 
 export interface PreorderDto {
   createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+}
+
+export interface PreorderDtoFilter {
+  and?: Maybe<Array<PreorderDtoFilter>>;
+  id?: Maybe<IdFilterComparison>;
+  or?: Maybe<Array<PreorderDtoFilter>>;
+}
+
+export interface PreorderDtoSort {
+  direction: SortDirection;
+  field: PreorderDtoSortFields;
+  nulls?: Maybe<SortNulls>;
+}
+
+export enum PreorderDtoSortFields {
+  Id = 'id'
+}
+
+export interface PreorderRequestInputDto {
+  email: Scalars['String'];
+  name: Scalars['String'];
+  phoneNumber: Scalars['String'];
+}
+
+export interface PreorderResponseDto {
+  createdAt: Scalars['DateTime'];
+  customToken?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
 }
 
@@ -1050,6 +1079,7 @@ export interface Showcase {
   investorStat?: Maybe<ShowcaseInvestorStatDto>;
   isFeatured?: Maybe<Scalars['Boolean']>;
   name: Scalars['String'];
+  preorders: ShowcasePreordersConnection;
   publishStatus: PublishStatus;
   slug: Scalars['String'];
   status: ShowcaseStatus;
@@ -1068,6 +1098,13 @@ export interface ShowcaseCommentsArgs {
 export interface ShowcaseHighlightFeaturesArgs {
   filter?: Maybe<ShowcaseHighlightFeatureFilter>;
   sorting?: Maybe<Array<ShowcaseHighlightFeatureSort>>;
+}
+
+
+export interface ShowcasePreordersArgs {
+  filter?: Maybe<PreorderDtoFilter>;
+  paging?: Maybe<OffsetPaging>;
+  sorting?: Maybe<Array<PreorderDtoSort>>;
 }
 
 
@@ -1302,6 +1339,12 @@ export interface ShowcaseMinAggregate {
   updatedAt?: Maybe<Scalars['DateTime']>;
 }
 
+export interface ShowcasePreordersConnection {
+  nodes: Array<PreorderDto>;
+  pageInfo: OffsetPageInfo;
+  totalCount: Scalars['Int'];
+}
+
 export interface ShowcasePrice {
   pioneer: Scalars['Float'];
   preorder: Scalars['Float'];
@@ -1491,26 +1534,12 @@ export enum UserStatusEnum {
   PendingInvestor = 'PENDING_INVESTOR'
 }
 
-export type CreateMediaMutationVariables = Exact<{
-  input: MediaInput;
-}>;
-
-
-export type CreateMediaMutation = { createOneMediaDto: { id: string, filename: string, mimetype: string, path: string } };
-
 export type CreateShowcaseMutationVariables = Exact<{
   input: ShowcaseCreateInputDto;
 }>;
 
 
 export type CreateShowcaseMutation = { createOneShowcase: { name: string, slug: string } };
-
-export type DeleteMediaMutationVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type DeleteMediaMutation = { deleteOneMediaDto: { id?: string | null | undefined } };
 
 export type AllUpdatesInShowcaseQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -1580,11 +1609,6 @@ export type PostAuthorizedCommentMutationVariables = Exact<{
 
 
 export type PostAuthorizedCommentMutation = { postAuthorizedComment: { id: string } };
-
-export type QueryBannerQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type QueryBannerQuery = { banner?: { value: any } | null | undefined };
 
 export type QueryCommentsQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -1686,6 +1710,14 @@ export type DeleteOneHighlightFeatureMutationVariables = Exact<{
 
 export type DeleteOneHighlightFeatureMutation = { deleteOneShowcaseHighlightFeature: { id?: string | null | undefined } };
 
+export type SubmitPreorderMutationVariables = Exact<{
+  slug: Scalars['String'];
+  input?: Maybe<PreorderRequestInputDto>;
+}>;
+
+
+export type SubmitPreorderMutation = { createOnePreorder: { id: string, customToken?: string | null | undefined } };
+
 export const MediaFragmentDoc = gql`
     fragment Media on MediaDto {
   id
@@ -1784,42 +1816,6 @@ export const ShowcaseDetailFragmentDoc = gql`
   createdAt
 }
     `;
-export const CreateMediaDocument = gql`
-    mutation createMedia($input: MediaInput!) {
-  createOneMediaDto(input: {mediaDto: $input}) {
-    id
-    filename
-    mimetype
-    path
-  }
-}
-    `;
-export type CreateMediaMutationFn = Apollo.MutationFunction<CreateMediaMutation, CreateMediaMutationVariables>;
-
-/**
- * __useCreateMediaMutation__
- *
- * To run a mutation, you first call `useCreateMediaMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateMediaMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createMediaMutation, { data, loading, error }] = useCreateMediaMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useCreateMediaMutation(baseOptions?: Apollo.MutationHookOptions<CreateMediaMutation, CreateMediaMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateMediaMutation, CreateMediaMutationVariables>(CreateMediaDocument, options);
-      }
-export type CreateMediaMutationHookResult = ReturnType<typeof useCreateMediaMutation>;
-export type CreateMediaMutationResult = Apollo.MutationResult<CreateMediaMutation>;
-export type CreateMediaMutationOptions = Apollo.BaseMutationOptions<CreateMediaMutation, CreateMediaMutationVariables>;
 export const CreateShowcaseDocument = gql`
     mutation createShowcase($input: ShowcaseCreateInputDto!) {
   createOneShowcase(input: $input) {
@@ -1854,39 +1850,6 @@ export function useCreateShowcaseMutation(baseOptions?: Apollo.MutationHookOptio
 export type CreateShowcaseMutationHookResult = ReturnType<typeof useCreateShowcaseMutation>;
 export type CreateShowcaseMutationResult = Apollo.MutationResult<CreateShowcaseMutation>;
 export type CreateShowcaseMutationOptions = Apollo.BaseMutationOptions<CreateShowcaseMutation, CreateShowcaseMutationVariables>;
-export const DeleteMediaDocument = gql`
-    mutation deleteMedia($id: ID!) {
-  deleteOneMediaDto(input: {id: $id}) {
-    id
-  }
-}
-    `;
-export type DeleteMediaMutationFn = Apollo.MutationFunction<DeleteMediaMutation, DeleteMediaMutationVariables>;
-
-/**
- * __useDeleteMediaMutation__
- *
- * To run a mutation, you first call `useDeleteMediaMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteMediaMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deleteMediaMutation, { data, loading, error }] = useDeleteMediaMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useDeleteMediaMutation(baseOptions?: Apollo.MutationHookOptions<DeleteMediaMutation, DeleteMediaMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteMediaMutation, DeleteMediaMutationVariables>(DeleteMediaDocument, options);
-      }
-export type DeleteMediaMutationHookResult = ReturnType<typeof useDeleteMediaMutation>;
-export type DeleteMediaMutationResult = Apollo.MutationResult<DeleteMediaMutation>;
-export type DeleteMediaMutationOptions = Apollo.BaseMutationOptions<DeleteMediaMutation, DeleteMediaMutationVariables>;
 export const AllUpdatesInShowcaseDocument = gql`
     query AllUpdatesInShowcase($slug: String!) {
   showcase(slug: $slug) {
@@ -2238,43 +2201,6 @@ export function usePostAuthorizedCommentMutation(baseOptions?: Apollo.MutationHo
 export type PostAuthorizedCommentMutationHookResult = ReturnType<typeof usePostAuthorizedCommentMutation>;
 export type PostAuthorizedCommentMutationResult = Apollo.MutationResult<PostAuthorizedCommentMutation>;
 export type PostAuthorizedCommentMutationOptions = Apollo.BaseMutationOptions<PostAuthorizedCommentMutation, PostAuthorizedCommentMutationVariables>;
-export const QueryBannerDocument = gql`
-    query queryBanner {
-  banner: setting(key: "common:banner") {
-    value
-  }
-}
-    `;
-
-/**
- * __useQueryBannerQuery__
- *
- * To run a query within a React component, call `useQueryBannerQuery` and pass it any options that fit your needs.
- * When your component renders, `useQueryBannerQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useQueryBannerQuery({
- *   variables: {
- *   },
- * });
- */
-export function useQueryBannerQuery(baseOptions?: Apollo.QueryHookOptions<QueryBannerQuery, QueryBannerQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<QueryBannerQuery, QueryBannerQueryVariables>(QueryBannerDocument, options);
-      }
-export function useQueryBannerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryBannerQuery, QueryBannerQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<QueryBannerQuery, QueryBannerQueryVariables>(QueryBannerDocument, options);
-        }
-export type QueryBannerQueryHookResult = ReturnType<typeof useQueryBannerQuery>;
-export type QueryBannerLazyQueryHookResult = ReturnType<typeof useQueryBannerLazyQuery>;
-export type QueryBannerQueryResult = Apollo.QueryResult<QueryBannerQuery, QueryBannerQueryVariables>;
-export function refetchQueryBannerQuery(variables?: QueryBannerQueryVariables) {
-      return { query: QueryBannerDocument, variables: variables }
-    }
 export const QueryCommentsDocument = gql`
     query QueryComments($slug: String!) {
   showcase(slug: $slug) {
@@ -2922,3 +2848,38 @@ export function useDeleteOneHighlightFeatureMutation(baseOptions?: Apollo.Mutati
 export type DeleteOneHighlightFeatureMutationHookResult = ReturnType<typeof useDeleteOneHighlightFeatureMutation>;
 export type DeleteOneHighlightFeatureMutationResult = Apollo.MutationResult<DeleteOneHighlightFeatureMutation>;
 export type DeleteOneHighlightFeatureMutationOptions = Apollo.BaseMutationOptions<DeleteOneHighlightFeatureMutation, DeleteOneHighlightFeatureMutationVariables>;
+export const SubmitPreorderDocument = gql`
+    mutation SubmitPreorder($slug: String!, $input: PreorderRequestInputDto) {
+  createOnePreorder(slug: $slug, input: $input) {
+    id
+    customToken
+  }
+}
+    `;
+export type SubmitPreorderMutationFn = Apollo.MutationFunction<SubmitPreorderMutation, SubmitPreorderMutationVariables>;
+
+/**
+ * __useSubmitPreorderMutation__
+ *
+ * To run a mutation, you first call `useSubmitPreorderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSubmitPreorderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [submitPreorderMutation, { data, loading, error }] = useSubmitPreorderMutation({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSubmitPreorderMutation(baseOptions?: Apollo.MutationHookOptions<SubmitPreorderMutation, SubmitPreorderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SubmitPreorderMutation, SubmitPreorderMutationVariables>(SubmitPreorderDocument, options);
+      }
+export type SubmitPreorderMutationHookResult = ReturnType<typeof useSubmitPreorderMutation>;
+export type SubmitPreorderMutationResult = Apollo.MutationResult<SubmitPreorderMutation>;
+export type SubmitPreorderMutationOptions = Apollo.BaseMutationOptions<SubmitPreorderMutation, SubmitPreorderMutationVariables>;

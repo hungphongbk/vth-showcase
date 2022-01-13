@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-export const AuthLoginHandler = dynamic(() => import("./AuthLoginHandler"), {
+export const AuthLoginHandler = dynamic(() => import("./auth-login-handler"), {
   ssr: false,
 });
 

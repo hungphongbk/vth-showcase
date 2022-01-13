@@ -477,23 +477,19 @@ export interface Mutation {
   postAuthorizedComment: CommentDto;
   postProjectUpdate: PrjUpdateDto;
   removeAuthorFromCommentDto: CommentDto;
-  removeAuthorFromPreorderDto: PreorderDto;
   removeAuthorFromShowcase: Showcase;
   removeCommentsFromShowcase: Showcase;
   removeHighlightFeaturesFromShowcase: Showcase;
   removeImageFromShowcase: Showcase;
   removeImageFromShowcaseHighlightFeature: ShowcaseHighlightFeature;
   removeImagesFromImageList: ImageList;
-  removeShowcaseFromPreorderDto: PreorderDto;
   setAuthorOnCommentDto: CommentDto;
-  setAuthorOnPreorderDto: PreorderDto;
   setAuthorOnShowcase: Showcase;
   setCommentsOnShowcase: Showcase;
   setHighlightFeaturesOnShowcase: Showcase;
   setImageOnShowcase: Showcase;
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
-  setShowcaseOnPreorderDto: PreorderDto;
   submitInvestor: Scalars['Boolean'];
   updateManyInvestmentPackageDtos: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
@@ -650,11 +646,6 @@ export interface MutationRemoveAuthorFromCommentDtoArgs {
 }
 
 
-export interface MutationRemoveAuthorFromPreorderDtoArgs {
-  input: RemoveAuthorFromPreorderDtoInput;
-}
-
-
 export interface MutationRemoveAuthorFromShowcaseArgs {
   input: RemoveAuthorFromShowcaseInput;
 }
@@ -685,18 +676,8 @@ export interface MutationRemoveImagesFromImageListArgs {
 }
 
 
-export interface MutationRemoveShowcaseFromPreorderDtoArgs {
-  input: RemoveShowcaseFromPreorderDtoInput;
-}
-
-
 export interface MutationSetAuthorOnCommentDtoArgs {
   input: SetAuthorOnCommentDtoInput;
-}
-
-
-export interface MutationSetAuthorOnPreorderDtoArgs {
-  input: SetAuthorOnPreorderDtoInput;
 }
 
 
@@ -727,11 +708,6 @@ export interface MutationSetImageOnShowcaseHighlightFeatureArgs {
 
 export interface MutationSetImagesOnImageListArgs {
   input: SetImagesOnImageListInput;
-}
-
-
-export interface MutationSetShowcaseOnPreorderDtoArgs {
-  input: SetShowcaseOnPreorderDtoInput;
 }
 
 
@@ -969,6 +945,7 @@ export interface Query {
   investmentPackageDtos: InvestmentPackageDtoConnection;
   mediaDto?: Maybe<MediaDto>;
   mediaDtos: MediaDtoConnection;
+  preorders: PreorderDtoConnection;
   prjUpdateDto?: Maybe<PrjUpdateDto>;
   setting?: Maybe<SettingDto>;
   settings: Array<SettingDto>;
@@ -1008,6 +985,13 @@ export interface QueryMediaDtosArgs {
 }
 
 
+export interface QueryPreordersArgs {
+  filter?: Maybe<PreorderDtoFilter>;
+  paging?: Maybe<CursorPaging>;
+  sorting?: Maybe<Array<PreorderDtoSort>>;
+}
+
+
 export interface QueryPrjUpdateDtoArgs {
   id: Scalars['ID'];
 }
@@ -1044,11 +1028,6 @@ export interface RemoveAuthorFromCommentDtoInput {
   relationId: Scalars['ID'];
 }
 
-export interface RemoveAuthorFromPreorderDtoInput {
-  id: Scalars['ID'];
-  relationId: Scalars['ID'];
-}
-
 export interface RemoveAuthorFromShowcaseInput {
   id: Scalars['String'];
   relationId: Scalars['ID'];
@@ -1079,17 +1058,7 @@ export interface RemoveImagesFromImageListInput {
   relationIds: Array<Scalars['ID']>;
 }
 
-export interface RemoveShowcaseFromPreorderDtoInput {
-  id: Scalars['ID'];
-  relationId: Scalars['String'];
-}
-
 export interface SetAuthorOnCommentDtoInput {
-  id: Scalars['ID'];
-  relationId: Scalars['ID'];
-}
-
-export interface SetAuthorOnPreorderDtoInput {
   id: Scalars['ID'];
   relationId: Scalars['ID'];
 }
@@ -1122,11 +1091,6 @@ export interface SetImageOnShowcaseInput {
 export interface SetImagesOnImageListInput {
   id: Scalars['ID'];
   relationIds: Array<Scalars['ID']>;
-}
-
-export interface SetShowcaseOnPreorderDtoInput {
-  id: Scalars['ID'];
-  relationId: Scalars['String'];
 }
 
 export interface SettingCreateDto {
@@ -1602,7 +1566,6 @@ export interface User {
   email: Scalars['String'];
   name: Scalars['String'];
   photoURL: Scalars['String'];
-  preorders: PreorderDtoConnection;
   role: AuthRoleType;
   showcases: ShowcaseConnection;
   uid: Scalars['ID'];
@@ -1698,11 +1661,6 @@ export type QueryCommentsQueryVariables = Exact<{
 
 export type QueryCommentsQuery = { showcase: { slug: string, comments: { nodes: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author?: { email: string, name: string } | null | undefined }> } } };
 
-export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type CurrentUserQuery = { currentUser: { email: string, name: string, role: AuthRoleType, approvalStatus: UserStatusEnum } };
-
 export type DraftShowcasesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1790,6 +1748,16 @@ export type DeleteOneHighlightFeatureMutationVariables = Exact<{
 
 
 export type DeleteOneHighlightFeatureMutation = { deleteOneShowcaseHighlightFeature: { id?: string | null | undefined } };
+
+export type PreorderCartQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PreorderCartQuery = { preorders: { edges: Array<{ node: { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number } | null | undefined } } }> } };
+
+export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentUserQuery = { currentUser: { email: string, name: string, role: AuthRoleType, approvalStatus: UserStatusEnum } };
 
 export type SubmitPreorderMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -2330,46 +2298,6 @@ export type QueryCommentsLazyQueryHookResult = ReturnType<typeof useQueryComment
 export type QueryCommentsQueryResult = Apollo.QueryResult<QueryCommentsQuery, QueryCommentsQueryVariables>;
 export function refetchQueryCommentsQuery(variables: QueryCommentsQueryVariables) {
       return { query: QueryCommentsDocument, variables: variables }
-    }
-export const CurrentUserDocument = gql`
-    query CurrentUser {
-  currentUser {
-    email
-    name
-    role
-    approvalStatus
-  }
-}
-    `;
-
-/**
- * __useCurrentUserQuery__
- *
- * To run a query within a React component, call `useCurrentUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useCurrentUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCurrentUserQuery({
- *   variables: {
- *   },
- * });
- */
-export function useCurrentUserQuery(baseOptions?: Apollo.QueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
-      }
-export function useCurrentUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
-        }
-export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
-export type CurrentUserLazyQueryHookResult = ReturnType<typeof useCurrentUserLazyQuery>;
-export type CurrentUserQueryResult = Apollo.QueryResult<CurrentUserQuery, CurrentUserQueryVariables>;
-export function refetchCurrentUserQuery(variables?: CurrentUserQueryVariables) {
-      return { query: CurrentUserDocument, variables: variables }
     }
 export const DraftShowcasesDocument = gql`
     query DraftShowcases {
@@ -2929,6 +2857,99 @@ export function useDeleteOneHighlightFeatureMutation(baseOptions?: Apollo.Mutati
 export type DeleteOneHighlightFeatureMutationHookResult = ReturnType<typeof useDeleteOneHighlightFeatureMutation>;
 export type DeleteOneHighlightFeatureMutationResult = Apollo.MutationResult<DeleteOneHighlightFeatureMutation>;
 export type DeleteOneHighlightFeatureMutationOptions = Apollo.BaseMutationOptions<DeleteOneHighlightFeatureMutation, DeleteOneHighlightFeatureMutationVariables>;
+export const PreorderCartDocument = gql`
+    query PreorderCart {
+  preorders {
+    edges {
+      node {
+        showcase {
+          id
+          slug
+          name
+          status
+          image {
+            ...Media
+          }
+          expectedSalePrice {
+            regular
+            pioneer
+          }
+        }
+      }
+    }
+  }
+}
+    ${MediaFragmentDoc}`;
+
+/**
+ * __usePreorderCartQuery__
+ *
+ * To run a query within a React component, call `usePreorderCartQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePreorderCartQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePreorderCartQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePreorderCartQuery(baseOptions?: Apollo.QueryHookOptions<PreorderCartQuery, PreorderCartQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PreorderCartQuery, PreorderCartQueryVariables>(PreorderCartDocument, options);
+      }
+export function usePreorderCartLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PreorderCartQuery, PreorderCartQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PreorderCartQuery, PreorderCartQueryVariables>(PreorderCartDocument, options);
+        }
+export type PreorderCartQueryHookResult = ReturnType<typeof usePreorderCartQuery>;
+export type PreorderCartLazyQueryHookResult = ReturnType<typeof usePreorderCartLazyQuery>;
+export type PreorderCartQueryResult = Apollo.QueryResult<PreorderCartQuery, PreorderCartQueryVariables>;
+export function refetchPreorderCartQuery(variables?: PreorderCartQueryVariables) {
+      return { query: PreorderCartDocument, variables: variables }
+    }
+export const CurrentUserDocument = gql`
+    query CurrentUser {
+  currentUser {
+    email
+    name
+    role
+    approvalStatus
+  }
+}
+    `;
+
+/**
+ * __useCurrentUserQuery__
+ *
+ * To run a query within a React component, call `useCurrentUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCurrentUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCurrentUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCurrentUserQuery(baseOptions?: Apollo.QueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
+      }
+export function useCurrentUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
+        }
+export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
+export type CurrentUserLazyQueryHookResult = ReturnType<typeof useCurrentUserLazyQuery>;
+export type CurrentUserQueryResult = Apollo.QueryResult<CurrentUserQuery, CurrentUserQueryVariables>;
+export function refetchCurrentUserQuery(variables?: CurrentUserQueryVariables) {
+      return { query: CurrentUserDocument, variables: variables }
+    }
 export const SubmitPreorderDocument = gql`
     mutation SubmitPreorder($slug: String!, $input: PreorderRequestInputDto) {
   createOnePreorder(slug: $slug, input: $input) {

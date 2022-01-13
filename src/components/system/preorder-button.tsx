@@ -4,7 +4,11 @@ import {
   PreorderFilledPrimaryIcon,
 } from "@hungphongbk/vth-sdk";
 import VthIconButton from "../vth-icon-button";
-import { Showcase, useSubmitPreorderMutation } from "../../types/graphql";
+import {
+  refetchPreorderCartQuery,
+  Showcase,
+  useSubmitPreorderMutation,
+} from "../../types/graphql";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSnackbar } from "notistack";
 import PreorderDialog from "./preorder-dialog";
@@ -26,6 +30,7 @@ export default function PreorderButton(
     [isSubmitted, setIsSubmitted] = useState(false),
     [doSubmitPreorder] = useSubmitPreorderMutation({
       variables: { slug: props.showcase.slug },
+      refetchQueries: [refetchPreorderCartQuery()],
     }),
     { enqueueSnackbar } = useSnackbar(),
     dispatch = useAppDispatch();

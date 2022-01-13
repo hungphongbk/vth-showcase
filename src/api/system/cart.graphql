@@ -1,0 +1,21 @@
+query PreorderCart {
+  preorders {
+    edges {
+      node {
+        showcase {
+          id
+          slug
+          name
+          status
+          image {
+            ...Media
+          }
+          expectedSalePrice {
+            regular
+            pioneer
+          }
+        }
+      }
+    }
+  }
+}

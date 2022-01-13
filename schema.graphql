@@ -515,23 +515,19 @@ type Mutation {
   postAuthorizedComment(input: CommentCreateDto!, slug: String!): CommentDto!
   postProjectUpdate(input: PrjUpdateCreateDto!, slug: String!): PrjUpdateDto!
   removeAuthorFromCommentDto(input: RemoveAuthorFromCommentDtoInput!): CommentDto!
-  removeAuthorFromPreorderDto(input: RemoveAuthorFromPreorderDtoInput!): PreorderDto!
   removeAuthorFromShowcase(input: RemoveAuthorFromShowcaseInput!): Showcase!
   removeCommentsFromShowcase(input: RemoveCommentsFromShowcaseInput!): Showcase!
   removeHighlightFeaturesFromShowcase(input: RemoveHighlightFeaturesFromShowcaseInput!): Showcase!
   removeImageFromShowcase(input: RemoveImageFromShowcaseInput!): Showcase!
   removeImageFromShowcaseHighlightFeature(input: RemoveImageFromShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
   removeImagesFromImageList(input: RemoveImagesFromImageListInput!): ImageList!
-  removeShowcaseFromPreorderDto(input: RemoveShowcaseFromPreorderDtoInput!): PreorderDto!
   setAuthorOnCommentDto(input: SetAuthorOnCommentDtoInput!): CommentDto!
-  setAuthorOnPreorderDto(input: SetAuthorOnPreorderDtoInput!): PreorderDto!
   setAuthorOnShowcase(input: SetAuthorOnShowcaseInput!): Showcase!
   setCommentsOnShowcase(input: SetCommentsOnShowcaseInput!): Showcase!
   setHighlightFeaturesOnShowcase(input: SetHighlightFeaturesOnShowcaseInput!): Showcase!
   setImageOnShowcase(input: SetImageOnShowcaseInput!): Showcase!
   setImageOnShowcaseHighlightFeature(input: SetImageOnShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
   setImagesOnImageList(input: SetImagesOnImageListInput!): ImageList!
-  setShowcaseOnPreorderDto(input: SetShowcaseOnPreorderDtoInput!): PreorderDto!
   submitInvestor(form: SubmitInvestorInputDto!): Boolean!
   updateManyInvestmentPackageDtos(input: UpdateManyInvestmentPackageDtosInput!): UpdateManyResponse!
   updateManyMediaDtos(input: UpdateManyMediaDtosInput!): UpdateManyResponse!
@@ -768,6 +764,16 @@ type Query {
     """Specify to sort results."""
     sorting: [MediaDtoSort!] = []
   ): MediaDtoConnection!
+  preorders(
+    """Specify to filter the records returned."""
+    filter: PreorderDtoFilter = {}
+
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to sort results."""
+    sorting: [PreorderDtoSort!] = []
+  ): PreorderDtoConnection!
   prjUpdateDto(
     """The id of the record to find."""
     id: ID!
@@ -793,14 +799,6 @@ type Query {
 }
 
 input RemoveAuthorFromCommentDtoInput {
-  """The id of the record."""
-  id: ID!
-
-  """The id of relation."""
-  relationId: ID!
-}
-
-input RemoveAuthorFromPreorderDtoInput {
   """The id of the record."""
   id: ID!
 
@@ -856,23 +854,7 @@ input RemoveImagesFromImageListInput {
   relationIds: [ID!]!
 }
 
-input RemoveShowcaseFromPreorderDtoInput {
-  """The id of the record."""
-  id: ID!
-
-  """The id of relation."""
-  relationId: String!
-}
-
 input SetAuthorOnCommentDtoInput {
-  """The id of the record."""
-  id: ID!
-
-  """The id of relation."""
-  relationId: ID!
-}
-
-input SetAuthorOnPreorderDtoInput {
   """The id of the record."""
   id: ID!
 
@@ -926,14 +908,6 @@ input SetImagesOnImageListInput {
 
   """The ids of the relations."""
   relationIds: [ID!]!
-}
-
-input SetShowcaseOnPreorderDtoInput {
-  """The id of the record."""
-  id: ID!
-
-  """The id of relation."""
-  relationId: String!
 }
 
 input SettingCreateDto {
@@ -1477,7 +1451,6 @@ type User {
   email: String!
   name: String!
   photoURL: String!
-  preorders: PreorderDtoConnection!
   role: AuthRoleType!
   showcases: ShowcaseConnection!
   uid: ID!

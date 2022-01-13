@@ -1,29 +1,16 @@
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import BookmarkIcon from "../../assets/icons/BookmarkIcon";
-import { sxFlexCenter, sxFullSize, sxSize } from "../../utils/predefinedSx";
-import {
-  Backdrop,
-  Box,
-  Divider,
-  Grid,
-  Portal,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { sxFlexCenter, sxSize } from "../../utils/predefinedSx";
+import { Backdrop, Box, Portal, Typography } from "@mui/material";
 import { MotionBox } from "../commons";
 import CloseIcon from "../../assets/icons/CloseIcon";
-import { useAppSelector } from "../../store";
-import { Showcase } from "../../types/graphql";
-import StatusBadge from "../StatusBadge";
-import { vndCurrency } from "../../utils/string";
-import { AspectRatio } from "@hungphongbk/vth-sdk";
+import CartDrawerListing from "./cart/cart-drawer-listing";
 
 const MotionBookmarkIcon = motion(BookmarkIcon);
 
 export default function CartDrawer(): JSX.Element {
-  const [open, setOpen] = useState(false),
-    list: Showcase[] = useAppSelector((state) => state.cart.list);
+  const [open, setOpen] = useState(false);
   return (
     <>
       {!open && (
@@ -86,59 +73,7 @@ export default function CartDrawer(): JSX.Element {
                   />
                 </Box>
                 <Box sx={{ bgcolor: "white", p: 2, flex: 1 }}>
-                  <Stack direction={"column"} alignItems={"stretch"} gap={1}>
-                    {list.map((showcase, index) => (
-                      <Grid key={showcase.slug} container spacing={2}>
-                        <Grid item xs={4}>
-                          <AspectRatio
-                            sx={{
-                              borderRadius: 3,
-                              overflow: "hidden",
-                              "& img": { ...sxFullSize, objectFit: "cover" },
-                            }}
-                          >
-                            <img
-                              src={showcase.image.path}
-                              alt={showcase.slug}
-                            />
-                          </AspectRatio>
-                        </Grid>
-                        <Grid item xs={8}>
-                          <Stack
-                            direction={"column"}
-                            gap={0.5}
-                            alignItems={"start"}
-                          >
-                            <Typography sx={{ fontSize: 14, fontWeight: 700 }}>
-                              {showcase.name}
-                            </Typography>
-                            <StatusBadge status={showcase.status} outlined />
-                            <Typography sx={{ fontWeight: 13 }}>
-                              Giá dự kiến:{" "}
-                              <strong>
-                                {vndCurrency(
-                                  showcase.expectedSalePrice!.regular
-                                )}
-                              </strong>
-                            </Typography>
-                            <Typography sx={{ fontWeight: 13 }}>
-                              Giá tiên phong:{" "}
-                              <strong>
-                                {vndCurrency(
-                                  showcase.expectedSalePrice!.pioneer
-                                )}
-                              </strong>
-                            </Typography>
-                          </Stack>
-                        </Grid>
-                        {index < list.length - 1 && (
-                          <Grid item xs={12}>
-                            <Divider />
-                          </Grid>
-                        )}
-                      </Grid>
-                    ))}
-                  </Stack>
+                  <CartDrawerListing />
                 </Box>
               </MotionBox>
             )}

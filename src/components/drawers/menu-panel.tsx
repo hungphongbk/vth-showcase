@@ -9,12 +9,12 @@ import {
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { isLoggedInSelector } from "../../store/auth.selectors";
-import GoogleColoredIcon from "../../assets/icons/GoogleColoredIcon";
-import { afterSignInFirebase, afterSignOut } from "../../store/auth.reducer";
+import { afterSignOut } from "../../store/auth.reducer";
 import { FirebaseAuthService } from "../../service";
 import { RoleIcon, StyledUpper } from "./menu/styled";
 import LoggedInMenu from "./menu/LoggedInMenu";
 import FooterMobile from "./menu/FooterMobile";
+import LoginPanel from "./login-panel";
 
 const MenuPanel = forwardRef(function MenuPanel(
   props: { onClose: () => void },
@@ -98,20 +98,23 @@ const MenuPanel = forwardRef(function MenuPanel(
             Logout
           </Button>
         ) : (
-          <Button
-            variant={"contained"}
-            startIcon={<GoogleColoredIcon />}
-            sx={{ bgcolor: "white !important" }}
-            onClick={() =>
-              FirebaseAuthService().then(({ signInWithGoogle }) =>
-                signInWithGoogle().then((payload) =>
-                  dispatch(afterSignInFirebase(payload!))
-                )
-              )
-            }
-          >
-            Login with Google
-          </Button>
+          // <Button
+          //   variant={"contained"}
+          //   startIcon={<GoogleColoredIcon />}
+          //   sx={{ bgcolor: "white !important" }}
+          //   onClick={() =>
+          //     FirebaseAuthService().then(({ signInWithGoogle }) =>
+          //       signInWithGoogle().then((payload) =>
+          //         dispatch(afterSignInFirebase(payload!))
+          //       )
+          //     )
+          //   }
+          // >
+          //   Login with Google
+          // </Button>
+          <LoginPanel
+            sx={{ borderTopRightRadius: "30px", overflow: "hidden" }}
+          />
         )}
       </Stack>
       <Box sx={{ position: "absolute", bottom: 0, left: 0, right: 0 }}>

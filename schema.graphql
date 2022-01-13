@@ -572,14 +572,52 @@ type PageInfo {
 }
 
 type PreorderDto {
+  author: User
   createdAt: DateTime!
   id: ID!
+  showcase: Showcase!
+}
+
+type PreorderDtoAggregateGroupBy {
+  id: ID
+}
+
+type PreorderDtoAvgAggregate {
+  id: Float
+}
+
+type PreorderDtoConnection {
+  """Array of edges."""
+  edges: [PreorderDtoEdge!]!
+
+  """Paging information"""
+  pageInfo: PageInfo!
+}
+
+type PreorderDtoCountAggregate {
+  id: Int
+}
+
+type PreorderDtoEdge {
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+
+  """The node containing the PreorderDto"""
+  node: PreorderDto!
 }
 
 input PreorderDtoFilter {
   and: [PreorderDtoFilter!]
   id: IDFilterComparison
   or: [PreorderDtoFilter!]
+}
+
+type PreorderDtoMaxAggregate {
+  id: ID
+}
+
+type PreorderDtoMinAggregate {
+  id: ID
 }
 
 input PreorderDtoSort {
@@ -590,6 +628,10 @@ input PreorderDtoSort {
 
 enum PreorderDtoSortFields {
   id
+}
+
+type PreorderDtoSumAggregate {
+  id: Float
 }
 
 input PreorderRequestInputDto {
@@ -722,6 +764,16 @@ type Query {
     """Specify to sort results."""
     sorting: [MediaDtoSort!] = []
   ): MediaDtoConnection!
+  preorders(
+    """Specify to filter the records returned."""
+    filter: PreorderDtoFilter = {}
+
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to sort results."""
+    sorting: [PreorderDtoSort!] = []
+  ): PreorderDtoConnection!
   prjUpdateDto(
     """The id of the record to find."""
     id: ID!

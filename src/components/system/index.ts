@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-export const AuthLoginHandler = dynamic(() => import("./AuthLoginHandler"), {
+export const AuthLoginHandler = dynamic(() => import("./auth-login-handler"), {
   ssr: false,
 });
 
@@ -15,10 +15,6 @@ export const CreatorAndInvestorActions = dynamic(
     ssr: false,
   }
 );
-
-export const PreorderDialog = dynamic(() => import("./preorder-dialog"), {
-  ssr: false,
-});
 
 export const PreorderButton = dynamic(() => import("./preorder-button"), {
   ssr: false,

@@ -9,9 +9,6 @@ import {
 import { ShowcaseStatus } from "../types/graphql";
 import { roundBorder } from "../utils/predefinedSx";
 
-const sxSmall: SxProps = {},
-  sxLarge: SxProps = {};
-
 export default function StatusBadge(props: {
   status: ShowcaseStatus;
   outlined?: boolean;

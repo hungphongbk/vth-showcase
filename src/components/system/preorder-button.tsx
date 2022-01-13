@@ -10,6 +10,8 @@ import { useSnackbar } from "notistack";
 import PreorderDialog from "./preorder-dialog";
 import { FirebaseAuthService } from "../../service";
 import { SxProps } from "@mui/system";
+import { useAppDispatch } from "../../store";
+import { afterSignInFirebase } from "../../store/auth.reducer";
 
 type PreorderButtonProps = {
   showcase: Pick<Showcase, "status" | "slug" | "expectedSalePrice">;
@@ -25,7 +27,8 @@ export default function PreorderButton(
     [doSubmitPreorder] = useSubmitPreorderMutation({
       variables: { slug: props.showcase.slug },
     }),
-    { enqueueSnackbar } = useSnackbar();
+    { enqueueSnackbar } = useSnackbar(),
+    dispatch = useAppDispatch();
 
   const IconComponent = useMemo(() => {
     if (isSubmitted) return CheckFilledPrimaryIcon;
@@ -44,12 +47,15 @@ export default function PreorderButton(
           },
         }),
       ]);
-      await authService.signInWithToken(data!.createOnePreorder.customToken!);
+      const payload = await authService.signInWithToken(
+        data!.createOnePreorder.customToken!
+      );
+      await dispatch(afterSignInFirebase(payload!));
       setOpen(false);
       setIsSubmitting(false);
       setIsSubmitted(true);
     },
-    [doSubmitPreorder, props.showcase.slug]
+    [dispatch, doSubmitPreorder, props.showcase.slug]
   );
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import MenuBarIcon from "../../assets/icons/MenuBarIcon";
 import { AnimatePresence, motion } from "framer-motion";
 import { useAuthInitialized, useOnClickOutside } from "../../utils/hooks";
 import { MotionBox } from "../commons";
-import MenuPanel from "./MenuPanel";
+import MenuPanel from "./menu-panel";
 
 const MENU_BTN_WIDTH = 59,
   MENU_BTN_HEIGHT = 32;

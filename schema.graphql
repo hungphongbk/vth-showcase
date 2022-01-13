@@ -515,19 +515,23 @@ type Mutation {
   postAuthorizedComment(input: CommentCreateDto!, slug: String!): CommentDto!
   postProjectUpdate(input: PrjUpdateCreateDto!, slug: String!): PrjUpdateDto!
   removeAuthorFromCommentDto(input: RemoveAuthorFromCommentDtoInput!): CommentDto!
+  removeAuthorFromPreorderDto(input: RemoveAuthorFromPreorderDtoInput!): PreorderDto!
   removeAuthorFromShowcase(input: RemoveAuthorFromShowcaseInput!): Showcase!
   removeCommentsFromShowcase(input: RemoveCommentsFromShowcaseInput!): Showcase!
   removeHighlightFeaturesFromShowcase(input: RemoveHighlightFeaturesFromShowcaseInput!): Showcase!
   removeImageFromShowcase(input: RemoveImageFromShowcaseInput!): Showcase!
   removeImageFromShowcaseHighlightFeature(input: RemoveImageFromShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
   removeImagesFromImageList(input: RemoveImagesFromImageListInput!): ImageList!
+  removeShowcaseFromPreorderDto(input: RemoveShowcaseFromPreorderDtoInput!): PreorderDto!
   setAuthorOnCommentDto(input: SetAuthorOnCommentDtoInput!): CommentDto!
+  setAuthorOnPreorderDto(input: SetAuthorOnPreorderDtoInput!): PreorderDto!
   setAuthorOnShowcase(input: SetAuthorOnShowcaseInput!): Showcase!
   setCommentsOnShowcase(input: SetCommentsOnShowcaseInput!): Showcase!
   setHighlightFeaturesOnShowcase(input: SetHighlightFeaturesOnShowcaseInput!): Showcase!
   setImageOnShowcase(input: SetImageOnShowcaseInput!): Showcase!
   setImageOnShowcaseHighlightFeature(input: SetImageOnShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
   setImagesOnImageList(input: SetImagesOnImageListInput!): ImageList!
+  setShowcaseOnPreorderDto(input: SetShowcaseOnPreorderDtoInput!): PreorderDto!
   submitInvestor(form: SubmitInvestorInputDto!): Boolean!
   updateManyInvestmentPackageDtos(input: UpdateManyInvestmentPackageDtosInput!): UpdateManyResponse!
   updateManyMediaDtos(input: UpdateManyMediaDtosInput!): UpdateManyResponse!
@@ -572,8 +576,18 @@ type PageInfo {
 }
 
 type PreorderDto {
+  author: User
   createdAt: DateTime!
   id: ID!
+  showcase: Showcase!
+}
+
+type PreorderDtoAggregateGroupBy {
+  id: ID
+}
+
+type PreorderDtoAvgAggregate {
+  id: Float
 }
 
 type PreorderDtoConnection {
@@ -582,6 +596,10 @@ type PreorderDtoConnection {
 
   """Paging information"""
   pageInfo: PageInfo!
+}
+
+type PreorderDtoCountAggregate {
+  id: Int
 }
 
 type PreorderDtoEdge {
@@ -598,6 +616,14 @@ input PreorderDtoFilter {
   or: [PreorderDtoFilter!]
 }
 
+type PreorderDtoMaxAggregate {
+  id: ID
+}
+
+type PreorderDtoMinAggregate {
+  id: ID
+}
+
 input PreorderDtoSort {
   direction: SortDirection!
   field: PreorderDtoSortFields!
@@ -606,6 +632,10 @@ input PreorderDtoSort {
 
 enum PreorderDtoSortFields {
   id
+}
+
+type PreorderDtoSumAggregate {
+  id: Float
 }
 
 input PreorderRequestInputDto {
@@ -770,6 +800,14 @@ input RemoveAuthorFromCommentDtoInput {
   relationId: ID!
 }
 
+input RemoveAuthorFromPreorderDtoInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: ID!
+}
+
 input RemoveAuthorFromShowcaseInput {
   """The id of the record."""
   id: String!
@@ -818,7 +856,23 @@ input RemoveImagesFromImageListInput {
   relationIds: [ID!]!
 }
 
+input RemoveShowcaseFromPreorderDtoInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: String!
+}
+
 input SetAuthorOnCommentDtoInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: ID!
+}
+
+input SetAuthorOnPreorderDtoInput {
   """The id of the record."""
   id: ID!
 
@@ -872,6 +926,14 @@ input SetImagesOnImageListInput {
 
   """The ids of the relations."""
   relationIds: [ID!]!
+}
+
+input SetShowcaseOnPreorderDtoInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: String!
 }
 
 input SettingCreateDto {

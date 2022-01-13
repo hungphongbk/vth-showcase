@@ -477,19 +477,23 @@ export interface Mutation {
   postAuthorizedComment: CommentDto;
   postProjectUpdate: PrjUpdateDto;
   removeAuthorFromCommentDto: CommentDto;
+  removeAuthorFromPreorderDto: PreorderDto;
   removeAuthorFromShowcase: Showcase;
   removeCommentsFromShowcase: Showcase;
   removeHighlightFeaturesFromShowcase: Showcase;
   removeImageFromShowcase: Showcase;
   removeImageFromShowcaseHighlightFeature: ShowcaseHighlightFeature;
   removeImagesFromImageList: ImageList;
+  removeShowcaseFromPreorderDto: PreorderDto;
   setAuthorOnCommentDto: CommentDto;
+  setAuthorOnPreorderDto: PreorderDto;
   setAuthorOnShowcase: Showcase;
   setCommentsOnShowcase: Showcase;
   setHighlightFeaturesOnShowcase: Showcase;
   setImageOnShowcase: Showcase;
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
+  setShowcaseOnPreorderDto: PreorderDto;
   submitInvestor: Scalars['Boolean'];
   updateManyInvestmentPackageDtos: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
@@ -646,6 +650,11 @@ export interface MutationRemoveAuthorFromCommentDtoArgs {
 }
 
 
+export interface MutationRemoveAuthorFromPreorderDtoArgs {
+  input: RemoveAuthorFromPreorderDtoInput;
+}
+
+
 export interface MutationRemoveAuthorFromShowcaseArgs {
   input: RemoveAuthorFromShowcaseInput;
 }
@@ -676,8 +685,18 @@ export interface MutationRemoveImagesFromImageListArgs {
 }
 
 
+export interface MutationRemoveShowcaseFromPreorderDtoArgs {
+  input: RemoveShowcaseFromPreorderDtoInput;
+}
+
+
 export interface MutationSetAuthorOnCommentDtoArgs {
   input: SetAuthorOnCommentDtoInput;
+}
+
+
+export interface MutationSetAuthorOnPreorderDtoArgs {
+  input: SetAuthorOnPreorderDtoInput;
 }
 
 
@@ -708,6 +727,11 @@ export interface MutationSetImageOnShowcaseHighlightFeatureArgs {
 
 export interface MutationSetImagesOnImageListArgs {
   input: SetImagesOnImageListInput;
+}
+
+
+export interface MutationSetShowcaseOnPreorderDtoArgs {
+  input: SetShowcaseOnPreorderDtoInput;
 }
 
 
@@ -786,13 +810,27 @@ export interface PageInfo {
 }
 
 export interface PreorderDto {
+  author?: Maybe<User>;
   createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
+  showcase: Showcase;
+}
+
+export interface PreorderDtoAggregateGroupBy {
+  id?: Maybe<Scalars['ID']>;
+}
+
+export interface PreorderDtoAvgAggregate {
+  id?: Maybe<Scalars['Float']>;
 }
 
 export interface PreorderDtoConnection {
   edges: Array<PreorderDtoEdge>;
   pageInfo: PageInfo;
+}
+
+export interface PreorderDtoCountAggregate {
+  id?: Maybe<Scalars['Int']>;
 }
 
 export interface PreorderDtoEdge {
@@ -806,6 +844,14 @@ export interface PreorderDtoFilter {
   or?: Maybe<Array<PreorderDtoFilter>>;
 }
 
+export interface PreorderDtoMaxAggregate {
+  id?: Maybe<Scalars['ID']>;
+}
+
+export interface PreorderDtoMinAggregate {
+  id?: Maybe<Scalars['ID']>;
+}
+
 export interface PreorderDtoSort {
   direction: SortDirection;
   field: PreorderDtoSortFields;
@@ -814,6 +860,10 @@ export interface PreorderDtoSort {
 
 export enum PreorderDtoSortFields {
   Id = 'id'
+}
+
+export interface PreorderDtoSumAggregate {
+  id?: Maybe<Scalars['Float']>;
 }
 
 export interface PreorderRequestInputDto {
@@ -994,6 +1044,11 @@ export interface RemoveAuthorFromCommentDtoInput {
   relationId: Scalars['ID'];
 }
 
+export interface RemoveAuthorFromPreorderDtoInput {
+  id: Scalars['ID'];
+  relationId: Scalars['ID'];
+}
+
 export interface RemoveAuthorFromShowcaseInput {
   id: Scalars['String'];
   relationId: Scalars['ID'];
@@ -1024,7 +1079,17 @@ export interface RemoveImagesFromImageListInput {
   relationIds: Array<Scalars['ID']>;
 }
 
+export interface RemoveShowcaseFromPreorderDtoInput {
+  id: Scalars['ID'];
+  relationId: Scalars['String'];
+}
+
 export interface SetAuthorOnCommentDtoInput {
+  id: Scalars['ID'];
+  relationId: Scalars['ID'];
+}
+
+export interface SetAuthorOnPreorderDtoInput {
   id: Scalars['ID'];
   relationId: Scalars['ID'];
 }
@@ -1057,6 +1122,11 @@ export interface SetImageOnShowcaseInput {
 export interface SetImagesOnImageListInput {
   id: Scalars['ID'];
   relationIds: Array<Scalars['ID']>;
+}
+
+export interface SetShowcaseOnPreorderDtoInput {
+  id: Scalars['ID'];
+  relationId: Scalars['String'];
 }
 
 export interface SettingCreateDto {

@@ -790,6 +790,16 @@ export interface PreorderDto {
   id: Scalars['ID'];
 }
 
+export interface PreorderDtoConnection {
+  edges: Array<PreorderDtoEdge>;
+  pageInfo: PageInfo;
+}
+
+export interface PreorderDtoEdge {
+  cursor: Scalars['ConnectionCursor'];
+  node: PreorderDto;
+}
+
 export interface PreorderDtoFilter {
   and?: Maybe<Array<PreorderDtoFilter>>;
   id?: Maybe<IdFilterComparison>;
@@ -1522,6 +1532,7 @@ export interface User {
   email: Scalars['String'];
   name: Scalars['String'];
   photoURL: Scalars['String'];
+  preorders: PreorderDtoConnection;
   role: AuthRoleType;
   showcases: ShowcaseConnection;
   uid: Scalars['ID'];

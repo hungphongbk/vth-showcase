@@ -3,11 +3,11 @@ query ShowcasePreview($slug: String!) {
     id
     slug
     name
-    author{
+    author {
       email
       name
     }
-    brand{
+    brand {
       name
     }
     status
@@ -15,12 +15,12 @@ query ShowcasePreview($slug: String!) {
       ...Media
     }
     description
-    expectedSalePrice{
+    expectedSalePrice {
       regular
       pioneer
       preorder
       promo
     }
+    isPreordered
   }
 }
-

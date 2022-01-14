@@ -3,10 +3,11 @@ query ShowcaseDetail($slug: String!) {
     ...ShowcaseDetail
     ...ShowcaseHF
     ...ShowcaseInvestorStat
-    updates{
+    updates {
       id
       content
       createdAt
     }
+    isPreordered
   }
 }

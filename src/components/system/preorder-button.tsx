@@ -20,6 +20,7 @@ import { afterSignInFirebase } from "../../store/auth.reducer";
 type PreorderButtonProps = {
   showcase: Pick<Showcase, "status" | "slug" | "expectedSalePrice">;
   sx?: SxProps;
+  refetchShowcase: any;
 };
 export default function PreorderButton(
   props: PreorderButtonProps
@@ -30,7 +31,7 @@ export default function PreorderButton(
     [isSubmitted, setIsSubmitted] = useState(false),
     [doSubmitPreorder] = useSubmitPreorderMutation({
       variables: { slug: props.showcase.slug },
-      refetchQueries: [refetchPreorderCartQuery()],
+      refetchQueries: [refetchPreorderCartQuery(), props.refetchShowcase],
     }),
     { enqueueSnackbar } = useSnackbar(),
     dispatch = useAppDispatch();

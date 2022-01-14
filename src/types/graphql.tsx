@@ -1122,6 +1122,7 @@ export interface Showcase {
   inventory?: Maybe<ShowcaseInventoryDto>;
   investorStat?: Maybe<ShowcaseInvestorStatDto>;
   isFeatured?: Maybe<Scalars['Boolean']>;
+  isPreordered?: Maybe<Scalars['Boolean']>;
   name: Scalars['String'];
   preorders: ShowcasePreordersConnection;
   publishStatus: PublishStatus;
@@ -1689,14 +1690,14 @@ export type ShowcaseDetailQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists?: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> | null | undefined, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null | undefined } };
+export type ShowcaseDetailQuery = { showcase: { isPreordered?: boolean | null | undefined, id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists?: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> | null | undefined, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null | undefined } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type ShowcasePreviewQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, author: { email: string, name: string }, brand: { name: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined } };
+export type ShowcasePreviewQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, isPreordered?: boolean | null | undefined, author: { email: string, name: string }, brand: { name: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined } };
 
 export type ShowcaseRelatedsQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -2489,6 +2490,7 @@ export const ShowcaseDetailDocument = gql`
       content
       createdAt
     }
+    isPreordered
   }
 }
     ${ShowcaseDetailFragmentDoc}
@@ -2551,6 +2553,7 @@ export const ShowcasePreviewDocument = gql`
       preorder
       promo
     }
+    isPreordered
   }
 }
     ${MediaFragmentDoc}`;

@@ -1,5 +1,5 @@
 import { GetStaticProps } from "next";
-import { Box, Button, ButtonProps } from "@mui/material";
+import { Box } from "@mui/material";
 import ShowcaseDetailed from "../../src/components/showcase-detailed";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
@@ -14,59 +14,31 @@ import Footer from "../../src/components/Footer";
 import PreorderButton from "../../src/components/system/preorder-button";
 import VthIconButton from "../../src/components/vth-icon-button";
 
-const BottomButton = ({
-    children,
-    ...props
-  }: PropsWithChildren<
-    Pick<ButtonProps, "startIcon" | "onClick" | "disabled">
-  >) => (
-    <Button
-      variant={"contained"}
-      sx={{
-        bgcolor: "yellow.main",
-        border: 3,
-        borderColor: "yellow.light",
-        color: "black",
-        fontWeight: 600,
-        fontSize: 12,
-        lineHeight: 15,
-        boxShadow: "none",
-        flex: "auto",
-        height: 35,
-        borderRadius: "17.5px",
-        mt: "-24px",
-        position: "relative",
-      }}
-      {...props}
-    >
-      {children}
-    </Button>
-  ),
-  IconWrapper = (props: PropsWithChildren<unknown>) => (
-    <Box
-      sx={{
-        height: "22px",
-        width: "22px",
-        borderRadius: "11px",
-        bgcolor: "yellow.light",
-        "& .Mui-disabled &": {
-          bgcolor: "#f3f3f3",
-          "& > svg": { color: "rgba(0,0,0,0.26)" },
-        },
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        position: "absolute",
-        top: 3.25,
-        left: 3.5,
-        "& > svg": {
-          display: "block",
-        },
-      }}
-    >
-      {props.children}
-    </Box>
-  );
+const IconWrapper = (props: PropsWithChildren<unknown>) => (
+  <Box
+    sx={{
+      height: "22px",
+      width: "22px",
+      borderRadius: "11px",
+      bgcolor: "yellow.light",
+      "& .Mui-disabled &": {
+        bgcolor: "#f3f3f3",
+        "& > svg": { color: "rgba(0,0,0,0.26)" },
+      },
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      position: "absolute",
+      top: 3.25,
+      left: 3.5,
+      "& > svg": {
+        display: "block",
+      },
+    }}
+  >
+    {props.children}
+  </Box>
+);
 
 function PostDetailedPage() {
   const router = useRouter(),
@@ -134,7 +106,7 @@ function PostDetailedPage() {
             }
             sx={{
               bgcolor: "yellow.main",
-              border: 3,
+              border: 1,
               borderColor: "yellow.light",
               color: "black",
               fontWeight: 600,
@@ -153,9 +125,6 @@ function PostDetailedPage() {
           <PreorderButton
             showcase={data!.showcase as unknown as Showcase}
             sx={{
-              bgcolor: "yellow.main",
-              border: 3,
-              borderColor: "yellow.light",
               color: "black",
               fontWeight: 600,
               fontSize: 12,

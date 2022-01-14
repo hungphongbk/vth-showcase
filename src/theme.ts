@@ -45,6 +45,12 @@ declare module "@mui/material/styles" {
   }
 }
 
+declare module "@mui/material/SvgIcon" {
+  interface SvgIconPropsColorOverrides {
+    green: true;
+  }
+}
+
 // Create a theme instance.
 const theme = createTheme({
   typography: {

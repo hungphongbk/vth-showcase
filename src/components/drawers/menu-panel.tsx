@@ -98,20 +98,6 @@ const MenuPanel = forwardRef(function MenuPanel(
             Logout
           </Button>
         ) : (
-          // <Button
-          //   variant={"contained"}
-          //   startIcon={<GoogleColoredIcon />}
-          //   sx={{ bgcolor: "white !important" }}
-          //   onClick={() =>
-          //     FirebaseAuthService().then(({ signInWithGoogle }) =>
-          //       signInWithGoogle().then((payload) =>
-          //         dispatch(afterSignInFirebase(payload!))
-          //       )
-          //     )
-          //   }
-          // >
-          //   Login with Google
-          // </Button>
           <LoginPanel
             sx={{ borderTopRightRadius: "30px", overflow: "hidden" }}
           />

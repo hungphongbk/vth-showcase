@@ -4,6 +4,10 @@ import Image from "next/image";
 import bg from "../../assets/login-header-bg.png";
 import { AspectRatio } from "@hungphongbk/vth-sdk";
 import { TextInput } from "../TextInput";
+import GoogleColoredIcon from "../../assets/icons/GoogleColoredIcon";
+import { useAppDispatch } from "../../store";
+import { FirebaseAuthService } from "../../service";
+import { afterSignInFirebase } from "../../store/auth.reducer";
 
 const Wrapper = styled(Box)`
   width: 100%;
@@ -17,6 +21,7 @@ type LoginPanelProps = {
   sx?: SxProps;
 };
 export default function LoginPanel({ sx }: LoginPanelProps): JSX.Element {
+  const dispatch = useAppDispatch();
   return (
     <Wrapper sx={sx}>
       <Box sx={{ position: "relative", mb: 2 }}>
@@ -51,11 +56,34 @@ export default function LoginPanel({ sx }: LoginPanelProps): JSX.Element {
             padding: "5px 3rem",
             alignSelf: "center",
             my: 1,
+            fontWeight: 600,
           }}
         >
           ĐĂNG NHẬP
         </Button>
         <Divider sx={{ width: "60%", alignSelf: "center", mb: 1 }} />
+        <Button
+          variant={"outlined"}
+          color={undefined}
+          endIcon={<GoogleColoredIcon sx={{ height: 26, width: 26 }} />}
+          sx={{
+            alignSelf: "center",
+            borderColor: "divider",
+            color: "black",
+            fontWeight: 400,
+            height: 32,
+            pr: "6px",
+          }}
+          onClick={() =>
+            FirebaseAuthService().then(({ signInWithGoogle }) =>
+              signInWithGoogle().then((payload) =>
+                dispatch(afterSignInFirebase(payload!))
+              )
+            )
+          }
+        >
+          Đăng nhập bằng tài khoản
+        </Button>
       </Stack>
     </Wrapper>
   );

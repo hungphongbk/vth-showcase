@@ -11,7 +11,7 @@ import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
 import { ssrShowcaseDetail } from "../../src/types/graphql.ssr";
 import Footer from "../../src/components/Footer";
-import PreorderButton from "../../src/components/system/preorder-button";
+import { PreorderButton } from "../../src/components/system";
 import VthIconButton from "../../src/components/vth-icon-button";
 
 const IconWrapper = (props: PropsWithChildren<unknown>) => (

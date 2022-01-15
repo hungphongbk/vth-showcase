@@ -36,6 +36,7 @@ import IconUser from "src/assets/icons/IconUser";
 import PhoneIcon from "src/assets/icons/PhoneIcon";
 import Avatar from '@mui/material/Avatar';
 import QuestionMarkIcon from "src/assets/icons/QuestionMarkIcon";
+import { NoEncryption } from "@mui/icons-material";
 
 
 type ImageBoxProps = BoxProps;
@@ -61,7 +62,9 @@ const SUBMIT_INVESTOR = gql`
 `;
 const ContactBox = styled(Box)`
   display: flex;
+  align-items: center;
   font-family: Montserrat;
+  margin-top: 15px;
   font-style: normal;
   font-weight: bold;
   line-height: 161.9%;
@@ -69,9 +72,6 @@ const ContactBox = styled(Box)`
   color: #FFFFFF;
 `
 const Avt = styled(Box)`
-width: 62px;
-height: 62px;
-padding-top: 10%
 `
 const Info = styled(Box)`
 `
@@ -119,19 +119,23 @@ export default function InvestorRegDialog(
         sx={{
           position: "absolute", 
           zIndex: 1, 
-          top: "-3%",
+          top: "-20px",
           left: "50%",
           width: "263px",
           transform: "translateX(-50%)",
           padding: "4px 0",
           textAlign: "center",
-          backgroundColor: "#575757",
+          backgroundColor: "rgb(87, 87, 87)",
           borderRadius: "20px",
           fontFamily: "Montserrat",
           fontWeight: 600,
-          fontSize: "15px",
+          fontSize: "0.8rem",
           lineHeight: "161.9%",
-          color: "#FFFFFF",
+          color: "rgb(255, 255, 255)",
+          height: "40px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
           }}>
           Trở thành Investor cùng chúng tôi
         </Box>
@@ -145,23 +149,22 @@ export default function InvestorRegDialog(
         <Typography
           sx={{
             textAlign: "justify",
-            fontSize: 11.32,
+            fontSize: "0.75rem",
             lineHeight: "18.33px",
             fontWeight: 400,
             color: "#000",
-            marginBottom: "70px"
+            margin: "15px 0 65px"
           }}
         >
           Nếu bạn đang mong muốn tìm hiểu sâu hơn về việc đầu tư cùng Vaithuhay,
           đăng nhập ngay để hiển thị các thông tin về Doanh thu dự kiến, P&L chi
           tiết của từng dự án, phương án kinh doanh & hình thức hợp tác
-          <span 
+          <button 
             style={{
               backgroundColor: "#000000",
               color: "#ffffff",
               borderRadius: "9.5px",
               marginLeft: "5px",
-              padding: "3px 20px 3px 6px",
               fontFamily: "Montserrat",
               fontStyle: "normal",
               fontWeight: 500,
@@ -169,8 +172,11 @@ export default function InvestorRegDialog(
               lineHeight: "161.9%",
               width: "53px",
               position: "relative",
+              border: "none",
+              textAlign: "left",
+              paddingLeft: "7px"
             }}>
-              Ví dụ <QuestionMarkIcon style={{position: "absolute", top: "2px", right: "2.5px"}} /></span>
+              Ví dụ <QuestionMarkIcon style={{position: "absolute", top: "2.5px", right: "5px"}} /></button>
         </Typography>
         <Stack
           direction={"column"}
@@ -274,22 +280,20 @@ export default function InvestorRegDialog(
             Hợp tác ngay
           </Button>
         </Stack>
-      </DialogContent>
-      <Box sx={{ position: "relative", marginTop: "-25px" }}>
-          <AspectRatio ratio={"357/190"}>
+        <Box sx={{position: "absolute", bottom:"0", right: "0", left:"0", zIndex:"-1"}}>
+          <AspectRatio ratio={"357/208"}>
             <Image src={bg2} layout={"fill"} objectFit={"cover"} />
           </AspectRatio>
-          <Typography
+        </Box>
+        <Typography
           sx={{
-            position: "absolute",
-            top: "30px",
-            right: "15%",
-            width: "68%",
+            width: "100%",
+            marginTop: "3rem",
             fontFamily: "Montserrat",
             fontStyle: "normal",
             fontWeight: "500",
-            fontSize: "13px",
-            lineHeight: "20px",
+            fontSize: "0.75rem",
+            lineHeight: "1.7",
             display: "flex",
             alignItems: "center",
             textAlign: "center",
@@ -299,21 +303,15 @@ export default function InvestorRegDialog(
           Liên hệ ngay chúng tôi để cùng nhau 
           hợp nhau các dự án của Vaithuhay.com
           </Typography>
-          <Box sx={{
-            position: "absolute",
-            top: "70px",
-            left: "10%"
-          }}>
-            <ContactBox>
-              <Avt><Avatar alt="Remy Sharp" > <Image src={avtInfo} layout={"fill"} objectFit={"cover"} /> </Avatar> </Avt>
+          <ContactBox>
+              <Avt><Avatar alt="Remy Sharp" sx={{width:62, height:62, marginRight: "11px"}} > <Image src={avtInfo} layout={"fill"} objectFit={"cover"} /> </Avatar> </Avt>
               <Info>
-                <h2 style={{fontSize: "15px", margin:"20px 0 0 0"}}>BÙI SƠN TÂM</h2>
-                <InfoDetail><IconUser /> <p style={{margin:"0 0 0 8px",fontSize: "13px"}}>Founder/CEO | Vaithuhay.com</p></InfoDetail>
-                <Phone><PhoneIcon /><p style={{margin:"0 0 0 8px",fontSize: "13px"}}>0902905808</p></Phone>
+                <h2 style={{fontSize: "15px", margin:"0 0 5px", fontWeight: "700"}}>BÙI SƠN TÂM</h2>
+                <InfoDetail><IconUser /> <a href="#" style={{color: "#ffffff", textDecoration:"none", margin:"0 0 5px 8px",fontSize: "0.65rem", fontWeight:"normal"}}>Founder/CEO | Vaithuhay.com</a></InfoDetail>
+                <Phone><PhoneIcon /><p style={{margin:"0 0 0 8px",fontSize: "0.65rem", fontWeight:"normal"}}>0902905808</p></Phone>
               </Info>
             </ContactBox>
-          </Box>
-      </Box>
+      </DialogContent>
     </StyledDialog>
   );
 }

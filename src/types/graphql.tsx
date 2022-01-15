@@ -742,16 +742,6 @@ export interface NumberFieldComparisonBetween {
   upper: Scalars['Float'];
 }
 
-export interface OffsetPageInfo {
-  hasNextPage?: Maybe<Scalars['Boolean']>;
-  hasPreviousPage?: Maybe<Scalars['Boolean']>;
-}
-
-export interface OffsetPaging {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-}
-
 export interface PageInfo {
   endCursor?: Maybe<Scalars['ConnectionCursor']>;
   hasNextPage?: Maybe<Scalars['Boolean']>;
@@ -1062,7 +1052,7 @@ export interface Showcase {
   author: User;
   brand: ShowcaseBrand;
   commentCount?: Maybe<Scalars['Float']>;
-  comments: ShowcaseCommentsConnection;
+  comments: Array<CommentDto>;
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   expectedQuantity?: Maybe<ShowcasePrice>;
@@ -1080,7 +1070,7 @@ export interface Showcase {
   isPreordered?: Maybe<Scalars['Boolean']>;
   name: Scalars['String'];
   preorderCount?: Maybe<Scalars['Float']>;
-  preorders: ShowcasePreordersConnection;
+  preorders: Array<PreorderDto>;
   publishStatus: PublishStatus;
   slug: Scalars['String'];
   status: ShowcaseStatus;
@@ -1091,7 +1081,6 @@ export interface Showcase {
 
 export interface ShowcaseCommentsArgs {
   filter?: Maybe<CommentDtoFilter>;
-  paging?: Maybe<OffsetPaging>;
   sorting?: Maybe<Array<CommentDtoSort>>;
 }
 
@@ -1104,7 +1093,6 @@ export interface ShowcaseHighlightFeaturesArgs {
 
 export interface ShowcasePreordersArgs {
   filter?: Maybe<PreorderDtoFilter>;
-  paging?: Maybe<OffsetPaging>;
   sorting?: Maybe<Array<PreorderDtoSort>>;
 }
 
@@ -1135,12 +1123,6 @@ export interface ShowcaseBrand {
 export interface ShowcaseBrandInput {
   description: Scalars['String'];
   name: Scalars['String'];
-}
-
-export interface ShowcaseCommentsConnection {
-  nodes: Array<CommentDto>;
-  pageInfo: OffsetPageInfo;
-  totalCount: Scalars['Int'];
 }
 
 export interface ShowcaseConnection {
@@ -1346,12 +1328,6 @@ export interface ShowcaseMinAggregate {
   slug?: Maybe<Scalars['String']>;
   status?: Maybe<ShowcaseStatus>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-}
-
-export interface ShowcasePreordersConnection {
-  nodes: Array<PreorderDto>;
-  pageInfo: OffsetPageInfo;
-  totalCount: Scalars['Int'];
 }
 
 export interface ShowcasePrice {
@@ -1633,7 +1609,7 @@ export type QueryCommentsQueryVariables = Exact<{
 }>;
 
 
-export type QueryCommentsQuery = { showcase: { slug: string, comments: { nodes: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author?: { email: string, name: string } | null | undefined }> } } };
+export type QueryCommentsQuery = { showcase: { slug: string, comments: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author?: { email: string, name: string } | null | undefined }> } };
 
 export type PostAnonymousCommentMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -2333,15 +2309,13 @@ export const QueryCommentsDocument = gql`
   showcase(slug: $slug) {
     slug
     comments {
-      nodes {
-        id
-        author {
-          email
-          name
-        }
-        content
-        rate
+      id
+      author {
+        email
+        name
       }
+      content
+      rate
     }
   }
 }

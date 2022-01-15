@@ -35,7 +35,7 @@ export default function CommentSection(
       <CommentWrite onSubmit={addComment} />
       <Stack gap={2} sx={{ mt: 2 }}>
         {typeof comments !== "undefined" &&
-          comments.comments.nodes.map((comment) => (
+          comments.comments.map((comment) => (
             <Box
               key={comment.id}
               sx={{

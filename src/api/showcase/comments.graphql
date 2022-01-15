@@ -2,15 +2,13 @@ query QueryComments($slug: String!) {
   showcase(slug: $slug) {
     slug
     comments {
-      nodes {
-        id
-        author {
-          email
-          name
-        }
-        content
-        rate
+      id
+      author {
+        email
+        name
       }
+      content
+      rate
     }
   }
 }

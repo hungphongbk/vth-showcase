@@ -150,43 +150,6 @@ export const ssrIndexClient = {
       withPage: withPageIndexClient,
       usePage: useIndexClient,
     }
-
-
-export async function getServerPageComments
-    (options: Omit<Apollo.QueryOptions<Types.QueryCommentsQueryVariables>, 'query'>, ctx: ApolloClientContext ){
-        const apolloClient = getApolloClient(ctx);
-        
-        const data = await apolloClient.query<Types.QueryCommentsQuery>({ ...options, query: Operations.QueryCommentsDocument });
-        
-        const apolloState = apolloClient.cache.extract();
-
-        return {
-            props: {
-                apolloState: apolloState,
-                data: data?.data,
-                error: data?.error ?? data?.errors ?? null,
-            },
-        };
-      }
-export const useComments = (
-  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.QueryCommentsQuery, Types.QueryCommentsQueryVariables>) => {
-  const router = useRouter();
-  const options = optionsFunc ? optionsFunc(router) : {};
-  return useQuery(Operations.QueryCommentsDocument, options);
-};
-export type PageCommentsComp = React.FC<{data?: Types.QueryCommentsQuery, error?: Apollo.ApolloError}>;
-export const withPageComments = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.QueryCommentsQuery, Types.QueryCommentsQueryVariables>) => (WrappedComponent:PageCommentsComp) : NextPage  => (props) => {
-                const router = useRouter()
-                const options = optionsFunc ? optionsFunc(router) : {};
-                const {data, error } = useQuery(Operations.QueryCommentsDocument, options)    
-                return <WrappedComponent {...props} data={data} error={error} /> ;
-                   
-            }; 
-export const ssrComments = {
-      getServerPage: getServerPageComments,
-      withPage: withPageComments,
-      usePage: useComments,
-    }
 export async function getServerPageDraftShowcases
     (options: Omit<Apollo.QueryOptions<Types.DraftShowcasesQueryVariables>, 'query'>, ctx: ApolloClientContext ){
         const apolloClient = getApolloClient(ctx);
@@ -327,6 +290,43 @@ export const ssrSlugs = {
       withPage: withPageSlugs,
       usePage: useSlugs,
     }
+export async function getServerPageComments
+    (options: Omit<Apollo.QueryOptions<Types.QueryCommentsQueryVariables>, 'query'>, ctx: ApolloClientContext ){
+        const apolloClient = getApolloClient(ctx);
+        
+        const data = await apolloClient.query<Types.QueryCommentsQuery>({ ...options, query: Operations.QueryCommentsDocument });
+        
+        const apolloState = apolloClient.cache.extract();
+
+        return {
+            props: {
+                apolloState: apolloState,
+                data: data?.data,
+                error: data?.error ?? data?.errors ?? null,
+            },
+        };
+      }
+export const useComments = (
+  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.QueryCommentsQuery, Types.QueryCommentsQueryVariables>) => {
+  const router = useRouter();
+  const options = optionsFunc ? optionsFunc(router) : {};
+  return useQuery(Operations.QueryCommentsDocument, options);
+};
+export type PageCommentsComp = React.FC<{data?: Types.QueryCommentsQuery, error?: Apollo.ApolloError}>;
+export const withPageComments = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.QueryCommentsQuery, Types.QueryCommentsQueryVariables>) => (WrappedComponent:PageCommentsComp) : NextPage  => (props) => {
+                const router = useRouter()
+                const options = optionsFunc ? optionsFunc(router) : {};
+                const {data, error } = useQuery(Operations.QueryCommentsDocument, options)    
+                return <WrappedComponent {...props} data={data} error={error} /> ;
+                   
+            }; 
+export const ssrComments = {
+      getServerPage: getServerPageComments,
+      withPage: withPageComments,
+      usePage: useComments,
+    }
+
+
 export async function getServerPageShowcaseDetail
     (options: Omit<Apollo.QueryOptions<Types.ShowcaseDetailQueryVariables>, 'query'>, ctx: ApolloClientContext ){
         const apolloClient = getApolloClient(ctx);

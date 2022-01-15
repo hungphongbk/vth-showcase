@@ -1,0 +1,26 @@
+query QueryComments($slug: String!) {
+  showcase(slug: $slug) {
+    slug
+    comments {
+      nodes {
+        id
+        author {
+          email
+          name
+        }
+        content
+        rate
+      }
+    }
+  }
+}
+mutation postAnonymousComment($slug: String!, $input: CommentCreateDto!) {
+  postAnonymousComment(slug: $slug, input: $input) {
+    id
+  }
+}
+mutation postAuthorizedComment($slug: String!, $input: CommentCreateDto!) {
+  postAuthorizedComment(slug: $slug, input: $input) {
+    id
+  }
+}

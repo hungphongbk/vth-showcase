@@ -3,6 +3,9 @@ import CommentWrite from "./comment-write";
 import { useAddComment } from "./useAddComment";
 import { Avatar, Box, Stack, styled, Typography } from "@mui/material";
 import { CommentRateMaps } from "./styled";
+import { useMemo } from "react";
+import { chunk } from "lodash";
+import SlickSlider from "../slick-slider";
 
 const CommentContent = styled(Box)`
   /* Neutral/Dark White */
@@ -28,55 +31,78 @@ type CommentSectionProps = { slug: string };
 export default function CommentSection(
   props: CommentSectionProps
 ): JSX.Element {
-  const { addComment, comments, loading } = useAddComment({ slug: props.slug });
+  const { addComment, comments, loading } = useAddComment({ slug: props.slug }),
+    isCommentLoaded = useMemo(() => {
+      return (
+        typeof comments !== "undefined" && Array.isArray(comments.comments)
+      );
+    }, [comments]),
+    commentsPaged = useMemo(
+      () => chunk(comments?.comments ?? [], 6),
+      [comments]
+    );
 
   return (
     <CollapseCard header={"Bình luận / Bình chọn"} sx={{ mt: 1 }} defaultOpen>
       <CommentWrite onSubmit={addComment} />
-      <Stack gap={2} sx={{ mt: 2 }}>
-        {typeof comments !== "undefined" &&
-          comments.comments.map((comment) => (
-            <Box
-              key={comment.id}
-              sx={{
-                display: "grid",
-                gridTemplateColumns: "32px 1fr",
-                gap: "6px",
-              }}
-            >
-              <Avatar sx={{ height: 32, width: 32, bgcolor: "#6C6C6C" }}>
-                {comment.author?.name[0] ?? "A"}
-              </Avatar>
-              <CommentContent>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontStyle:
-                      typeof comment.author?.name === "undefined"
-                        ? "italic"
-                        : "normal",
-                    mb: 0.3,
-                  }}
-                >
-                  {comment.author?.name ?? "Người dùng"}
-                </Typography>
-                {comment.rate.length > 0 && (
-                  <Stack gap={1} direction={"row"} sx={{ mb: 0.4 }}>
-                    {comment.rate.map((rate) => {
-                      const map = CommentRateMaps[rate];
-                      return (
-                        <CommentChip sx={{ bgcolor: map.color }} key={rate}>
-                          {map.label}
-                        </CommentChip>
-                      );
-                    })}
-                  </Stack>
-                )}
-                <Typography>{comment.content}</Typography>
-              </CommentContent>
-            </Box>
-          ))}
-      </Stack>
+      <Box>
+        {isCommentLoaded && (
+          <SlickSlider>
+            {commentsPaged.map((page, index) => (
+              <Box key={index}>
+                <Stack gap={2} sx={{ mt: 2 }}>
+                  {page.map((comment) => (
+                    <Box
+                      key={comment.id}
+                      sx={{
+                        display: "grid",
+                        gridTemplateColumns: "32px 1fr",
+                        gap: "6px",
+                      }}
+                    >
+                      <Avatar
+                        sx={{ height: 32, width: 32, bgcolor: "#6C6C6C" }}
+                      >
+                        {comment.author?.name[0] ?? "A"}
+                      </Avatar>
+                      <CommentContent>
+                        <Typography
+                          sx={{
+                            fontWeight: 700,
+                            fontStyle:
+                              typeof comment.author?.name === "undefined"
+                                ? "italic"
+                                : "normal",
+                            mb: 0.3,
+                          }}
+                        >
+                          {comment.author?.name ?? "Người dùng"}
+                        </Typography>
+                        {comment.rate.length > 0 && (
+                          <Stack gap={1} direction={"row"} sx={{ mb: 0.4 }}>
+                            {comment.rate.map((rate) => {
+                              const map = CommentRateMaps[rate];
+                              return (
+                                <CommentChip
+                                  sx={{ bgcolor: map.color }}
+                                  key={rate}
+                                >
+                                  {map.label}
+                                </CommentChip>
+                              );
+                            })}
+                          </Stack>
+                        )}
+                        <Typography>{comment.content}</Typography>
+                      </CommentContent>
+                    </Box>
+                  ))}
+                </Stack>
+              </Box>
+            ))}
+          </SlickSlider>
+        )}
+      </Box>
     </CollapseCard>
   );
 }

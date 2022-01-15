@@ -17,16 +17,6 @@ export interface Scalars {
   JSONObject: any;
 }
 
-export interface AddCommentsToShowcaseInput {
-  id: Scalars['String'];
-  relationIds: Array<Scalars['ID']>;
-}
-
-export interface AddHighlightFeaturesToShowcaseInput {
-  id: Scalars['String'];
-  relationIds: Array<Scalars['ID']>;
-}
-
 export interface AddImagesToImageListInput {
   id: Scalars['ID'];
   relationIds: Array<Scalars['ID']>;
@@ -450,8 +440,6 @@ export enum MediaType {
 }
 
 export interface Mutation {
-  addCommentsToShowcase: Showcase;
-  addHighlightFeaturesToShowcase: Showcase;
   addImagesToImageList: ImageList;
   createManyInvestmentPackageDtos: Array<InvestmentPackageDto>;
   createManyMediaDtos: Array<MediaDto>;
@@ -478,15 +466,11 @@ export interface Mutation {
   postProjectUpdate: PrjUpdateDto;
   removeAuthorFromCommentDto: CommentDto;
   removeAuthorFromShowcase: Showcase;
-  removeCommentsFromShowcase: Showcase;
-  removeHighlightFeaturesFromShowcase: Showcase;
   removeImageFromShowcase: Showcase;
   removeImageFromShowcaseHighlightFeature: ShowcaseHighlightFeature;
   removeImagesFromImageList: ImageList;
   setAuthorOnCommentDto: CommentDto;
   setAuthorOnShowcase: Showcase;
-  setCommentsOnShowcase: Showcase;
-  setHighlightFeaturesOnShowcase: Showcase;
   setImageOnShowcase: Showcase;
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
@@ -501,16 +485,6 @@ export interface Mutation {
   updateOneShowcase: Scalars['Boolean'];
   updateOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
   updateOneUser: Scalars['Boolean'];
-}
-
-
-export interface MutationAddCommentsToShowcaseArgs {
-  input: AddCommentsToShowcaseInput;
-}
-
-
-export interface MutationAddHighlightFeaturesToShowcaseArgs {
-  input: AddHighlightFeaturesToShowcaseInput;
 }
 
 
@@ -651,16 +625,6 @@ export interface MutationRemoveAuthorFromShowcaseArgs {
 }
 
 
-export interface MutationRemoveCommentsFromShowcaseArgs {
-  input: RemoveCommentsFromShowcaseInput;
-}
-
-
-export interface MutationRemoveHighlightFeaturesFromShowcaseArgs {
-  input: RemoveHighlightFeaturesFromShowcaseInput;
-}
-
-
 export interface MutationRemoveImageFromShowcaseArgs {
   input: RemoveImageFromShowcaseInput;
 }
@@ -683,16 +647,6 @@ export interface MutationSetAuthorOnCommentDtoArgs {
 
 export interface MutationSetAuthorOnShowcaseArgs {
   input: SetAuthorOnShowcaseInput;
-}
-
-
-export interface MutationSetCommentsOnShowcaseArgs {
-  input: SetCommentsOnShowcaseInput;
-}
-
-
-export interface MutationSetHighlightFeaturesOnShowcaseArgs {
-  input: SetHighlightFeaturesOnShowcaseInput;
 }
 
 
@@ -768,14 +722,24 @@ export interface MutationUpdateOneUserArgs {
   uid: Scalars['String'];
 }
 
-export interface OffsetPageInfo {
-  hasNextPage?: Maybe<Scalars['Boolean']>;
-  hasPreviousPage?: Maybe<Scalars['Boolean']>;
+export interface NumberFieldComparison {
+  between?: Maybe<NumberFieldComparisonBetween>;
+  eq?: Maybe<Scalars['Float']>;
+  gt?: Maybe<Scalars['Float']>;
+  gte?: Maybe<Scalars['Float']>;
+  in?: Maybe<Array<Scalars['Float']>>;
+  is?: Maybe<Scalars['Boolean']>;
+  isNot?: Maybe<Scalars['Boolean']>;
+  lt?: Maybe<Scalars['Float']>;
+  lte?: Maybe<Scalars['Float']>;
+  neq?: Maybe<Scalars['Float']>;
+  notBetween?: Maybe<NumberFieldComparisonBetween>;
+  notIn?: Maybe<Array<Scalars['Float']>>;
 }
 
-export interface OffsetPaging {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+export interface NumberFieldComparisonBetween {
+  lower: Scalars['Float'];
+  upper: Scalars['Float'];
 }
 
 export interface PageInfo {
@@ -1033,16 +997,6 @@ export interface RemoveAuthorFromShowcaseInput {
   relationId: Scalars['ID'];
 }
 
-export interface RemoveCommentsFromShowcaseInput {
-  id: Scalars['String'];
-  relationIds: Array<Scalars['ID']>;
-}
-
-export interface RemoveHighlightFeaturesFromShowcaseInput {
-  id: Scalars['String'];
-  relationIds: Array<Scalars['ID']>;
-}
-
 export interface RemoveImageFromShowcaseHighlightFeatureInput {
   id: Scalars['ID'];
   relationId: Scalars['ID'];
@@ -1066,16 +1020,6 @@ export interface SetAuthorOnCommentDtoInput {
 export interface SetAuthorOnShowcaseInput {
   id: Scalars['String'];
   relationId: Scalars['ID'];
-}
-
-export interface SetCommentsOnShowcaseInput {
-  id: Scalars['String'];
-  relationIds: Array<Scalars['ID']>;
-}
-
-export interface SetHighlightFeaturesOnShowcaseInput {
-  id: Scalars['String'];
-  relationIds: Array<Scalars['ID']>;
 }
 
 export interface SetImageOnShowcaseHighlightFeatureInput {
@@ -1107,7 +1051,8 @@ export interface SettingDto {
 export interface Showcase {
   author: User;
   brand: ShowcaseBrand;
-  comments: ShowcaseCommentsConnection;
+  commentCount?: Maybe<Scalars['Float']>;
+  comments: Array<CommentDto>;
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   expectedQuantity?: Maybe<ShowcasePrice>;
@@ -1124,7 +1069,8 @@ export interface Showcase {
   isFeatured?: Maybe<Scalars['Boolean']>;
   isPreordered?: Maybe<Scalars['Boolean']>;
   name: Scalars['String'];
-  preorders: ShowcasePreordersConnection;
+  preorderCount?: Maybe<Scalars['Float']>;
+  preorders: Array<PreorderDto>;
   publishStatus: PublishStatus;
   slug: Scalars['String'];
   status: ShowcaseStatus;
@@ -1135,7 +1081,6 @@ export interface Showcase {
 
 export interface ShowcaseCommentsArgs {
   filter?: Maybe<CommentDtoFilter>;
-  paging?: Maybe<OffsetPaging>;
   sorting?: Maybe<Array<CommentDtoSort>>;
 }
 
@@ -1148,7 +1093,6 @@ export interface ShowcaseHighlightFeaturesArgs {
 
 export interface ShowcasePreordersArgs {
   filter?: Maybe<PreorderDtoFilter>;
-  paging?: Maybe<OffsetPaging>;
   sorting?: Maybe<Array<PreorderDtoSort>>;
 }
 
@@ -1159,10 +1103,12 @@ export interface ShowcaseUpdatesArgs {
 }
 
 export interface ShowcaseAggregateGroupBy {
+  commentCount?: Maybe<Scalars['Float']>;
   expectedSaleAt?: Maybe<Scalars['DateTime']>;
   expectedSaleEndAt?: Maybe<Scalars['DateTime']>;
   isFeatured?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
+  preorderCount?: Maybe<Scalars['Float']>;
   publishStatus?: Maybe<PublishStatus>;
   slug?: Maybe<Scalars['String']>;
   status?: Maybe<ShowcaseStatus>;
@@ -1179,22 +1125,18 @@ export interface ShowcaseBrandInput {
   name: Scalars['String'];
 }
 
-export interface ShowcaseCommentsConnection {
-  nodes: Array<CommentDto>;
-  pageInfo: OffsetPageInfo;
-  totalCount: Scalars['Int'];
-}
-
 export interface ShowcaseConnection {
   edges: Array<ShowcaseEdge>;
   pageInfo: PageInfo;
 }
 
 export interface ShowcaseCountAggregate {
+  commentCount?: Maybe<Scalars['Int']>;
   expectedSaleAt?: Maybe<Scalars['Int']>;
   expectedSaleEndAt?: Maybe<Scalars['Int']>;
   isFeatured?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['Int']>;
+  preorderCount?: Maybe<Scalars['Int']>;
   publishStatus?: Maybe<Scalars['Int']>;
   slug?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
@@ -1222,11 +1164,13 @@ export interface ShowcaseCreateInputDto {
 
 export interface ShowcaseDeleteFilter {
   and?: Maybe<Array<ShowcaseDeleteFilter>>;
+  commentCount?: Maybe<NumberFieldComparison>;
   expectedSaleAt?: Maybe<DateFieldComparison>;
   expectedSaleEndAt?: Maybe<DateFieldComparison>;
   isFeatured?: Maybe<BooleanFieldComparison>;
   name?: Maybe<StringFieldComparison>;
   or?: Maybe<Array<ShowcaseDeleteFilter>>;
+  preorderCount?: Maybe<NumberFieldComparison>;
   publishStatus?: Maybe<PublishStatusFilterComparison>;
   slug?: Maybe<StringFieldComparison>;
   status?: Maybe<ShowcaseStatusFilterComparison>;
@@ -1240,11 +1184,13 @@ export interface ShowcaseEdge {
 
 export interface ShowcaseFilter {
   and?: Maybe<Array<ShowcaseFilter>>;
+  commentCount?: Maybe<NumberFieldComparison>;
   expectedSaleAt?: Maybe<DateFieldComparison>;
   expectedSaleEndAt?: Maybe<DateFieldComparison>;
   isFeatured?: Maybe<BooleanFieldComparison>;
   name?: Maybe<StringFieldComparison>;
   or?: Maybe<Array<ShowcaseFilter>>;
+  preorderCount?: Maybe<NumberFieldComparison>;
   publishStatus?: Maybe<PublishStatusFilterComparison>;
   slug?: Maybe<StringFieldComparison>;
   status?: Maybe<ShowcaseStatusFilterComparison>;
@@ -1384,12 +1330,6 @@ export interface ShowcaseMinAggregate {
   updatedAt?: Maybe<Scalars['DateTime']>;
 }
 
-export interface ShowcasePreordersConnection {
-  nodes: Array<PreorderDto>;
-  pageInfo: OffsetPageInfo;
-  totalCount: Scalars['Int'];
-}
-
 export interface ShowcasePrice {
   pioneer: Scalars['Float'];
   preorder: Scalars['Float'];
@@ -1411,10 +1351,12 @@ export interface ShowcaseSort {
 }
 
 export enum ShowcaseSortFields {
+  CommentCount = 'commentCount',
   ExpectedSaleAt = 'expectedSaleAt',
   ExpectedSaleEndAt = 'expectedSaleEndAt',
   IsFeatured = 'isFeatured',
   Name = 'name',
+  PreorderCount = 'preorderCount',
   PublishStatus = 'publishStatus',
   Slug = 'slug',
   Status = 'status',
@@ -1639,29 +1581,6 @@ export type IndexPageClientQueryVariables = Exact<{
 
 export type IndexPageClientQuery = { showcases: { pageInfo: { hasNextPage?: boolean | null | undefined, endCursor?: any | null | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
-export type PostAnonymousCommentMutationVariables = Exact<{
-  slug: Scalars['String'];
-  input: CommentCreateDto;
-}>;
-
-
-export type PostAnonymousCommentMutation = { postAnonymousComment: { id: string } };
-
-export type PostAuthorizedCommentMutationVariables = Exact<{
-  slug: Scalars['String'];
-  input: CommentCreateDto;
-}>;
-
-
-export type PostAuthorizedCommentMutation = { postAuthorizedComment: { id: string } };
-
-export type QueryCommentsQueryVariables = Exact<{
-  slug: Scalars['String'];
-}>;
-
-
-export type QueryCommentsQuery = { showcase: { slug: string, comments: { nodes: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author?: { email: string, name: string } | null | undefined }> } } };
-
 export type DraftShowcasesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1684,6 +1603,29 @@ export type SlugsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type SlugsQuery = { slugs: Array<string> };
+
+export type QueryCommentsQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type QueryCommentsQuery = { showcase: { slug: string, comments: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author?: { email: string, name: string } | null | undefined }> } };
+
+export type PostAnonymousCommentMutationVariables = Exact<{
+  slug: Scalars['String'];
+  input: CommentCreateDto;
+}>;
+
+
+export type PostAnonymousCommentMutation = { postAnonymousComment: { id: string } };
+
+export type PostAuthorizedCommentMutationVariables = Exact<{
+  slug: Scalars['String'];
+  input: CommentCreateDto;
+}>;
+
+
+export type PostAuthorizedCommentMutation = { postAuthorizedComment: { id: string } };
 
 export type ShowcaseDetailQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -2183,123 +2125,6 @@ export type IndexPageClientQueryResult = Apollo.QueryResult<IndexPageClientQuery
 export function refetchIndexPageClientQuery(variables: IndexPageClientQueryVariables) {
       return { query: IndexPageClientDocument, variables: variables }
     }
-export const PostAnonymousCommentDocument = gql`
-    mutation postAnonymousComment($slug: String!, $input: CommentCreateDto!) {
-  postAnonymousComment(slug: $slug, input: $input) {
-    id
-  }
-}
-    `;
-export type PostAnonymousCommentMutationFn = Apollo.MutationFunction<PostAnonymousCommentMutation, PostAnonymousCommentMutationVariables>;
-
-/**
- * __usePostAnonymousCommentMutation__
- *
- * To run a mutation, you first call `usePostAnonymousCommentMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePostAnonymousCommentMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [postAnonymousCommentMutation, { data, loading, error }] = usePostAnonymousCommentMutation({
- *   variables: {
- *      slug: // value for 'slug'
- *      input: // value for 'input'
- *   },
- * });
- */
-export function usePostAnonymousCommentMutation(baseOptions?: Apollo.MutationHookOptions<PostAnonymousCommentMutation, PostAnonymousCommentMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<PostAnonymousCommentMutation, PostAnonymousCommentMutationVariables>(PostAnonymousCommentDocument, options);
-      }
-export type PostAnonymousCommentMutationHookResult = ReturnType<typeof usePostAnonymousCommentMutation>;
-export type PostAnonymousCommentMutationResult = Apollo.MutationResult<PostAnonymousCommentMutation>;
-export type PostAnonymousCommentMutationOptions = Apollo.BaseMutationOptions<PostAnonymousCommentMutation, PostAnonymousCommentMutationVariables>;
-export const PostAuthorizedCommentDocument = gql`
-    mutation postAuthorizedComment($slug: String!, $input: CommentCreateDto!) {
-  postAuthorizedComment(slug: $slug, input: $input) {
-    id
-  }
-}
-    `;
-export type PostAuthorizedCommentMutationFn = Apollo.MutationFunction<PostAuthorizedCommentMutation, PostAuthorizedCommentMutationVariables>;
-
-/**
- * __usePostAuthorizedCommentMutation__
- *
- * To run a mutation, you first call `usePostAuthorizedCommentMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePostAuthorizedCommentMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [postAuthorizedCommentMutation, { data, loading, error }] = usePostAuthorizedCommentMutation({
- *   variables: {
- *      slug: // value for 'slug'
- *      input: // value for 'input'
- *   },
- * });
- */
-export function usePostAuthorizedCommentMutation(baseOptions?: Apollo.MutationHookOptions<PostAuthorizedCommentMutation, PostAuthorizedCommentMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<PostAuthorizedCommentMutation, PostAuthorizedCommentMutationVariables>(PostAuthorizedCommentDocument, options);
-      }
-export type PostAuthorizedCommentMutationHookResult = ReturnType<typeof usePostAuthorizedCommentMutation>;
-export type PostAuthorizedCommentMutationResult = Apollo.MutationResult<PostAuthorizedCommentMutation>;
-export type PostAuthorizedCommentMutationOptions = Apollo.BaseMutationOptions<PostAuthorizedCommentMutation, PostAuthorizedCommentMutationVariables>;
-export const QueryCommentsDocument = gql`
-    query QueryComments($slug: String!) {
-  showcase(slug: $slug) {
-    slug
-    comments {
-      nodes {
-        id
-        author {
-          email
-          name
-        }
-        content
-        rate
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useQueryCommentsQuery__
- *
- * To run a query within a React component, call `useQueryCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useQueryCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useQueryCommentsQuery({
- *   variables: {
- *      slug: // value for 'slug'
- *   },
- * });
- */
-export function useQueryCommentsQuery(baseOptions: Apollo.QueryHookOptions<QueryCommentsQuery, QueryCommentsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<QueryCommentsQuery, QueryCommentsQueryVariables>(QueryCommentsDocument, options);
-      }
-export function useQueryCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryCommentsQuery, QueryCommentsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<QueryCommentsQuery, QueryCommentsQueryVariables>(QueryCommentsDocument, options);
-        }
-export type QueryCommentsQueryHookResult = ReturnType<typeof useQueryCommentsQuery>;
-export type QueryCommentsLazyQueryHookResult = ReturnType<typeof useQueryCommentsLazyQuery>;
-export type QueryCommentsQueryResult = Apollo.QueryResult<QueryCommentsQuery, QueryCommentsQueryVariables>;
-export function refetchQueryCommentsQuery(variables: QueryCommentsQueryVariables) {
-      return { query: QueryCommentsDocument, variables: variables }
-    }
 export const DraftShowcasesDocument = gql`
     query DraftShowcases {
   showcases(filter: {publishStatus: {eq: DRAFT}}) {
@@ -2479,6 +2304,121 @@ export type SlugsQueryResult = Apollo.QueryResult<SlugsQuery, SlugsQueryVariable
 export function refetchSlugsQuery(variables?: SlugsQueryVariables) {
       return { query: SlugsDocument, variables: variables }
     }
+export const QueryCommentsDocument = gql`
+    query QueryComments($slug: String!) {
+  showcase(slug: $slug) {
+    slug
+    comments {
+      id
+      author {
+        email
+        name
+      }
+      content
+      rate
+    }
+  }
+}
+    `;
+
+/**
+ * __useQueryCommentsQuery__
+ *
+ * To run a query within a React component, call `useQueryCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryCommentsQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useQueryCommentsQuery(baseOptions: Apollo.QueryHookOptions<QueryCommentsQuery, QueryCommentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QueryCommentsQuery, QueryCommentsQueryVariables>(QueryCommentsDocument, options);
+      }
+export function useQueryCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryCommentsQuery, QueryCommentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QueryCommentsQuery, QueryCommentsQueryVariables>(QueryCommentsDocument, options);
+        }
+export type QueryCommentsQueryHookResult = ReturnType<typeof useQueryCommentsQuery>;
+export type QueryCommentsLazyQueryHookResult = ReturnType<typeof useQueryCommentsLazyQuery>;
+export type QueryCommentsQueryResult = Apollo.QueryResult<QueryCommentsQuery, QueryCommentsQueryVariables>;
+export function refetchQueryCommentsQuery(variables: QueryCommentsQueryVariables) {
+      return { query: QueryCommentsDocument, variables: variables }
+    }
+export const PostAnonymousCommentDocument = gql`
+    mutation postAnonymousComment($slug: String!, $input: CommentCreateDto!) {
+  postAnonymousComment(slug: $slug, input: $input) {
+    id
+  }
+}
+    `;
+export type PostAnonymousCommentMutationFn = Apollo.MutationFunction<PostAnonymousCommentMutation, PostAnonymousCommentMutationVariables>;
+
+/**
+ * __usePostAnonymousCommentMutation__
+ *
+ * To run a mutation, you first call `usePostAnonymousCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostAnonymousCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postAnonymousCommentMutation, { data, loading, error }] = usePostAnonymousCommentMutation({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePostAnonymousCommentMutation(baseOptions?: Apollo.MutationHookOptions<PostAnonymousCommentMutation, PostAnonymousCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PostAnonymousCommentMutation, PostAnonymousCommentMutationVariables>(PostAnonymousCommentDocument, options);
+      }
+export type PostAnonymousCommentMutationHookResult = ReturnType<typeof usePostAnonymousCommentMutation>;
+export type PostAnonymousCommentMutationResult = Apollo.MutationResult<PostAnonymousCommentMutation>;
+export type PostAnonymousCommentMutationOptions = Apollo.BaseMutationOptions<PostAnonymousCommentMutation, PostAnonymousCommentMutationVariables>;
+export const PostAuthorizedCommentDocument = gql`
+    mutation postAuthorizedComment($slug: String!, $input: CommentCreateDto!) {
+  postAuthorizedComment(slug: $slug, input: $input) {
+    id
+  }
+}
+    `;
+export type PostAuthorizedCommentMutationFn = Apollo.MutationFunction<PostAuthorizedCommentMutation, PostAuthorizedCommentMutationVariables>;
+
+/**
+ * __usePostAuthorizedCommentMutation__
+ *
+ * To run a mutation, you first call `usePostAuthorizedCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostAuthorizedCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postAuthorizedCommentMutation, { data, loading, error }] = usePostAuthorizedCommentMutation({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePostAuthorizedCommentMutation(baseOptions?: Apollo.MutationHookOptions<PostAuthorizedCommentMutation, PostAuthorizedCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PostAuthorizedCommentMutation, PostAuthorizedCommentMutationVariables>(PostAuthorizedCommentDocument, options);
+      }
+export type PostAuthorizedCommentMutationHookResult = ReturnType<typeof usePostAuthorizedCommentMutation>;
+export type PostAuthorizedCommentMutationResult = Apollo.MutationResult<PostAuthorizedCommentMutation>;
+export type PostAuthorizedCommentMutationOptions = Apollo.BaseMutationOptions<PostAuthorizedCommentMutation, PostAuthorizedCommentMutationVariables>;
 export const ShowcaseDetailDocument = gql`
     query ShowcaseDetail($slug: String!) {
   showcase(slug: $slug) {

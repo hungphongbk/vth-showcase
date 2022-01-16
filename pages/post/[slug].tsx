@@ -106,8 +106,6 @@ function PostDetailedPage() {
             }
             sx={{
               bgcolor: "yellow.main",
-              border: 1,
-              borderColor: "yellow.light",
               color: "black",
               fontWeight: 600,
               fontSize: 12,

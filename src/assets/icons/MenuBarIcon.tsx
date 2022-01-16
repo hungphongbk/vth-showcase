@@ -1,9 +1,12 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { SvgIcon, SvgIconProps } from "@mui/material";
 
-export default function MenuBarIcon(props: SvgIconProps): JSX.Element {
+const MenuBarIcon = forwardRef(function MenuBarIcon(
+  props: SvgIconProps,
+  ref: any
+): JSX.Element {
   return (
-    <SvgIcon viewBox="0 0 54 32" {...props}>
+    <SvgIcon ref={ref} viewBox="0 0 54 32" {...props}>
       <g filter="url(#filter0_d_163_840)">
         <rect x="1" y="1" width="50" height="28" rx="14" fill="#6B6B6B" />
       </g>
@@ -49,4 +52,6 @@ export default function MenuBarIcon(props: SvgIconProps): JSX.Element {
       </defs>
     </SvgIcon>
   );
-}
+});
+
+export default MenuBarIcon;

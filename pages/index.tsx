@@ -61,8 +61,6 @@ const Home = () => {
       ShowcaseStatus | undefined
     >();
 
-  console.log(networkStatus, loading, statusFilter);
-
   /**
    * Calculate final filter
    */

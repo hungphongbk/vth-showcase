@@ -23,8 +23,7 @@ export default function VthIconButton({
       sx={{
         display: "flex",
         padding: "5px",
-        outline: `3px solid ${color === "green" ? "#8affce" : "#FFF5CB"}`,
-        borderWidth: 0,
+        border: `3px solid ${color === "green" ? "#8affce" : "#FFF5CB"}`,
         ...sx,
       }}
       color={color ?? "primary"}

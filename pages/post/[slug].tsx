@@ -123,7 +123,6 @@ function PostDetailedPage() {
           <PreorderButton
             showcase={data!.showcase as unknown as Showcase}
             sx={{
-              color: "black",
               fontWeight: 600,
               fontSize: 12,
               lineHeight: 15,

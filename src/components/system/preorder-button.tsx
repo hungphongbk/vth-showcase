@@ -82,12 +82,16 @@ export default function PreorderButton(
         sx={{ flexGrow: 1, opacity: initialized ? 1 : 0.5, ...props.sx }}
         startIcon={
           <IconComponent
-            sx={{ width: 22, height: 22 }}
-            color={props.showcase.isPreordered ? "green" : undefined}
+            sx={{
+              width: 22,
+              height: 22,
+              transform: "translate(-0.5px,-0.5px)",
+            }}
+            color={props.showcase.isPreordered ? "gray" : undefined}
           />
         }
         fullWidth
-        color={props.showcase.isPreordered ? "green" : "primary"}
+        color={props.showcase.isPreordered ? "gray" : "primary"}
         onClick={() => {
           if (props.showcase.isPreordered) return;
           if (isLoggedIn) {

@@ -1,12 +1,6 @@
 import { Button, ButtonProps, Typography } from "@mui/material";
 import { ReactNode } from "react";
 
-declare module "@mui/material/Button" {
-  interface ButtonPropsColorOverrides {
-    green: true;
-  }
-}
-
 type VthIconButtonProps = Omit<ButtonProps, "startIcon"> & {
   startIcon: ReactNode;
 };
@@ -23,7 +17,9 @@ export default function VthIconButton({
       sx={{
         display: "flex",
         padding: "5px",
-        border: `3px solid ${color === "green" ? "#8affce" : "#FFF5CB"}`,
+        borderWidth: "3px",
+        borderStyle: "solid",
+        borderColor: `${color ?? "primary"}.light`,
         ...sx,
       }}
       color={color ?? "primary"}

@@ -25,6 +25,11 @@ declare module "@mui/material/styles" {
       black: string;
       placeholderText: string;
     };
+    gray: {
+      main: string;
+      light?: string;
+      dark?: string;
+    };
   }
 
   interface Theme {
@@ -48,6 +53,17 @@ declare module "@mui/material/styles" {
 declare module "@mui/material/SvgIcon" {
   interface SvgIconPropsColorOverrides {
     green: true;
+    gray: true;
+  }
+}
+
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    green: true;
+    gray: true;
+  }
+  interface ButtonClasses {
+    containedGray: string;
   }
 }
 
@@ -61,6 +77,7 @@ const theme = createTheme({
     divider: "#BFBFBF",
     primary: {
       main: "#FFDE50",
+      light: "#FFF5CB",
     },
     secondary: {
       main: "#19857b",
@@ -86,6 +103,11 @@ const theme = createTheme({
       darkGrey: "#ABABAB",
       placeholderText: "rgba(0,0,0,.35)",
     },
+    gray: {
+      main: "#ababab",
+      light: "#d5d5d5",
+      dark: "#ababab",
+    },
   },
   variables: {
     appBarHeight: 59,
@@ -105,6 +127,11 @@ const theme = createTheme({
           "&.Mui-disabled": {
             backgroundColor: "#e3e3e3",
             borderColor: "#d3d3d3",
+          },
+        },
+        contained: {
+          "&.MuiButton-containedGray": {
+            color: "white",
           },
         },
       },

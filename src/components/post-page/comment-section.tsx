@@ -38,7 +38,11 @@ export default function CommentSection(
       );
     }, [comments]),
     commentsPaged = useMemo(
-      () => chunk(comments?.comments ?? [], 6),
+      () => chunk(comments?.comments?.filter((c) => !c.isTopComment) ?? [], 6),
+      [comments]
+    ),
+    topComment = useMemo(
+      () => comments?.comments?.filter((c) => c.isTopComment) ?? undefined,
       [comments]
     );
 

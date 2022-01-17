@@ -9,6 +9,7 @@ query QueryComments($slug: String!) {
       }
       content
       rate
+      isTopComment
     }
   }
 }

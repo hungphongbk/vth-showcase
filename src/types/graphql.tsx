@@ -52,6 +52,7 @@ export interface CommentDto {
 }
 
 export interface CommentDtoAggregateGroupBy {
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   isTopComment?: Maybe<Scalars['Boolean']>;
 }
@@ -61,6 +62,7 @@ export interface CommentDtoAvgAggregate {
 }
 
 export interface CommentDtoCountAggregate {
+  createdAt?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
   isTopComment?: Maybe<Scalars['Int']>;
 }
@@ -72,16 +74,19 @@ export interface CommentDtoEdge {
 
 export interface CommentDtoFilter {
   and?: InputMaybe<Array<CommentDtoFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   isTopComment?: InputMaybe<BooleanFieldComparison>;
   or?: InputMaybe<Array<CommentDtoFilter>>;
 }
 
 export interface CommentDtoMaxAggregate {
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
 }
 
 export interface CommentDtoMinAggregate {
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
 }
 
@@ -92,6 +97,7 @@ export interface CommentDtoSort {
 }
 
 export enum CommentDtoSortFields {
+  CreatedAt = 'createdAt',
   Id = 'id',
   IsTopComment = 'isTopComment'
 }
@@ -1613,7 +1619,7 @@ export type QueryCommentsQueryVariables = Exact<{
 }>;
 
 
-export type QueryCommentsQuery = { showcase: { slug: string, comments: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author?: { email: string, name: string } | undefined }> } };
+export type QueryCommentsQuery = { showcase: { slug: string, comments: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, isTopComment: boolean, author?: { email: string, name: string } | undefined }> } };
 
 export type PostAnonymousCommentMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -2320,6 +2326,7 @@ export const QueryCommentsDocument = gql`
       }
       content
       rate
+      isTopComment
     }
   }
 }

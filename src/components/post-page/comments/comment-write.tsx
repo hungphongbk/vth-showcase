@@ -8,10 +8,10 @@ import {
   ToggleButtonGroup,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { CommentCreateDto } from "../../types/graphql";
+import { CommentCreateDto } from "../../../types/graphql";
 import { FormInput } from "@hungphongbk/vth-sdk";
 import React from "react";
-import { CommentRateMaps } from "./styled";
+import { CommentRateMaps } from "../styled";
 
 const CommentBox = styled(Box)`
     /* Neutral/Dark White */

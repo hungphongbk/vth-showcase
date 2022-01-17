@@ -20,6 +20,7 @@ input BooleanFieldComparison {
 
 input CommentCreateDto {
   content: String!
+  isTopComment: Boolean
   rate: [CommentRateEnum!]!
 }
 
@@ -28,12 +29,14 @@ type CommentDto {
   content: String!
   createdAt: DateTime!
   id: ID!
+  isTopComment: Boolean!
   rate: [CommentRateEnum!]!
   updatedAt: DateTime!
 }
 
 type CommentDtoAggregateGroupBy {
   id: ID
+  isTopComment: Boolean
 }
 
 type CommentDtoAvgAggregate {
@@ -42,6 +45,7 @@ type CommentDtoAvgAggregate {
 
 type CommentDtoCountAggregate {
   id: Int
+  isTopComment: Int
 }
 
 type CommentDtoEdge {
@@ -55,6 +59,7 @@ type CommentDtoEdge {
 input CommentDtoFilter {
   and: [CommentDtoFilter!]
   id: IDFilterComparison
+  isTopComment: BooleanFieldComparison
   or: [CommentDtoFilter!]
 }
 
@@ -74,6 +79,7 @@ input CommentDtoSort {
 
 enum CommentDtoSortFields {
   id
+  isTopComment
 }
 
 type CommentDtoSumAggregate {

@@ -1,10 +1,11 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | undefined;
+export type InputMaybe<T> = T | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export interface Scalars {
   ID: string;
@@ -30,12 +31,13 @@ export enum AuthRoleType {
 }
 
 export interface BooleanFieldComparison {
-  is?: Maybe<Scalars['Boolean']>;
-  isNot?: Maybe<Scalars['Boolean']>;
+  is?: InputMaybe<Scalars['Boolean']>;
+  isNot?: InputMaybe<Scalars['Boolean']>;
 }
 
 export interface CommentCreateDto {
   content: Scalars['String'];
+  isTopComment?: InputMaybe<Scalars['Boolean']>;
   rate: Array<CommentRateEnum>;
 }
 
@@ -44,12 +46,14 @@ export interface CommentDto {
   content: Scalars['String'];
   createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
+  isTopComment: Scalars['Boolean'];
   rate: Array<CommentRateEnum>;
   updatedAt: Scalars['DateTime'];
 }
 
 export interface CommentDtoAggregateGroupBy {
   id?: Maybe<Scalars['ID']>;
+  isTopComment?: Maybe<Scalars['Boolean']>;
 }
 
 export interface CommentDtoAvgAggregate {
@@ -58,6 +62,7 @@ export interface CommentDtoAvgAggregate {
 
 export interface CommentDtoCountAggregate {
   id?: Maybe<Scalars['Int']>;
+  isTopComment?: Maybe<Scalars['Int']>;
 }
 
 export interface CommentDtoEdge {
@@ -66,9 +71,10 @@ export interface CommentDtoEdge {
 }
 
 export interface CommentDtoFilter {
-  and?: Maybe<Array<CommentDtoFilter>>;
-  id?: Maybe<IdFilterComparison>;
-  or?: Maybe<Array<CommentDtoFilter>>;
+  and?: InputMaybe<Array<CommentDtoFilter>>;
+  id?: InputMaybe<IdFilterComparison>;
+  isTopComment?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<CommentDtoFilter>>;
 }
 
 export interface CommentDtoMaxAggregate {
@@ -82,11 +88,12 @@ export interface CommentDtoMinAggregate {
 export interface CommentDtoSort {
   direction: SortDirection;
   field: CommentDtoSortFields;
-  nulls?: Maybe<SortNulls>;
+  nulls?: InputMaybe<SortNulls>;
 }
 
 export enum CommentDtoSortFields {
-  Id = 'id'
+  Id = 'id',
+  IsTopComment = 'isTopComment'
 }
 
 export interface CommentDtoSumAggregate {
@@ -102,13 +109,12 @@ export enum CommentRateEnum {
   XamXi = 'XAM_XI'
 }
 
-
 export interface CreateInvestmentPackageDto {
-  benefitRate?: Maybe<Scalars['Float']>;
-  count?: Maybe<Scalars['Float']>;
-  displayName?: Maybe<Scalars['String']>;
-  fundedRate?: Maybe<Scalars['Float']>;
-  id?: Maybe<Scalars['ID']>;
+  benefitRate?: InputMaybe<Scalars['Float']>;
+  count?: InputMaybe<Scalars['Float']>;
+  displayName?: InputMaybe<Scalars['String']>;
+  fundedRate?: InputMaybe<Scalars['Float']>;
+  id?: InputMaybe<Scalars['ID']>;
 }
 
 export interface CreateManyInvestmentPackageDtosInput {
@@ -128,32 +134,31 @@ export interface CreateOneMediaDtoInput {
 }
 
 export interface CursorPaging {
-  after?: Maybe<Scalars['ConnectionCursor']>;
-  before?: Maybe<Scalars['ConnectionCursor']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['ConnectionCursor']>;
+  before?: InputMaybe<Scalars['ConnectionCursor']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 }
 
 export interface DateFieldComparison {
-  between?: Maybe<DateFieldComparisonBetween>;
-  eq?: Maybe<Scalars['DateTime']>;
-  gt?: Maybe<Scalars['DateTime']>;
-  gte?: Maybe<Scalars['DateTime']>;
-  in?: Maybe<Array<Scalars['DateTime']>>;
-  is?: Maybe<Scalars['Boolean']>;
-  isNot?: Maybe<Scalars['Boolean']>;
-  lt?: Maybe<Scalars['DateTime']>;
-  lte?: Maybe<Scalars['DateTime']>;
-  neq?: Maybe<Scalars['DateTime']>;
-  notBetween?: Maybe<DateFieldComparisonBetween>;
-  notIn?: Maybe<Array<Scalars['DateTime']>>;
+  between?: InputMaybe<DateFieldComparisonBetween>;
+  eq?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<Scalars['DateTime']>>;
+  is?: InputMaybe<Scalars['Boolean']>;
+  isNot?: InputMaybe<Scalars['Boolean']>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  neq?: InputMaybe<Scalars['DateTime']>;
+  notBetween?: InputMaybe<DateFieldComparisonBetween>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 }
 
 export interface DateFieldComparisonBetween {
   lower: Scalars['DateTime'];
   upper: Scalars['DateTime'];
 }
-
 
 export interface DeleteManyInvestmentPackageDtosInput {
   filter: InvestmentPackageDtoDeleteFilter;
@@ -192,20 +197,20 @@ export interface DeleteOneShowcaseHighlightFeatureInput {
 }
 
 export interface IdFilterComparison {
-  eq?: Maybe<Scalars['ID']>;
-  gt?: Maybe<Scalars['ID']>;
-  gte?: Maybe<Scalars['ID']>;
-  iLike?: Maybe<Scalars['ID']>;
-  in?: Maybe<Array<Scalars['ID']>>;
-  is?: Maybe<Scalars['Boolean']>;
-  isNot?: Maybe<Scalars['Boolean']>;
-  like?: Maybe<Scalars['ID']>;
-  lt?: Maybe<Scalars['ID']>;
-  lte?: Maybe<Scalars['ID']>;
-  neq?: Maybe<Scalars['ID']>;
-  notILike?: Maybe<Scalars['ID']>;
-  notIn?: Maybe<Array<Scalars['ID']>>;
-  notLike?: Maybe<Scalars['ID']>;
+  eq?: InputMaybe<Scalars['ID']>;
+  gt?: InputMaybe<Scalars['ID']>;
+  gte?: InputMaybe<Scalars['ID']>;
+  iLike?: InputMaybe<Scalars['ID']>;
+  in?: InputMaybe<Array<Scalars['ID']>>;
+  is?: InputMaybe<Scalars['Boolean']>;
+  isNot?: InputMaybe<Scalars['Boolean']>;
+  like?: InputMaybe<Scalars['ID']>;
+  lt?: InputMaybe<Scalars['ID']>;
+  lte?: InputMaybe<Scalars['ID']>;
+  neq?: InputMaybe<Scalars['ID']>;
+  notILike?: InputMaybe<Scalars['ID']>;
+  notIn?: InputMaybe<Array<Scalars['ID']>>;
+  notLike?: InputMaybe<Scalars['ID']>;
 }
 
 export interface IdInterface {
@@ -219,8 +224,8 @@ export interface ImageList extends IdInterface {
 
 
 export interface ImageListImagesArgs {
-  filter?: Maybe<MediaDtoFilter>;
-  sorting?: Maybe<Array<MediaDtoSort>>;
+  filter?: InputMaybe<MediaDtoFilter>;
+  sorting?: InputMaybe<Array<MediaDtoSort>>;
 }
 
 export interface ImageListAggregateGroupBy {
@@ -232,7 +237,7 @@ export interface ImageListCountAggregate {
 }
 
 export interface ImageListCreateDto {
-  images?: Maybe<Array<MediaInput>>;
+  images?: InputMaybe<Array<MediaInput>>;
 }
 
 export interface ImageListDeleteResponse {
@@ -280,10 +285,10 @@ export interface InvestmentPackageDtoCountAggregate {
 }
 
 export interface InvestmentPackageDtoDeleteFilter {
-  and?: Maybe<Array<InvestmentPackageDtoDeleteFilter>>;
-  displayName?: Maybe<StringFieldComparison>;
-  id?: Maybe<IdFilterComparison>;
-  or?: Maybe<Array<InvestmentPackageDtoDeleteFilter>>;
+  and?: InputMaybe<Array<InvestmentPackageDtoDeleteFilter>>;
+  displayName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<InvestmentPackageDtoDeleteFilter>>;
 }
 
 export interface InvestmentPackageDtoDeleteResponse {
@@ -300,10 +305,10 @@ export interface InvestmentPackageDtoEdge {
 }
 
 export interface InvestmentPackageDtoFilter {
-  and?: Maybe<Array<InvestmentPackageDtoFilter>>;
-  displayName?: Maybe<StringFieldComparison>;
-  id?: Maybe<IdFilterComparison>;
-  or?: Maybe<Array<InvestmentPackageDtoFilter>>;
+  and?: InputMaybe<Array<InvestmentPackageDtoFilter>>;
+  displayName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<InvestmentPackageDtoFilter>>;
 }
 
 export interface InvestmentPackageDtoMaxAggregate {
@@ -319,7 +324,7 @@ export interface InvestmentPackageDtoMinAggregate {
 export interface InvestmentPackageDtoSort {
   direction: SortDirection;
   field: InvestmentPackageDtoSortFields;
-  nulls?: Maybe<SortNulls>;
+  nulls?: InputMaybe<SortNulls>;
 }
 
 export enum InvestmentPackageDtoSortFields {
@@ -332,12 +337,11 @@ export interface InvestmentPackageDtoSumAggregate {
 }
 
 export interface InvestmentPackageDtoUpdateFilter {
-  and?: Maybe<Array<InvestmentPackageDtoUpdateFilter>>;
-  displayName?: Maybe<StringFieldComparison>;
-  id?: Maybe<IdFilterComparison>;
-  or?: Maybe<Array<InvestmentPackageDtoUpdateFilter>>;
+  and?: InputMaybe<Array<InvestmentPackageDtoUpdateFilter>>;
+  displayName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<InvestmentPackageDtoUpdateFilter>>;
 }
-
 
 export interface MediaDto extends IdInterface {
   filename: Scalars['String'];
@@ -366,10 +370,10 @@ export interface MediaDtoCountAggregate {
 }
 
 export interface MediaDtoDeleteFilter {
-  and?: Maybe<Array<MediaDtoDeleteFilter>>;
-  filename?: Maybe<StringFieldComparison>;
-  id?: Maybe<IdFilterComparison>;
-  or?: Maybe<Array<MediaDtoDeleteFilter>>;
+  and?: InputMaybe<Array<MediaDtoDeleteFilter>>;
+  filename?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<MediaDtoDeleteFilter>>;
 }
 
 export interface MediaDtoDeleteResponse {
@@ -389,10 +393,10 @@ export interface MediaDtoEdge {
 }
 
 export interface MediaDtoFilter {
-  and?: Maybe<Array<MediaDtoFilter>>;
-  filename?: Maybe<StringFieldComparison>;
-  id?: Maybe<IdFilterComparison>;
-  or?: Maybe<Array<MediaDtoFilter>>;
+  and?: InputMaybe<Array<MediaDtoFilter>>;
+  filename?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<MediaDtoFilter>>;
 }
 
 export interface MediaDtoMaxAggregate {
@@ -408,7 +412,7 @@ export interface MediaDtoMinAggregate {
 export interface MediaDtoSort {
   direction: SortDirection;
   field: MediaDtoSortFields;
-  nulls?: Maybe<SortNulls>;
+  nulls?: InputMaybe<SortNulls>;
 }
 
 export enum MediaDtoSortFields {
@@ -417,20 +421,20 @@ export enum MediaDtoSortFields {
 }
 
 export interface MediaDtoUpdateFilter {
-  and?: Maybe<Array<MediaDtoUpdateFilter>>;
-  filename?: Maybe<StringFieldComparison>;
-  id?: Maybe<IdFilterComparison>;
-  or?: Maybe<Array<MediaDtoUpdateFilter>>;
+  and?: InputMaybe<Array<MediaDtoUpdateFilter>>;
+  filename?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<MediaDtoUpdateFilter>>;
 }
 
 export interface MediaInput {
   filename: Scalars['String'];
-  height?: Maybe<Scalars['Float']>;
+  height?: InputMaybe<Scalars['Float']>;
   mimetype: Scalars['String'];
   path: Scalars['String'];
-  preloadUrl?: Maybe<Scalars['String']>;
-  type?: Maybe<MediaType>;
-  width?: Maybe<Scalars['Float']>;
+  preloadUrl?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<MediaType>;
+  width?: InputMaybe<Scalars['Float']>;
 }
 
 export enum MediaType {
@@ -519,7 +523,7 @@ export interface MutationCreateOneMediaDtoArgs {
 
 
 export interface MutationCreateOnePreorderArgs {
-  input?: Maybe<PreorderRequestInputDto>;
+  input?: InputMaybe<PreorderRequestInputDto>;
   slug: Scalars['String'];
 }
 
@@ -723,18 +727,18 @@ export interface MutationUpdateOneUserArgs {
 }
 
 export interface NumberFieldComparison {
-  between?: Maybe<NumberFieldComparisonBetween>;
-  eq?: Maybe<Scalars['Float']>;
-  gt?: Maybe<Scalars['Float']>;
-  gte?: Maybe<Scalars['Float']>;
-  in?: Maybe<Array<Scalars['Float']>>;
-  is?: Maybe<Scalars['Boolean']>;
-  isNot?: Maybe<Scalars['Boolean']>;
-  lt?: Maybe<Scalars['Float']>;
-  lte?: Maybe<Scalars['Float']>;
-  neq?: Maybe<Scalars['Float']>;
-  notBetween?: Maybe<NumberFieldComparisonBetween>;
-  notIn?: Maybe<Array<Scalars['Float']>>;
+  between?: InputMaybe<NumberFieldComparisonBetween>;
+  eq?: InputMaybe<Scalars['Float']>;
+  gt?: InputMaybe<Scalars['Float']>;
+  gte?: InputMaybe<Scalars['Float']>;
+  in?: InputMaybe<Array<Scalars['Float']>>;
+  is?: InputMaybe<Scalars['Boolean']>;
+  isNot?: InputMaybe<Scalars['Boolean']>;
+  lt?: InputMaybe<Scalars['Float']>;
+  lte?: InputMaybe<Scalars['Float']>;
+  neq?: InputMaybe<Scalars['Float']>;
+  notBetween?: InputMaybe<NumberFieldComparisonBetween>;
+  notIn?: InputMaybe<Array<Scalars['Float']>>;
 }
 
 export interface NumberFieldComparisonBetween {
@@ -779,9 +783,9 @@ export interface PreorderDtoEdge {
 }
 
 export interface PreorderDtoFilter {
-  and?: Maybe<Array<PreorderDtoFilter>>;
-  id?: Maybe<IdFilterComparison>;
-  or?: Maybe<Array<PreorderDtoFilter>>;
+  and?: InputMaybe<Array<PreorderDtoFilter>>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<PreorderDtoFilter>>;
 }
 
 export interface PreorderDtoMaxAggregate {
@@ -795,7 +799,7 @@ export interface PreorderDtoMinAggregate {
 export interface PreorderDtoSort {
   direction: SortDirection;
   field: PreorderDtoSortFields;
-  nulls?: Maybe<SortNulls>;
+  nulls?: InputMaybe<SortNulls>;
 }
 
 export enum PreorderDtoSortFields {
@@ -852,9 +856,9 @@ export interface PrjUpdateDtoEdge {
 }
 
 export interface PrjUpdateDtoFilter {
-  and?: Maybe<Array<PrjUpdateDtoFilter>>;
-  id?: Maybe<IdFilterComparison>;
-  or?: Maybe<Array<PrjUpdateDtoFilter>>;
+  and?: InputMaybe<Array<PrjUpdateDtoFilter>>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<PrjUpdateDtoFilter>>;
 }
 
 export interface PrjUpdateDtoMaxAggregate {
@@ -868,7 +872,7 @@ export interface PrjUpdateDtoMinAggregate {
 export interface PrjUpdateDtoSort {
   direction: SortDirection;
   field: PrjUpdateDtoSortFields;
-  nulls?: Maybe<SortNulls>;
+  nulls?: InputMaybe<SortNulls>;
 }
 
 export enum PrjUpdateDtoSortFields {
@@ -885,20 +889,20 @@ export enum PublishStatus {
 }
 
 export interface PublishStatusFilterComparison {
-  eq?: Maybe<PublishStatus>;
-  gt?: Maybe<PublishStatus>;
-  gte?: Maybe<PublishStatus>;
-  iLike?: Maybe<PublishStatus>;
-  in?: Maybe<Array<PublishStatus>>;
-  is?: Maybe<Scalars['Boolean']>;
-  isNot?: Maybe<Scalars['Boolean']>;
-  like?: Maybe<PublishStatus>;
-  lt?: Maybe<PublishStatus>;
-  lte?: Maybe<PublishStatus>;
-  neq?: Maybe<PublishStatus>;
-  notILike?: Maybe<PublishStatus>;
-  notIn?: Maybe<Array<PublishStatus>>;
-  notLike?: Maybe<PublishStatus>;
+  eq?: InputMaybe<PublishStatus>;
+  gt?: InputMaybe<PublishStatus>;
+  gte?: InputMaybe<PublishStatus>;
+  iLike?: InputMaybe<PublishStatus>;
+  in?: InputMaybe<Array<PublishStatus>>;
+  is?: InputMaybe<Scalars['Boolean']>;
+  isNot?: InputMaybe<Scalars['Boolean']>;
+  like?: InputMaybe<PublishStatus>;
+  lt?: InputMaybe<PublishStatus>;
+  lte?: InputMaybe<PublishStatus>;
+  neq?: InputMaybe<PublishStatus>;
+  notILike?: InputMaybe<PublishStatus>;
+  notIn?: InputMaybe<Array<PublishStatus>>;
+  notLike?: InputMaybe<PublishStatus>;
 }
 
 export interface Query {
@@ -931,9 +935,9 @@ export interface QueryInvestmentPackageDtoArgs {
 
 
 export interface QueryInvestmentPackageDtosArgs {
-  filter?: Maybe<InvestmentPackageDtoFilter>;
-  paging?: Maybe<CursorPaging>;
-  sorting?: Maybe<Array<InvestmentPackageDtoSort>>;
+  filter?: InputMaybe<InvestmentPackageDtoFilter>;
+  paging?: InputMaybe<CursorPaging>;
+  sorting?: InputMaybe<Array<InvestmentPackageDtoSort>>;
 }
 
 
@@ -943,16 +947,16 @@ export interface QueryMediaDtoArgs {
 
 
 export interface QueryMediaDtosArgs {
-  filter?: Maybe<MediaDtoFilter>;
-  paging?: Maybe<CursorPaging>;
-  sorting?: Maybe<Array<MediaDtoSort>>;
+  filter?: InputMaybe<MediaDtoFilter>;
+  paging?: InputMaybe<CursorPaging>;
+  sorting?: InputMaybe<Array<MediaDtoSort>>;
 }
 
 
 export interface QueryPreordersArgs {
-  filter?: Maybe<PreorderDtoFilter>;
-  paging?: Maybe<CursorPaging>;
-  sorting?: Maybe<Array<PreorderDtoSort>>;
+  filter?: InputMaybe<PreorderDtoFilter>;
+  paging?: InputMaybe<CursorPaging>;
+  sorting?: InputMaybe<Array<PreorderDtoSort>>;
 }
 
 
@@ -982,9 +986,9 @@ export interface QueryShowcaseHighlightFeatureArgs {
 
 
 export interface QueryShowcasesArgs {
-  filter?: Maybe<ShowcaseFilter>;
-  paging?: Maybe<CursorPaging>;
-  sorting?: Maybe<Array<ShowcaseSort>>;
+  filter?: InputMaybe<ShowcaseFilter>;
+  paging?: InputMaybe<CursorPaging>;
+  sorting?: InputMaybe<Array<ShowcaseSort>>;
 }
 
 export interface RemoveAuthorFromCommentDtoInput {
@@ -1080,26 +1084,26 @@ export interface Showcase {
 
 
 export interface ShowcaseCommentsArgs {
-  filter?: Maybe<CommentDtoFilter>;
-  sorting?: Maybe<Array<CommentDtoSort>>;
+  filter?: InputMaybe<CommentDtoFilter>;
+  sorting?: InputMaybe<Array<CommentDtoSort>>;
 }
 
 
 export interface ShowcaseHighlightFeaturesArgs {
-  filter?: Maybe<ShowcaseHighlightFeatureFilter>;
-  sorting?: Maybe<Array<ShowcaseHighlightFeatureSort>>;
+  filter?: InputMaybe<ShowcaseHighlightFeatureFilter>;
+  sorting?: InputMaybe<Array<ShowcaseHighlightFeatureSort>>;
 }
 
 
 export interface ShowcasePreordersArgs {
-  filter?: Maybe<PreorderDtoFilter>;
-  sorting?: Maybe<Array<PreorderDtoSort>>;
+  filter?: InputMaybe<PreorderDtoFilter>;
+  sorting?: InputMaybe<Array<PreorderDtoSort>>;
 }
 
 
 export interface ShowcaseUpdatesArgs {
-  filter?: Maybe<PrjUpdateDtoFilter>;
-  sorting?: Maybe<Array<PrjUpdateDtoSort>>;
+  filter?: InputMaybe<PrjUpdateDtoFilter>;
+  sorting?: InputMaybe<Array<PrjUpdateDtoSort>>;
 }
 
 export interface ShowcaseAggregateGroupBy {
@@ -1146,35 +1150,35 @@ export interface ShowcaseCountAggregate {
 export interface ShowcaseCreateInputDto {
   brand: ShowcaseBrandInput;
   description: Scalars['String'];
-  expectedQuantity?: Maybe<ShowcasePriceInput>;
-  expectedSaleAt?: Maybe<Scalars['DateTime']>;
-  expectedSaleEndAt?: Maybe<Scalars['DateTime']>;
-  expectedSalePrice?: Maybe<ShowcasePriceInput>;
-  highlightFeatures?: Maybe<Array<ShowcaseHfCreateInputDto>>;
-  id?: Maybe<Scalars['String']>;
+  expectedQuantity?: InputMaybe<ShowcasePriceInput>;
+  expectedSaleAt?: InputMaybe<Scalars['DateTime']>;
+  expectedSaleEndAt?: InputMaybe<Scalars['DateTime']>;
+  expectedSalePrice?: InputMaybe<ShowcasePriceInput>;
+  highlightFeatures?: InputMaybe<Array<ShowcaseHfCreateInputDto>>;
+  id?: InputMaybe<Scalars['String']>;
   image: MediaInput;
-  imageLists?: Maybe<Array<ImageListCreateDto>>;
-  inventory?: Maybe<ShowcaseInventoryDtoInput>;
-  isFeatured?: Maybe<Scalars['Boolean']>;
+  imageLists?: InputMaybe<Array<ImageListCreateDto>>;
+  inventory?: InputMaybe<ShowcaseInventoryDtoInput>;
+  isFeatured?: InputMaybe<Scalars['Boolean']>;
   name: Scalars['String'];
-  publishStatus?: Maybe<PublishStatus>;
+  publishStatus?: InputMaybe<PublishStatus>;
   status: ShowcaseStatus;
-  updates?: Maybe<Array<PrjUpdateCreateDto>>;
+  updates?: InputMaybe<Array<PrjUpdateCreateDto>>;
 }
 
 export interface ShowcaseDeleteFilter {
-  and?: Maybe<Array<ShowcaseDeleteFilter>>;
-  commentCount?: Maybe<NumberFieldComparison>;
-  expectedSaleAt?: Maybe<DateFieldComparison>;
-  expectedSaleEndAt?: Maybe<DateFieldComparison>;
-  isFeatured?: Maybe<BooleanFieldComparison>;
-  name?: Maybe<StringFieldComparison>;
-  or?: Maybe<Array<ShowcaseDeleteFilter>>;
-  preorderCount?: Maybe<NumberFieldComparison>;
-  publishStatus?: Maybe<PublishStatusFilterComparison>;
-  slug?: Maybe<StringFieldComparison>;
-  status?: Maybe<ShowcaseStatusFilterComparison>;
-  updatedAt?: Maybe<DateFieldComparison>;
+  and?: InputMaybe<Array<ShowcaseDeleteFilter>>;
+  commentCount?: InputMaybe<NumberFieldComparison>;
+  expectedSaleAt?: InputMaybe<DateFieldComparison>;
+  expectedSaleEndAt?: InputMaybe<DateFieldComparison>;
+  isFeatured?: InputMaybe<BooleanFieldComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ShowcaseDeleteFilter>>;
+  preorderCount?: InputMaybe<NumberFieldComparison>;
+  publishStatus?: InputMaybe<PublishStatusFilterComparison>;
+  slug?: InputMaybe<StringFieldComparison>;
+  status?: InputMaybe<ShowcaseStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 }
 
 export interface ShowcaseEdge {
@@ -1183,18 +1187,18 @@ export interface ShowcaseEdge {
 }
 
 export interface ShowcaseFilter {
-  and?: Maybe<Array<ShowcaseFilter>>;
-  commentCount?: Maybe<NumberFieldComparison>;
-  expectedSaleAt?: Maybe<DateFieldComparison>;
-  expectedSaleEndAt?: Maybe<DateFieldComparison>;
-  isFeatured?: Maybe<BooleanFieldComparison>;
-  name?: Maybe<StringFieldComparison>;
-  or?: Maybe<Array<ShowcaseFilter>>;
-  preorderCount?: Maybe<NumberFieldComparison>;
-  publishStatus?: Maybe<PublishStatusFilterComparison>;
-  slug?: Maybe<StringFieldComparison>;
-  status?: Maybe<ShowcaseStatusFilterComparison>;
-  updatedAt?: Maybe<DateFieldComparison>;
+  and?: InputMaybe<Array<ShowcaseFilter>>;
+  commentCount?: InputMaybe<NumberFieldComparison>;
+  expectedSaleAt?: InputMaybe<DateFieldComparison>;
+  expectedSaleEndAt?: InputMaybe<DateFieldComparison>;
+  isFeatured?: InputMaybe<BooleanFieldComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ShowcaseFilter>>;
+  preorderCount?: InputMaybe<NumberFieldComparison>;
+  publishStatus?: InputMaybe<PublishStatusFilterComparison>;
+  slug?: InputMaybe<StringFieldComparison>;
+  status?: InputMaybe<ShowcaseStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 }
 
 export interface ShowcaseGaDto {
@@ -1203,15 +1207,15 @@ export interface ShowcaseGaDto {
 
 export interface ShowcaseHfCreateInputDto {
   description: Scalars['String'];
-  id?: Maybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
   image: MediaInput;
   name: Scalars['String'];
 }
 
 export interface ShowcaseHfUpdateInputDto {
-  description?: Maybe<Scalars['String']>;
-  image?: Maybe<MediaInput>;
-  name?: Maybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<MediaInput>;
+  name?: InputMaybe<Scalars['String']>;
 }
 
 export interface ShowcaseHighlightFeature {
@@ -1243,10 +1247,10 @@ export interface ShowcaseHighlightFeatureEdge {
 }
 
 export interface ShowcaseHighlightFeatureFilter {
-  and?: Maybe<Array<ShowcaseHighlightFeatureFilter>>;
-  id?: Maybe<IdFilterComparison>;
-  name?: Maybe<StringFieldComparison>;
-  or?: Maybe<Array<ShowcaseHighlightFeatureFilter>>;
+  and?: InputMaybe<Array<ShowcaseHighlightFeatureFilter>>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ShowcaseHighlightFeatureFilter>>;
 }
 
 export interface ShowcaseHighlightFeatureMaxAggregate {
@@ -1262,7 +1266,7 @@ export interface ShowcaseHighlightFeatureMinAggregate {
 export interface ShowcaseHighlightFeatureSort {
   direction: SortDirection;
   field: ShowcaseHighlightFeatureSortFields;
-  nulls?: Maybe<SortNulls>;
+  nulls?: InputMaybe<SortNulls>;
 }
 
 export enum ShowcaseHighlightFeatureSortFields {
@@ -1347,7 +1351,7 @@ export interface ShowcasePriceInput {
 export interface ShowcaseSort {
   direction: SortDirection;
   field: ShowcaseSortFields;
-  nulls?: Maybe<SortNulls>;
+  nulls?: InputMaybe<SortNulls>;
 }
 
 export enum ShowcaseSortFields {
@@ -1370,39 +1374,39 @@ export enum ShowcaseStatus {
 }
 
 export interface ShowcaseStatusFilterComparison {
-  eq?: Maybe<ShowcaseStatus>;
-  gt?: Maybe<ShowcaseStatus>;
-  gte?: Maybe<ShowcaseStatus>;
-  iLike?: Maybe<ShowcaseStatus>;
-  in?: Maybe<Array<ShowcaseStatus>>;
-  is?: Maybe<Scalars['Boolean']>;
-  isNot?: Maybe<Scalars['Boolean']>;
-  like?: Maybe<ShowcaseStatus>;
-  lt?: Maybe<ShowcaseStatus>;
-  lte?: Maybe<ShowcaseStatus>;
-  neq?: Maybe<ShowcaseStatus>;
-  notILike?: Maybe<ShowcaseStatus>;
-  notIn?: Maybe<Array<ShowcaseStatus>>;
-  notLike?: Maybe<ShowcaseStatus>;
+  eq?: InputMaybe<ShowcaseStatus>;
+  gt?: InputMaybe<ShowcaseStatus>;
+  gte?: InputMaybe<ShowcaseStatus>;
+  iLike?: InputMaybe<ShowcaseStatus>;
+  in?: InputMaybe<Array<ShowcaseStatus>>;
+  is?: InputMaybe<Scalars['Boolean']>;
+  isNot?: InputMaybe<Scalars['Boolean']>;
+  like?: InputMaybe<ShowcaseStatus>;
+  lt?: InputMaybe<ShowcaseStatus>;
+  lte?: InputMaybe<ShowcaseStatus>;
+  neq?: InputMaybe<ShowcaseStatus>;
+  notILike?: InputMaybe<ShowcaseStatus>;
+  notIn?: InputMaybe<Array<ShowcaseStatus>>;
+  notLike?: InputMaybe<ShowcaseStatus>;
 }
 
 export interface ShowcaseUpdateInputDto {
-  brand?: Maybe<ShowcaseBrandInput>;
-  description?: Maybe<Scalars['String']>;
-  expectedQuantity?: Maybe<ShowcasePriceInput>;
-  expectedSaleAt?: Maybe<Scalars['DateTime']>;
-  expectedSaleEndAt?: Maybe<Scalars['DateTime']>;
-  expectedSalePrice?: Maybe<ShowcasePriceInput>;
-  highlightFeatures?: Maybe<Array<ShowcaseHfCreateInputDto>>;
-  id?: Maybe<Scalars['String']>;
-  image?: Maybe<MediaInput>;
-  imageLists?: Maybe<Array<ImageListCreateDto>>;
-  inventory?: Maybe<ShowcaseInventoryDtoInput>;
-  isFeatured?: Maybe<Scalars['Boolean']>;
-  name?: Maybe<Scalars['String']>;
-  publishStatus?: Maybe<PublishStatus>;
-  status?: Maybe<ShowcaseStatus>;
-  updates?: Maybe<Array<PrjUpdateCreateDto>>;
+  brand?: InputMaybe<ShowcaseBrandInput>;
+  description?: InputMaybe<Scalars['String']>;
+  expectedQuantity?: InputMaybe<ShowcasePriceInput>;
+  expectedSaleAt?: InputMaybe<Scalars['DateTime']>;
+  expectedSaleEndAt?: InputMaybe<Scalars['DateTime']>;
+  expectedSalePrice?: InputMaybe<ShowcasePriceInput>;
+  highlightFeatures?: InputMaybe<Array<ShowcaseHfCreateInputDto>>;
+  id?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<MediaInput>;
+  imageLists?: InputMaybe<Array<ImageListCreateDto>>;
+  inventory?: InputMaybe<ShowcaseInventoryDtoInput>;
+  isFeatured?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+  publishStatus?: InputMaybe<PublishStatus>;
+  status?: InputMaybe<ShowcaseStatus>;
+  updates?: InputMaybe<Array<PrjUpdateCreateDto>>;
 }
 
 export enum SortDirection {
@@ -1416,20 +1420,20 @@ export enum SortNulls {
 }
 
 export interface StringFieldComparison {
-  eq?: Maybe<Scalars['String']>;
-  gt?: Maybe<Scalars['String']>;
-  gte?: Maybe<Scalars['String']>;
-  iLike?: Maybe<Scalars['String']>;
-  in?: Maybe<Array<Scalars['String']>>;
-  is?: Maybe<Scalars['Boolean']>;
-  isNot?: Maybe<Scalars['Boolean']>;
-  like?: Maybe<Scalars['String']>;
-  lt?: Maybe<Scalars['String']>;
-  lte?: Maybe<Scalars['String']>;
-  neq?: Maybe<Scalars['String']>;
-  notILike?: Maybe<Scalars['String']>;
-  notIn?: Maybe<Array<Scalars['String']>>;
-  notLike?: Maybe<Scalars['String']>;
+  eq?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  iLike?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  is?: InputMaybe<Scalars['Boolean']>;
+  isNot?: InputMaybe<Scalars['Boolean']>;
+  like?: InputMaybe<Scalars['String']>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  neq?: InputMaybe<Scalars['String']>;
+  notILike?: InputMaybe<Scalars['String']>;
+  notIn?: InputMaybe<Array<Scalars['String']>>;
+  notLike?: InputMaybe<Scalars['String']>;
 }
 
 export interface SubmitInvestorInputDto {
@@ -1442,15 +1446,15 @@ export interface SubmitInvestorInputDto {
 }
 
 export interface UpdateImageList {
-  id?: Maybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']>;
 }
 
 export interface UpdateInvestmentPackageDto {
-  benefitRate?: Maybe<Scalars['Float']>;
-  count?: Maybe<Scalars['Float']>;
-  displayName?: Maybe<Scalars['String']>;
-  fundedRate?: Maybe<Scalars['Float']>;
-  id?: Maybe<Scalars['ID']>;
+  benefitRate?: InputMaybe<Scalars['Float']>;
+  count?: InputMaybe<Scalars['Float']>;
+  displayName?: InputMaybe<Scalars['String']>;
+  fundedRate?: InputMaybe<Scalars['Float']>;
+  id?: InputMaybe<Scalars['ID']>;
 }
 
 export interface UpdateManyInvestmentPackageDtosInput {
@@ -1468,14 +1472,14 @@ export interface UpdateManyResponse {
 }
 
 export interface UpdateMediaDto {
-  filename?: Maybe<Scalars['String']>;
-  height?: Maybe<Scalars['Float']>;
-  id?: Maybe<Scalars['ID']>;
-  mimetype?: Maybe<Scalars['String']>;
-  path?: Maybe<Scalars['String']>;
-  preloadUrl?: Maybe<Scalars['String']>;
-  type?: Maybe<MediaType>;
-  width?: Maybe<Scalars['Float']>;
+  filename?: InputMaybe<Scalars['String']>;
+  height?: InputMaybe<Scalars['Float']>;
+  id?: InputMaybe<Scalars['ID']>;
+  mimetype?: InputMaybe<Scalars['String']>;
+  path?: InputMaybe<Scalars['String']>;
+  preloadUrl?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<MediaType>;
+  width?: InputMaybe<Scalars['Float']>;
 }
 
 export interface UpdateOneImageListInput {
@@ -1499,9 +1503,9 @@ export interface UpdateOnePrjUpdateDtoInput {
 }
 
 export interface UpdatePrjUpdateDto {
-  content?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  id?: Maybe<Scalars['ID']>;
+  content?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['ID']>;
 }
 
 export interface User {
@@ -1540,7 +1544,7 @@ export type OneUpdateInShowcaseQueryVariables = Exact<{
 }>;
 
 
-export type OneUpdateInShowcaseQuery = { update?: { id: string, content: string, createdAt: any } | null | undefined };
+export type OneUpdateInShowcaseQuery = { update?: { id: string, content: string, createdAt: any } | undefined };
 
 export type PostAnUpdateInShowcaseMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -1564,22 +1568,22 @@ export type HighlightFeatureFragment = { id: string, name: string, description: 
 
 export type ShowcaseHfFragment = { highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }> };
 
-export type ShowcaseInvestorStatFragment = { investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null | undefined };
+export type ShowcaseInvestorStatFragment = { investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | undefined };
 
-export type ShowcaseDetailFragment = { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists?: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> | null | undefined };
+export type ShowcaseDetailFragment = { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | undefined, expectedSaleEndAt?: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, imageLists?: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> | undefined };
 
 export type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type IndexPageQuery = { banner?: { value: any } | null | undefined, featured: { edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, expectedSaleAt?: any | null | undefined, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> }, showcases: { pageInfo: { hasNextPage?: boolean | null | undefined, endCursor?: any | null | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
+export type IndexPageQuery = { banner?: { value: any } | undefined, featured: { edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, expectedSaleAt?: any | undefined, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> }, showcases: { pageInfo: { hasNextPage?: boolean | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type IndexPageClientQueryVariables = Exact<{
   filter: ShowcaseFilter;
-  cursor?: Maybe<Scalars['ConnectionCursor']>;
+  cursor?: InputMaybe<Scalars['ConnectionCursor']>;
 }>;
 
 
-export type IndexPageClientQuery = { showcases: { pageInfo: { hasNextPage?: boolean | null | undefined, endCursor?: any | null | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
+export type IndexPageClientQuery = { showcases: { pageInfo: { hasNextPage?: boolean | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type DraftShowcasesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1592,12 +1596,12 @@ export type InvestmentPackagesQueryVariables = Exact<{ [key: string]: never; }>;
 export type InvestmentPackagesQuery = { investmentPackageDtos: { edges: Array<{ node: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } };
 
 export type ShowcasesQueryVariables = Exact<{
-  filter?: Maybe<ShowcaseFilter>;
+  filter?: InputMaybe<ShowcaseFilter>;
   paging: CursorPaging;
 }>;
 
 
-export type ShowcasesQuery = { showcases: { pageInfo: { hasNextPage?: boolean | null | undefined, endCursor?: any | null | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
+export type ShowcasesQuery = { showcases: { pageInfo: { hasNextPage?: boolean | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type SlugsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1609,7 +1613,7 @@ export type QueryCommentsQueryVariables = Exact<{
 }>;
 
 
-export type QueryCommentsQuery = { showcase: { slug: string, comments: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author?: { email: string, name: string } | null | undefined }> } };
+export type QueryCommentsQuery = { showcase: { slug: string, comments: Array<{ id: string, content: string, rate: Array<CommentRateEnum>, author?: { email: string, name: string } | undefined }> } };
 
 export type PostAnonymousCommentMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -1632,14 +1636,14 @@ export type ShowcaseDetailQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { isPreordered?: boolean | null | undefined, id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists?: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> | null | undefined, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | null | undefined } };
+export type ShowcaseDetailQuery = { showcase: { isPreordered?: boolean | undefined, id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | undefined, expectedSaleEndAt?: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, imageLists?: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> | undefined, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | undefined } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type ShowcasePreviewQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, isPreordered?: boolean | null | undefined, author: { email: string, name: string }, brand: { name: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined } };
+export type ShowcasePreviewQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, isPreordered?: boolean | undefined, author: { email: string, name: string }, brand: { name: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined } };
 
 export type ShowcaseRelatedsQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -1653,7 +1657,7 @@ export type ShowcaseForUpdateQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseForUpdateQuery = { showcase: { slug: string, id: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | null | undefined, expectedSaleEndAt?: any | null | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | null | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | null | undefined, imageLists?: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> | null | undefined } };
+export type ShowcaseForUpdateQuery = { showcase: { slug: string, id: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | undefined, expectedSaleEndAt?: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, imageLists?: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> | undefined } };
 
 export type GetHighlightFeaturesOnShowcaseQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -1667,7 +1671,7 @@ export type GetOneHighlightFeatureQueryVariables = Exact<{
 }>;
 
 
-export type GetOneHighlightFeatureQuery = { showcaseHighlightFeature?: { id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } | null | undefined };
+export type GetOneHighlightFeatureQuery = { showcaseHighlightFeature?: { id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } | undefined };
 
 export type CreateOneHighlightFeatureMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -1690,12 +1694,12 @@ export type DeleteOneHighlightFeatureMutationVariables = Exact<{
 }>;
 
 
-export type DeleteOneHighlightFeatureMutation = { deleteOneShowcaseHighlightFeature: { id?: string | null | undefined } };
+export type DeleteOneHighlightFeatureMutation = { deleteOneShowcaseHighlightFeature: { id?: string | undefined } };
 
 export type PreorderCartQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PreorderCartQuery = { preorders: { edges: Array<{ node: { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number } | null | undefined } } }> } };
+export type PreorderCartQuery = { preorders: { edges: Array<{ node: { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number } | undefined } } }> } };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1704,11 +1708,11 @@ export type CurrentUserQuery = { currentUser: { email: string, name: string, rol
 
 export type SubmitPreorderMutationVariables = Exact<{
   slug: Scalars['String'];
-  input?: Maybe<PreorderRequestInputDto>;
+  input?: InputMaybe<PreorderRequestInputDto>;
 }>;
 
 
-export type SubmitPreorderMutation = { createOnePreorder: { id: string, customToken?: string | null | undefined } };
+export type SubmitPreorderMutation = { createOnePreorder: { id: string, customToken?: string | undefined } };
 
 export const MediaFragmentDoc = gql`
     fragment Media on MediaDto {

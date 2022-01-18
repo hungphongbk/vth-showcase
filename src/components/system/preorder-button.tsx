@@ -79,6 +79,8 @@ export default function PreorderButton(
   return (
     <>
       <VthIconButton
+        aria-label={"Đăng ký đặt trước"}
+        aria-disabled={props.showcase.isPreordered}
         sx={{ flexGrow: 1, opacity: initialized ? 1 : 0.5, ...props.sx }}
         startIcon={
           <IconComponent

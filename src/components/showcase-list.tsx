@@ -35,7 +35,7 @@ const ShowcaseList = forwardRef(function ShowcaseList(
             item={item.node}
             loadMorePoint={index === props.posts.length - 5}
             onLoadMore={props.onLoadMore}
-            onClick={() => router.push(`/preview/${item.node.slug}`)}
+            prefixRoute={"/preview"}
           />
         ))}
       </ImageList>

@@ -3,7 +3,6 @@ import Image, { ImageProps } from "next/image";
 import { forwardRef } from "react";
 import { TabList, TabPanel } from "@mui/lab";
 import { css } from "@mui/material/styles";
-import { CommentRateEnum } from "../../types/graphql";
 
 type ImageBoxProps = BoxProps & { bg: ImageProps["src"] };
 // eslint-disable-next-line react/display-name
@@ -81,13 +80,3 @@ export const StyledTabList = styled(TabList)(
     }
   `
 );
-
-//@ts-ignore
-export const CommentRateMaps: Record<
-  CommentRateEnum,
-  { label: string; color: string }
-> = {
-  [CommentRateEnum.CoTiemNang]: { label: "Có tiềm năng", color: "#FF9900" },
-  [CommentRateEnum.DangTien]: { label: "Đáng tiền", color: "#FFD211" },
-  [CommentRateEnum.SieuPham]: { label: "Siêu phẩm", color: "#FF0000" },
-};

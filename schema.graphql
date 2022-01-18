@@ -50,6 +50,15 @@ type CommentDtoCountAggregate {
   isTopComment: Int
 }
 
+type CommentDtoDeleteResponse {
+  content: String
+  createdAt: DateTime
+  id: ID
+  isTopComment: Boolean
+  rate: [CommentRateEnum!]
+  updatedAt: DateTime
+}
+
 type CommentDtoEdge {
   """Cursor for this node."""
   cursor: ConnectionCursor!
@@ -189,6 +198,11 @@ type DeleteManyResponse {
 input DeleteManyShowcasesInput {
   """Filter to find records to delete"""
   filter: ShowcaseDeleteFilter!
+}
+
+input DeleteOneCommentDtoInput {
+  """The id of the record to delete."""
+  id: ID!
 }
 
 input DeleteOneImageListInput {
@@ -497,6 +511,7 @@ type Mutation {
   deleteManyInvestmentPackageDtos(input: DeleteManyInvestmentPackageDtosInput!): DeleteManyResponse!
   deleteManyMediaDtos(input: DeleteManyMediaDtosInput!): DeleteManyResponse!
   deleteManyShowcases(input: DeleteManyShowcasesInput!): DeleteManyResponse!
+  deleteOneCommentDto(input: DeleteOneCommentDtoInput!): CommentDtoDeleteResponse!
   deleteOneImageList(input: DeleteOneImageListInput!): ImageListDeleteResponse!
   deleteOneInvestmentPackageDto(input: DeleteOneInvestmentPackageDtoInput!): InvestmentPackageDtoDeleteResponse!
   deleteOneMediaDto(input: DeleteOneMediaDtoInput!): MediaDtoDeleteResponse!
@@ -521,6 +536,7 @@ type Mutation {
   submitInvestor(form: SubmitInvestorInputDto!): Boolean!
   updateManyInvestmentPackageDtos(input: UpdateManyInvestmentPackageDtosInput!): UpdateManyResponse!
   updateManyMediaDtos(input: UpdateManyMediaDtosInput!): UpdateManyResponse!
+  updateOneCommentDto(input: UpdateOneCommentDtoInput!): CommentDto!
   updateOneImageList(input: UpdateOneImageListInput!): ImageList!
   updateOneInvestmentPackageDto(input: UpdateOneInvestmentPackageDtoInput!): InvestmentPackageDto!
   updateOneMediaDto(input: UpdateOneMediaDtoInput!): MediaDto!
@@ -727,6 +743,10 @@ input PublishStatusFilterComparison {
 }
 
 type Query {
+  commentDto(
+    """The id of the record to find."""
+    id: ID!
+  ): CommentDto
   currentUser: User!
   getAllUsers: [User!]!
   getOneUser(uid: String!): User!
@@ -1315,6 +1335,15 @@ input SubmitInvestorInputDto {
   purpose: String!
 }
 
+input UpdateCommentDto {
+  content: String
+  createdAt: DateTime
+  id: ID
+  isTopComment: Boolean
+  rate: [CommentRateEnum!]
+  updatedAt: DateTime
+}
+
 input UpdateImageList {
   id: ID
 }
@@ -1357,6 +1386,14 @@ input UpdateMediaDto {
   preloadUrl: String
   type: MediaType
   width: Float
+}
+
+input UpdateOneCommentDtoInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateCommentDto!
 }
 
 input UpdateOneImageListInput {

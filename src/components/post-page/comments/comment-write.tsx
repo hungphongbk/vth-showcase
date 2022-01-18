@@ -54,7 +54,7 @@ export default function CommentWrite(props: CommentWriteProps): JSX.Element {
           name={"rate"}
           control={control}
           component={CommentRateSelector}
-          sx={{ p: 0.5 }}
+          sx={{ p: 0.5, flexWrap: "wrap" }}
         />
       </CommentBox>
       <Button

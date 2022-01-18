@@ -67,6 +67,15 @@ export interface CommentDtoCountAggregate {
   isTopComment?: Maybe<Scalars['Int']>;
 }
 
+export interface CommentDtoDeleteResponse {
+  content?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
+  isTopComment?: Maybe<Scalars['Boolean']>;
+  rate?: Maybe<Array<CommentRateEnum>>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+}
+
 export interface CommentDtoEdge {
   cursor: Scalars['ConnectionCursor'];
   node: CommentDto;
@@ -180,6 +189,10 @@ export interface DeleteManyResponse {
 
 export interface DeleteManyShowcasesInput {
   filter: ShowcaseDeleteFilter;
+}
+
+export interface DeleteOneCommentDtoInput {
+  id: Scalars['ID'];
 }
 
 export interface DeleteOneImageListInput {
@@ -463,6 +476,7 @@ export interface Mutation {
   deleteManyInvestmentPackageDtos: DeleteManyResponse;
   deleteManyMediaDtos: DeleteManyResponse;
   deleteManyShowcases: DeleteManyResponse;
+  deleteOneCommentDto: CommentDtoDeleteResponse;
   deleteOneImageList: ImageListDeleteResponse;
   deleteOneInvestmentPackageDto: InvestmentPackageDtoDeleteResponse;
   deleteOneMediaDto: MediaDtoDeleteResponse;
@@ -487,6 +501,7 @@ export interface Mutation {
   submitInvestor: Scalars['Boolean'];
   updateManyInvestmentPackageDtos: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
+  updateOneCommentDto: CommentDto;
   updateOneImageList: ImageList;
   updateOneInvestmentPackageDto: InvestmentPackageDto;
   updateOneMediaDto: MediaDto;
@@ -562,6 +577,11 @@ export interface MutationDeleteManyMediaDtosArgs {
 
 export interface MutationDeleteManyShowcasesArgs {
   input: DeleteManyShowcasesInput;
+}
+
+
+export interface MutationDeleteOneCommentDtoArgs {
+  input: DeleteOneCommentDtoInput;
 }
 
 
@@ -687,6 +707,11 @@ export interface MutationUpdateManyInvestmentPackageDtosArgs {
 
 export interface MutationUpdateManyMediaDtosArgs {
   input: UpdateManyMediaDtosInput;
+}
+
+
+export interface MutationUpdateOneCommentDtoArgs {
+  input: UpdateOneCommentDtoInput;
 }
 
 
@@ -912,6 +937,7 @@ export interface PublishStatusFilterComparison {
 }
 
 export interface Query {
+  commentDto?: Maybe<CommentDto>;
   currentUser: User;
   getAllUsers: Array<User>;
   getOneUser: User;
@@ -927,6 +953,11 @@ export interface Query {
   showcaseHighlightFeature?: Maybe<ShowcaseHighlightFeature>;
   showcases: ShowcaseConnection;
   slugs: Array<Scalars['String']>;
+}
+
+
+export interface QueryCommentDtoArgs {
+  id: Scalars['ID'];
 }
 
 
@@ -1451,6 +1482,15 @@ export interface SubmitInvestorInputDto {
   purpose: Scalars['String'];
 }
 
+export interface UpdateCommentDto {
+  content?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['ID']>;
+  isTopComment?: InputMaybe<Scalars['Boolean']>;
+  rate?: InputMaybe<Array<CommentRateEnum>>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+}
+
 export interface UpdateImageList {
   id?: InputMaybe<Scalars['ID']>;
 }
@@ -1486,6 +1526,11 @@ export interface UpdateMediaDto {
   preloadUrl?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<MediaType>;
   width?: InputMaybe<Scalars['Float']>;
+}
+
+export interface UpdateOneCommentDtoInput {
+  id: Scalars['ID'];
+  update: UpdateCommentDto;
 }
 
 export interface UpdateOneImageListInput {

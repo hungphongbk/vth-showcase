@@ -15,7 +15,7 @@ import { LoadingButton } from "@mui/lab";
 type PreorderDialogProps = {
   open: boolean;
   showcase: Pick<Showcase, "status" | "slug" | "expectedSalePrice">;
-  onClose: (value: PreorderRequestInputDto) => Promise<void>;
+  onClose: (value: PreorderRequestInputDto | undefined) => Promise<void>;
 };
 export default function PreorderDialog(
   props: PreorderDialogProps
@@ -28,7 +28,7 @@ export default function PreorderDialog(
     { control, formState, handleSubmit } = form;
 
   return (
-    <StyledDialog open={props.open} onClose={props.onClose}>
+    <StyledDialog open={props.open} onClose={() => props.onClose(undefined)}>
       <DialogContent>
         {props.showcase.status === ShowcaseStatus.Coming && (
           <Box
@@ -112,7 +112,7 @@ export default function PreorderDialog(
             loading={formState.isSubmitting}
             variant={"contained"}
             color={"primary"}
-            onClick={handleSubmit(props.onClose)}
+            onClick={handleSubmit((value) => props.onClose(value))}
             sx={{ fontWeight: 600 }}
           >
             Đăng ký

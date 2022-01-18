@@ -6,8 +6,8 @@ import {
   OutlinedInput,
   OutlinedInputProps,
 } from "@mui/material";
-import React from "react";
-import { uniqueId } from "lodash";
+import React, { forwardRef } from "react";
+import { omit, uniqueId } from "lodash";
 import { SxProps } from "@mui/system";
 
 const StyledOutlinedInput = styled(OutlinedInput)(
@@ -38,21 +38,27 @@ export const StyledInputLabel = styled((props: InputLabelProps) => (
   color: black;
 `;
 
-const TextInput = ({
-  label,
-  inputSx,
-  ...props
-}: Pick<
+export type TextInputProps = Pick<
   OutlinedInputProps,
   "name" | "value" | "onChange" | "placeholder" | "label"
-> & { inputSx?: SxProps }): JSX.Element => {
+> & { inputSx?: SxProps };
+
+const TextInput = forwardRef<unknown, TextInputProps>(function TextInput(
+  { label, inputSx, ...props },
+  ref
+): JSX.Element {
   const id = uniqueId();
   return (
     <FormControl sx={{ width: "100%" }}>
       {label && <StyledInputLabel htmlFor={id}>{label}</StyledInputLabel>}
-      <StyledOutlinedInput id={id} sx={inputSx} {...props} />
+      <StyledOutlinedInput
+        ref={ref}
+        id={id}
+        sx={inputSx}
+        {...omit(props, ["helperText"])}
+      />
     </FormControl>
   );
-};
+});
 
 export { TextInput };

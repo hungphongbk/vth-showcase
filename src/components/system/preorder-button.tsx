@@ -46,6 +46,10 @@ export default function PreorderButton(
 
   const submitAnonymously = useCallback(
     async (value) => {
+      if (typeof value === "undefined") {
+        setOpen(false);
+        return;
+      }
       setIsSubmitting(true);
       const [authService, { data }] = await Promise.all([
         FirebaseAuthService(),

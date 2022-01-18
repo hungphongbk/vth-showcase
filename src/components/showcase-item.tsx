@@ -86,6 +86,11 @@ export default function ShowcaseItem({
         href={`${prefixRoute}/${item.slug}`}
         noLinkStyle
         aria-label={item.name}
+        sx={{
+          flex: "1 1 100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
       >
         <MotionBox
           // layoutId={getLayoutId("/thumb-wrapper")}

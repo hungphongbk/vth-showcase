@@ -70,17 +70,6 @@ const Home = () => {
     }).then(() => setStatusFiltered(statusFilter));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
-  /**
-   * Trigger reload API
-   */
-  // useEffect(() => {
-  //   console.log(calculatedFilter);
-  //   if (typeof calculatedFilter !== "undefined")
-  //     refetch({ filter: calculatedFilter }).then(() => {
-  //       setStatusFiltered(statusFilter);
-  //     });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [calculatedFilter]);
 
   const loadMore = async () => {
     if (!pageInfo.hasNextPage) return;

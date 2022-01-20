@@ -1626,7 +1626,7 @@ export type ShowcaseDetailFragment = { id: string, slug: string, name: string, s
 export type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type IndexPageQuery = { banner?: { value: any } | undefined, featured: { edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, expectedSaleAt?: any | undefined, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> }, showcases: { pageInfo: { hasNextPage?: boolean | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
+export type IndexPageQuery = { banner?: { value: any } | undefined, featured: { edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, expectedSaleAt?: any | undefined, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> }, showcases: { pageInfo: { hasNextPage?: boolean | undefined, startCursor?: any | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type IndexPageClientQueryVariables = Exact<{
   filter: ShowcaseFilter;
@@ -1634,7 +1634,7 @@ export type IndexPageClientQueryVariables = Exact<{
 }>;
 
 
-export type IndexPageClientQuery = { showcases: { pageInfo: { hasNextPage?: boolean | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
+export type IndexPageClientQuery = { showcases: { pageInfo: { hasNextPage?: boolean | undefined, startCursor?: any | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type DraftShowcasesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2072,10 +2072,11 @@ export const IndexPageDocument = gql`
   }
   showcases(
     paging: {first: 10}
-    filter: {isFeatured: {is: false}, publishStatus: {eq: PUBLISHED}}
-  ) {
+    filter: {and: [{}, {isFeatured: {is: false}, publishStatus: {eq: PUBLISHED}}]}
+  ) @connection(filter: {}) {
     pageInfo {
       hasNextPage
+      startCursor
       endCursor
     }
     edges {
@@ -2128,9 +2129,10 @@ export const IndexPageClientDocument = gql`
   showcases(
     filter: {and: [$filter, {isFeatured: {is: false}, publishStatus: {eq: PUBLISHED}}]}
     paging: {first: 10, after: $cursor}
-  ) {
+  ) @connection(filter: $filter) {
     pageInfo {
       hasNextPage
+      startCursor
       endCursor
     }
     edges {

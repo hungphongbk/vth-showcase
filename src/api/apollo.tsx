@@ -9,9 +9,9 @@ import introspection from "./introspection.json";
 import { setContext } from "@apollo/client/link/context";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
-import { useMemo } from "react";
 import store from "../store";
 import { NextPage } from "next";
+import { relayStylePagination } from "src/utils/apollo/relay-style-pagination";
 
 export type ApolloClientContext = unknown;
 
@@ -48,6 +48,11 @@ const apolloClient = new ApolloClient({
     typePolicies: {
       Showcase: { keyFields: ["slug"] },
       User: { keyFields: ["email"] },
+      Query: {
+        fields: {
+          showcases: relayStylePagination(["@connection", ["filter"]]),
+        },
+      },
     },
     // }
     // : {}),
@@ -103,11 +108,6 @@ export function getApolloClient(
   }
 
   return apolloClient;
-}
-
-export function useApollo(pageProps: any) {
-  const state = pageProps[APOLLO_STATE_PROP_NAME];
-  return useMemo(() => getApolloClient(state), [state]);
 }
 
 export const withApollo = (Comp: NextPage) => {

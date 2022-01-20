@@ -1,9 +1,8 @@
 import { Box, IconButton, ImageListItem } from "@mui/material";
 import { motion } from "framer-motion";
-import { HTMLProps, useCallback, useEffect, useRef, useState } from "react";
+import { HTMLProps, useCallback, useRef, useState } from "react";
 import { MotionBox, MotionTypo, ProductInfo } from "./commons";
 import StatusBadge from "./StatusBadge";
-import { useInViewport } from "react-in-viewport";
 import { useRouter } from "next/router";
 import InboxIcon from "@mui/icons-material/Inbox";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
@@ -27,23 +26,16 @@ const sxIcon: SystemStyleObject = { width: 16, height: 16, mr: 1 },
 type ProductItemProps = {
   item: Showcase;
   prefixRoute: string;
-  // use this property to attach cursor point
-  // when item with this property has been in viewport, trigger load more
-  loadMorePoint?: boolean | undefined;
-  onLoadMore?: () => void | Promise<void>;
 } & HTMLProps<HTMLElement>;
 
 export default function ShowcaseItem({
   prefixRoute,
   item,
   onClick,
-  loadMorePoint,
-  onLoadMore,
 }: ProductItemProps) {
   const itemRef = useRef<HTMLElement>(),
     router = useRouter();
-  const { inViewport } = useInViewport(itemRef),
-    color = usingShowcaseStatusColor(item.status);
+  const color = usingShowcaseStatusColor(item.status);
 
   const [clicked, setClicked] = useState(false);
   const getLayoutId = useCallback(
@@ -58,12 +50,6 @@ export default function ShowcaseItem({
     setClicked(true);
     onClick?.(e);
   };
-
-  useEffect(() => {
-    if (inViewport && loadMorePoint === true) {
-      onLoadMore?.();
-    }
-  }, [inViewport, item.slug, loadMorePoint, onLoadMore, router]);
 
   return (
     <MotionImageListItem

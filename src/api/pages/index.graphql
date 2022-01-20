@@ -21,10 +21,13 @@ query IndexPage {
   }
   showcases(
     paging: { first: 10 }
-    filter: { isFeatured: { is: false }, publishStatus: { eq: PUBLISHED } }
-  ) {
+    filter: {
+      and: [{}, { isFeatured: { is: false }, publishStatus: { eq: PUBLISHED } }]
+    }
+  ) @connection(filter: {}) {
     pageInfo {
       hasNextPage
+      startCursor
       endCursor
     }
     edges {
@@ -50,9 +53,10 @@ query IndexPageClient($filter: ShowcaseFilter!, $cursor: ConnectionCursor) {
       ]
     }
     paging: { first: 10, after: $cursor }
-  ) {
+  ) @connection(filter: $filter) {
     pageInfo {
       hasNextPage
+      startCursor
       endCursor
     }
     edges {

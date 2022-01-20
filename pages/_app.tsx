@@ -30,6 +30,7 @@ import { ApolloProvider } from "@apollo/client";
 import { useGATrackView } from "../src/utils/hooks";
 import { apolloClient } from "../src/api";
 import "../styles/globals.css";
+import ScrollablePanel from "../src/components/scrollable-panel";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -107,17 +108,11 @@ export default function MyApp(props: AppPropsWithLayout) {
                           />
                         </Box>
                         {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
-                        <Box
-                          sx={{
-                            width: "100%",
-                            height: (theme) =>
-                              `calc(100% - ${theme.variables.appBarHeight}px)`,
-                          }}
-                        >
+                        <ScrollablePanel>
                           {getLayout(
                             <Component {...pageProps} key={router.route} />
                           )}
-                        </Box>
+                        </ScrollablePanel>
                         <CreatorAndInvestorActions />
                       </LayoutGroup>
                       <InvestorRegDialog />

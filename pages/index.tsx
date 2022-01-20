@@ -21,6 +21,7 @@ import { LoadingIndicator } from "@hungphongbk/vth-sdk";
 import { NetworkStatus } from "@apollo/client";
 import ShowcaseFeaturedItem from "../src/components/showcase-featured-item";
 import Footer from "../src/components/Footer";
+import { InfiniteScroll } from "../src/components/infinite-scroll";
 
 const FilterPanel = dynamic(() => import("../src/components/filter-panel"), {
   ssr: false,
@@ -65,17 +66,19 @@ const Home = () => {
    * Calculate final filter
    */
   useEffect(() => {
+    const filter: any = statusFilter ? { status: { eq: statusFilter } } : {};
     refetch({
-      filter: { status: { eq: statusFilter } },
+      filter,
     }).then(() => setStatusFiltered(statusFilter));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
 
   const loadMore = async () => {
     if (!pageInfo.hasNextPage) return;
+    const filter: any = statusFilter ? { status: { eq: statusFilter } } : {};
     await fetchMore({
       variables: {
-        filter: { status: { eq: statusFilter } },
+        filter,
         cursor: pageInfo.endCursor,
       },
     });
@@ -150,11 +153,16 @@ const Home = () => {
               <LoadingIndicator />
             </Box>
           </Fade>
-          <ShowcaseList
-            posts={posts as unknown as ShowcaseEdge[]}
-            variant={"standard"}
-            onLoadMore={loadMore}
-          />
+          <InfiniteScroll
+            next={loadMore}
+            hasMore={pageInfo.hasNextPage!}
+            threshold={1000}
+          >
+            <ShowcaseList
+              posts={posts as unknown as ShowcaseEdge[]}
+              variant={"standard"}
+            />
+          </InfiniteScroll>
         </Box>
         <Box
           sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 99 }}

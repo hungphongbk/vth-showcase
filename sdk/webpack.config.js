@@ -1,8 +1,6 @@
 const webpack = require("webpack");
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 const entryApp = path.resolve(__dirname, "./src/sdk.tsx"),
   buildPath = path.resolve(__dirname, "../public/sdk"),
@@ -53,6 +51,17 @@ module.exports = {
                   },
                 },
               ],
+              [
+                "babel-plugin-direct-import",
+                {
+                  modules: [
+                    "@mui/lab",
+                    "@mui/system",
+                    "@mui/material",
+                    "@mui/icons-material",
+                  ],
+                },
+              ],
             ],
           },
         },
@@ -80,6 +89,7 @@ module.exports = {
   plugins: [
     new webpack.EnvironmentPlugin({
       NEXT_PUBLIC_API_URL: "https://api.showcase-dev.vaithuhay.com", // use 'development' unless process.env.NODE_ENV is defined
+      NEXT_PUBLIC_HOMEPAGE_URL: "https://showcase-dev.vaithuhay.com", // use 'development' unless process.env.NODE_ENV is defined
     }),
   ],
   optimization: {

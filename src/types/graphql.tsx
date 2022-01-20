@@ -1650,7 +1650,7 @@ export type InvestmentPackagesQuery = { investmentPackageDtos: { edges: Array<{ 
 export type ShowcasePortalQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ShowcasePortalQuery = { showcases: { pageInfo: { hasNextPage?: boolean | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { path: string, preloadUrl: string, height: number, width: number } } }> } };
+export type ShowcasePortalQuery = { showcases: { pageInfo: { hasNextPage?: boolean | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, expectedSaleAt?: any | undefined, image: { path: string, preloadUrl: string, height: number, width: number } } }> } };
 
 export type ShowcasesQueryVariables = Exact<{
   filter?: InputMaybe<ShowcaseFilter>;
@@ -2280,7 +2280,7 @@ export function refetchInvestmentPackagesQuery(variables?: InvestmentPackagesQue
     }
 export const ShowcasePortalDocument = gql`
     query ShowcasePortal {
-  showcases(paging: {first: 10}) {
+  showcases(paging: {first: 10}, filter: {isFeatured: {is: true}}) {
     pageInfo {
       hasNextPage
       endCursor
@@ -2298,6 +2298,7 @@ export const ShowcasePortalDocument = gql`
           width
         }
         createdAt
+        expectedSaleAt
       }
     }
   }

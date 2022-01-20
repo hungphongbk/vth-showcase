@@ -83,7 +83,11 @@ export default function ShowcaseFeaturedItem<
         <Typography sx={{ fontSize: 10, my: 0.5 }}>
           Dự kiến ra mắt:{" "}
           <strong>
-            <FnsDate value={node.expectedSaleAt} format={"dd/MM/yyyy"} />
+            <FnsDate
+              //TODO remove new Date
+              value={node.expectedSaleAt ?? new Date()}
+              format={"dd/MM/yyyy"}
+            />
           </strong>
         </Typography>
         <Box sx={{ width: "100%", my: 0.5 }}>

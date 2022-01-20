@@ -11,7 +11,7 @@ import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
 import store from "../store";
 import { NextPage } from "next";
-import { relayStylePagination } from "src/utils/apollo/relay-style-pagination";
+import { relayStylePagination } from "@hungphongbk/vth-sdk";
 
 export type ApolloClientContext = unknown;
 

@@ -1169,6 +1169,7 @@ export interface ShowcaseBrandInput {
 export interface ShowcaseConnection {
   edges: Array<ShowcaseEdge>;
   pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 }
 
 export interface ShowcaseCountAggregate {
@@ -1649,7 +1650,7 @@ export type InvestmentPackagesQuery = { investmentPackageDtos: { edges: Array<{ 
 export type ShowcasePortalQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ShowcasePortalQuery = { showcases: { pageInfo: { hasNextPage?: boolean | null | undefined, endCursor?: any | null | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { path: string, preloadUrl: string, height: number, width: number } } }> } };
+export type ShowcasePortalQuery = { showcases: { pageInfo: { hasNextPage?: boolean | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { path: string, preloadUrl: string, height: number, width: number } } }> } };
 
 export type ShowcasesQueryVariables = Exact<{
   filter?: InputMaybe<ShowcaseFilter>;

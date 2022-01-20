@@ -63,6 +63,10 @@ module.exports = {
         use: ["style-loader", "css-loader"],
         test: /\.css$/,
       },
+      {
+        loader: "file-loader",
+        test: /\.webp$/,
+      },
     ],
   },
   resolve: {

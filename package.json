@@ -28,7 +28,6 @@
     "date-fns": "^2.27.0",
     "deepmerge": "^4.2.2",
     "firebase": "^9.5.0",
-    "firebase-admin": "^10.0.0",
     "firebase-auth": "^0.1.2",
     "framer-motion": "^5.0.0",
     "graphql": "^15.7.2",
@@ -48,7 +47,6 @@
     "react-dom": "17.0.2",
     "react-hook-form": "^7.20.2",
     "react-in-viewport": "^1.0.0-alpha.20",
-    "react-infinite-scroll-component": "^6.1.0",
     "react-redux": "^7.2.6",
     "react-sizeme": "^3.0.2",
     "react-slick": "^0.28.1",
@@ -91,7 +89,7 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md,graphql}": [
       "prettier --write"
     ]
   },

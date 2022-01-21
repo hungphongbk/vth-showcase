@@ -88,8 +88,8 @@ module.exports = {
   target: "web",
   plugins: [
     new webpack.EnvironmentPlugin({
-      NEXT_PUBLIC_API_URL: "https://api.showcase-dev.vaithuhay.com", // use 'development' unless process.env.NODE_ENV is defined
-      NEXT_PUBLIC_HOMEPAGE_URL: "https://showcase-dev.vaithuhay.com", // use 'development' unless process.env.NODE_ENV is defined
+      NEXT_PUBLIC_API_URL: "https://api.showcase-dev.vaithuhay.com",
+      NEXT_PUBLIC_HOMEPAGE_URL: "https://showcase-dev.vaithuhay.com",
     }),
   ],
   optimization: {

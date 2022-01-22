@@ -183,6 +183,10 @@ export interface DeleteManyMediaDtosInput {
   filter: MediaDtoDeleteFilter;
 }
 
+export interface DeleteManyPreorderDtosInput {
+  filter: PreorderDtoDeleteFilter;
+}
+
 export interface DeleteManyResponse {
   deletedCount: Scalars['Int'];
 }
@@ -475,6 +479,7 @@ export interface Mutation {
   createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
   deleteManyInvestmentPackageDtos: DeleteManyResponse;
   deleteManyMediaDtos: DeleteManyResponse;
+  deleteManyPreorderDtos: DeleteManyResponse;
   deleteManyShowcases: DeleteManyResponse;
   deleteOneCommentDto: CommentDtoDeleteResponse;
   deleteOneImageList: ImageListDeleteResponse;
@@ -572,6 +577,11 @@ export interface MutationDeleteManyInvestmentPackageDtosArgs {
 
 export interface MutationDeleteManyMediaDtosArgs {
   input: DeleteManyMediaDtosInput;
+}
+
+
+export interface MutationDeleteManyPreorderDtosArgs {
+  input: DeleteManyPreorderDtosInput;
 }
 
 
@@ -806,6 +816,12 @@ export interface PreorderDtoConnection {
 
 export interface PreorderDtoCountAggregate {
   id?: Maybe<Scalars['Int']>;
+}
+
+export interface PreorderDtoDeleteFilter {
+  and?: InputMaybe<Array<PreorderDtoDeleteFilter>>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<PreorderDtoDeleteFilter>>;
 }
 
 export interface PreorderDtoEdge {

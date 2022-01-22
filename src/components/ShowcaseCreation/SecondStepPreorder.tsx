@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { useForm } from "react-hook-form";
-import { ShowcaseCreateInputDto } from "../../types/graphql";
+import {
+  ShowcaseCreateInputDto,
+  useCreateShowcaseMutation,
+} from "../../types/graphql";
 import PlusIcon from "../../assets/icons/PlusIcon";
 import { CollapseCard } from "../index";
 import {
@@ -12,8 +15,6 @@ import {
 } from "./utils";
 import CreationBottomBar from "./CreationBottomBar";
 import { DevTool } from "@hookform/devtools";
-import { apiService } from "../../api";
-import { useRouter } from "next/router";
 import {
   FormInput,
   HighlightFeature,
@@ -26,7 +27,6 @@ import { MobileDatePicker } from "@mui/lab";
 type ShowcaseForm = ShowcaseCreateInputDto;
 
 export default function SecondStepPreorder(): JSX.Element {
-  const router = useRouter();
   const { showcase, dispatch } = useShowcaseCreation(),
     callback = useShowcaseCreationSuccess(),
     form = useForm<ShowcaseForm>({
@@ -41,7 +41,8 @@ export default function SecondStepPreorder(): JSX.Element {
         },
       },
     }),
-    { control, handleSubmit, formState, watch, setValue } = form;
+    { control, handleSubmit, formState, watch, setValue } = form,
+    [createShowcase] = useCreateShowcaseMutation();
 
   const watchRegularQuantity = watch("expectedQuantity.regular", 0);
 
@@ -65,7 +66,10 @@ export default function SecondStepPreorder(): JSX.Element {
 
   const onSave = async (values: ShowcaseForm) => {
     try {
-      const { name, slug } = await apiService.createShowcase(values);
+      const { data } = await createShowcase({
+          variables: { input: values },
+        }),
+        { name, slug } = data!.createOneShowcase;
       await callback({ name, slug });
     } catch (e) {}
   };

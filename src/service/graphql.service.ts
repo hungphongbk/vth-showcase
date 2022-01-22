@@ -1,10 +1,7 @@
-import { apolloClient, mutationCreateShowcase } from "../api";
+import { apolloClient } from "../api";
 import {
-  CreateShowcaseMutation,
-  CreateShowcaseMutationVariables,
   CursorPaging,
   Maybe,
-  ShowcaseCreateInputDto,
   ShowcaseFilter,
   ShowcasesDocument,
   ShowcasesQuery,
@@ -43,17 +40,4 @@ export const getAllShowcases = async (
     variables: { paging, filter },
   });
   return data.showcases;
-};
-
-export const createShowcase = async (
-  form: ShowcaseCreateInputDto
-): Promise<CreateShowcaseMutation["createOneShowcase"]> => {
-  const { data } = await apolloClient.mutate<
-    CreateShowcaseMutation,
-    CreateShowcaseMutationVariables
-  >({
-    mutation: mutationCreateShowcase,
-    variables: { input: form },
-  });
-  return data!.createOneShowcase;
 };

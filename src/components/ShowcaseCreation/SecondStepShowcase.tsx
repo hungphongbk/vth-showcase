@@ -2,7 +2,10 @@ import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { useForm } from "react-hook-form";
-import { ShowcaseCreateInputDto } from "../../types/graphql";
+import {
+  ShowcaseCreateInputDto,
+  useCreateShowcaseMutation,
+} from "../../types/graphql";
 import PlusIcon from "../../assets/icons/PlusIcon";
 import { CollapseCard } from "../index";
 import {
@@ -10,7 +13,6 @@ import {
   EnhancedTextField,
   useShowcaseCreationSuccess,
 } from "./utils";
-import { apiService } from "../../api";
 import {
   FormInput,
   HighlightFeature,
@@ -32,11 +34,15 @@ export default function SecondStepShowcase(): JSX.Element {
         ...(showcase as unknown as ShowcaseForm),
       },
     }),
-    { control, handleSubmit, formState } = form;
+    { control, handleSubmit, formState } = form,
+    [createShowcase] = useCreateShowcaseMutation();
 
   const onSave = async (values: ShowcaseForm) => {
     try {
-      const { name, slug } = await apiService.createShowcase(values);
+      const { data } = await createShowcase({
+          variables: { input: values },
+        }),
+        { name, slug } = data!.createOneShowcase;
       await callback({ name, slug });
     } catch (e) {}
   };

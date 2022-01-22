@@ -802,6 +802,7 @@ export interface PreorderDto {
 }
 
 export interface PreorderDtoAggregateGroupBy {
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
 }
 
@@ -812,14 +813,17 @@ export interface PreorderDtoAvgAggregate {
 export interface PreorderDtoConnection {
   edges: Array<PreorderDtoEdge>;
   pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 }
 
 export interface PreorderDtoCountAggregate {
+  createdAt?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
 }
 
 export interface PreorderDtoDeleteFilter {
   and?: InputMaybe<Array<PreorderDtoDeleteFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<PreorderDtoDeleteFilter>>;
 }
@@ -831,15 +835,18 @@ export interface PreorderDtoEdge {
 
 export interface PreorderDtoFilter {
   and?: InputMaybe<Array<PreorderDtoFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<PreorderDtoFilter>>;
 }
 
 export interface PreorderDtoMaxAggregate {
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
 }
 
 export interface PreorderDtoMinAggregate {
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
 }
 
@@ -850,6 +857,7 @@ export interface PreorderDtoSort {
 }
 
 export enum PreorderDtoSortFields {
+  CreatedAt = 'createdAt',
   Id = 'id'
 }
 
@@ -961,6 +969,8 @@ export interface Query {
   investmentPackageDtos: InvestmentPackageDtoConnection;
   mediaDto?: Maybe<MediaDto>;
   mediaDtos: MediaDtoConnection;
+  preorderDto?: Maybe<PreorderDto>;
+  preorderDtos: PreorderDtoConnection;
   preorders: PreorderDtoConnection;
   prjUpdateDto?: Maybe<PrjUpdateDto>;
   setting?: Maybe<SettingDto>;
@@ -1003,6 +1013,18 @@ export interface QueryMediaDtosArgs {
   filter?: InputMaybe<MediaDtoFilter>;
   paging?: InputMaybe<CursorPaging>;
   sorting?: InputMaybe<Array<MediaDtoSort>>;
+}
+
+
+export interface QueryPreorderDtoArgs {
+  id: Scalars['ID'];
+}
+
+
+export interface QueryPreorderDtosArgs {
+  filter?: InputMaybe<PreorderDtoFilter>;
+  paging?: InputMaybe<CursorPaging>;
+  sorting?: InputMaybe<Array<PreorderDtoSort>>;
 }
 
 
@@ -1580,6 +1602,7 @@ export interface User {
   approvalStatus: UserStatusEnum;
   email: Scalars['String'];
   name: Scalars['String'];
+  phoneNumber?: Maybe<Scalars['String']>;
   photoURL: Scalars['String'];
   role: AuthRoleType;
   showcases: ShowcaseConnection;

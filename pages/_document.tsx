@@ -40,6 +40,10 @@ export default class MyDocument extends Document {
             href={`/favicon.ico?v=${process.env.NEXT_PUBLIC_APP_VERSION}`}
           />
           <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+          />
+          <meta
             name="apple-mobile-web-app-title"
             content="Vaithuhay Showcase"
           />

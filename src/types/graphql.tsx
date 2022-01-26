@@ -15,6 +15,7 @@ export interface Scalars {
   Float: number;
   ConnectionCursor: any;
   DateTime: any;
+  JSON: any;
   JSONObject: any;
 }
 
@@ -132,8 +133,20 @@ export interface CreateInvestmentPackageDto {
   id?: InputMaybe<Scalars['ID']>;
 }
 
+export interface CreateMailTemplateDto {
+  _serializedNode?: InputMaybe<Scalars['String']>;
+  html?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  subject?: InputMaybe<Scalars['String']>;
+  templateName?: InputMaybe<Scalars['String']>;
+}
+
 export interface CreateManyInvestmentPackageDtosInput {
   investmentPackageDtos: Array<CreateInvestmentPackageDto>;
+}
+
+export interface CreateManyMailTemplateDtosInput {
+  mailTemplateDtos: Array<CreateMailTemplateDto>;
 }
 
 export interface CreateManyMediaDtosInput {
@@ -142,6 +155,10 @@ export interface CreateManyMediaDtosInput {
 
 export interface CreateOneInvestmentPackageDtoInput {
   investmentPackageDto: CreateInvestmentPackageDto;
+}
+
+export interface CreateOneMailTemplateDtoInput {
+  mailTemplateDto: CreateMailTemplateDto;
 }
 
 export interface CreateOneMediaDtoInput {
@@ -179,6 +196,10 @@ export interface DeleteManyInvestmentPackageDtosInput {
   filter: InvestmentPackageDtoDeleteFilter;
 }
 
+export interface DeleteManyMailTemplateDtosInput {
+  filter: MailTemplateDtoDeleteFilter;
+}
+
 export interface DeleteManyMediaDtosInput {
   filter: MediaDtoDeleteFilter;
 }
@@ -205,6 +226,10 @@ export interface DeleteOneImageListInput {
 
 export interface DeleteOneInvestmentPackageDtoInput {
   id: Scalars['ID'];
+}
+
+export interface DeleteOneMailTemplateDtoInput {
+  id: Scalars['String'];
 }
 
 export interface DeleteOneMediaDtoInput {
@@ -366,6 +391,106 @@ export interface InvestmentPackageDtoUpdateFilter {
   or?: InputMaybe<Array<InvestmentPackageDtoUpdateFilter>>;
 }
 
+export interface MailCreateDto {
+  id?: InputMaybe<Scalars['ID']>;
+  template?: InputMaybe<MailTemplateSpecInputDto>;
+  to?: InputMaybe<Array<Scalars['String']>>;
+}
+
+export interface MailDto {
+  id: Scalars['ID'];
+  template: MailTemplateSpecDto;
+  to: Array<Scalars['String']>;
+}
+
+export interface MailTemplateDto {
+  _serializedNode?: Maybe<Scalars['String']>;
+  html?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  subject: Scalars['String'];
+  templateName: Scalars['String'];
+}
+
+export interface MailTemplateDtoAggregateGroupBy {
+  id?: Maybe<Scalars['String']>;
+  templateName?: Maybe<Scalars['String']>;
+}
+
+export interface MailTemplateDtoConnection {
+  edges: Array<MailTemplateDtoEdge>;
+  pageInfo: PageInfo;
+}
+
+export interface MailTemplateDtoCountAggregate {
+  id?: Maybe<Scalars['Int']>;
+  templateName?: Maybe<Scalars['Int']>;
+}
+
+export interface MailTemplateDtoDeleteFilter {
+  and?: InputMaybe<Array<MailTemplateDtoDeleteFilter>>;
+  id?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<MailTemplateDtoDeleteFilter>>;
+  templateName?: InputMaybe<StringFieldComparison>;
+}
+
+export interface MailTemplateDtoDeleteResponse {
+  _serializedNode?: Maybe<Scalars['String']>;
+  html?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  subject?: Maybe<Scalars['String']>;
+  templateName?: Maybe<Scalars['String']>;
+}
+
+export interface MailTemplateDtoEdge {
+  cursor: Scalars['ConnectionCursor'];
+  node: MailTemplateDto;
+}
+
+export interface MailTemplateDtoFilter {
+  and?: InputMaybe<Array<MailTemplateDtoFilter>>;
+  id?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<MailTemplateDtoFilter>>;
+  templateName?: InputMaybe<StringFieldComparison>;
+}
+
+export interface MailTemplateDtoMaxAggregate {
+  id?: Maybe<Scalars['String']>;
+  templateName?: Maybe<Scalars['String']>;
+}
+
+export interface MailTemplateDtoMinAggregate {
+  id?: Maybe<Scalars['String']>;
+  templateName?: Maybe<Scalars['String']>;
+}
+
+export interface MailTemplateDtoSort {
+  direction: SortDirection;
+  field: MailTemplateDtoSortFields;
+  nulls?: InputMaybe<SortNulls>;
+}
+
+export enum MailTemplateDtoSortFields {
+  Id = 'id',
+  TemplateName = 'templateName'
+}
+
+export interface MailTemplateDtoUpdateFilter {
+  and?: InputMaybe<Array<MailTemplateDtoUpdateFilter>>;
+  id?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<MailTemplateDtoUpdateFilter>>;
+  templateName?: InputMaybe<StringFieldComparison>;
+}
+
+export interface MailTemplateSpecDto {
+  data: Scalars['JSON'];
+  name: Scalars['String'];
+}
+
+export interface MailTemplateSpecInputDto {
+  data: Scalars['JSON'];
+  name: Scalars['String'];
+}
+
 export interface MediaDto extends IdInterface {
   filename: Scalars['String'];
   height: Scalars['Float'];
@@ -469,21 +594,25 @@ export enum MediaType {
 export interface Mutation {
   addImagesToImageList: ImageList;
   createManyInvestmentPackageDtos: Array<InvestmentPackageDto>;
+  createManyMailTemplateDtos: Array<MailTemplateDto>;
   createManyMediaDtos: Array<MediaDto>;
   createOneImageList: ImageList;
   createOneInvestmentPackageDto: InvestmentPackageDto;
+  createOneMailTemplateDto: MailTemplateDto;
   createOneMediaDto: MediaDto;
   createOnePreorder: PreorderResponseDto;
   createOneSetting: Scalars['Boolean'];
   createOneShowcase: Showcase;
   createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
   deleteManyInvestmentPackageDtos: DeleteManyResponse;
+  deleteManyMailTemplateDtos: DeleteManyResponse;
   deleteManyMediaDtos: DeleteManyResponse;
   deleteManyPreorderDtos: DeleteManyResponse;
   deleteManyShowcases: DeleteManyResponse;
   deleteOneCommentDto: CommentDtoDeleteResponse;
   deleteOneImageList: ImageListDeleteResponse;
   deleteOneInvestmentPackageDto: InvestmentPackageDtoDeleteResponse;
+  deleteOneMailTemplateDto: MailTemplateDtoDeleteResponse;
   deleteOneMediaDto: MediaDtoDeleteResponse;
   deleteOneMediaFromImageList: ImageList;
   deleteOnePrjUpdateDto: PrjUpdateDtoDeleteResponse;
@@ -498,6 +627,7 @@ export interface Mutation {
   removeImageFromShowcase: Showcase;
   removeImageFromShowcaseHighlightFeature: ShowcaseHighlightFeature;
   removeImagesFromImageList: ImageList;
+  sendEmail: MailDto;
   setAuthorOnCommentDto: CommentDto;
   setAuthorOnShowcase: Showcase;
   setImageOnShowcase: Showcase;
@@ -505,10 +635,12 @@ export interface Mutation {
   setImagesOnImageList: ImageList;
   submitInvestor: Scalars['Boolean'];
   updateManyInvestmentPackageDtos: UpdateManyResponse;
+  updateManyMailTemplateDtos: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
   updateOneCommentDto: CommentDto;
   updateOneImageList: ImageList;
   updateOneInvestmentPackageDto: InvestmentPackageDto;
+  updateOneMailTemplateDto: MailTemplateDto;
   updateOneMediaDto: MediaDto;
   updateOnePrjUpdateDto: PrjUpdateDto;
   updateOneSetting: Scalars['Boolean'];
@@ -528,6 +660,11 @@ export interface MutationCreateManyInvestmentPackageDtosArgs {
 }
 
 
+export interface MutationCreateManyMailTemplateDtosArgs {
+  input: CreateManyMailTemplateDtosInput;
+}
+
+
 export interface MutationCreateManyMediaDtosArgs {
   input: CreateManyMediaDtosInput;
 }
@@ -540,6 +677,11 @@ export interface MutationCreateOneImageListArgs {
 
 export interface MutationCreateOneInvestmentPackageDtoArgs {
   input: CreateOneInvestmentPackageDtoInput;
+}
+
+
+export interface MutationCreateOneMailTemplateDtoArgs {
+  input: CreateOneMailTemplateDtoInput;
 }
 
 
@@ -575,6 +717,11 @@ export interface MutationDeleteManyInvestmentPackageDtosArgs {
 }
 
 
+export interface MutationDeleteManyMailTemplateDtosArgs {
+  input: DeleteManyMailTemplateDtosInput;
+}
+
+
 export interface MutationDeleteManyMediaDtosArgs {
   input: DeleteManyMediaDtosInput;
 }
@@ -602,6 +749,11 @@ export interface MutationDeleteOneImageListArgs {
 
 export interface MutationDeleteOneInvestmentPackageDtoArgs {
   input: DeleteOneInvestmentPackageDtoInput;
+}
+
+
+export interface MutationDeleteOneMailTemplateDtoArgs {
+  input: DeleteOneMailTemplateDtoInput;
 }
 
 
@@ -680,6 +832,11 @@ export interface MutationRemoveImagesFromImageListArgs {
 }
 
 
+export interface MutationSendEmailArgs {
+  input: MailCreateDto;
+}
+
+
 export interface MutationSetAuthorOnCommentDtoArgs {
   input: SetAuthorOnCommentDtoInput;
 }
@@ -715,6 +872,11 @@ export interface MutationUpdateManyInvestmentPackageDtosArgs {
 }
 
 
+export interface MutationUpdateManyMailTemplateDtosArgs {
+  input: UpdateManyMailTemplateDtosInput;
+}
+
+
 export interface MutationUpdateManyMediaDtosArgs {
   input: UpdateManyMediaDtosInput;
 }
@@ -732,6 +894,11 @@ export interface MutationUpdateOneImageListArgs {
 
 export interface MutationUpdateOneInvestmentPackageDtoArgs {
   input: UpdateOneInvestmentPackageDtoInput;
+}
+
+
+export interface MutationUpdateOneMailTemplateDtoArgs {
+  input: UpdateOneMailTemplateDtoInput;
 }
 
 
@@ -961,12 +1128,15 @@ export interface PublishStatusFilterComparison {
 }
 
 export interface Query {
+  calculateInventoryStat: ShowcaseInvestorStatDto;
   commentDto?: Maybe<CommentDto>;
   currentUser: User;
   getAllUsers: Array<User>;
   getOneUser: User;
   investmentPackageDto?: Maybe<InvestmentPackageDto>;
   investmentPackageDtos: InvestmentPackageDtoConnection;
+  mailTemplateDto?: Maybe<MailTemplateDto>;
+  mailTemplateDtos: MailTemplateDtoConnection;
   mediaDto?: Maybe<MediaDto>;
   mediaDtos: MediaDtoConnection;
   preorderDto?: Maybe<PreorderDto>;
@@ -979,6 +1149,11 @@ export interface Query {
   showcaseHighlightFeature?: Maybe<ShowcaseHighlightFeature>;
   showcases: ShowcaseConnection;
   slugs: Array<Scalars['String']>;
+}
+
+
+export interface QueryCalculateInventoryStatArgs {
+  showcase: ShowcaseForCalculateDto;
 }
 
 
@@ -1001,6 +1176,18 @@ export interface QueryInvestmentPackageDtosArgs {
   filter?: InputMaybe<InvestmentPackageDtoFilter>;
   paging?: InputMaybe<CursorPaging>;
   sorting?: InputMaybe<Array<InvestmentPackageDtoSort>>;
+}
+
+
+export interface QueryMailTemplateDtoArgs {
+  id: Scalars['String'];
+}
+
+
+export interface QueryMailTemplateDtosArgs {
+  filter?: InputMaybe<MailTemplateDtoFilter>;
+  paging?: InputMaybe<CursorPaging>;
+  sorting?: InputMaybe<Array<MailTemplateDtoSort>>;
 }
 
 
@@ -1277,6 +1464,14 @@ export interface ShowcaseFilter {
   updatedAt?: InputMaybe<DateFieldComparison>;
 }
 
+export interface ShowcaseForCalculateDto {
+  expectedQuantity?: InputMaybe<ShowcasePriceInput>;
+  expectedSaleAt?: InputMaybe<Scalars['DateTime']>;
+  expectedSaleEndAt?: InputMaybe<Scalars['DateTime']>;
+  expectedSalePrice?: InputMaybe<ShowcasePriceInput>;
+  inventory?: InputMaybe<ShowcaseInventoryDtoInput>;
+}
+
 export interface ShowcaseGaDto {
   viewCount: Scalars['Float'];
 }
@@ -1542,9 +1737,22 @@ export interface UpdateInvestmentPackageDto {
   id?: InputMaybe<Scalars['ID']>;
 }
 
+export interface UpdateMailTemplateDto {
+  _serializedNode?: InputMaybe<Scalars['String']>;
+  html?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  subject?: InputMaybe<Scalars['String']>;
+  templateName?: InputMaybe<Scalars['String']>;
+}
+
 export interface UpdateManyInvestmentPackageDtosInput {
   filter: InvestmentPackageDtoUpdateFilter;
   update: UpdateInvestmentPackageDto;
+}
+
+export interface UpdateManyMailTemplateDtosInput {
+  filter: MailTemplateDtoUpdateFilter;
+  update: UpdateMailTemplateDto;
 }
 
 export interface UpdateManyMediaDtosInput {
@@ -1580,6 +1788,11 @@ export interface UpdateOneImageListInput {
 export interface UpdateOneInvestmentPackageDtoInput {
   id: Scalars['ID'];
   update: UpdateInvestmentPackageDto;
+}
+
+export interface UpdateOneMailTemplateDtoInput {
+  id: Scalars['String'];
+  update: UpdateMailTemplateDto;
 }
 
 export interface UpdateOneMediaDtoInput {
@@ -2100,7 +2313,7 @@ export const IndexPageDocument = gql`
   }
   featured: showcases(
     filter: {isFeatured: {is: true}, publishStatus: {eq: PUBLISHED}}
-  ) {
+  ) @connection(filter: {isFeatured: {is: true}, publishStatus: {eq: PUBLISHED}}) {
     edges {
       node {
         id

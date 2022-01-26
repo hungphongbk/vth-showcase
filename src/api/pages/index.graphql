@@ -4,7 +4,10 @@ query IndexPage {
   }
   featured: showcases(
     filter: { isFeatured: { is: true }, publishStatus: { eq: PUBLISHED } }
-  ) {
+  )
+    @connection(
+      filter: { isFeatured: { is: true }, publishStatus: { eq: PUBLISHED } }
+    ) {
     edges {
       node {
         id

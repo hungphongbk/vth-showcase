@@ -1,8 +1,7 @@
 import { StyledDialog, StyledSelect } from "../commons";
-import React, { forwardRef } from "react";
+import React from "react";
 import {
   Box,
-  BoxProps,
   Button,
   DialogContent,
   MenuItem,
@@ -11,13 +10,9 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import bg1 from "../../assets/bg-investor-reg-1.png";
-import bg2 from "../../assets/bg-investor-2.png";
+import bg1 from "../../assets/bg-investor-reg-1.webp";
+import bg2 from "../../assets/bg-investor-2.webp";
 import avtInfo from "../../assets/avt_info.png";
-import {
-  sxFullSize,
-  sxFullSizeAbsolute,
-} from "@hungphongbk/vth-sdk/utils/predefinedSx";
 import {
   AspectRatio,
   FormInput,
@@ -36,22 +31,6 @@ import PhoneIcon from "src/assets/icons/PhoneIcon";
 import Avatar from "@mui/material/Avatar";
 import QuestionMarkIcon from "src/assets/icons/QuestionMarkIcon";
 
-type ImageBoxProps = BoxProps;
-// eslint-disable-next-line react/display-name
-const ImageBox = forwardRef(
-  ({ children, ...props }: ImageBoxProps, ref: any) => (
-    <Box ref={ref} {...props}>
-      <Box sx={sxFullSizeAbsolute}>
-        <Box sx={{ position: "relative", ...sxFullSize }}>
-          <Image src={bg1} layout={"fill"} objectFit={"cover"} />
-          <Image src={bg2} layout={"fill"} objectFit={"cover"} />
-          <Image src={avtInfo} layout={"fill"} objectFit={"cover"} />
-        </Box>
-      </Box>
-      {children}
-    </Box>
-  )
-);
 const SUBMIT_INVESTOR = gql`
   mutation SubmitInvestor($form: SubmitInvestorInputDto!) {
     submitInvestor(form: $form)
@@ -60,7 +39,6 @@ const SUBMIT_INVESTOR = gql`
 const ContactBox = styled(Box)`
   display: flex;
   align-items: center;
-  font-family: Montserrat;
   margin-top: 15px;
   font-style: normal;
   font-weight: bold;
@@ -101,7 +79,7 @@ export default function InvestorRegDialogComponent({
 
   return (
     <StyledDialog open={true} onClose={close}>
-      <DialogContent sx={{ position: "relative", zIndex: 0 }}>
+      <DialogContent sx={{ position: "relative", zIndex: 0, pb: 0 }}>
         <Box
           sx={{
             position: "absolute",
@@ -114,7 +92,6 @@ export default function InvestorRegDialogComponent({
             textAlign: "center",
             backgroundColor: "rgb(87, 87, 87)",
             borderRadius: "20px",
-            fontFamily: "Montserrat",
             fontWeight: 600,
             fontSize: "0.8rem",
             lineHeight: "161.9%",
@@ -267,82 +244,90 @@ export default function InvestorRegDialogComponent({
             Hợp tác ngay
           </Button>
         </Stack>
+      </DialogContent>
+      <DialogContent
+        sx={{ position: "relative", zIndex: 0, p: 0, overflow: "hidden" }}
+      >
+        <AspectRatio ratio={"357/208"} sx={{ zIndex: "-1" }}>
+          <Image src={bg2} layout={"fill"} objectFit={"cover"} />
+        </AspectRatio>
         <Box
           sx={{
             position: "absolute",
             bottom: "0",
             right: "0",
             left: "0",
-            zIndex: "-1",
+            px: "24px",
+            pb: "20px",
           }}
         >
-          <AspectRatio ratio={"357/208"}>
-            <Image src={bg2} layout={"fill"} objectFit={"cover"} />
-          </AspectRatio>
+          <Typography
+            sx={{
+              width: "100%",
+              marginTop: "3rem",
+              fontStyle: "normal",
+              fontWeight: "500",
+              fontSize: "0.75rem",
+              lineHeight: "1.7",
+              display: "flex",
+              alignItems: "center",
+              textAlign: "center",
+              color: "#FFFFFF",
+            }}
+          >
+            Liên hệ ngay chúng tôi để cùng nhau hợp nhau các dự án của
+            Vaithuhay.com
+          </Typography>
+          <ContactBox>
+            <Avt>
+              <Avatar
+                alt="Remy Sharp"
+                sx={{ width: 62, height: 62, marginRight: "11px" }}
+              >
+                {" "}
+                <Image src={avtInfo} layout={"fill"} objectFit={"cover"} />{" "}
+              </Avatar>{" "}
+            </Avt>
+            <Info>
+              <h2
+                style={{
+                  fontSize: "15px",
+                  margin: "0 0 5px",
+                  fontWeight: "700",
+                }}
+              >
+                BÙI SƠN TÂM
+              </h2>
+              <InfoDetail>
+                <IconUser />{" "}
+                <a
+                  href="#"
+                  style={{
+                    color: "#ffffff",
+                    textDecoration: "none",
+                    margin: "0 0 5px 8px",
+                    fontSize: "0.65rem",
+                    fontWeight: "normal",
+                  }}
+                >
+                  Founder/CEO | Vaithuhay.com
+                </a>
+              </InfoDetail>
+              <Phone>
+                <PhoneIcon />
+                <p
+                  style={{
+                    margin: "0 0 0 8px",
+                    fontSize: "0.65rem",
+                    fontWeight: "normal",
+                  }}
+                >
+                  0902905808
+                </p>
+              </Phone>
+            </Info>
+          </ContactBox>
         </Box>
-        <Typography
-          sx={{
-            width: "100%",
-            marginTop: "3rem",
-            fontFamily: "Montserrat",
-            fontStyle: "normal",
-            fontWeight: "500",
-            fontSize: "0.75rem",
-            lineHeight: "1.7",
-            display: "flex",
-            alignItems: "center",
-            textAlign: "center",
-            color: "#FFFFFF",
-          }}
-        >
-          Liên hệ ngay chúng tôi để cùng nhau hợp nhau các dự án của
-          Vaithuhay.com
-        </Typography>
-        <ContactBox>
-          <Avt>
-            <Avatar
-              alt="Remy Sharp"
-              sx={{ width: 62, height: 62, marginRight: "11px" }}
-            >
-              {" "}
-              <Image src={avtInfo} layout={"fill"} objectFit={"cover"} />{" "}
-            </Avatar>{" "}
-          </Avt>
-          <Info>
-            <h2
-              style={{ fontSize: "15px", margin: "0 0 5px", fontWeight: "700" }}
-            >
-              BÙI SƠN TÂM
-            </h2>
-            <InfoDetail>
-              <IconUser />{" "}
-              <a
-                href="#"
-                style={{
-                  color: "#ffffff",
-                  textDecoration: "none",
-                  margin: "0 0 5px 8px",
-                  fontSize: "0.65rem",
-                  fontWeight: "normal",
-                }}
-              >
-                Founder/CEO | Vaithuhay.com
-              </a>
-            </InfoDetail>
-            <Phone>
-              <PhoneIcon />
-              <p
-                style={{
-                  margin: "0 0 0 8px",
-                  fontSize: "0.65rem",
-                  fontWeight: "normal",
-                }}
-              >
-                0902905808
-              </p>
-            </Phone>
-          </Info>
-        </ContactBox>
       </DialogContent>
     </StyledDialog>
   );

@@ -1,4 +1,5 @@
 const withPlugins = require("next-compose-plugins");
+const { withSentryConfig } = require("@sentry/nextjs");
 const withTM = require("next-transpile-modules")([
   "@mui/material",
   "@mui/system",
@@ -6,7 +7,7 @@ const withTM = require("next-transpile-modules")([
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
-module.exports = withPlugins([withBundleAnalyzer, withTM], {
+const moduleExports = withPlugins([withBundleAnalyzer, withTM], {
   swcMinify: true,
   reactStrictMode: true,
   webpack: (config, { isServer }) => {
@@ -44,3 +45,15 @@ module.exports = withPlugins([withBundleAnalyzer, withTM], {
     ];
   },
 });
+
+const sentryWebpackPluginOptions = {
+  // Additional config options for the Sentry Webpack plugin. Keep in mind that
+  // the following options are set automatically, and overriding them is not
+  // recommended:
+  //   release, url, org, project, authToken, configFile, stripPrefix,
+  //   urlPrefix, include, ignore
+
+  silent: true,
+};
+
+module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);

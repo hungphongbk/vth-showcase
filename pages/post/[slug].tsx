@@ -2,7 +2,7 @@ import { GetStaticProps } from "next";
 import { Box } from "@mui/material";
 import ShowcaseDetailed from "../../src/components/showcase-detailed";
 import { useRouter } from "next/router";
-import { PropsWithChildren, useEffect, useMemo, useState } from "react";
+import { PropsWithChildren, useEffect, useMemo } from "react";
 import { apiService, withApollo } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
 import { refetchShowcaseDetailQuery, Showcase } from "../../src/types/graphql";
@@ -11,7 +11,10 @@ import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
 import { ssrShowcaseDetail } from "../../src/types/graphql.ssr";
 import Footer from "../../src/components/Footer";
-import { PreorderButton } from "../../src/components/system";
+import {
+  PreorderButton,
+  useInvestorRegDialog,
+} from "../../src/components/system";
 import VthIconButton from "../../src/components/vth-icon-button";
 
 const IconWrapper = (props: PropsWithChildren<unknown>) => (
@@ -47,7 +50,7 @@ function PostDetailedPage() {
     // noinspection JSIgnoredPromiseFromCall
     router.prefetch("/");
   }, [router]);
-  const [open, setOpen] = useState(false);
+  const { renderDialog, open } = useInvestorRegDialog();
   const { loading, error, data } = useAuthQuery(
     ssrShowcaseDetail.usePage(() => ({
       fetchPolicy: "cache-and-network",
@@ -117,8 +120,9 @@ function PostDetailedPage() {
               position: "relative",
               flex: 1,
             }}
+            onClick={open}
           >
-            HỢP TÁC
+            ĐẦU TƯ
           </VthIconButton>
           <PreorderButton
             showcase={data!.showcase as unknown as Showcase}
@@ -138,6 +142,7 @@ function PostDetailedPage() {
         </Box>
       </Box>
       <Footer />
+      {renderDialog}
     </>
   );
 }

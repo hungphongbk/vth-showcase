@@ -10,17 +10,12 @@ export default function AuthLoginHandler(): JSX.Element {
 
   const completeHandler = useCallback(
     async (event: DocumentEventMap["readystatechange"]) => {
-      console.log(event);
       // @ts-ignore
       if (event.target!.readyState === "complete") {
-        try {
-          const { getPersistAuth } = await FirebaseAuthService();
-          const payload = await getPersistAuth();
-          dispatch(afterSignInFirebase(payload));
-          if (payload.token) await fetchCurrentUser();
-        } catch (e) {
-          console.error(e);
-        }
+        const { getPersistAuth } = await FirebaseAuthService();
+        const payload = await getPersistAuth();
+        dispatch(afterSignInFirebase(payload));
+        if (payload.token) await fetchCurrentUser();
       }
     },
     [dispatch, fetchCurrentUser]

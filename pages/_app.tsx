@@ -16,11 +16,7 @@ import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { SnackbarProvider } from "notistack";
-import {
-  AuthLoginHandler,
-  CreatorAndInvestorActions,
-  InvestorRegDialog,
-} from "../src/components/system";
+import { AuthLoginHandler } from "../src/components/system";
 import { StyledDialog } from "../src/components/commons";
 import { UploadService } from "../src/service";
 import { VthThemeProvider } from "@hungphongbk/vth-sdk";
@@ -50,8 +46,8 @@ export default function MyApp(props: AppPropsWithLayout) {
     <>
       <Head>
         <meta
-          content="minimum-scale=1, initial-scale=1, width=device-width"
           name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
         />
       </Head>
       <DefaultSeo
@@ -113,9 +109,7 @@ export default function MyApp(props: AppPropsWithLayout) {
                             <Component {...pageProps} key={router.route} />
                           )}
                         </ScrollablePanel>
-                        <CreatorAndInvestorActions />
                       </LayoutGroup>
-                      <InvestorRegDialog />
                     </LocalizationProvider>
                   </SnackbarProvider>
                 </ThemeProvider>

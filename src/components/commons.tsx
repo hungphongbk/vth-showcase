@@ -80,6 +80,14 @@ export const StyledDialog = styled((props: Omit<DialogProps, "fullWidth">) => (
     .MuiDialog-paper {
       border-radius: 25px;
       overflow-y: visible;
+      .MuiDialogContent-root:first-of-type {
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+      }
+      .MuiDialogContent-root:last-of-type {
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+      }
     }
     .MuiDialogContent-root {
       overflow-y: visible;

@@ -20,7 +20,6 @@ export function InfiniteScroll({ next, threshold, hasMore, children }: Props) {
     actionTriggered = useRef<boolean>(false);
 
   const isElementAtBottom = useCallback(() => {
-    console.log(scrollEl?.clientHeight);
     const clientHeight = scrollEl?.clientHeight;
     if (!clientHeight) return false;
     return (

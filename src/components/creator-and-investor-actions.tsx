@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Backdrop,
   css,
@@ -10,6 +9,8 @@ import {
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import DocumentIcon from "../assets/icons/DocumentIcon";
 import { useRouter } from "next/router";
+import { useInvestorRegDialog } from "./system";
+import { useState } from "react";
 
 const ICON_SIZE = 30,
   ACTION_GUTTER = 4;
@@ -70,11 +71,9 @@ const StyledSpeedDial = styled(SpeedDial)(
   `
 );
 
-type CreatorAndInvestorActionsProps = {};
-export default function CreatorAndInvestorActionsComponent(
-  props: CreatorAndInvestorActionsProps
-): JSX.Element {
+export default function CreatorAndInvestorActionsComponent(): JSX.Element {
   const router = useRouter();
+  const { open: openDialog, renderDialog } = useInvestorRegDialog();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -85,7 +84,7 @@ export default function CreatorAndInvestorActionsComponent(
   };
 
   const handleCorporate = async () => {
-    await router.push({ hash: "corporate" }, undefined, { shallow: true });
+    await openDialog();
     handleClose();
   };
 
@@ -116,6 +115,7 @@ export default function CreatorAndInvestorActionsComponent(
           />
         </StyledSpeedDial>
       </Fade>
+      {renderDialog}
     </>
   );
 }

@@ -22,6 +22,7 @@ import { NetworkStatus } from "@apollo/client";
 import ShowcaseFeaturedItem from "../src/components/showcase-featured-item";
 import Footer from "../src/components/Footer";
 import { InfiniteScroll } from "../src/components/infinite-scroll";
+import { CreatorAndInvestorActions } from "src/components/system";
 
 const FilterPanel = dynamic(() => import("../src/components/filter-panel"), {
   ssr: false,
@@ -187,6 +188,7 @@ const Home = () => {
         </Box>
       </Container>
       <Footer />
+      <CreatorAndInvestorActions />
     </>
   );
 };

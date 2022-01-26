@@ -71,7 +71,7 @@ const StyledSpeedDial = styled(SpeedDial)(
 );
 
 type CreatorAndInvestorActionsProps = {};
-export default function CreatorAndInvestorActions(
+export default function CreatorAndInvestorActionsComponent(
   props: CreatorAndInvestorActionsProps
 ): JSX.Element {
   const router = useRouter();

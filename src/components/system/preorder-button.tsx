@@ -5,6 +5,7 @@ import {
 } from "@hungphongbk/vth-sdk";
 import VthIconButton from "../vth-icon-button";
 import {
+  PreorderRequestInputDto,
   refetchPreorderCartQuery,
   Showcase,
   useSubmitPreorderMutation,
@@ -45,10 +46,13 @@ export default function PreorderButton(
   }, [isSubmitted]);
 
   const submitAnonymously = useCallback(
-    async (value) => {
+    async (value: PreorderRequestInputDto | undefined) => {
       if (typeof value === "undefined") {
         setOpen(false);
         return;
+      }
+      if (/^0/.test(value.phoneNumber)) {
+        value.phoneNumber = value.phoneNumber.replace(/^0/g, "+84");
       }
       setIsSubmitting(true);
       const [authService, { data }] = await Promise.all([

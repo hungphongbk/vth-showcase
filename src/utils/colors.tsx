@@ -28,23 +28,21 @@ export const usingShowcaseStatusLabel = memoize(
   }
 );
 
-export const usingShowcaseStatusIcon = memoize(
-  (status: ShowcaseStatus, sx?: SxProps): ReactNode => {
-    return (
-      {
-        [ShowcaseStatus.Idea]: (
-          <IdeaBulbIcon color={"inherit"} sx={{ color: "red.main", ...sx }} />
-        ),
-        [ShowcaseStatus.Showcase]: (
-          <LookupIcon color={"inherit"} sx={{ color: "yellow.main", ...sx }} />
-        ),
-        [ShowcaseStatus.Coming]: (
-          <ComingSoonIcon
-            color={"inherit"}
-            sx={{ color: "green.main", ...sx }}
-          />
-        ),
-      } as Record<ShowcaseStatus, ReactNode>
-    )[status]!;
-  }
-);
+export const usingShowcaseStatusIcon = (
+  status: ShowcaseStatus,
+  sx?: SxProps
+): ReactNode => {
+  return (
+    {
+      [ShowcaseStatus.Idea]: (
+        <IdeaBulbIcon color={"inherit"} sx={{ color: "red.main", ...sx }} />
+      ),
+      [ShowcaseStatus.Showcase]: (
+        <LookupIcon color={"inherit"} sx={{ color: "yellow.main", ...sx }} />
+      ),
+      [ShowcaseStatus.Coming]: (
+        <ComingSoonIcon color={"inherit"} sx={{ color: "green.main", ...sx }} />
+      ),
+    } as Record<ShowcaseStatus, ReactNode>
+  )[status]!;
+};

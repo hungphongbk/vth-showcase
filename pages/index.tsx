@@ -11,7 +11,7 @@ import {
   ShowcaseEdge,
   ShowcaseStatus,
 } from "../src/types/graphql";
-import SimpleFilter from "../src/components/indexPage/SimpleFilter";
+import SimpleFilter from "../src/components/index-page/simple-filter";
 import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
 import dynamic from "next/dynamic";

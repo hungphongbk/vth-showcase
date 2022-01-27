@@ -5,8 +5,7 @@ import ShowCaseSearchIcon from "../components/drawers/menu/ShowCaseSearchIcon";
 import bg1 from "../assets/white-paper-texture 1.png";
 import logo from "../assets/Logo Showcase-01.png";
 import CloseIcon from "../assets/icons/CloseIcon";
-import VthIconButton from "./vth-icon-button";
-import { UploadFilledPrimaryIcon } from "@hungphongbk/vth-sdk";
+import { PostProductButton } from "./system";
 
 type ImageBoxProps = BoxProps & { bg: ImageProps["src"] };
 // eslint-disable-next-line react/display-name
@@ -332,15 +331,7 @@ function Footer() {
             Vaithuhay propose cùng đồng hành phát triển dự án
             <EllipseBlur />
           </PBox2>
-          <VthIconButton
-            sx={{ mb: "-19px", mt: "-19px" }}
-            labelProps={{ sx: { mx: 2 } }}
-            startIcon={
-              <UploadFilledPrimaryIcon sx={{ width: 22, height: 22 }} />
-            }
-          >
-            ĐĂNG SẢN PHẨM
-          </VthIconButton>
+          <PostProductButton />
           <WrapperEllipse>
             {" "}
             <BoxEllipse>

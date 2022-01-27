@@ -21,6 +21,8 @@ export const PreorderButton = dynamic(() => import("./preorder-button"), {
   ssr: false,
 });
 
+export { default as PostProductButton } from "./post-product-button";
+
 export function useInvestorRegDialog() {
   const router = useRouter();
   const isOpen = useMemo(() => {

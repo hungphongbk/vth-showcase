@@ -8,6 +8,9 @@ import GoogleColoredIcon from "../../assets/icons/GoogleColoredIcon";
 import { useAppDispatch } from "../../store";
 import { FirebaseAuthService } from "../../service";
 import { afterSignInFirebase } from "../../store/auth.reducer";
+import { useCallback } from "react";
+import { UrlObject } from "url";
+import { useRouter } from "next/router";
 
 const Wrapper = styled(Box)`
   width: 100%;
@@ -19,9 +22,26 @@ const Wrapper = styled(Box)`
 
 type LoginPanelProps = {
   sx?: SxProps;
+  redirectAfterLogin?: UrlObject | string;
 };
-export default function LoginPanel({ sx }: LoginPanelProps): JSX.Element {
-  const dispatch = useAppDispatch();
+export default function LoginPanel({
+  sx,
+  redirectAfterLogin,
+}: LoginPanelProps): JSX.Element {
+  const dispatch = useAppDispatch(),
+    router = useRouter();
+
+  const onClick = useCallback(
+    () =>
+      FirebaseAuthService().then(({ signInWithGoogle }) =>
+        signInWithGoogle().then((payload) => {
+          dispatch(afterSignInFirebase(payload!));
+          if (redirectAfterLogin) router.replace(redirectAfterLogin);
+        })
+      ),
+    [dispatch, redirectAfterLogin]
+  );
+
   return (
     <Wrapper sx={sx}>
       <Box sx={{ position: "relative", mb: 2 }}>
@@ -74,13 +94,7 @@ export default function LoginPanel({ sx }: LoginPanelProps): JSX.Element {
             height: 32,
             pr: "6px",
           }}
-          onClick={() =>
-            FirebaseAuthService().then(({ signInWithGoogle }) =>
-              signInWithGoogle().then((payload) =>
-                dispatch(afterSignInFirebase(payload!))
-              )
-            )
-          }
+          onClick={onClick}
         >
           Đăng nhập bằng tài khoản
         </Button>

@@ -1,16 +1,24 @@
-import { Button, ButtonProps, Typography } from "@mui/material";
+import {
+  Button,
+  ButtonProps,
+  Typography,
+  TypographyProps,
+} from "@mui/material";
 import { ReactNode } from "react";
 
 type VthIconButtonProps = Omit<ButtonProps, "startIcon"> & {
   startIcon: ReactNode;
+  labelProps?: Omit<TypographyProps, "children">;
 };
 export default function VthIconButton({
   children,
   startIcon,
   sx,
   color,
+  labelProps: _labelProps = {},
   ...props
 }: VthIconButtonProps): JSX.Element {
+  const { sx: labelSx = undefined, ...labelProps } = _labelProps!;
   return (
     <Button
       variant={"contained"}
@@ -26,7 +34,10 @@ export default function VthIconButton({
       {...props}
     >
       {startIcon}
-      <Typography sx={{ fontWeight: 600, flexGrow: 1, textAlign: "center" }}>
+      <Typography
+        sx={{ fontWeight: 600, flexGrow: 1, textAlign: "center", ...labelSx }}
+        {...labelProps}
+      >
         {children}
       </Typography>
     </Button>

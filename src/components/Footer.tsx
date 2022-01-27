@@ -1,11 +1,12 @@
 import React, { forwardRef, useState } from "react";
 import { Box, BoxProps, Button, Dialog, styled } from "@mui/material";
 import Image, { ImageProps } from "next/image";
-import ShowCaseIcon from "../components/drawers/menu/ShowCaseIcon";
 import ShowCaseSearchIcon from "../components/drawers/menu/ShowCaseSearchIcon";
 import bg1 from "../assets/white-paper-texture 1.png";
 import logo from "../assets/Logo Showcase-01.png";
 import CloseIcon from "../assets/icons/CloseIcon";
+import VthIconButton from "./vth-icon-button";
+import { UploadFilledPrimaryIcon } from "@hungphongbk/vth-sdk";
 
 type ImageBoxProps = BoxProps & { bg: ImageProps["src"] };
 // eslint-disable-next-line react/display-name
@@ -63,7 +64,6 @@ const LogoFooter = styled(Box)`
 `;
 const FooterBox1 = styled(Box)``;
 const PBox1 = styled(Box)`
-  font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -88,7 +88,7 @@ const FooterBox2 = styled(Box)`
   border-radius: 13px;
   margin: 17px 27px 0px 29px;
 `;
-const ElipseBlur = styled(Box)`
+const EllipseBlur = styled(Box)`
   position: absolute;
   bottom: -20%;
   right: 5%;
@@ -99,7 +99,7 @@ const ElipseBlur = styled(Box)`
   filter: blur(15px);
   z-index: 0;
 `;
-const Elipse = styled(Box)`
+const Ellipse = styled(Box)`
   position: absolute;
   bottom: 2px;
   right: 0;
@@ -133,7 +133,6 @@ const FooterBox3 = styled(Box)`
   margin: 35px 27px 0px 29px;
 `;
 const PBox2 = styled(Box)`
-  font-family: Montserrat;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -147,7 +146,7 @@ const PBox2 = styled(Box)`
 
   color: #ffffff;
   margin: 10px 0 0;
-  padding: 0 19px 23px 19px;
+  padding: 0 19px 30px 19px;
 `;
 const BtnPostProduct = styled(Button)`
   /* Yellow */
@@ -168,7 +167,6 @@ const BtnPostProduct = styled(Button)`
   }
 `;
 const BtnPost = styled(Box)`
-  font-family: Montserrat;
   font-style: normal;
   font-weight: 600;
   font-size: 12px;
@@ -182,7 +180,6 @@ const BtnPost = styled(Box)`
   height: 100%;
 `;
 const PBox3 = styled(Box)`
-  font-family: Montserrat;
   position: relative;
   overflow: hidden;
   font-style: normal;
@@ -205,7 +202,6 @@ const Back = styled(Box)`
 `;
 
 const PBack = styled(Button)`
-  font-family: Montserrat;
   font-style: normal;
   font-weight: 600;
   font-size: 15px;
@@ -225,7 +221,6 @@ const FooterBox4 = styled(Box)`
   color: #000000;
 `;
 const H1Box = styled(Box)`
-  font-family: Montserrat;
   font-style: normal;
   font-weight: bold;
   font-size: 20px;
@@ -235,7 +230,6 @@ const H1Box = styled(Box)`
   color: #3f3f3f;
 `;
 const H3Box = styled(Box)`
-  font-family: Montserrat;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -246,7 +240,6 @@ const H3Box = styled(Box)`
   position: relative;
 `;
 const H4Box = styled(Button)`
-  font-family: Montserrat;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -311,7 +304,7 @@ function Footer() {
     <StyleFooter>
       <WrapperOval>
         <BoxOval>
-          <Oval></Oval>
+          <Oval />
         </BoxOval>
       </WrapperOval>
       <StyleBgrFooter>
@@ -327,22 +320,31 @@ function Footer() {
             để anh em nhanh tay đặt trước giá hời gói Tiên Phong
           </PBox1>
         </FooterBox1>
-        <FooterBox2>
+        <FooterBox2
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <PBox2>
             Ngoài ra, tại đây bạn có thể đăng tải sản phẩm lên platform để được
             Vaithuhay propose cùng đồng hành phát triển dự án
-            <ElipseBlur></ElipseBlur>
+            <EllipseBlur />
           </PBox2>
-          <BtnPostProduct>
-            <BtnPost>
-              <ShowCaseIcon style={{ marginRight: "6px" }} />
-              ĐĂNG SẢN PHẨM
-            </BtnPost>
-          </BtnPostProduct>
+          <VthIconButton
+            sx={{ mb: "-19px", mt: "-19px" }}
+            labelProps={{ sx: { mx: 2 } }}
+            startIcon={
+              <UploadFilledPrimaryIcon sx={{ width: 22, height: 22 }} />
+            }
+          >
+            ĐĂNG SẢN PHẨM
+          </VthIconButton>
           <WrapperEllipse>
             {" "}
             <BoxEllipse>
-              <Elipse></Elipse>
+              <Ellipse />
             </BoxEllipse>
           </WrapperEllipse>
         </FooterBox2>
@@ -353,9 +355,9 @@ function Footer() {
             tôi tự tin về cách giải quyết vấn đề, kinh nghiệm, cách triển khai,
             nguồn vốn cũng như &quot;insight về ngành&quot; sẽ giúp anh/chị đầu
             tư hạn chế rủi ro hơn rất nhiều khi tự mình làm.
-            <ElipseBlur
+            <EllipseBlur
               style={{ left: "10%", bottom: "-8%", filter: "blur(15px)" }}
-            ></ElipseBlur>
+            />
           </PBox3>
           <BtnPostProduct>
             <BtnPost>
@@ -373,7 +375,7 @@ function Footer() {
           >
             {" "}
             <BoxEllipse>
-              <Elipse style={{ filter: "blur(1px)" }}></Elipse>
+              <Ellipse style={{ filter: "blur(1px)" }} />
             </BoxEllipse>
           </WrapperEllipse>
         </FooterBox3>

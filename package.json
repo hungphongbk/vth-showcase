@@ -20,7 +20,7 @@
     "@apollo/client": "^3.5.7",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@hungphongbk/vth-sdk": "^1.0.6-128",
+    "@hungphongbk/vth-sdk": "^1.0.6-139",
     "@mui/icons-material": "^5.3.1",
     "@mui/lab": "^5.0.0-alpha.66",
     "@mui/material": "^5.3.1",

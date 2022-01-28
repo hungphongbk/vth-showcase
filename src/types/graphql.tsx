@@ -228,6 +228,10 @@ export interface DeleteOneInvestmentPackageDtoInput {
   id: Scalars['ID'];
 }
 
+export interface DeleteOneInvestorRegistrationDtoInput {
+  id: Scalars['ID'];
+}
+
 export interface DeleteOneMailTemplateDtoInput {
   id: Scalars['String'];
 }
@@ -389,6 +393,79 @@ export interface InvestmentPackageDtoUpdateFilter {
   displayName?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<InvestmentPackageDtoUpdateFilter>>;
+}
+
+export interface InvestorRegistrationCreateDto {
+  email: Scalars['String'];
+  fund: Scalars['String'];
+  job: Scalars['String'];
+  method: Scalars['String'];
+  phone: Scalars['String'];
+  purpose: Scalars['String'];
+}
+
+export interface InvestorRegistrationDto {
+  email: Scalars['String'];
+  fund: Scalars['String'];
+  id: Scalars['ID'];
+  job: Scalars['String'];
+  method: Scalars['String'];
+  phone: Scalars['String'];
+  promotedUid: Scalars['String'];
+  purpose: Scalars['String'];
+}
+
+export interface InvestorRegistrationDtoAggregateGroupBy {
+  id?: Maybe<Scalars['ID']>;
+}
+
+export interface InvestorRegistrationDtoConnection {
+  edges: Array<InvestorRegistrationDtoEdge>;
+  pageInfo: PageInfo;
+}
+
+export interface InvestorRegistrationDtoCountAggregate {
+  id?: Maybe<Scalars['Int']>;
+}
+
+export interface InvestorRegistrationDtoDeleteResponse {
+  email?: Maybe<Scalars['String']>;
+  fund?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  job?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  promotedUid?: Maybe<Scalars['String']>;
+  purpose?: Maybe<Scalars['String']>;
+}
+
+export interface InvestorRegistrationDtoEdge {
+  cursor: Scalars['ConnectionCursor'];
+  node: InvestorRegistrationDto;
+}
+
+export interface InvestorRegistrationDtoFilter {
+  and?: InputMaybe<Array<InvestorRegistrationDtoFilter>>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<InvestorRegistrationDtoFilter>>;
+}
+
+export interface InvestorRegistrationDtoMaxAggregate {
+  id?: Maybe<Scalars['ID']>;
+}
+
+export interface InvestorRegistrationDtoMinAggregate {
+  id?: Maybe<Scalars['ID']>;
+}
+
+export interface InvestorRegistrationDtoSort {
+  direction: SortDirection;
+  field: InvestorRegistrationDtoSortFields;
+  nulls?: InputMaybe<SortNulls>;
+}
+
+export enum InvestorRegistrationDtoSortFields {
+  Id = 'id'
 }
 
 export interface MailCreateDto {
@@ -598,6 +675,7 @@ export interface Mutation {
   createManyMediaDtos: Array<MediaDto>;
   createOneImageList: ImageList;
   createOneInvestmentPackageDto: InvestmentPackageDto;
+  createOneInvestorRegistrationDto: InvestorRegistrationDto;
   createOneMailTemplateDto: MailTemplateDto;
   createOneMediaDto: MediaDto;
   createOnePreorder: PreorderResponseDto;
@@ -612,6 +690,7 @@ export interface Mutation {
   deleteOneCommentDto: CommentDtoDeleteResponse;
   deleteOneImageList: ImageListDeleteResponse;
   deleteOneInvestmentPackageDto: InvestmentPackageDtoDeleteResponse;
+  deleteOneInvestorRegistrationDto: InvestorRegistrationDtoDeleteResponse;
   deleteOneMailTemplateDto: MailTemplateDtoDeleteResponse;
   deleteOneMediaDto: MediaDtoDeleteResponse;
   deleteOneMediaFromImageList: ImageList;
@@ -633,13 +712,13 @@ export interface Mutation {
   setImageOnShowcase: Showcase;
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
-  submitInvestor: Scalars['Boolean'];
   updateManyInvestmentPackageDtos: UpdateManyResponse;
   updateManyMailTemplateDtos: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
   updateOneCommentDto: CommentDto;
   updateOneImageList: ImageList;
   updateOneInvestmentPackageDto: InvestmentPackageDto;
+  updateOneInvestorRegistrationDto: InvestorRegistrationDto;
   updateOneMailTemplateDto: MailTemplateDto;
   updateOneMediaDto: MediaDto;
   updateOnePrjUpdateDto: PrjUpdateDto;
@@ -677,6 +756,11 @@ export interface MutationCreateOneImageListArgs {
 
 export interface MutationCreateOneInvestmentPackageDtoArgs {
   input: CreateOneInvestmentPackageDtoInput;
+}
+
+
+export interface MutationCreateOneInvestorRegistrationDtoArgs {
+  input: InvestorRegistrationCreateDto;
 }
 
 
@@ -749,6 +833,11 @@ export interface MutationDeleteOneImageListArgs {
 
 export interface MutationDeleteOneInvestmentPackageDtoArgs {
   input: DeleteOneInvestmentPackageDtoInput;
+}
+
+
+export interface MutationDeleteOneInvestorRegistrationDtoArgs {
+  input: DeleteOneInvestorRegistrationDtoInput;
 }
 
 
@@ -862,11 +951,6 @@ export interface MutationSetImagesOnImageListArgs {
 }
 
 
-export interface MutationSubmitInvestorArgs {
-  form: SubmitInvestorInputDto;
-}
-
-
 export interface MutationUpdateManyInvestmentPackageDtosArgs {
   input: UpdateManyInvestmentPackageDtosInput;
 }
@@ -894,6 +978,11 @@ export interface MutationUpdateOneImageListArgs {
 
 export interface MutationUpdateOneInvestmentPackageDtoArgs {
   input: UpdateOneInvestmentPackageDtoInput;
+}
+
+
+export interface MutationUpdateOneInvestorRegistrationDtoArgs {
+  input: UpdateOneInvestorRegistrationDtoInput;
 }
 
 
@@ -1135,6 +1224,8 @@ export interface Query {
   getOneUser: User;
   investmentPackageDto?: Maybe<InvestmentPackageDto>;
   investmentPackageDtos: InvestmentPackageDtoConnection;
+  investorRegistrationDto?: Maybe<InvestorRegistrationDto>;
+  investorRegistrationDtos: InvestorRegistrationDtoConnection;
   mailTemplateDto?: Maybe<MailTemplateDto>;
   mailTemplateDtos: MailTemplateDtoConnection;
   mediaDto?: Maybe<MediaDto>;
@@ -1176,6 +1267,18 @@ export interface QueryInvestmentPackageDtosArgs {
   filter?: InputMaybe<InvestmentPackageDtoFilter>;
   paging?: InputMaybe<CursorPaging>;
   sorting?: InputMaybe<Array<InvestmentPackageDtoSort>>;
+}
+
+
+export interface QueryInvestorRegistrationDtoArgs {
+  id: Scalars['ID'];
+}
+
+
+export interface QueryInvestorRegistrationDtosArgs {
+  filter?: InputMaybe<InvestorRegistrationDtoFilter>;
+  paging?: InputMaybe<CursorPaging>;
+  sorting?: InputMaybe<Array<InvestorRegistrationDtoSort>>;
 }
 
 
@@ -1707,15 +1810,6 @@ export interface StringFieldComparison {
   notLike?: InputMaybe<Scalars['String']>;
 }
 
-export interface SubmitInvestorInputDto {
-  email: Scalars['String'];
-  fund: Scalars['String'];
-  job: Scalars['String'];
-  method: Scalars['String'];
-  phone: Scalars['String'];
-  purpose: Scalars['String'];
-}
-
 export interface UpdateCommentDto {
   content?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
@@ -1735,6 +1829,17 @@ export interface UpdateInvestmentPackageDto {
   displayName?: InputMaybe<Scalars['String']>;
   fundedRate?: InputMaybe<Scalars['Float']>;
   id?: InputMaybe<Scalars['ID']>;
+}
+
+export interface UpdateInvestorRegistrationDto {
+  email?: InputMaybe<Scalars['String']>;
+  fund?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  job?: InputMaybe<Scalars['String']>;
+  method?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
+  promotedUid?: InputMaybe<Scalars['String']>;
+  purpose?: InputMaybe<Scalars['String']>;
 }
 
 export interface UpdateMailTemplateDto {
@@ -1788,6 +1893,11 @@ export interface UpdateOneImageListInput {
 export interface UpdateOneInvestmentPackageDtoInput {
   id: Scalars['ID'];
   update: UpdateInvestmentPackageDto;
+}
+
+export interface UpdateOneInvestorRegistrationDtoInput {
+  id: Scalars['ID'];
+  update: UpdateInvestorRegistrationDto;
 }
 
 export interface UpdateOneMailTemplateDtoInput {

@@ -20,20 +20,19 @@ import {
 } from "@hungphongbk/vth-sdk";
 import { TextInput } from "../TextInput";
 import { useForm } from "react-hook-form";
-import {
-  MutationSubmitInvestorArgs,
-  SubmitInvestorInputDto,
-} from "../../types/graphql";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import IconUser from "src/assets/icons/IconUser";
 import PhoneIcon from "src/assets/icons/PhoneIcon";
 import Avatar from "@mui/material/Avatar";
 import QuestionMarkIcon from "src/assets/icons/QuestionMarkIcon";
+import { InvestorRegistrationCreateDto } from "../../types/graphql";
 
 const SUBMIT_INVESTOR = gql`
-  mutation SubmitInvestor($form: SubmitInvestorInputDto!) {
-    submitInvestor(form: $form)
+  mutation SubmitInvestor($form: InvestorRegistrationCreateDto!) {
+    createOneInvestorRegistrationDto(input: $form) {
+      id
+    }
   }
 `;
 const ContactBox = styled(Box)`
@@ -60,11 +59,11 @@ type InvestorRegDialogProps = {
 export default function InvestorRegDialogComponent({
   close,
 }: InvestorRegDialogProps): JSX.Element {
-  const [mutate] = useMutation<any, MutationSubmitInvestorArgs>(
+  const [mutate] = useMutation<any, { form: InvestorRegistrationCreateDto }>(
     SUBMIT_INVESTOR
   );
 
-  const { control, handleSubmit } = useForm<SubmitInvestorInputDto>({
+  const { control, handleSubmit } = useForm<InvestorRegistrationCreateDto>({
     defaultValues: {
       purpose: "-",
       method: "-",
@@ -72,7 +71,7 @@ export default function InvestorRegDialogComponent({
     },
   });
 
-  const onSubmit = async (values: SubmitInvestorInputDto) => {
+  const onSubmit = async (values: InvestorRegistrationCreateDto) => {
     await mutate({ variables: { form: values } });
     await close();
   };

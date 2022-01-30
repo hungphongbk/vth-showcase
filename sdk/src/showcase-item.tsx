@@ -7,6 +7,7 @@ import {
 import { Link, Stack, styled, Typography } from "@mui/material";
 import PreloadImage from "./components/PreloadImage";
 import VthCountdown from "../../src/components/vth-countdown";
+import PortalPreorderButton from "./portal-preorder-button";
 
 type ShowcaseItemBase = Pick<
   Partial<Showcase>,
@@ -43,6 +44,7 @@ type ShowcaseItemProps<T> = {
 export default function ShowcaseItem<
   T extends ShowcaseItemBase = ShowcaseItemBase
 >({ showcase }: ShowcaseItemProps<T>): JSX.Element {
+  console.log(showcase.slug);
   return (
     <StyledLink
       sx={{ display: "grid", gridTemplateColumns: "6fr 11fr", gridGap: "7px" }}
@@ -70,7 +72,9 @@ export default function ShowcaseItem<
           <VthCountdown
             expectedSaleAt={showcase.expectedSaleAt ?? new Date()}
           />
-          <AlertPrimaryIcon sx={{ width: 22, height: 22, mr: 1 }} />
+          <PortalPreorderButton showcase={showcase as any}>
+            <AlertPrimaryIcon sx={{ width: 22, height: 22, mr: 1 }} />
+          </PortalPreorderButton>
         </Stack>
       </Stack>
     </StyledLink>

@@ -18,6 +18,12 @@ query ShowcasePortal {
         }
         createdAt
         expectedSaleAt
+        expectedSalePrice {
+          regular
+          pioneer
+          preorder
+          promo
+        }
       }
     }
   }

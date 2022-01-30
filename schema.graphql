@@ -6,6 +6,20 @@ input AddImagesToImageListInput {
   relationIds: [ID!]!
 }
 
+type AuthProviderInfoDto {
+  displayName: String!
+  email: String!
+  providerId: String!
+  uid: String!
+}
+
+input AuthProviderInfoInputDto {
+  displayName: String
+  email: String
+  providerId: String
+  uid: String
+}
+
 enum AuthRoleType {
   ADMIN
   INVESTOR
@@ -266,6 +280,13 @@ input DeleteOnePrjUpdateDtoInput {
 input DeleteOneShowcaseHighlightFeatureInput {
   """The id of the record to delete."""
   id: ID!
+}
+
+type FcmRegistrationTokenDto {
+  createdAt: DateTime!
+  id: ID!
+  token: String!
+  topic: String!
 }
 
 input IDFilterComparison {
@@ -739,6 +760,7 @@ type Mutation {
   createOneSetting(input: SettingCreateDto!): Boolean!
   createOneShowcase(input: ShowcaseCreateInputDto!): Showcase!
   createOneShowcaseHighlightFeature(input: ShowcaseHFCreateInputDto!, slug: String!): ShowcaseHighlightFeature!
+  createOneUserDto(input: UserCreateInputDto!): User!
   deleteManyInvestmentPackageDtos(input: DeleteManyInvestmentPackageDtosInput!): DeleteManyResponse!
   deleteManyMailTemplateDtos(input: DeleteManyMailTemplateDtosInput!): DeleteManyResponse!
   deleteManyMediaDtos(input: DeleteManyMediaDtosInput!): DeleteManyResponse!
@@ -769,6 +791,7 @@ type Mutation {
   setImageOnShowcase(input: SetImageOnShowcaseInput!): Showcase!
   setImageOnShowcaseHighlightFeature(input: SetImageOnShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
   setImagesOnImageList(input: SetImagesOnImageListInput!): ImageList!
+  subscribeToFcmTopic(token: String!, topic: String!): FcmRegistrationTokenDto!
   updateManyInvestmentPackageDtos(input: UpdateManyInvestmentPackageDtosInput!): UpdateManyResponse!
   updateManyMailTemplateDtos(input: UpdateManyMailTemplateDtosInput!): UpdateManyResponse!
   updateManyMediaDtos(input: UpdateManyMediaDtosInput!): UpdateManyResponse!
@@ -782,7 +805,7 @@ type Mutation {
   updateOneSetting(input: SettingCreateDto!): Boolean!
   updateOneShowcase(input: ShowcaseUpdateInputDto!, slug: String!): Boolean!
   updateOneShowcaseHighlightFeature(id: ID!, input: ShowcaseHFUpdateInputDto!): ShowcaseHighlightFeature!
-  updateOneUser(role: AuthRoleType!, uid: String!): Boolean!
+  updateOneUser(input: UserUpdateInputDto!, uid: String!): Boolean!
 }
 
 input NumberFieldComparison {
@@ -1778,13 +1801,24 @@ input UpdatePrjUpdateDto {
 
 type User {
   approvalStatus: UserStatusEnum!
+  createdAt: DateTime!
   email: String!
   name: String!
   phoneNumber: String
   photoURL: String!
+  providedData: [AuthProviderInfoDto!]
   role: AuthRoleType!
   showcases: ShowcaseConnection!
   uid: ID!
+}
+
+input UserCreateInputDto {
+  email: String
+  name: String
+  password: String
+  phoneNumber: String
+  photoURL: String
+  role: AuthRoleType
 }
 
 enum UserStatusEnum {
@@ -1792,4 +1826,13 @@ enum UserStatusEnum {
   APPROVED_INVESTOR
   PENDING_CREATOR
   PENDING_INVESTOR
+}
+
+input UserUpdateInputDto {
+  name: String
+  password: String
+  phoneNumber: String
+  photoURL: String
+  providerToLink: AuthProviderInfoInputDto
+  role: AuthRoleType
 }

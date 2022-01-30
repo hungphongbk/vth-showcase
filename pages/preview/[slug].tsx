@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { MotionBox } from "../../src/components/commons";
 import { apiService, withApollo } from "../../src/api";
-import { refetchShowcasePreviewQuery, Showcase } from "../../src/types/graphql";
+import { Showcase } from "../../src/types/graphql";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
 import { ssrShowcasePreview } from "../../src/types/graphql.ssr";
@@ -45,11 +45,7 @@ function PreviewPage() {
       }}
     >
       <NextSeo canonical={"https://showcase.vaithuhay.com"} />
-      <ShowcaseDetailed
-        item={showcase}
-        onClick={() => router.back()}
-        refetchShowcase={refetchShowcasePreviewQuery({ slug })}
-      />
+      <ShowcaseDetailed item={showcase} onClick={() => router.back()} />
       <MotionBox
         data-testid={"backdrop"}
         sx={{

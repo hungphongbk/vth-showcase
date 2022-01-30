@@ -7,8 +7,8 @@ import VthIconButton from "../vth-icon-button";
 import {
   PreorderRequestInputDto,
   refetchPreorderCartQuery,
-  Showcase,
-  useSubmitPreorderMutation,
+  refetchShowcaseDetailQuery,
+  refetchShowcasePreviewQuery,
 } from "../../types/graphql";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSnackbar } from "notistack";
@@ -17,26 +17,22 @@ import { FirebaseAuthService } from "../../service";
 import { SxProps } from "@mui/system";
 import { useAppDispatch } from "../../store";
 import { afterSignInFirebase } from "../../store/auth.reducer";
+import { withPreorder } from "./with-preorder";
 
 type PreorderButtonProps = {
-  showcase: Pick<
-    Showcase,
-    "status" | "slug" | "expectedSalePrice" | "isPreordered"
-  >;
   sx?: SxProps;
-  refetchShowcase: any;
 };
-export default function PreorderButton(
-  props: PreorderButtonProps
-): JSX.Element {
+const PreorderButton = withPreorder<PreorderButtonProps>({
+  refetchQueries: ({ slug }) => [
+    refetchPreorderCartQuery(),
+    refetchShowcaseDetailQuery({ slug }),
+    refetchShowcasePreviewQuery({ slug }),
+  ],
+})(function PreorderButton({ showcase, doSubmitPreorder, sx }): JSX.Element {
   const { initialized, isLoggedIn } = useAuthInitialized(),
     [open, setOpen] = useState(false),
     [isSubmitting, setIsSubmitting] = useState(false),
     [isSubmitted, setIsSubmitted] = useState(false),
-    [doSubmitPreorder] = useSubmitPreorderMutation({
-      variables: { slug: props.showcase.slug },
-      refetchQueries: [refetchPreorderCartQuery(), props.refetchShowcase],
-    }),
     { enqueueSnackbar } = useSnackbar(),
     dispatch = useAppDispatch();
 
@@ -51,18 +47,10 @@ export default function PreorderButton(
         setOpen(false);
         return;
       }
-      if (/^0/.test(value.phoneNumber)) {
-        value.phoneNumber = value.phoneNumber.replace(/^0/g, "+84");
-      }
       setIsSubmitting(true);
-      const [authService, { data }] = await Promise.all([
+      const [authService, data] = await Promise.all([
         FirebaseAuthService(),
-        doSubmitPreorder({
-          variables: {
-            slug: props.showcase.slug,
-            input: value,
-          },
-        }),
+        doSubmitPreorder(value),
       ]);
       const payload = await authService.signInWithToken(
         data!.createOnePreorder.customToken!
@@ -72,7 +60,7 @@ export default function PreorderButton(
       setIsSubmitting(false);
       setIsSubmitted(true);
     },
-    [dispatch, doSubmitPreorder, props.showcase.slug]
+    [dispatch, doSubmitPreorder]
   );
 
   useEffect(() => {
@@ -88,8 +76,8 @@ export default function PreorderButton(
     <>
       <VthIconButton
         aria-label={"Đăng ký đặt trước"}
-        aria-disabled={props.showcase.isPreordered}
-        sx={{ flexGrow: 1, opacity: initialized ? 1 : 0.5, ...props.sx }}
+        aria-disabled={showcase.isPreordered}
+        sx={{ flexGrow: 1, opacity: initialized ? 1 : 0.5, ...sx }}
         startIcon={
           <IconComponent
             sx={{
@@ -97,25 +85,27 @@ export default function PreorderButton(
               height: 22,
               transform: "translate(-0.5px,-0.5px)",
             }}
-            color={props.showcase.isPreordered ? "gray" : undefined}
+            color={showcase.isPreordered ? "gray" : undefined}
           />
         }
         fullWidth
-        color={props.showcase.isPreordered ? "gray" : "primary"}
+        color={showcase.isPreordered ? "gray" : "primary"}
         onClick={() => {
-          if (props.showcase.isPreordered) return;
+          if (showcase.isPreordered) return;
           if (isLoggedIn) {
             doSubmitPreorder().then(() => setIsSubmitted(true));
           } else setOpen(true);
         }}
       >
-        {props.showcase.isPreordered ? "ĐÃ ĐẶT TRƯỚC" : "ĐĂNG KÝ ĐẶT TRƯỚC"}
+        {showcase.isPreordered ? "ĐÃ ĐẶT TRƯỚC" : "ĐĂNG KÝ ĐẶT TRƯỚC"}
       </VthIconButton>
       <PreorderDialog
         open={open}
-        showcase={props.showcase}
+        showcase={showcase}
         onClose={submitAnonymously}
       />
     </>
   );
-}
+});
+
+export default PreorderButton;

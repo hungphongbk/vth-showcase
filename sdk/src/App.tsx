@@ -13,13 +13,12 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
+import { SnackbarProvider } from "notistack";
+import theme from "../../src/theme";
 
-const theme = createTheme({
+const portalTheme = createTheme(theme, {
   typography: {
     fontFamily: "Montserrat, Arial",
-  },
-  variables: {
-    appBarHeight: 59,
   },
 });
 const Title = styled(Typography)`
@@ -39,32 +38,34 @@ export default function App() {
   const isMobile = useMediaQuery("(max-width: 992px)");
   if (!isMobile) return null;
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={portalTheme}>
       <CssBaseline />
-      <AspectRatio ratio={"752/473"} sx={{ mb: -1, overflow: "hidden" }}>
-        <img
-          // @ts-ignore
-          src={bg}
-          style={{
-            position: "absolute",
-            top: 26,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            objectFit: "contain",
-          }}
-        />
-        <Box sx={{ p: 1, width: "100%" }}>
-          <ShowcasePortalLogo />
-          {/* eslint-disable-next-line react/no-unescaped-entities */}
-          <Title>DỰ ÁN CHUẨN BỊ "RỜI BỆ PHÓNG"</Title>
-          <SlickSlider slidesToShow={1.17} infinite={false}>
-            {data?.showcases.edges.map(({ node }) => (
-              <ShowcaseItem key={node.id} showcase={node} />
-            ))}
-          </SlickSlider>
-        </Box>
-      </AspectRatio>
+      <SnackbarProvider maxSnack={3}>
+        <AspectRatio ratio={"752/473"} sx={{ mb: -1, overflow: "hidden" }}>
+          <img
+            // @ts-ignore
+            src={bg}
+            style={{
+              position: "absolute",
+              top: 26,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              objectFit: "contain",
+            }}
+          />
+          <Box sx={{ p: 1, width: "100%" }}>
+            <ShowcasePortalLogo />
+            {/* eslint-disable-next-line react/no-unescaped-entities */}
+            <Title>DỰ ÁN CHUẨN BỊ "RỜI BỆ PHÓNG"</Title>
+            <SlickSlider slidesToShow={1.17} infinite={false}>
+              {data?.showcases.edges.map(({ node }) => (
+                <ShowcaseItem key={node.id} showcase={node} />
+              ))}
+            </SlickSlider>
+          </Box>
+        </AspectRatio>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }

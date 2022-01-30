@@ -24,6 +24,20 @@ export interface AddImagesToImageListInput {
   relationIds: Array<Scalars['ID']>;
 }
 
+export interface AuthProviderInfoDto {
+  displayName: Scalars['String'];
+  email: Scalars['String'];
+  providerId: Scalars['String'];
+  uid: Scalars['String'];
+}
+
+export interface AuthProviderInfoInputDto {
+  displayName?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  providerId?: InputMaybe<Scalars['String']>;
+  uid?: InputMaybe<Scalars['String']>;
+}
+
 export enum AuthRoleType {
   Admin = 'ADMIN',
   Investor = 'INVESTOR',
@@ -246,6 +260,13 @@ export interface DeleteOnePrjUpdateDtoInput {
 
 export interface DeleteOneShowcaseHighlightFeatureInput {
   id: Scalars['ID'];
+}
+
+export interface FcmRegistrationTokenDto {
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+  token: Scalars['String'];
+  topic: Scalars['String'];
 }
 
 export interface IdFilterComparison {
@@ -682,6 +703,7 @@ export interface Mutation {
   createOneSetting: Scalars['Boolean'];
   createOneShowcase: Showcase;
   createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
+  createOneUserDto: User;
   deleteManyInvestmentPackageDtos: DeleteManyResponse;
   deleteManyMailTemplateDtos: DeleteManyResponse;
   deleteManyMediaDtos: DeleteManyResponse;
@@ -712,6 +734,7 @@ export interface Mutation {
   setImageOnShowcase: Showcase;
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
+  subscribeToFcmTopic: FcmRegistrationTokenDto;
   updateManyInvestmentPackageDtos: UpdateManyResponse;
   updateManyMailTemplateDtos: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
@@ -793,6 +816,11 @@ export interface MutationCreateOneShowcaseArgs {
 export interface MutationCreateOneShowcaseHighlightFeatureArgs {
   input: ShowcaseHfCreateInputDto;
   slug: Scalars['String'];
+}
+
+
+export interface MutationCreateOneUserDtoArgs {
+  input: UserCreateInputDto;
 }
 
 
@@ -951,6 +979,12 @@ export interface MutationSetImagesOnImageListArgs {
 }
 
 
+export interface MutationSubscribeToFcmTopicArgs {
+  token: Scalars['String'];
+  topic: Scalars['String'];
+}
+
+
 export interface MutationUpdateManyInvestmentPackageDtosArgs {
   input: UpdateManyInvestmentPackageDtosInput;
 }
@@ -1019,7 +1053,7 @@ export interface MutationUpdateOneShowcaseHighlightFeatureArgs {
 
 
 export interface MutationUpdateOneUserArgs {
-  role: AuthRoleType;
+  input: UserUpdateInputDto;
   uid: Scalars['String'];
 }
 
@@ -1923,13 +1957,24 @@ export interface UpdatePrjUpdateDto {
 
 export interface User {
   approvalStatus: UserStatusEnum;
+  createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   name: Scalars['String'];
   phoneNumber?: Maybe<Scalars['String']>;
   photoURL: Scalars['String'];
+  providedData?: Maybe<Array<AuthProviderInfoDto>>;
   role: AuthRoleType;
   showcases: ShowcaseConnection;
   uid: Scalars['ID'];
+}
+
+export interface UserCreateInputDto {
+  email?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+  photoURL?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<AuthRoleType>;
 }
 
 export enum UserStatusEnum {
@@ -1937,6 +1982,15 @@ export enum UserStatusEnum {
   ApprovedInvestor = 'APPROVED_INVESTOR',
   PendingCreator = 'PENDING_CREATOR',
   PendingInvestor = 'PENDING_INVESTOR'
+}
+
+export interface UserUpdateInputDto {
+  name?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+  photoURL?: InputMaybe<Scalars['String']>;
+  providerToLink?: InputMaybe<AuthProviderInfoInputDto>;
+  role?: InputMaybe<AuthRoleType>;
 }
 
 export type CreateShowcaseMutationVariables = Exact<{
@@ -2012,7 +2066,7 @@ export type InvestmentPackagesQuery = { investmentPackageDtos: { edges: Array<{ 
 export type ShowcasePortalQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ShowcasePortalQuery = { showcases: { pageInfo: { hasNextPage?: boolean | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, expectedSaleAt?: any | undefined, image: { path: string, preloadUrl: string, height: number, width: number } } }> } };
+export type ShowcasePortalQuery = { showcases: { pageInfo: { hasNextPage?: boolean | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, expectedSaleAt?: any | undefined, image: { path: string, preloadUrl: string, height: number, width: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined } }> } };
 
 export type ShowcasesQueryVariables = Exact<{
   filter?: InputMaybe<ShowcaseFilter>;
@@ -2661,6 +2715,12 @@ export const ShowcasePortalDocument = gql`
         }
         createdAt
         expectedSaleAt
+        expectedSalePrice {
+          regular
+          pioneer
+          preorder
+          promo
+        }
       }
     }
   }

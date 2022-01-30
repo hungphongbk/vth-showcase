@@ -23,10 +23,8 @@ const testPreview = (str: string) => /^\/preview/.test(str),
 export default function ShowcaseDetailed({
   item,
   onClick,
-  refetchShowcase,
 }: {
   item: Showcase;
-  refetchShowcase: any;
 } & HTMLProps<HTMLElement>) {
   const router = useRouter();
   const currentPage: "preview" | "post" | undefined = testPreview(
@@ -204,10 +202,7 @@ export default function ShowcaseDetailed({
                 >
                   XEM THÊM
                 </VthIconButton>
-                <PreorderButton
-                  showcase={item}
-                  refetchShowcase={refetchShowcase}
-                />
+                <PreorderButton showcase={item} />
               </Box>
             )}
           </MotionBox>

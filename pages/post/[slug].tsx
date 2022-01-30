@@ -2,10 +2,10 @@ import { GetStaticProps } from "next";
 import { Box } from "@mui/material";
 import ShowcaseDetailed from "../../src/components/showcase-detailed";
 import { useRouter } from "next/router";
-import { PropsWithChildren, useEffect, useMemo } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import { apiService, withApollo } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
-import { refetchShowcaseDetailQuery, Showcase } from "../../src/types/graphql";
+import { Showcase } from "../../src/types/graphql";
 import { InvestorInformation } from "../../src/components/post-page";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
@@ -57,10 +57,6 @@ function PostDetailedPage() {
       variables: { slug },
     }))
   );
-  const refetchShowcase = useMemo(
-    () => refetchShowcaseDetailQuery({ slug: router.query.slug as string }),
-    [router.query.slug]
-  );
 
   const showcase = data?.showcase as Showcase;
 
@@ -75,11 +71,7 @@ function PostDetailedPage() {
       />
       <Box sx={{ bgcolor: "#f0f0f0" }}>
         <InvestorInformation stat={data!.showcase.investorStat as any} />
-        <ShowcaseDetailed
-          item={showcase}
-          onClick={() => router.push("/")}
-          refetchShowcase={refetchShowcase}
-        />
+        <ShowcaseDetailed item={showcase} onClick={() => router.push("/")} />
         <Box
           sx={{
             position: "fixed",
@@ -137,7 +129,6 @@ function PostDetailedPage() {
               position: "relative",
               flex: 1.5,
             }}
-            refetchShowcase={refetchShowcase}
           />
         </Box>
       </Box>

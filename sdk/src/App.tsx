@@ -10,6 +10,7 @@ import {
   styled,
   ThemeProvider,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 
@@ -35,6 +36,8 @@ const Title = styled(Typography)`
 
 export default function App() {
   const { data } = useShowcasePortalQuery();
+  const isMobile = useMediaQuery("(max-width: 992px)");
+  if (!isMobile) return null;
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

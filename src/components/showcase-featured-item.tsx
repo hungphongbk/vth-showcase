@@ -91,7 +91,7 @@ export default function ShowcaseFeaturedItem<
           </strong>
         </Typography>
         <Box sx={{ width: "100%", my: 0.5 }}>
-          <VthCountdown />
+          <VthCountdown expectedSaleAt={node.expectedSaleAt ?? new Date()} />
         </Box>
       </ProductInfoSecond>
     </ImageListItem>

@@ -1,5 +1,5 @@
 import { useShowcasePortalQuery } from "../../src/types/graphql";
-import ShowcaseItem from "./ShowcaseItem";
+import ShowcaseItem from "./showcase-item";
 import SlickSlider from "../../src/components/slick-slider";
 import ShowcasePortalLogo from "./assets/ShowcasePortalLogo";
 import { AspectRatio } from "@hungphongbk/vth-sdk";

@@ -67,7 +67,9 @@ export default function ShowcaseItem<
           sx={{ alignSelf: "stretch", alignItems: "center" }}
           direction={"row"}
         >
-          <VthCountdown />
+          <VthCountdown
+            expectedSaleAt={showcase.expectedSaleAt ?? new Date()}
+          />
           <AlertPrimaryIcon sx={{ width: 22, height: 22, mr: 1 }} />
         </Stack>
       </Stack>

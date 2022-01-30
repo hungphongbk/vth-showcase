@@ -2,6 +2,7 @@ import React from "react";
 import BaseCountdown, { CountdownRendererFn } from "react-countdown";
 import { Box, Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
+import { Showcase } from "../types/graphql";
 
 const AnimateNumber = (props: {
   number: number;
@@ -54,6 +55,7 @@ const renderer: CountdownRendererFn = (props) => {
         borderRadius: "2px",
         pb: 0.8,
         flex: 1,
+        lineHeight: 1.5,
       }}
     >
       <AnimateNumber
@@ -83,6 +85,10 @@ const renderer: CountdownRendererFn = (props) => {
   );
 };
 
-export default function VthCountdown(props: unknown): JSX.Element {
-  return <BaseCountdown date={Date.now() + 500000} renderer={renderer} />;
+export default function VthCountdown(
+  props: Pick<Showcase, "expectedSaleAt">
+): JSX.Element {
+  return (
+    <BaseCountdown date={new Date(props.expectedSaleAt)} renderer={renderer} />
+  );
 }

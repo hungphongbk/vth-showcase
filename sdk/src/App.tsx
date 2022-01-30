@@ -1,5 +1,5 @@
 import { useShowcasePortalQuery } from "../../src/types/graphql";
-import ShowcaseItem from "./ShowcaseItem";
+import ShowcaseItem from "./showcase-item";
 import SlickSlider from "../../src/components/slick-slider";
 import ShowcasePortalLogo from "./assets/ShowcasePortalLogo";
 import { AspectRatio } from "@hungphongbk/vth-sdk";
@@ -10,6 +10,7 @@ import {
   styled,
   ThemeProvider,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 
@@ -35,6 +36,8 @@ const Title = styled(Typography)`
 
 export default function App() {
   const { data } = useShowcasePortalQuery();
+  const isMobile = useMediaQuery("(max-width: 992px)");
+  if (!isMobile) return null;
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

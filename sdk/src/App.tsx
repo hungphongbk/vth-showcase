@@ -28,8 +28,8 @@ const Title = styled(Typography)`
     font-size: 1.25rem;
     line-height: 139.4%;
     color: white;
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -58,11 +58,18 @@ export default function App() {
             <ShowcasePortalLogo />
             {/* eslint-disable-next-line react/no-unescaped-entities */}
             <Title>DỰ ÁN CHUẨN BỊ "RỜI BỆ PHÓNG"</Title>
-            <SlickSlider slidesToShow={1.17} infinite={false}>
-              {data?.showcases.edges.map(({ node }) => (
-                <ShowcaseItem key={node.id} showcase={node} />
-              ))}
-            </SlickSlider>
+            {data && (
+              <SlickSlider slidesToShow={1.17} infinite={false}>
+                {data.showcases.edges.map(({ node }) => (
+                  <ShowcaseItem key={node.id} showcase={node} />
+                ))}
+                <ShowcaseItem
+                  showcase={data.showcases.edges.slice(-1)[0]!.node!}
+                  seeMoreUi
+                  key={"__see-more"}
+                />
+              </SlickSlider>
+            )}
           </Box>
         </AspectRatio>
       </SnackbarProvider>

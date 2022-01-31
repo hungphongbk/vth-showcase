@@ -4,10 +4,11 @@ import {
   MediaDto,
   Showcase,
 } from "@hungphongbk/vth-sdk";
-import { Link, Stack, styled, Typography } from "@mui/material";
+import { Box, Button, Link, Stack, styled, Typography } from "@mui/material";
 import PreloadImage from "./components/PreloadImage";
 import VthCountdown from "../../src/components/vth-countdown";
 import PortalPreorderButton from "./portal-preorder-button";
+import { useMemo } from "react";
 
 type ShowcaseItemBase = Pick<
   Partial<Showcase>,
@@ -40,21 +41,32 @@ const StyledLink = styled(Link)`
 
 type ShowcaseItemProps<T> = {
   showcase: T;
+  seeMoreUi?: boolean;
 };
 export default function ShowcaseItem<
   T extends ShowcaseItemBase = ShowcaseItemBase
->({ showcase }: ShowcaseItemProps<T>): JSX.Element {
-  console.log(showcase.slug);
+>({ showcase, seeMoreUi }: ShowcaseItemProps<T>): JSX.Element {
+  const link = useMemo(() => {
+    if (seeMoreUi) return process.env.NEXT_PUBLIC_HOMEPAGE_URL;
+    return `${process.env.NEXT_PUBLIC_HOMEPAGE_URL}/post/${showcase.slug}`;
+  }, [seeMoreUi, showcase]);
+
   return (
     <StyledLink
-      sx={{ display: "grid", gridTemplateColumns: "6fr 11fr", gridGap: "7px" }}
-      href={`${process.env.NEXT_PUBLIC_HOMEPAGE_URL}/post/${showcase.slug}`}
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "6fr 12fr",
+        gridGap: "7px",
+        position: "relative",
+        overflow: "hidden",
+      }}
+      href={link}
       target={"_blank"}
     >
       <PreloadImage src={showcase.image} />
       <Stack gap={1}>
         <StyledTitle sx={{ flex: 1 }}>{showcase.name}</StyledTitle>
-        <Typography>
+        <Typography sx={{ fontSize: 10 }}>
           Dự kiến ra mắt:{" "}
           <strong>
             <FnsDate
@@ -65,7 +77,7 @@ export default function ShowcaseItem<
           </strong>
         </Typography>
         <Stack
-          gap={2}
+          gap={1.5}
           sx={{ alignSelf: "stretch", alignItems: "center" }}
           direction={"row"}
         >
@@ -73,10 +85,32 @@ export default function ShowcaseItem<
             expectedSaleAt={showcase.expectedSaleAt ?? new Date()}
           />
           <PortalPreorderButton showcase={showcase as any}>
-            <AlertPrimaryIcon sx={{ width: 22, height: 22, mr: 1 }} />
+            <AlertPrimaryIcon sx={{ width: 26, height: 26, mr: 1 }} />
           </PortalPreorderButton>
         </Stack>
       </Stack>
+      {seeMoreUi && (
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            bgcolor: "rgba(0,0,0,.82)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            variant={"outlined"}
+            sx={{ borderColor: "white", color: "white", px: 3 }}
+          >
+            Xem thêm
+          </Button>
+        </Box>
+      )}
     </StyledLink>
   );
 }

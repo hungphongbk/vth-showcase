@@ -40,7 +40,7 @@ export const StyledInputLabel = styled((props: InputLabelProps) => (
 
 export type TextInputProps = Pick<
   OutlinedInputProps,
-  "name" | "value" | "onChange" | "placeholder" | "label"
+  "name" | "value" | "onChange" | "placeholder" | "label" | "inputProps"
 > & { inputSx?: SxProps };
 
 const TextInput = forwardRef<unknown, TextInputProps>(function TextInput(

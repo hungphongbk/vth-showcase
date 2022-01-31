@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, DialogContent, Stack, Typography } from "@mui/material";
+import { Box, DialogContent, Stack, styled, Typography } from "@mui/material";
 import {
   PreorderRequestInputDto,
   Showcase,
@@ -11,6 +11,18 @@ import { vndCurrency } from "../../utils/string";
 import { useForm } from "react-hook-form";
 import { FormInput } from "@hungphongbk/vth-sdk";
 import { LoadingButton } from "@mui/lab";
+
+const StyledTextInput = styled(TextInput)`
+  input {
+    font-size: 11px;
+  }
+  .MuiOutlinedInput-notchedOutline {
+    legend {
+      font-size: inherit;
+      border: unset;
+    }
+  }
+`;
 
 type PreorderDialogProps = {
   open: boolean;
@@ -92,21 +104,24 @@ export default function PreorderDialog(
         <Stack direction={"column"} gap={1.5} alignItems={"center"}>
           <FormInput
             control={control}
-            component={TextInput}
+            component={StyledTextInput}
             name={"name"}
             placeholder={"Họ tên"}
+            inputProps={{ autocomplete: "off" }}
           />
           <FormInput
             control={control}
-            component={TextInput}
+            component={StyledTextInput}
             name={"email"}
             placeholder={"Email"}
+            inputProps={{ autocomplete: "off" }}
           />
           <FormInput
             control={control}
-            component={TextInput}
+            component={StyledTextInput}
             name={"phoneNumber"}
             placeholder={"Số điện thoại"}
+            inputProps={{ autocomplete: "off" }}
           />
           <LoadingButton
             loading={formState.isSubmitting}

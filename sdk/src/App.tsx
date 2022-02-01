@@ -15,6 +15,8 @@ import {
 import { createTheme } from "@mui/material/styles";
 import { SnackbarProvider } from "notistack";
 import theme from "../../src/theme";
+import NewPopup from "./components/new-popup";
+import "./App.css";
 
 const portalTheme = createTheme(theme, {
   typography: {
@@ -28,8 +30,8 @@ const Title = styled(Typography)`
     font-size: 1.25rem;
     line-height: 139.4%;
     color: white;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
   }
 `;
 
@@ -41,7 +43,7 @@ export default function App() {
     <ThemeProvider theme={portalTheme}>
       <CssBaseline />
       <SnackbarProvider maxSnack={3}>
-        <AspectRatio ratio={"752/473"} sx={{ mb: -1, overflow: "hidden" }}>
+        <AspectRatio ratio={"752/473"} sx={{ mb: -1 }}>
           <img
             // @ts-ignore
             src={bg}
@@ -55,7 +57,10 @@ export default function App() {
             }}
           />
           <Box sx={{ p: 1, width: "100%" }}>
-            <ShowcasePortalLogo />
+            <Box sx={{ display: "flex" }}>
+              <ShowcasePortalLogo />
+              <NewPopup />
+            </Box>
             {/* eslint-disable-next-line react/no-unescaped-entities */}
             <Title>DỰ ÁN CHUẨN BỊ "RỜI BỆ PHÓNG"</Title>
             {data && (

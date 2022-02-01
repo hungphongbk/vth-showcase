@@ -9,8 +9,6 @@ const entryApp = path.resolve(__dirname, "./src/sdk.tsx"),
     path.resolve(__dirname, "../src"),
   ];
 
-console.log(process.env.NODE_ENV);
-
 module.exports = {
   mode: process.env.NODE_ENV ?? "development",
   entry: {
@@ -77,6 +75,14 @@ module.exports = {
   },
   devServer: {
     allowedHosts: ["vaithuhay.com"],
+    host: "localhost",
+    port: 8080,
+    client: {
+      progress: true,
+    },
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   },
   target: "web",
   plugins: [

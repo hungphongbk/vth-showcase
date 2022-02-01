@@ -106,22 +106,25 @@ export default function PreorderDialog(
             control={control}
             component={StyledTextInput}
             name={"name"}
-            placeholder={"Họ tên"}
+            placeholder={"Họ tên *"}
             inputProps={{ autocomplete: "off" }}
+            rules={{ required: "Họ tên là bắt buộc" }}
           />
           <FormInput
             control={control}
             component={StyledTextInput}
             name={"email"}
-            placeholder={"Email"}
+            placeholder={"Email *"}
             inputProps={{ autocomplete: "off" }}
+            rules={{ required: "Email là bắt buộc" }}
           />
           <FormInput
             control={control}
             component={StyledTextInput}
             name={"phoneNumber"}
-            placeholder={"Số điện thoại"}
+            placeholder={"Số điện thoại *"}
             inputProps={{ autocomplete: "off" }}
+            rules={{ required: "Số điện thoại là bắt buộc" }}
           />
           <LoadingButton
             loading={formState.isSubmitting}

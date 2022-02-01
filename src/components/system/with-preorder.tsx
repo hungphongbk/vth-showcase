@@ -21,7 +21,8 @@ type WithPreorderBaseProps = {
 type WithPreorderOuterProps = WithPreorderBaseProps;
 type WithPreorderInnerProps = WithPreorderBaseProps & {
   doSubmitPreorder: (
-    value?: PreorderRequestInputDto | undefined
+    value: PreorderRequestInputDto | undefined,
+    isAnonymous: boolean
   ) => Promise<SubmitPreorderMutation>;
 };
 
@@ -37,7 +38,15 @@ export const withPreorder =
       });
 
       const doSubmitPreorder = useCallback(
-        async (value: PreorderRequestInputDto | undefined) => {
+        async (
+          value: PreorderRequestInputDto | undefined,
+          isAnonymous: boolean
+        ) => {
+          if (isAnonymous && !value) {
+            throw new Error(
+              "Value must not be undefined while in anonymous mode"
+            );
+          }
           if (value && /^0/.test(value.phoneNumber)) {
             value.phoneNumber = value.phoneNumber.replace(/^0/g, "+84");
           }

@@ -9,10 +9,11 @@ const entryApp = path.resolve(__dirname, "./src/sdk.tsx"),
     path.resolve(__dirname, "../src"),
   ];
 
+console.log(process.env.NODE_ENV);
+
 module.exports = {
   mode: process.env.NODE_ENV ?? "development",
   entry: {
-    runtime: "regenerator-runtime/runtime.js",
     sdk: entryApp,
   },
   output: {
@@ -22,59 +23,51 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: [
-              [
-                "@babel/preset-env",
-                {
-                  modules: false,
-                },
-              ],
-              [
-                "@babel/preset-react",
-                {
-                  runtime: "automatic",
-                },
-              ],
-              "@babel/preset-typescript",
-            ],
-            plugins: [
-              [
-                "babel-plugin-transform-imports",
-                {
-                  lodash: {
-                    transform: "lodash/${member}",
-                    preventFullImport: true,
-                  },
-                },
-              ],
-              [
-                "babel-plugin-direct-import",
-                {
-                  modules: [
-                    "@mui/lab",
-                    "@mui/system",
-                    "@mui/material",
-                    "@mui/icons-material",
+        oneOf: [
+          {
+            test: /\.tsx?$/,
+            use: {
+              loader: "babel-loader",
+              options: {
+                presets: [
+                  [
+                    "@babel/preset-env",
+                    {
+                      modules: false,
+                      useBuiltIns: "usage",
+                      corejs: 3,
+                    },
                   ],
-                },
-              ],
-            ],
+                  [
+                    "@babel/preset-react",
+                    {
+                      runtime: "automatic",
+                    },
+                  ],
+                  "@babel/preset-typescript",
+                ],
+                plugins: [
+                  [
+                    "babel-plugin-styled-components",
+                    {
+                      pure: true,
+                    },
+                  ],
+                ],
+              },
+            },
+            include: srcPath,
+            exclude: /node_modules/,
           },
-        },
-        include: srcPath,
-        exclude: /node_modules/,
-      },
-      {
-        use: ["style-loader", "css-loader"],
-        test: /\.css$/,
-      },
-      {
-        loader: "file-loader",
-        test: /\.webp$/,
+          {
+            use: ["style-loader", "css-loader"],
+            test: /\.css$/,
+          },
+          {
+            loader: "file-loader",
+            test: /\.webp$/,
+          },
+        ],
       },
     ],
   },
@@ -93,10 +86,21 @@ module.exports = {
     }),
   ],
   optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          // cacheGroupKey here is `commons` as the key of the cacheGroup
+          name: "commons",
+          chunks: "all",
+        },
+      },
+    },
     minimizer: [
       new TerserPlugin({
         minify: TerserPlugin.swcMinify,
       }),
     ],
+    sideEffects: true,
   },
 };

@@ -43,7 +43,7 @@ export default function App() {
     <ThemeProvider theme={portalTheme}>
       <CssBaseline />
       <SnackbarProvider maxSnack={3}>
-        <AspectRatio ratio={"752/473"} sx={{ mb: -1 }}>
+        <AspectRatio ratio={"752/473"} sx={{ mb: -1, overflowX: "hidden" }}>
           <img
             // @ts-ignore
             src={bg}

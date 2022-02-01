@@ -1,12 +1,13 @@
 import { css, styled } from "@mui/material/styles";
 import {
   FormControl,
+  FormHelperText,
   InputLabel,
   InputLabelProps,
   OutlinedInput,
   OutlinedInputProps,
 } from "@mui/material";
-import React, { forwardRef } from "react";
+import React, { forwardRef, ReactNode } from "react";
 import { omit, uniqueId } from "lodash";
 import { SxProps } from "@mui/system";
 
@@ -40,11 +41,17 @@ export const StyledInputLabel = styled((props: InputLabelProps) => (
 
 export type TextInputProps = Pick<
   OutlinedInputProps,
-  "name" | "value" | "onChange" | "placeholder" | "label" | "inputProps"
-> & { inputSx?: SxProps };
+  | "name"
+  | "value"
+  | "onChange"
+  | "placeholder"
+  | "label"
+  | "inputProps"
+  | "error"
+> & { inputSx?: SxProps; helperText?: ReactNode };
 
 const TextInput = forwardRef<unknown, TextInputProps>(function TextInput(
-  { label, inputSx, ...props },
+  { label, inputSx, error, helperText, ...props },
   ref
 ): JSX.Element {
   const id = uniqueId();
@@ -57,6 +64,9 @@ const TextInput = forwardRef<unknown, TextInputProps>(function TextInput(
         sx={inputSx}
         {...omit(props, ["helperText"])}
       />
+      {helperText && (
+        <FormHelperText error={error}>{helperText}</FormHelperText>
+      )}
     </FormControl>
   );
 });

@@ -42,7 +42,10 @@ const PreorderButton = withPreorder<PreorderButtonProps>({
   }, [isSubmitted]);
 
   const submitAnonymously = useCallback(
-    async (value: PreorderRequestInputDto | undefined) => {
+    async (
+      value: PreorderRequestInputDto | undefined,
+      isAnonymous: boolean
+    ) => {
       if (typeof value === "undefined") {
         setOpen(false);
         return;
@@ -50,7 +53,7 @@ const PreorderButton = withPreorder<PreorderButtonProps>({
       setIsSubmitting(true);
       const [authService, data] = await Promise.all([
         FirebaseAuthService(),
-        doSubmitPreorder(value),
+        doSubmitPreorder(value, isAnonymous),
       ]);
       const payload = await authService.signInWithToken(
         data!.createOnePreorder.customToken!
@@ -78,6 +81,7 @@ const PreorderButton = withPreorder<PreorderButtonProps>({
         aria-label={"Đăng ký đặt trước"}
         aria-disabled={showcase.isPreordered}
         sx={{ flexGrow: 1, opacity: initialized ? 1 : 0.5, ...sx }}
+        disabled={!initialized}
         startIcon={
           <IconComponent
             sx={{
@@ -93,7 +97,7 @@ const PreorderButton = withPreorder<PreorderButtonProps>({
         onClick={() => {
           if (showcase.isPreordered) return;
           if (isLoggedIn) {
-            doSubmitPreorder().then(() => setIsSubmitted(true));
+            doSubmitPreorder(undefined, false).then(() => setIsSubmitted(true));
           } else setOpen(true);
         }}
       >
@@ -102,7 +106,7 @@ const PreorderButton = withPreorder<PreorderButtonProps>({
       <PreorderDialog
         open={open}
         showcase={showcase}
-        onClose={submitAnonymously}
+        onClose={(value) => submitAnonymously(value, true)}
       />
     </>
   );

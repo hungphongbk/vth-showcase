@@ -16,7 +16,7 @@ const PortalPreorderButton = withPreorder<PropsWithChildren<unknown>>({
   const submitAnonymously = useCallback(
     async (value: PreorderRequestInputDto | undefined) => {
       setIsSubmitting(true);
-      const data = await doSubmitPreorder(value);
+      const data = await doSubmitPreorder(value, true);
       setOpen(false);
       setIsSubmitted(true);
     },
@@ -38,7 +38,6 @@ const PortalPreorderButton = withPreorder<PropsWithChildren<unknown>>({
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          console.log("hihi");
           setOpen(true);
           return false;
         }}

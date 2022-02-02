@@ -39,7 +39,7 @@ export default function App() {
   const { data } = useShowcasePortalQuery();
   const isMobile = useMediaQuery("(max-width: 992px)");
   if (!isMobile) return null;
-  if (Math.random() > 0.5) return null;
+  if (Math.random() > 0.2) return null;
   return (
     <ThemeProvider theme={portalTheme}>
       <CssBaseline />

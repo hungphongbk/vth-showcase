@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Portal } from "@mui/material";
+import { Portal } from "@mui/base";
 import MenuBarIcon from "../../assets/icons/MenuBarIcon";
 import { AnimatePresence, motion } from "framer-motion";
 import { useAuthInitialized, useOnClickOutside } from "../../utils/hooks";

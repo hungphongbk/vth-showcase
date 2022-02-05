@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import BookmarkIcon from "../../assets/icons/BookmarkIcon";
 import { sxFlexCenter, sxSize } from "../../utils/predefinedSx";
-import { Backdrop, Box, Portal, Typography } from "@mui/material";
+import { Backdrop, Box, Typography } from "@mui/material";
 import { MotionBox } from "../commons";
 import CloseIcon from "../../assets/icons/CloseIcon";
 import CartDrawerListing from "./cart/cart-drawer-listing";
+import { Portal } from "@mui/base";
 
 const MotionBookmarkIcon = motion(BookmarkIcon);
 

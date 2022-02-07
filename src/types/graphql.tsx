@@ -1462,11 +1462,10 @@ export interface Showcase {
   expectedSaleAt?: Maybe<Scalars['DateTime']>;
   expectedSaleEndAt?: Maybe<Scalars['DateTime']>;
   expectedSalePrice?: Maybe<ShowcasePrice>;
-  ga?: Maybe<ShowcaseGaDto>;
   highlightFeatures: Array<ShowcaseHighlightFeature>;
   id: Scalars['ID'];
   image: MediaDto;
-  imageLists?: Maybe<Array<ImageList>>;
+  imageLists: Array<ImageList>;
   inventory?: Maybe<ShowcaseInventoryDto>;
   investorStat?: Maybe<ShowcaseInvestorStatDto>;
   isFeatured?: Maybe<Scalars['Boolean']>;
@@ -1479,6 +1478,7 @@ export interface Showcase {
   status: ShowcaseStatus;
   updatedAt: Scalars['DateTime'];
   updates: Array<PrjUpdateDto>;
+  viewCount: Scalars['Float'];
 }
 
 
@@ -1516,6 +1516,13 @@ export interface ShowcaseAggregateGroupBy {
   slug?: Maybe<Scalars['String']>;
   status?: Maybe<ShowcaseStatus>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+  viewCount?: Maybe<Scalars['Float']>;
+}
+
+export interface ShowcaseAvgAggregate {
+  commentCount?: Maybe<Scalars['Float']>;
+  preorderCount?: Maybe<Scalars['Float']>;
+  viewCount?: Maybe<Scalars['Float']>;
 }
 
 export interface ShowcaseBrand {
@@ -1545,6 +1552,7 @@ export interface ShowcaseCountAggregate {
   slug?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['Int']>;
+  viewCount?: Maybe<Scalars['Int']>;
 }
 
 export interface ShowcaseCreateInputDto {
@@ -1579,6 +1587,7 @@ export interface ShowcaseDeleteFilter {
   slug?: InputMaybe<StringFieldComparison>;
   status?: InputMaybe<ShowcaseStatusFilterComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
+  viewCount?: InputMaybe<NumberFieldComparison>;
 }
 
 export interface ShowcaseEdge {
@@ -1599,6 +1608,7 @@ export interface ShowcaseFilter {
   slug?: InputMaybe<StringFieldComparison>;
   status?: InputMaybe<ShowcaseStatusFilterComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
+  viewCount?: InputMaybe<NumberFieldComparison>;
 }
 
 export interface ShowcaseForCalculateDto {
@@ -1607,10 +1617,6 @@ export interface ShowcaseForCalculateDto {
   expectedSaleEndAt?: InputMaybe<Scalars['DateTime']>;
   expectedSalePrice?: InputMaybe<ShowcasePriceInput>;
   inventory?: InputMaybe<ShowcaseInventoryDtoInput>;
-}
-
-export interface ShowcaseGaDto {
-  viewCount: Scalars['Float'];
 }
 
 export interface ShowcaseHfCreateInputDto {
@@ -1723,23 +1729,29 @@ export interface ShowcaseInvestorStatDto {
 }
 
 export interface ShowcaseMaxAggregate {
+  commentCount?: Maybe<Scalars['Float']>;
   expectedSaleAt?: Maybe<Scalars['DateTime']>;
   expectedSaleEndAt?: Maybe<Scalars['DateTime']>;
   name?: Maybe<Scalars['String']>;
+  preorderCount?: Maybe<Scalars['Float']>;
   publishStatus?: Maybe<PublishStatus>;
   slug?: Maybe<Scalars['String']>;
   status?: Maybe<ShowcaseStatus>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+  viewCount?: Maybe<Scalars['Float']>;
 }
 
 export interface ShowcaseMinAggregate {
+  commentCount?: Maybe<Scalars['Float']>;
   expectedSaleAt?: Maybe<Scalars['DateTime']>;
   expectedSaleEndAt?: Maybe<Scalars['DateTime']>;
   name?: Maybe<Scalars['String']>;
+  preorderCount?: Maybe<Scalars['Float']>;
   publishStatus?: Maybe<PublishStatus>;
   slug?: Maybe<Scalars['String']>;
   status?: Maybe<ShowcaseStatus>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+  viewCount?: Maybe<Scalars['Float']>;
 }
 
 export interface ShowcasePrice {
@@ -1772,7 +1784,8 @@ export enum ShowcaseSortFields {
   PublishStatus = 'publishStatus',
   Slug = 'slug',
   Status = 'status',
-  UpdatedAt = 'updatedAt'
+  UpdatedAt = 'updatedAt',
+  ViewCount = 'viewCount'
 }
 
 export enum ShowcaseStatus {
@@ -1796,6 +1809,12 @@ export interface ShowcaseStatusFilterComparison {
   notILike?: InputMaybe<ShowcaseStatus>;
   notIn?: InputMaybe<Array<ShowcaseStatus>>;
   notLike?: InputMaybe<ShowcaseStatus>;
+}
+
+export interface ShowcaseSumAggregate {
+  commentCount?: Maybe<Scalars['Float']>;
+  preorderCount?: Maybe<Scalars['Float']>;
+  viewCount?: Maybe<Scalars['Float']>;
 }
 
 export interface ShowcaseUpdateInputDto {
@@ -2038,7 +2057,7 @@ export type ShowcaseHfFragment = { highlightFeatures: Array<{ id: string, name: 
 
 export type ShowcaseInvestorStatFragment = { investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | undefined };
 
-export type ShowcaseDetailFragment = { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | undefined, expectedSaleEndAt?: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, imageLists?: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> | undefined };
+export type ShowcaseDetailFragment = { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | undefined, expectedSaleEndAt?: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> };
 
 export type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2109,7 +2128,7 @@ export type ShowcaseDetailQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { isPreordered?: boolean | undefined, id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | undefined, expectedSaleEndAt?: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, imageLists?: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> | undefined, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | undefined } };
+export type ShowcaseDetailQuery = { showcase: { isPreordered?: boolean | undefined, viewCount: number, id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | undefined, expectedSaleEndAt?: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }>, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | undefined } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -2130,7 +2149,7 @@ export type ShowcaseForUpdateQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseForUpdateQuery = { showcase: { slug: string, id: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | undefined, expectedSaleEndAt?: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, imageLists?: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> | undefined } };
+export type ShowcaseForUpdateQuery = { showcase: { slug: string, id: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | undefined, expectedSaleEndAt?: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }> } };
 
 export type GetHighlightFeaturesOnShowcaseQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -2973,6 +2992,7 @@ export const ShowcaseDetailDocument = gql`
       createdAt
     }
     isPreordered
+    viewCount
   }
 }
     ${ShowcaseDetailFragmentDoc}

@@ -9,5 +9,6 @@ query ShowcaseDetail($slug: String!) {
       createdAt
     }
     isPreordered
+    viewCount
   }
 }

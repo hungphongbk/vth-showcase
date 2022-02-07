@@ -3,6 +3,9 @@ import introspection from "../../src/api/introspection.json";
 
 const httpLink = new HttpLink({
   uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
+  headers: {
+    "x-vth-from": "showcase-portal",
+  },
 });
 
 export const apolloClient = new ApolloClient({

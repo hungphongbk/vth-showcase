@@ -24,16 +24,18 @@ const authLink = setContext(async (_, { headers }) => {
       headers: {
         ...headers,
         ssr: true,
+        "x-vth-from": "showcase-ssr",
       },
     };
 
   const token = store.getState().auth?.token;
-  if (!token) return headers;
+  if (!token) return { headers: { ...headers, "x-vth-from": "showcase" } };
 
   return {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : "",
+      "x-vth-from": "showcase",
     },
   };
 });

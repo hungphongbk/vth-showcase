@@ -1,131 +1,167 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { Box, Button, ButtonProps } from "@mui/material";
-import ProductDetailed from "../../src/components/ProductDetailed";
+import { GetStaticProps } from "next";
+import { Box } from "@mui/material";
+import ShowcaseDetailed from "../../src/components/showcase-detailed";
 import { useRouter } from "next/router";
-import { PropsWithChildren, useEffect, useState } from "react";
-import { apiService } from "../../src/api";
+import { PropsWithChildren, useEffect } from "react";
+import { apiService, withApollo } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
-import { PreorderDialog } from "../../src/components";
+import { Showcase } from "../../src/types/graphql";
+import { InvestorInformation } from "../../src/components/post-page";
+import { useAuthQuery } from "../../src/components/system/useAuthQuery";
+import { NextSeo } from "next-seo";
+import { ssrShowcaseDetail } from "../../src/types/graphql.ssr";
+import Footer from "../../src/components/Footer";
+import {
+  PreorderButton,
+  useInvestorRegDialog,
+} from "../../src/components/system";
+import VthIconButton from "../../src/components/vth-icon-button";
 
-const BottomButton = ({
-    children,
-    ...props
-  }: PropsWithChildren<Pick<ButtonProps, "startIcon" | "onClick">>) => (
-    <Button
-      variant={"contained"}
-      sx={{
-        bgcolor: "yellow.main",
-        border: 3,
-        borderColor: "yellow.light",
-        color: "black",
-        fontWeight: 600,
-        fontSize: 12,
-        lineHeight: 15,
-        boxShadow: "none",
-        flex: "auto",
-        height: 30,
-        borderRadius: "15px",
-        mt: "-22px",
-        position: "relative",
-      }}
-      {...props}
-    >
-      {children}
-    </Button>
-  ),
-  IconWrapper = (props: PropsWithChildren<unknown>) => (
-    <Box
-      sx={{
-        height: "20px",
-        width: "20px",
-        borderRadius: "10px",
-        bgcolor: "yellow.light",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        position: "absolute",
-        top: 2,
-        left: 2,
-        "& > svg": {
-          display: "block",
-        },
-      }}
-    >
-      {props.children}
-    </Box>
-  );
+const IconWrapper = (props: PropsWithChildren<unknown>) => (
+  <Box
+    sx={{
+      height: "22px",
+      width: "22px",
+      borderRadius: "11px",
+      bgcolor: "yellow.light",
+      "& .Mui-disabled &": {
+        bgcolor: "#f3f3f3",
+        "& > svg": { color: "rgba(0,0,0,0.26)" },
+      },
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      position: "absolute",
+      top: 3.25,
+      left: 3.5,
+      "& > svg": {
+        display: "block",
+      },
+    }}
+  >
+    {props.children}
+  </Box>
+);
 
-export default function PostDetailedPage({
-  post,
-  posts,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter();
+function PostDetailedPage() {
+  const router = useRouter(),
+    slug = router.query.slug as string;
   useEffect(() => {
     // noinspection JSIgnoredPromiseFromCall
     router.prefetch("/");
   }, [router]);
-  const [open, setOpen] = useState(false);
+  const { renderDialog, open } = useInvestorRegDialog();
+  const { loading, error, data } = useAuthQuery(
+    ssrShowcaseDetail.usePage(() => ({
+      fetchPolicy: "cache-and-network",
+      variables: { slug },
+    }))
+  );
+
+  const showcase = data?.showcase as Showcase;
+
+  if (!showcase) return null;
+
   return (
-    <Box sx={{ bgcolor: "#f0f0f0" }}>
-      <ProductDetailed
-        item={post}
-        onClick={() => router.push("/")}
-        posts={posts}
+    <>
+      <NextSeo
+        title={showcase.name}
+        description={showcase.description}
+        canonical={`https://showcase.vaithuhay.com/post/${showcase.slug}`}
       />
-      <Box
-        sx={{
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          display: "flex",
-          justifyContent: "space-evenly",
-          gap: 1,
-          p: 1,
-          px: 3,
-          height: 30,
-          zIndex: 12,
-          bgcolor: "white",
-          boxShadow: "0px -4px 30px rgba(0, 0, 0, 0.15)",
-          borderTopLeftRadius: "20px",
-          borderTopRightRadius: "20px",
-        }}
-      >
-        <BottomButton
-          startIcon={
-            <IconWrapper>
-              <HopTacIcon />
-            </IconWrapper>
-          }
+      <Box sx={{ bgcolor: "#f0f0f0" }}>
+        <InvestorInformation stat={data!.showcase.investorStat as any} />
+        <ShowcaseDetailed item={showcase} onClick={() => router.push("/")} />
+        <Box
+          sx={{
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            display: "flex",
+            justifyContent: "space-evenly",
+            gap: 1,
+            p: 1,
+            px: 3,
+            height: 35,
+            zIndex: 12,
+            bgcolor: "white",
+            boxShadow: "0px -4px 30px rgba(0, 0, 0, 0.15)",
+            borderTopLeftRadius: "20px",
+            borderTopRightRadius: "20px",
+          }}
         >
-          Hợp tác
-        </BottomButton>
-        <BottomButton onClick={() => setOpen(true)}>
-          Đăng ký đặt trước
-        </BottomButton>
+          <VthIconButton
+            startIcon={
+              <IconWrapper>
+                <HopTacIcon
+                  sx={{ color: "yellow.main", transform: "translateX(1px)" }}
+                />
+              </IconWrapper>
+            }
+            sx={{
+              bgcolor: "yellow.main",
+              color: "black",
+              fontWeight: 600,
+              fontSize: 12,
+              lineHeight: 15,
+              boxShadow: "none",
+              height: 35,
+              borderRadius: "17.5px",
+              mt: "-24px",
+              position: "relative",
+              flex: 1,
+            }}
+            onClick={open}
+          >
+            ĐẦU TƯ
+          </VthIconButton>
+          <PreorderButton
+            showcase={data!.showcase as unknown as Showcase}
+            sx={{
+              fontWeight: 600,
+              fontSize: 12,
+              lineHeight: 15,
+              boxShadow: "none",
+              height: 35,
+              borderRadius: "17.5px",
+              mt: "-24px",
+              position: "relative",
+              flex: 1.5,
+            }}
+          />
+        </Box>
       </Box>
-      <PreorderDialog
-        open={open}
-        price={post.expectedSalePrice}
-        onClose={() => setOpen(false)}
-      />
-    </Box>
+      <Footer />
+      {renderDialog}
+    </>
   );
 }
 
+export default withApollo(
+  ssrShowcaseDetail.withPage((r) => ({
+    variables: { slug: r.query.slug as string },
+  }))(PostDetailedPage)
+);
+
 export const getStaticProps: GetStaticProps = async (context) => {
-  // noinspection PointlessArithmeticExpressionJS
-  return Promise.resolve({
-    props: {
-      ...(await apiService.getShowcasePreview(context.params!.slug as string)),
-    },
-  });
+  const slug = context.params!.slug as string;
+
+  return {
+    ...(await ssrShowcaseDetail.getServerPage(
+      { variables: { slug } },
+      context
+    )),
+    revalidate: 45,
+  };
 };
 
 // noinspection JSUnusedGlobalSymbols
 export async function getStaticPaths() {
   return {
-    paths: (await apiService.getAllSlugs()).map((slug) => `/post/${slug}`),
-    fallback: false,
+    paths: (await apiService.getAllSlugs())
+      .filter((slug) => !/^ci-test/.test(slug))
+      .map((slug) => `/post/${slug}`),
+    fallback: "blocking",
   };
 }

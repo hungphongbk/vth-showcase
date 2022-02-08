@@ -1,258 +1,204 @@
-import type { InferGetStaticPropsType } from "next";
-import {
-  Box,
-  Container,
-  ImageList,
-  ImageListItem,
-  Typography,
-} from "@mui/material";
-import ProductList from "../src/components/ProductList";
-import { AnimatePresence, motion } from "framer-motion";
-import TuneIcon from "@mui/icons-material/Tune";
-import React, { PropsWithChildren, useMemo, useState } from "react";
-import { SxProps } from "@mui/system";
-import { MotionBox, ProductInfoSecond } from "../src/components/commons";
-import FilterPanel from "../src/components/FilterPanel";
-import { range } from "lodash";
-import { VthCountdown } from "../src/components";
+import type { GetStaticProps } from "next";
+import { Box, Container, Fade, ImageList, Typography } from "@mui/material";
+import ShowcaseList from "../src/components/showcase-list";
+import { AnimatePresence } from "framer-motion";
+import React, { useEffect, useMemo, useState } from "react";
+import { MotionBox } from "../src/components/commons";
 import Banner from "../src/components/Banner";
-import { apiService } from "../src/api";
-import { ShowcaseEdge } from "../src/types/graphql";
+import { withApollo } from "../src/api";
+import {
+  IndexPageQuery,
+  ShowcaseEdge,
+  ShowcaseStatus,
+} from "../src/types/graphql";
+import SimpleFilter from "../src/components/index-page/simple-filter";
+import { sxFullSizeFixed } from "../src/utils/predefinedSx";
+import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
+import dynamic from "next/dynamic";
+import { NextSeo } from "next-seo";
+import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
+import { LoadingIndicator } from "@hungphongbk/vth-sdk";
+import { NetworkStatus } from "@apollo/client";
+import ShowcaseFeaturedItem from "../src/components/showcase-featured-item";
+import Footer from "../src/components/Footer";
+import { InfiniteScroll } from "../src/components/infinite-scroll";
+import { CreatorAndInvestorActions } from "src/components/system";
 
-const MotionContainer = motion(Container);
+const FilterPanel = dynamic(() => import("../src/components/filter-panel"), {
+  ssr: false,
+});
 
-const FilterTag = ({
-  sx,
-  children,
-  ...others
-}: PropsWithChildren<{ sx?: SxProps; [key: string]: any }>) => (
-  <Box
-    sx={{
-      height: 27,
-      px: 2,
-      borderRadius: "13.5px",
-      display: "flex",
-      alignItems: "center",
-      fontWeight: 600,
-      ...sx,
-    }}
-    {...others}
-  >
-    {children}
-  </Box>
-);
+const Home = () => {
+  const { data: ssrData } = ssrIndex.usePage(() => ({
+      fetchPolicy: "cache-only",
+    })),
+    {
+      data: clientData,
+      networkStatus,
+      loading,
+      fetchMore,
+      refetch,
+    } = ssrIndexClient.usePage(() => ({
+      variables: {
+        filter: {},
+      },
+      notifyOnNetworkStatusChange: true,
+    }));
+  const data = useMemo(() => {
+    return {
+      ...ssrData,
+      ...clientData,
+    } as unknown as IndexPageQuery;
+  }, [ssrData, clientData]);
+  const posts = data!.showcases.edges,
+    featured = data!.featured.edges,
+    pageInfo = data!.showcases.pageInfo,
+    banner = data!.banner;
 
-function Home({
-  posts: _posts,
-  pageInfo: _pageInfo,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
   const [openFilter, setOpenFilter] = useState(false);
-  const [filter, setFilter] = useState<string | undefined>();
+  const [statusFilter, setStatusFilter] = useState<
+      ShowcaseStatus | undefined
+    >(),
+    [statusFiltered, setStatusFiltered] = useState<
+      ShowcaseStatus | undefined
+    >();
 
-  const [posts, setPosts] = useState(() => _posts),
-    [pageInfo, setPageInfo] = useState(() => _pageInfo);
+  /**
+   * Calculate final filter
+   */
+  useEffect(() => {
+    const filter: any = statusFilter ? { status: { eq: statusFilter } } : {};
+    refetch({
+      filter,
+    }).then(() => setStatusFiltered(statusFilter));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statusFilter]);
 
   const loadMore = async () => {
     if (!pageInfo.hasNextPage) return;
-    const data = await apiService.getAllShowcases(pageInfo.endCursor);
-    setPosts([...posts, ...data.edges]);
-    setPageInfo(data.pageInfo);
-  };
-
-  // useEffect(() => console.log(pageInfo), [pageInfo]);
-
-  const restPost = useMemo(() => {
-    if (!filter) return posts;
-    return posts.filter((i) => i.node.status === filter);
-  }, [filter, posts]);
-
-  const changeFilter = (value: string) => {
-    setFilter(value);
+    const filter: any = statusFilter ? { status: { eq: statusFilter } } : {};
+    await fetchMore({
+      variables: {
+        filter,
+        cursor: pageInfo.endCursor,
+      },
+    });
   };
 
   return (
-    <MotionContainer
-      sx={{ mt: 2, pl: 1, pr: 1 }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{}}
-    >
-      <Banner sx={{ mt: -2, mx: -1 }} />
-      <Typography
-        sx={{
-          fontSize: 15,
-          fontWeight: 600,
-          textAlign: "center",
-          width: "100%",
-          my: 2,
-          textTransform: "uppercase",
-        }}
-      >
-        Dự án đang chuẩn bị &quot;rời bệ phóng&quot;
-      </Typography>
-      <ImageList variant={"standard"} cols={2} gap={8}>
-        {range(0, 2).map((index) => (
-          <ImageListItem
-            key={index}
-            sx={{
-              borderRadius: 3,
-              overflow: "hidden",
-              cursor: "pointer",
-              mb: 2,
-              boxShadow: "4px 4px 16px rgba(0, 0, 0, 0.1)",
-            }}
-          >
+    <>
+      <Container sx={{ mt: 2, pl: 1, pr: 1 }}>
+        <NextSeo canonical={"https://showcase.vaithuhay.com"} />
+        <Banner banner={banner} />
+        <Typography
+          sx={{
+            fontSize: 15,
+            fontWeight: 600,
+            textAlign: "center",
+            width: "100%",
+            my: 2,
+            textTransform: "uppercase",
+          }}
+        >
+          Dự án đang chuẩn bị &quot;rời bệ phóng&quot;
+        </Typography>
+        <ImageList variant={"standard"} cols={2} gap={8} component={"section"}>
+          {featured.map(({ node }, index) => (
+            <ShowcaseFeaturedItem item={node} key={node.id} />
+          ))}
+        </ImageList>
+        <Box
+          sx={{
+            my: 0.7,
+            maxWidth: "100%",
+            overflowX: "scroll",
+            overflowY: "visible",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, py: 0.7 }}>
             <Box
-              // layoutId={getLayoutId("/thumb-wrapper")}
               sx={{
-                flexGrow: 1,
-                "& img": {
-                  objectFit: "cover",
-                  width: "100%",
-                  height: "100%",
-                },
+                width: 38,
+                height: 38,
+                mt: "-5px",
+                mb: "-5px",
+                borderRadius: "50%",
+                bgcolor: "yellow.main",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onClick={() => setOpenFilter(true)}
+            >
+              <FilterTuneIcon sx={{ width: 20, height: 20 }} />
+            </Box>
+            <SimpleFilter
+              filter={statusFilter}
+              onFilterChange={setStatusFilter}
+            />
+          </Box>
+        </Box>
+        <Box sx={{ minHeight: "75vh", position: "relative" }}>
+          <Fade in={networkStatus !== NetworkStatus.ready}>
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                pt: 3,
+                display: "flex",
+                justifyContent: "center",
               }}
             >
-              <img
-                // layoutId={getLayoutId("/thumb")}
-                src={
-                  "https://product.hstatic.net/1000069970/product/carpio22_fcc7132be79748e08ffabac9bd65aa4f_large.png"
-                }
-                alt={"ke co tay cong thai hoc"}
-              />
+              <LoadingIndicator />
             </Box>
-            <ProductInfoSecond>
-              <Box
-                sx={{
-                  height: 35,
-                  borderRadius: 17.5,
-                  bgcolor: "yellow.main",
-                  border: "3px solid white",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  mt: "-26px",
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: "black",
-                    fontWeight: 600,
-                    fontSize: 10,
-                    textAlign: "center",
-                    lineHeight: "11.74px",
-                  }}
-                  component={"div"}
-                >
-                  Kê cổ tay công thái học Carpio 2.0 - DeltaHub
-                </Typography>
-              </Box>
-              <Typography sx={{ fontSize: 10, my: 0.5 }}>
-                Dự kiến ra mắt: <strong>15/11/2021</strong>
-              </Typography>
-              <Box sx={{ width: "100%", my: 0.5 }}>
-                <VthCountdown />
-              </Box>
-            </ProductInfoSecond>
-          </ImageListItem>
-        ))}
-      </ImageList>
-      <Box sx={{ my: 1, maxWidth: "100%", overflowX: "scroll" }}>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <Box
-            sx={{
-              width: 28,
-              height: 28,
-              borderRadius: "50%",
-              bgcolor: "yellow.main",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            onClick={() => setOpenFilter(true)}
+          </Fade>
+          <InfiniteScroll
+            next={loadMore}
+            hasMore={pageInfo.hasNextPage!}
+            threshold={1000}
           >
-            <TuneIcon sx={{ width: 16, height: 16 }} />
-          </Box>
-          <FilterTag
-            sx={
-              filter === "coming soon"
-                ? { bgcolor: "yellow.main", color: "black" }
-                : { bgcolor: "#d5d5d5", color: "white" }
-            }
-            onClick={() => changeFilter("coming soon")}
-          >
-            Coming Soon
-          </FilterTag>
-          <FilterTag
-            sx={
-              filter === "showcase"
-                ? { bgcolor: "yellow.main", color: "black" }
-                : { bgcolor: "#d5d5d5", color: "white" }
-            }
-            onClick={() => changeFilter("showcase")}
-          >
-            Showcase
-          </FilterTag>
-          <FilterTag
-            sx={
-              filter === "idea"
-                ? { bgcolor: "yellow.main", color: "black" }
-                : { bgcolor: "#d5d5d5", color: "white" }
-            }
-            onClick={() => changeFilter("idea")}
-          >
-            Idea
-          </FilterTag>
+            <ShowcaseList
+              posts={posts as unknown as ShowcaseEdge[]}
+              variant={"standard"}
+            />
+          </InfiniteScroll>
         </Box>
-      </Box>
-      <AnimatePresence>
-        <motion.div
-          key={filter ?? "none"}
-          animate={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 20 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.15 }}
+        <Box
+          sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 99 }}
         >
-          <ProductList
-            posts={restPost as unknown as ShowcaseEdge[]}
-            variant={"standard"}
-            onLoadMore={loadMore}
-          />
-        </motion.div>
-      </AnimatePresence>
-      <Box sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 99 }}>
-        <AnimatePresence>
-          {openFilter && (
-            <>
-              <MotionBox
-                sx={{
-                  position: "fixed",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  bgcolor: "rgba(0,0,0,.65)",
-                }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setOpenFilter(false)}
-              />
-              <FilterPanel />
-            </>
-          )}
-        </AnimatePresence>
-      </Box>
-    </MotionContainer>
+          <AnimatePresence>
+            {openFilter && (
+              <>
+                <MotionBox
+                  sx={{
+                    ...sxFullSizeFixed,
+                    bgcolor: "rgba(0,0,0,.65)",
+                  }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setOpenFilter(false)}
+                />
+                <FilterPanel />
+              </>
+            )}
+          </AnimatePresence>
+        </Box>
+      </Container>
+      <Footer />
+      <CreatorAndInvestorActions />
+    </>
   );
-}
+};
 
 // noinspection JSUnusedGlobalSymbols
-export default Home;
+export default withApollo(ssrIndex.withPage(() => ({}))(Home));
 
-export const getStaticProps = async () => {
-  const { edges, pageInfo } = await apiService.getAllShowcases();
-  return Promise.resolve({
-    props: { posts: edges, pageInfo },
-  });
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  return {
+    ...(await ssrIndex.getServerPage({}, ctx)),
+    revalidate: 45,
+  };
 };

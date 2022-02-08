@@ -1,0 +1,30 @@
+query ShowcasePortal {
+  showcases(paging: { first: 10 }, filter: { isFeatured: { is: true } }) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        slug
+        status
+        image {
+          path
+          preloadUrl
+          height
+          width
+        }
+        createdAt
+        expectedSaleAt
+        expectedSalePrice {
+          regular
+          pioneer
+          preorder
+          promo
+        }
+      }
+    }
+  }
+}

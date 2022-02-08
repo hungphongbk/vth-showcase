@@ -1,3 +1,8 @@
 {
-  "possibleTypes": {}
+  "possibleTypes": {
+    "IdInterface": [
+      "ImageList",
+      "MediaDto"
+    ]
+  }
 }

@@ -1,24 +1,47 @@
 overwrite: true
-schema: http://localhost:3001/graphql
-documents: ./src/**/*.graphql
+schema: ${NEXT_PUBLIC_API_URL}/graphql
+documents:
+  - ./src/**/*.graphql
 generates:
+  ./schema.graphql:
+    plugins:
+      - schema-ast
   ./src/api/introspection.json:
     plugins:
       - fragment-matcher
     config:
       module: commonjs
-  ./src/types/graphql.ts:
+  ./src/types/graphql.tsx:
     plugins:
       - typescript
       - typescript-operations
+      - typescript-react-apollo
     config:
-      avoidOptionals: true
-      dedupeFragments: false
+      reactApolloVersion: 3
+      withHooks: true
+      withRefetchFn: true
+      avoidOptionals: false
+      dedupeFragments: true
       declarationKind: interface
       disableDescriptions: true
       flattenGeneratedTypes: false
       preResolveTypes: true
       skipTypename: true
+      maybeValue: T | undefined
     hooks:
       afterAllFileWrite:
         - prettier --write
+  ./src/types/graphql.ssr.tsx:
+    plugins:
+      - graphql-codegen-apollo-next-ssr
+    config:
+      documentMode: external
+      importDocumentNodeExternallyFrom: ./graphql
+      reactApolloVersion: 3
+      withHooks: true
+      contextType: 'ApolloClientContext'
+      contextTypeRequired: true
+      apolloClientInstanceImport: '../api/apollo'
+    preset: import-types
+    presetConfig:
+      typesPath: ./graphql

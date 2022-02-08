@@ -1,0 +1,26 @@
+query ShowcasePreview($slug: String!) {
+  showcase(slug: $slug) {
+    id
+    slug
+    name
+    author {
+      email
+      name
+    }
+    brand {
+      name
+    }
+    status
+    image {
+      ...Media
+    }
+    description
+    expectedSalePrice {
+      regular
+      pioneer
+      preorder
+      promo
+    }
+    isPreordered
+  }
+}

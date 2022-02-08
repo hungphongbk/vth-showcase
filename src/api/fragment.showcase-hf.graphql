@@ -1,0 +1,14 @@
+fragment HighlightFeature on ShowcaseHighlightFeature{
+  id
+  name
+  description
+  image {
+    ...Media
+  }
+}
+
+fragment ShowcaseHF on Showcase{
+  highlightFeatures{
+    ...HighlightFeature
+  }
+}

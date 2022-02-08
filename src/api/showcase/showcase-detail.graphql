@@ -1,0 +1,14 @@
+query ShowcaseDetail($slug: String!) {
+  showcase(slug: $slug) {
+    ...ShowcaseDetail
+    ...ShowcaseHF
+    ...ShowcaseInvestorStat
+    updates {
+      id
+      content
+      createdAt
+    }
+    isPreordered
+    viewCount
+  }
+}

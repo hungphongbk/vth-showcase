@@ -1,0 +1,42 @@
+fragment ShowcaseDetail on Showcase{
+  id
+  slug
+  name
+  author{
+    email
+    name
+  }
+  brand{
+    name
+    description
+  }
+  status
+  image {
+    ...Media
+  }
+  description
+  expectedSalePrice{
+    regular
+    pioneer
+    preorder
+    promo
+  }
+  expectedQuantity {
+    pioneer
+    promo
+    preorder
+    regular
+  }
+  expectedSaleAt
+  expectedSaleEndAt
+  imageLists{
+    id
+    images{
+      ...Media
+    }
+  }
+  publishStatus
+  status
+  updatedAt
+  createdAt
+}

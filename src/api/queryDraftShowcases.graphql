@@ -1,0 +1,13 @@
+query DraftShowcases{
+  showcases(filter: {publishStatus: {eq: DRAFT}}){
+    edges {
+      node {
+        slug
+        name
+        image {
+          path
+        }
+      }
+    }
+  }
+}

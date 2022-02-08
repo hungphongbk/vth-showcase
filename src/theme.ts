@@ -2,59 +2,68 @@ import { createTheme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 
 declare module "@mui/material/styles" {
+  interface VthPalette {
+    red: {
+      main: string;
+      light?: string;
+      dark?: string;
+    };
+    green: {
+      main: string;
+      light?: string;
+      dark?: string;
+    };
+    yellow: {
+      main: string;
+      light?: string;
+      dark?: string;
+    };
+    neutral: {
+      lightGrey: string;
+      darkGrey: string;
+      darkWhite: string;
+      black: string;
+      placeholderText: string;
+    };
+    gray: {
+      main: string;
+      light?: string;
+      dark?: string;
+    };
+  }
+
   interface Theme {
     variables: {
       appBarHeight: number;
     };
   }
 
-  interface PaletteOptions {
-    red: {
-      main: string;
-      light?: string;
-      dark?: string;
-    };
-    green: {
-      main: string;
-      light?: string;
-      dark?: string;
-    };
-    yellow: {
-      main: string;
-      light?: string;
-      dark?: string;
-    };
-    neutral: {
-      darkWhite: string;
-    };
-  }
+  interface PaletteOptions extends VthPalette {}
 
-  interface Palette {
-    red: {
-      main: string;
-      light?: string;
-      dark?: string;
-    };
-    green: {
-      main: string;
-      light?: string;
-      dark?: string;
-    };
-    yellow: {
-      main: string;
-      light?: string;
-      dark?: string;
-    };
-    neutral: {
-      darkWhite: string;
-    };
-  }
+  interface Palette extends VthPalette {}
 
   // allow configuration using `createTheme`
   interface ThemeOptions {
     variables: {
       appBarHeight: number;
     };
+  }
+}
+
+declare module "@mui/material/SvgIcon" {
+  interface SvgIconPropsColorOverrides {
+    green: true;
+    gray: true;
+  }
+}
+
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    green: true;
+    gray: true;
+  }
+  interface ButtonClasses {
+    containedGray: string;
   }
 }
 
@@ -65,8 +74,10 @@ const theme = createTheme({
     fontSize: 10,
   },
   palette: {
+    divider: "#BFBFBF",
     primary: {
       main: "#FFDE50",
+      light: "#FFF5CB",
     },
     secondary: {
       main: "#19857b",
@@ -79,12 +90,24 @@ const theme = createTheme({
     },
     green: {
       main: "#0FD07F",
+      dark: "#008F54",
     },
     yellow: {
       main: "#FFDE50",
       light: "#FFF5CB",
     },
-    neutral: { darkWhite: "#F3F3F3" },
+    neutral: {
+      darkWhite: "#F3F3F3",
+      black: "#000",
+      lightGrey: "#D5D5D5",
+      darkGrey: "#ABABAB",
+      placeholderText: "rgba(0,0,0,.35)",
+    },
+    gray: {
+      main: "#ababab",
+      light: "#d5d5d5",
+      dark: "#ababab",
+    },
   },
   variables: {
     appBarHeight: 59,
@@ -101,6 +124,15 @@ const theme = createTheme({
           textTransform: "capitalize",
           fontWeight: 700,
           fontSize: 13,
+          "&.Mui-disabled": {
+            backgroundColor: "#e3e3e3",
+            borderColor: "#d3d3d3",
+          },
+        },
+        contained: {
+          "&.MuiButton-containedGray": {
+            color: "white",
+          },
         },
       },
     },

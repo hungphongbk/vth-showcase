@@ -9,6 +9,42 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href={`/apple-touch-icon.png?v=${process.env.NEXT_PUBLIC_APP_VERSION}`}
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href={`/favicon-32x32.png?v=${process.env.NEXT_PUBLIC_APP_VERSION}`}
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href={`/favicon-16x16.png?v=${process.env.NEXT_PUBLIC_APP_VERSION}`}
+          />
+          <link
+            rel="manifest"
+            href={`/site.webmanifest?v=${process.env.NEXT_PUBLIC_APP_VERSION}`}
+          />
+          <link
+            rel="mask-icon"
+            href={`/safari-pinned-tab.svg?v=${process.env.NEXT_PUBLIC_APP_VERSION}`}
+            color="#5bbad5"
+          />
+          <link
+            rel="shortcut icon"
+            href={`/favicon.ico?v=${process.env.NEXT_PUBLIC_APP_VERSION}`}
+          />
+          <meta
+            name="apple-mobile-web-app-title"
+            content="Vaithuhay Showcase"
+          />
+          <meta name="application-name" content="Vaithuhay Showcase" />
+          <meta name="msapplication-TileColor" content="#da532c" />
           {/* PWA primary color */}
           <meta content={theme.palette.primary.main} name="theme-color" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,11 +54,27 @@ export default class MyDocument extends Document {
             crossOrigin="true"
           />
           <link
-            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap"
+            rel="preconnect"
+            href={process.env.NEXT_PUBLIC_UPLOAD_API_URL}
+          />
+          <link
+            rel="dns-prefetch"
+            href={process.env.NEXT_PUBLIC_UPLOAD_API_URL}
+          />
+          <link rel="preconnect" href={process.env.NEXT_PUBLIC_API_URL} />
+          <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_API_URL} />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
             rel="stylesheet"
           />
         </Head>
-        <body style={{ paddingTop: theme.variables.appBarHeight }}>
+        <body
+          style={{
+            paddingTop: theme.variables.appBarHeight,
+            width: "100%",
+            height: "100%",
+          }}
+        >
           <Main />
           <NextScript />
         </body>
@@ -39,7 +91,10 @@ MyDocument.getInitialProps = async (ctx) => {
   try {
     ctx.renderPage = () =>
       originalRenderPage({
-        enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
+        enhanceApp: (App) =>
+          function EnhancedApp(props) {
+            return sheet.collectStyles(<App {...props} />);
+          },
       });
 
     const initialProps = await Document.getInitialProps(ctx);

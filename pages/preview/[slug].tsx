@@ -1,24 +1,37 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
-import ProductDetailed from "../../src/components/ProductDetailed";
+import { GetStaticProps } from "next";
+import ShowcaseDetailed from "../../src/components/showcase-detailed";
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { MotionBox } from "../../src/components/commons";
-import { apiService } from "../../src/api";
+import { apiService, withApollo } from "../../src/api";
+import { Showcase } from "../../src/types/graphql";
+import { useAuthQuery } from "../../src/components/system/useAuthQuery";
+import { NextSeo } from "next-seo";
+import { ssrShowcasePreview } from "../../src/types/graphql.ssr";
 
-export default function PreviewPage({
-  post,
-  posts,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter();
+function PreviewPage() {
+  const router = useRouter(),
+    slug = router.query.slug as string;
+
   useEffect(() => {
     // noinspection JSIgnoredPromiseFromCall
     router.prefetch("/");
     // noinspection JSIgnoredPromiseFromCall
-    router
-      .prefetch(`/post/${post.slug}`)
-      .then(() => console.log("prefetch post"));
-  }, [post.slug, router]);
+    router.prefetch(`/post/${slug}`);
+  }, [slug, router]);
+
+  const { loading, error, data } = useAuthQuery(
+    ssrShowcasePreview.usePage(() => ({
+      fetchPolicy: "cache-and-network",
+      variables: { slug },
+    }))
+  );
+
+  const showcase = data?.showcase as Showcase;
+
+  if (!showcase) return null;
+
   return (
     <Box
       sx={{
@@ -31,11 +44,8 @@ export default function PreviewPage({
         overflowY: "scroll",
       }}
     >
-      <ProductDetailed
-        item={post}
-        onClick={() => router.back()}
-        posts={posts}
-      />
+      <NextSeo canonical={"https://showcase.vaithuhay.com"} />
+      <ShowcaseDetailed item={showcase} onClick={() => router.back()} />
       <MotionBox
         data-testid={"backdrop"}
         sx={{
@@ -57,19 +67,30 @@ export default function PreviewPage({
   );
 }
 
+export default withApollo(
+  ssrShowcasePreview.withPage((r) => ({
+    variables: { slug: r.query.slug as string },
+  }))(PreviewPage)
+);
+
 export const getStaticProps: GetStaticProps = async (context) => {
-  // noinspection PointlessArithmeticExpressionJS
-  return Promise.resolve({
-    props: {
-      ...(await apiService.getShowcasePreview(context.params!.slug as string)),
-    },
-  });
+  const slug = context.params!.slug as string;
+
+  return {
+    ...(await ssrShowcasePreview.getServerPage(
+      { variables: { slug } },
+      context
+    )),
+    revalidate: 45,
+  };
 };
 
 // noinspection JSUnusedGlobalSymbols
 export async function getStaticPaths() {
   return {
-    paths: (await apiService.getAllSlugs()).map((slug) => `/preview/${slug}`),
-    fallback: false,
+    paths: (await apiService.getAllSlugs())
+      .filter((slug) => !/^ci-test/.test(slug))
+      .map((slug) => `/preview/${slug}`),
+    fallback: "blocking",
   };
 }

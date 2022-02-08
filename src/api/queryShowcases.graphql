@@ -1,5 +1,5 @@
-query Showcases($paging: CursorPaging!) {
-  showcases(paging: $paging)  {
+query Showcases($filter: ShowcaseFilter, $paging: CursorPaging!) {
+  showcases(filter: $filter, paging: $paging)  {
     pageInfo{
       hasNextPage
       endCursor
@@ -9,10 +9,9 @@ query Showcases($paging: CursorPaging!) {
         id
         name
         slug
-        author
         status
         image {
-          path
+          ...Media
         }
         createdAt
       }

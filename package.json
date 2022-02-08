@@ -29,6 +29,7 @@
     "@mui/system": "^5.4.0",
     "@reduxjs/toolkit": "^1.6.2",
     "@sentry/nextjs": "^6.17.5",
+    "crypto-hash": "^2.0.1",
     "currency.js": "^2.0.4",
     "date-fns": "^2.27.0",
     "deepmerge": "^4.2.2",

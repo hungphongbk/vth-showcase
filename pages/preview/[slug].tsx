@@ -9,6 +9,7 @@ import { Showcase } from "../../src/types/graphql";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
 import { ssrShowcasePreview } from "../../src/types/graphql.ssr";
+import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 
 function PreviewPage() {
   const router = useRouter(),
@@ -21,7 +22,7 @@ function PreviewPage() {
     router.prefetch(`/post/${slug}`);
   }, [slug, router]);
 
-  const { loading, error, data } = useAuthQuery(
+  const { data } = useAuthQuery(
     ssrShowcasePreview.usePage(() => ({
       fetchPolicy: "cache-and-network",
       variables: { slug },
@@ -45,7 +46,29 @@ function PreviewPage() {
       }}
     >
       <NextSeo canonical={"https://showcase.vaithuhay.com"} />
-      <ShowcaseDetailed item={showcase} onClick={() => router.back()} />
+      <ShowcaseDetailed
+        item={showcase}
+        goBackButton={
+          <Box
+            data-testid={"go-back-button"}
+            sx={{
+              position: "fixed",
+              top: 8,
+              left: 8,
+              p: 2,
+              zIndex: 99,
+              color: "white",
+            }}
+            onClick={() => router.back()}
+          >
+            <ArrowBackIosRoundedIcon
+              sx={{
+                fontSize: 32,
+              }}
+            />
+          </Box>
+        }
+      />
       <MotionBox
         data-testid={"backdrop"}
         sx={{

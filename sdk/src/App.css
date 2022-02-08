@@ -1,7 +1,0 @@
-section#showcase-portal{
-    position:relative;
-    z-index:1;
-}
-section#showcase-portal+section{
-    z-index:0;
-}

@@ -3,7 +3,8 @@ import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { forwardRef, PropsWithChildren } from "react";
-import { Box, styled } from "@mui/material";
+import { Box } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { SxProps } from "@mui/system";
 
 type SlickSliderProps = PropsWithChildren<Partial<Settings>> & {

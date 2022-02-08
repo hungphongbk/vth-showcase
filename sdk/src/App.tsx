@@ -7,16 +7,14 @@ import bg from "./assets/bg.webp";
 import {
   Box,
   CssBaseline,
-  styled,
-  ThemeProvider,
+  GlobalStyles,
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
+import { createTheme, styled, ThemeProvider } from "@mui/material/styles";
 import { SnackbarProvider } from "notistack";
 import theme from "../../src/theme";
 import NewPopup from "./components/new-popup";
-import "./App.css";
 
 const portalTheme = createTheme(theme, {
   typography: {
@@ -34,6 +32,19 @@ const Title = styled(Typography)`
     margin-bottom: 1.5rem;
   }
 `;
+const globalStyles = (
+  <GlobalStyles
+    styles={{
+      "#showcase-portal": {
+        position: "relative",
+        zIndex: 1,
+      },
+      "#showcase-portal+section": {
+        zIndex: 0,
+      },
+    }}
+  />
+);
 
 export default function App() {
   const { data } = useShowcasePortalQuery();
@@ -43,6 +54,7 @@ export default function App() {
   return (
     <ThemeProvider theme={portalTheme}>
       <CssBaseline />
+      {globalStyles}
       <SnackbarProvider maxSnack={3}>
         <AspectRatio ratio={"752/473"} sx={{ mb: -1, overflowX: "hidden" }}>
           <img

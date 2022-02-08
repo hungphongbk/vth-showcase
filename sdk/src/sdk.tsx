@@ -2,6 +2,7 @@ import "regenerator-runtime/runtime";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import "!style-loader!css-loader!./sdk.css";
 // noinspection ES6PreferShortImport
 import { ApolloProvider } from "@apollo/client";
 import { apolloClient } from "./apollo";

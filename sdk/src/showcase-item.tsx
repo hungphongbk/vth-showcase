@@ -4,7 +4,8 @@ import {
   MediaDto,
   Showcase,
 } from "@hungphongbk/vth-sdk";
-import { Box, Button, Link, Stack, styled, Typography } from "@mui/material";
+import { Box, Button, Link, Stack, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import PreloadImage from "./components/PreloadImage";
 import VthCountdown from "../../src/components/vth-countdown";
 import PortalPreorderButton from "./portal-preorder-button";

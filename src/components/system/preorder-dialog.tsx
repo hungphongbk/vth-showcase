@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, DialogContent, Stack, styled, Typography } from "@mui/material";
+import { Box, DialogContent, Stack, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import {
   PreorderRequestInputDto,
   Showcase,

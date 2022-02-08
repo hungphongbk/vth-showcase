@@ -32,7 +32,7 @@ const moduleExports = withPlugins([withBundleAnalyzer, withTM], {
   },
   experimental: {
     scrollRestoration: true,
-    styledComponent: true,
+    styledComponents: true,
   },
   staticPageGenerationTimeout: 300,
   async redirects() {

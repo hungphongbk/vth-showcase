@@ -48,26 +48,28 @@ function PreviewPage() {
       <NextSeo canonical={"https://showcase.vaithuhay.com"} />
       <ShowcaseDetailed
         item={showcase}
-        goBackButton={
-          <Box
-            data-testid={"go-back-button"}
-            sx={{
-              position: "fixed",
-              top: 8,
-              left: 8,
-              p: 2,
-              zIndex: 99,
-              color: "white",
-            }}
-            onClick={() => router.back()}
-          >
-            <ArrowBackIosRoundedIcon
+        slots={{
+          goBackButton: (
+            <Box
+              data-testid={"go-back-button"}
               sx={{
-                fontSize: 32,
+                position: "fixed",
+                top: 8,
+                left: 8,
+                p: 2,
+                zIndex: 99,
+                color: "white",
               }}
-            />
-          </Box>
-        }
+              onClick={() => router.back()}
+            >
+              <ArrowBackIosRoundedIcon
+                sx={{
+                  fontSize: 32,
+                }}
+              />
+            </Box>
+          ),
+        }}
       />
       <MotionBox
         data-testid={"backdrop"}

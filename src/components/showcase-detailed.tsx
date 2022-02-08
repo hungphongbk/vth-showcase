@@ -19,13 +19,17 @@ import ImageListDisplay from "./image-list-display";
 const testPreview = (str: string) => /^\/preview/.test(str),
   testPost = (str: string) => /^\/post/.test(str);
 
+type ShowcaseDetailedProps = {
+  item: Showcase;
+  slots?: {
+    goBackButton?: ReactNode;
+    afterSummary?: ReactNode;
+  };
+} & HTMLProps<HTMLElement>;
 export default function ShowcaseDetailed({
   item,
-  goBackButton = undefined,
-}: {
-  item: Showcase;
-  goBackButton?: ReactNode;
-} & HTMLProps<HTMLElement>) {
+  slots = {},
+}: ShowcaseDetailedProps) {
   const router = useRouter();
   const currentPage: "preview" | "post" | undefined = testPreview(
     router.pathname
@@ -61,6 +65,8 @@ export default function ShowcaseDetailed({
     };
   }, [routeChangeEnd, routeChangeStart, router.events]);
 
+  const { goBackButton = undefined, afterSummary = undefined } = slots!;
+
   // @ts-ignore
   return (
     <>
@@ -68,7 +74,6 @@ export default function ShowcaseDetailed({
         //@ts-ignore
         ref={wrapper}
         layoutId={"detail-"}
-        // layout
         sx={{
           position: "relative",
           overflowY: "scroll",
@@ -80,9 +85,6 @@ export default function ShowcaseDetailed({
           fontSize: 13,
           WebkitTapHighlightColor: "transparent",
         }}
-        // initial={{ x: "100%", opacity: 0 }}
-        // animate={{ x: 0, opacity: "100%" }}
-        // exit={{ x: 0, opacity: 0 }}
         transition={{ duration: 0.4 }}
       >
         {goBackButton}
@@ -159,11 +161,17 @@ export default function ShowcaseDetailed({
                 sx={{ gridArea: "user" }}
               >
                 <DetailedUserIcon />
-                <Typography sx={{ fontSize: "15px", lineHeight: "18px" }}>
+                <Typography sx={{ fontSize: "1.1em", lineHeight: "18px" }}>
                   {item.author.name}
                 </Typography>
               </Stack>
             </Box>
+            {afterSummary && (
+              <>
+                <Divider sx={{ mt: 1.2, mb: 1.2 }} />
+                {afterSummary}
+              </>
+            )}
             {currentPage === "preview" && (
               <Box
                 sx={{

@@ -78,6 +78,7 @@ export default function ShowcaseDetailed({
           zIndex: 11,
           padding: 1,
           fontSize: 13,
+          WebkitTapHighlightColor: "transparent",
         }}
         // initial={{ x: "100%", opacity: 0 }}
         // animate={{ x: 0, opacity: "100%" }}

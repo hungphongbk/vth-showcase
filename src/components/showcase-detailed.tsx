@@ -1,9 +1,8 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
-import { HTMLProps, useCallback, useEffect, useRef } from "react";
+import { HTMLProps, ReactNode, useCallback, useEffect, useRef } from "react";
 import { MotionBox, MotionTypo, ProductInfoDetailed } from "./commons";
 import CollapseDetail from "./CollapseDetail";
 import StatusBadge from "./StatusBadge";
-import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { CollapseCard, SlickSlider } from "./index";
@@ -22,9 +21,10 @@ const testPreview = (str: string) => /^\/preview/.test(str),
 
 export default function ShowcaseDetailed({
   item,
-  onClick,
+  goBackButton = undefined,
 }: {
   item: Showcase;
+  goBackButton?: ReactNode;
 } & HTMLProps<HTMLElement>) {
   const router = useRouter();
   const currentPage: "preview" | "post" | undefined = testPreview(
@@ -84,26 +84,7 @@ export default function ShowcaseDetailed({
         // exit={{ x: 0, opacity: 0 }}
         transition={{ duration: 0.4 }}
       >
-        {currentPage === "preview" && (
-          <MotionBox
-            data-testid={"go-back-button"}
-            sx={{
-              position: "fixed",
-              top: 8,
-              left: 8,
-              p: 2,
-              zIndex: 99,
-              color: "white",
-            }}
-            onClick={onClick}
-          >
-            <ArrowBackIosRoundedIcon
-              sx={{
-                fontSize: 32,
-              }}
-            />
-          </MotionBox>
-        )}
+        {goBackButton}
         <MotionBox
           layoutId={"info"}
           layout

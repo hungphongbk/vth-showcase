@@ -71,7 +71,7 @@ function PostDetailedPage() {
       />
       <Box sx={{ bgcolor: "#f0f0f0" }}>
         <InvestorInformation stat={data!.showcase.investorStat as any} />
-        <ShowcaseDetailed item={showcase} onClick={() => router.push("/")} />
+        <ShowcaseDetailed item={showcase} />
         <Box
           sx={{
             position: "fixed",

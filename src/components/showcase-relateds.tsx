@@ -1,7 +1,8 @@
-import { useShowcaseRelatedsQuery } from "../types/graphql";
 import { Box, Fade, Typography } from "@mui/material";
 import ShowcaseList from "./showcase-list";
 import { SwitchTransition } from "react-transition-group";
+import { useShowcaseRelatedsLazyQuery } from "../types/graphql";
+import { useEffect } from "react";
 
 type ShowcaseRelatedsProps = {
   slug: string;
@@ -9,11 +10,18 @@ type ShowcaseRelatedsProps = {
 export default function ShowcaseRelateds({
   slug,
 }: ShowcaseRelatedsProps): JSX.Element {
-  const { data: relateds, networkStatus } = useShowcaseRelatedsQuery({
-    variables: { slug },
-    ssr: false,
-    notifyOnNetworkStatusChange: true,
-  });
+  const [fetchRelateds, { data: relateds, networkStatus }] =
+    useShowcaseRelatedsLazyQuery({
+      variables: { slug },
+      ssr: false,
+      notifyOnNetworkStatusChange: true,
+    });
+
+  useEffect(() => {
+    setTimeout(() => fetchRelateds(), 300);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Box
     // initial={{ opacity: 0 }}

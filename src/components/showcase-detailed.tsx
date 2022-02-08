@@ -1,5 +1,5 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
-import { HTMLProps, useCallback, useEffect, useRef, useState } from "react";
+import { HTMLProps, useCallback, useEffect, useRef } from "react";
 import { MotionBox, MotionTypo, ProductInfoDetailed } from "./commons";
 import CollapseDetail from "./CollapseDetail";
 import StatusBadge from "./StatusBadge";
@@ -61,8 +61,6 @@ export default function ShowcaseDetailed({
     };
   }, [routeChangeEnd, routeChangeStart, router.events]);
 
-  const [open, setOpen] = useState(false);
-
   // @ts-ignore
   return (
     <>
@@ -70,7 +68,7 @@ export default function ShowcaseDetailed({
         //@ts-ignore
         ref={wrapper}
         layoutId={"detail-"}
-        layout
+        // layout
         sx={{
           position: "relative",
           overflowY: "scroll",
@@ -108,6 +106,7 @@ export default function ShowcaseDetailed({
         )}
         <MotionBox
           layoutId={"info"}
+          layout
           sx={{ borderRadius: 5, overflow: "hidden" }}
         >
           <MotionBox

@@ -262,11 +262,14 @@ export interface DeleteOneShowcaseHighlightFeatureInput {
   id: Scalars['ID'];
 }
 
-export interface FcmRegistrationTokenDto {
-  createdAt: Scalars['DateTime'];
-  id: Scalars['ID'];
-  token: Scalars['String'];
-  topic: Scalars['String'];
+export interface FcmNotificationPayloadDto {
+  body?: InputMaybe<Scalars['String']>;
+  icon?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+}
+
+export interface FcmPayloadDto {
+  notification?: InputMaybe<FcmNotificationPayloadDto>;
 }
 
 export interface IdFilterComparison {
@@ -729,12 +732,13 @@ export interface Mutation {
   removeImageFromShowcaseHighlightFeature: ShowcaseHighlightFeature;
   removeImagesFromImageList: ImageList;
   sendEmail: MailDto;
+  sendNotification: Scalars['Boolean'];
   setAuthorOnCommentDto: CommentDto;
   setAuthorOnShowcase: Showcase;
   setImageOnShowcase: Showcase;
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
-  subscribeToFcmTopic: FcmRegistrationTokenDto;
+  subscribeToFcmTopic: Scalars['Boolean'];
   updateManyInvestmentPackageDtos: UpdateManyResponse;
   updateManyMailTemplateDtos: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
@@ -954,6 +958,12 @@ export interface MutationSendEmailArgs {
 }
 
 
+export interface MutationSendNotificationArgs {
+  payload: FcmPayloadDto;
+  topic: Scalars['String'];
+}
+
+
 export interface MutationSetAuthorOnCommentDtoArgs {
   input: SetAuthorOnCommentDtoInput;
 }
@@ -981,7 +991,7 @@ export interface MutationSetImagesOnImageListArgs {
 
 export interface MutationSubscribeToFcmTopicArgs {
   token: Scalars['String'];
-  topic: Scalars['String'];
+  topic: Array<Scalars['String']>;
 }
 
 
@@ -1284,6 +1294,11 @@ export interface QueryCalculateInventoryStatArgs {
 
 export interface QueryCommentDtoArgs {
   id: Scalars['ID'];
+}
+
+
+export interface QueryGetAllUsersArgs {
+  isAdmin?: InputMaybe<Scalars['Boolean']>;
 }
 
 
@@ -1818,6 +1833,7 @@ export interface ShowcaseSumAggregate {
 }
 
 export interface ShowcaseUpdateInputDto {
+  authorUid?: InputMaybe<Scalars['String']>;
   brand?: InputMaybe<ShowcaseBrandInput>;
   description?: InputMaybe<Scalars['String']>;
   expectedQuantity?: InputMaybe<ShowcasePriceInput>;
@@ -2197,6 +2213,14 @@ export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CurrentUserQuery = { currentUser: { email: string, name: string, role: AuthRoleType, approvalStatus: UserStatusEnum } };
+
+export type SubscribeFcmMutationVariables = Exact<{
+  token: Scalars['String'];
+  topic: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type SubscribeFcmMutation = { subscribeToFcmTopic: boolean };
 
 export type SubmitPreorderMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -3456,6 +3480,38 @@ export type CurrentUserQueryResult = Apollo.QueryResult<CurrentUserQuery, Curren
 export function refetchCurrentUserQuery(variables?: CurrentUserQueryVariables) {
       return { query: CurrentUserDocument, variables: variables }
     }
+export const SubscribeFcmDocument = gql`
+    mutation SubscribeFcm($token: String!, $topic: [String!]!) {
+  subscribeToFcmTopic(token: $token, topic: $topic)
+}
+    `;
+export type SubscribeFcmMutationFn = Apollo.MutationFunction<SubscribeFcmMutation, SubscribeFcmMutationVariables>;
+
+/**
+ * __useSubscribeFcmMutation__
+ *
+ * To run a mutation, you first call `useSubscribeFcmMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSubscribeFcmMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [subscribeFcmMutation, { data, loading, error }] = useSubscribeFcmMutation({
+ *   variables: {
+ *      token: // value for 'token'
+ *      topic: // value for 'topic'
+ *   },
+ * });
+ */
+export function useSubscribeFcmMutation(baseOptions?: Apollo.MutationHookOptions<SubscribeFcmMutation, SubscribeFcmMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SubscribeFcmMutation, SubscribeFcmMutationVariables>(SubscribeFcmDocument, options);
+      }
+export type SubscribeFcmMutationHookResult = ReturnType<typeof useSubscribeFcmMutation>;
+export type SubscribeFcmMutationResult = Apollo.MutationResult<SubscribeFcmMutation>;
+export type SubscribeFcmMutationOptions = Apollo.BaseMutationOptions<SubscribeFcmMutation, SubscribeFcmMutationVariables>;
 export const SubmitPreorderDocument = gql`
     mutation SubmitPreorder($slug: String!, $input: PreorderRequestInputDto) {
   createOnePreorder(slug: $slug, input: $input) {

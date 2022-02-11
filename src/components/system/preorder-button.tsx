@@ -1,4 +1,4 @@
-import { useAuthInitialized } from "../../utils/hooks";
+import { useAuthInitialized, useNotificationRegister } from "../../utils/hooks";
 import {
   CheckFilledPrimaryIcon,
   PreorderFilledPrimaryIcon,
@@ -35,6 +35,7 @@ const PreorderButton = withPreorder<PreorderButtonProps>({
     [isSubmitted, setIsSubmitted] = useState(false),
     { enqueueSnackbar } = useSnackbar(),
     dispatch = useAppDispatch();
+  const register = useNotificationRegister([`preorder:${showcase.slug}`]);
 
   const IconComponent = useMemo(() => {
     if (isSubmitted) return CheckFilledPrimaryIcon;
@@ -54,6 +55,7 @@ const PreorderButton = withPreorder<PreorderButtonProps>({
       const [authService, data] = await Promise.all([
         FirebaseAuthService(),
         doSubmitPreorder(value, isAnonymous),
+        register(),
       ]);
       const payload = await authService.signInWithToken(
         data!.createOnePreorder.customToken!
@@ -63,7 +65,7 @@ const PreorderButton = withPreorder<PreorderButtonProps>({
       setIsSubmitting(false);
       setIsSubmitted(true);
     },
-    [dispatch, doSubmitPreorder]
+    [dispatch, doSubmitPreorder, register]
   );
 
   useEffect(() => {

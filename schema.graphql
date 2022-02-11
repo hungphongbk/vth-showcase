@@ -282,11 +282,14 @@ input DeleteOneShowcaseHighlightFeatureInput {
   id: ID!
 }
 
-type FcmRegistrationTokenDto {
-  createdAt: DateTime!
-  id: ID!
-  token: String!
-  topic: String!
+input FcmNotificationPayloadDto {
+  body: String
+  icon: String
+  title: String
+}
+
+input FcmPayloadDto {
+  notification: FcmNotificationPayloadDto
 }
 
 input IDFilterComparison {
@@ -786,12 +789,13 @@ type Mutation {
   removeImageFromShowcaseHighlightFeature(input: RemoveImageFromShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
   removeImagesFromImageList(input: RemoveImagesFromImageListInput!): ImageList!
   sendEmail(input: MailCreateDto!): MailDto!
+  sendNotification(payload: FcmPayloadDto!, topic: String!): Boolean!
   setAuthorOnCommentDto(input: SetAuthorOnCommentDtoInput!): CommentDto!
   setAuthorOnShowcase(input: SetAuthorOnShowcaseInput!): Showcase!
   setImageOnShowcase(input: SetImageOnShowcaseInput!): Showcase!
   setImageOnShowcaseHighlightFeature(input: SetImageOnShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
   setImagesOnImageList(input: SetImagesOnImageListInput!): ImageList!
-  subscribeToFcmTopic(token: String!, topic: String!): FcmRegistrationTokenDto!
+  subscribeToFcmTopic(token: String!, topic: [String!]!): Boolean!
   updateManyInvestmentPackageDtos(input: UpdateManyInvestmentPackageDtosInput!): UpdateManyResponse!
   updateManyMailTemplateDtos(input: UpdateManyMailTemplateDtosInput!): UpdateManyResponse!
   updateManyMediaDtos(input: UpdateManyMediaDtosInput!): UpdateManyResponse!
@@ -1026,7 +1030,7 @@ type Query {
     id: ID!
   ): CommentDto
   currentUser: User!
-  getAllUsers: [User!]!
+  getAllUsers(isAdmin: Boolean = false): [User!]!
   getOneUser(uid: String!): User!
   investmentPackageDto(
     """The id of the record to find."""
@@ -1629,6 +1633,7 @@ type ShowcaseSumAggregate {
 }
 
 input ShowcaseUpdateInputDto {
+  authorUid: String
   brand: ShowcaseBrandInput
   description: String
   expectedQuantity: ShowcasePriceInput

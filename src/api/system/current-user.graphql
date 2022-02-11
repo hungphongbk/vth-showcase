@@ -6,3 +6,6 @@ query CurrentUser {
     approvalStatus
   }
 }
+mutation SubscribeFcm($token: String!, $topic: [String!]!) {
+  subscribeToFcmTopic(token: $token, topic: $topic)
+}

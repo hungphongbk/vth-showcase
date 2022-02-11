@@ -122,19 +122,16 @@ async function checkNotificationClientGranted() {
 }
 export function useNotificationRegister(topics: string[]) {
   const [isTokenFound, setTokenFound] = useState(false),
-    getServicePromiseRef = useRef(
-      Promise.all([FcmService(), checkNotificationClientGranted()])
-    ),
-    [subscribe] = useSubscribeFcmMutation(),
-    getTokenPromise = useCallback(async () => {
-      const [service, isGranted] = await getServicePromiseRef.current;
-      if (!isGranted) return false;
-      const token = await service.getToken(setTokenFound);
-      if (token) {
-        await subscribe({ variables: { token, topic: topics } });
-      }
-      return true;
-    }, [subscribe, topics]);
-
-  return getTokenPromise;
+    getServicePromiseRef = useRef(FcmService()),
+    [subscribe] = useSubscribeFcmMutation();
+  return useCallback(async () => {
+    const service = await getServicePromiseRef.current;
+    const isGranted = await checkNotificationClientGranted();
+    if (!isGranted) return false;
+    const token = await service.getToken(setTokenFound);
+    if (token) {
+      await subscribe({ variables: { token, topic: topics } });
+    }
+    return true;
+  }, [subscribe, topics]);
 }

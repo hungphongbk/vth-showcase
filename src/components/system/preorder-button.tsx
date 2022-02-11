@@ -99,7 +99,9 @@ const PreorderButton = withPreorder<PreorderButtonProps>({
         onClick={() => {
           if (showcase.isPreordered) return;
           if (isLoggedIn) {
-            doSubmitPreorder(undefined, false).then(() => setIsSubmitted(true));
+            doSubmitPreorder(undefined, false)
+              .then(register)
+              .then(() => setIsSubmitted(true));
           } else setOpen(true);
         }}
       >

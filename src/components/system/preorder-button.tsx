@@ -35,7 +35,7 @@ const PreorderButton = withPreorder<PreorderButtonProps>({
     [isSubmitted, setIsSubmitted] = useState(false),
     { enqueueSnackbar } = useSnackbar(),
     dispatch = useAppDispatch();
-  const register = useNotificationRegister([`preorder:${showcase.slug}`]);
+  const register = useNotificationRegister([`preorder~${showcase.slug}`]);
 
   const IconComponent = useMemo(() => {
     if (isSubmitted) return CheckFilledPrimaryIcon;

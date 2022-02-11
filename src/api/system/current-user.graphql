@@ -7,7 +7,5 @@ query CurrentUser {
   }
 }
 mutation SubscribeFcm($token: String!, $topic: [String!]!) {
-  subscribeToFcmTopic(token: $token, topic: $topic) {
-    id
-  }
+  subscribeToFcmTopic(token: $token, topic: $topic)
 }

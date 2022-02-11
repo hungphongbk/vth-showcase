@@ -1,4 +1,4 @@
-import { useAuthInitialized } from "../../utils/hooks";
+import { useAuthInitialized, useNotificationRegister } from "../../utils/hooks";
 import {
   CheckFilledPrimaryIcon,
   PreorderFilledPrimaryIcon,
@@ -35,6 +35,7 @@ const PreorderButton = withPreorder<PreorderButtonProps>({
     [isSubmitted, setIsSubmitted] = useState(false),
     { enqueueSnackbar } = useSnackbar(),
     dispatch = useAppDispatch();
+  const register = useNotificationRegister([`preorder:${showcase.slug}`]);
 
   const IconComponent = useMemo(() => {
     if (isSubmitted) return CheckFilledPrimaryIcon;

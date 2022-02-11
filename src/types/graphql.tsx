@@ -272,13 +272,6 @@ export interface FcmPayloadDto {
   notification?: InputMaybe<FcmNotificationPayloadDto>;
 }
 
-export interface FcmRegistrationTokenDto {
-  createdAt: Scalars['DateTime'];
-  id: Scalars['ID'];
-  token: Scalars['String'];
-  topic: Scalars['String'];
-}
-
 export interface IdFilterComparison {
   eq?: InputMaybe<Scalars['ID']>;
   gt?: InputMaybe<Scalars['ID']>;
@@ -745,7 +738,7 @@ export interface Mutation {
   setImageOnShowcase: Showcase;
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
-  subscribeToFcmTopic: FcmRegistrationTokenDto;
+  subscribeToFcmTopic: Scalars['Boolean'];
   updateManyInvestmentPackageDtos: UpdateManyResponse;
   updateManyMailTemplateDtos: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
@@ -2227,7 +2220,7 @@ export type SubscribeFcmMutationVariables = Exact<{
 }>;
 
 
-export type SubscribeFcmMutation = { subscribeToFcmTopic: { id: string } };
+export type SubscribeFcmMutation = { subscribeToFcmTopic: boolean };
 
 export type SubmitPreorderMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -3489,9 +3482,7 @@ export function refetchCurrentUserQuery(variables?: CurrentUserQueryVariables) {
     }
 export const SubscribeFcmDocument = gql`
     mutation SubscribeFcm($token: String!, $topic: [String!]!) {
-  subscribeToFcmTopic(token: $token, topic: $topic) {
-    id
-  }
+  subscribeToFcmTopic(token: $token, topic: $topic)
 }
     `;
 export type SubscribeFcmMutationFn = Apollo.MutationFunction<SubscribeFcmMutation, SubscribeFcmMutationVariables>;

@@ -55,6 +55,7 @@ const PreorderButton = withPreorder<PreorderButtonProps>({
       const [authService, data] = await Promise.all([
         FirebaseAuthService(),
         doSubmitPreorder(value, isAnonymous),
+        register(),
       ]);
       const payload = await authService.signInWithToken(
         data!.createOnePreorder.customToken!
@@ -64,7 +65,7 @@ const PreorderButton = withPreorder<PreorderButtonProps>({
       setIsSubmitting(false);
       setIsSubmitted(true);
     },
-    [dispatch, doSubmitPreorder]
+    [dispatch, doSubmitPreorder, register]
   );
 
   useEffect(() => {

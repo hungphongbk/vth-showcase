@@ -3,6 +3,7 @@ const { withSentryConfig } = require("@sentry/nextjs");
 const withTM = require("next-transpile-modules")([
   "@mui/material",
   "@mui/system",
+  "@hungphongbk/vth-sdk",
 ]); // pass the modules you would like to see transpiled
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",

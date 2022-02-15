@@ -122,7 +122,7 @@ export default function InvestorRegDialogComponent({
         >
           Nếu bạn đang mong muốn tìm hiểu sâu hơn về việc đầu tư cùng Vaithuhay,
           đăng nhập ngay để hiển thị các thông tin về Doanh thu dự kiến, P&L chi
-          tiết của từng dự án, phương án kinh doanh & hình thức hợp tác
+          tiết của từng dự án, phương án kinh doanh & hình thức Đầu tư
           <button
             style={{
               backgroundColor: "#000000",
@@ -240,7 +240,7 @@ export default function InvestorRegDialogComponent({
             sx={{ fontWeight: 500 }}
             onClick={handleSubmit(onSubmit)}
           >
-            Hợp tác ngay
+            Đầu tư ngay
           </Button>
         </Stack>
       </DialogContent>

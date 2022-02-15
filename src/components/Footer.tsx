@@ -5,6 +5,7 @@ import ShowCaseSearchIcon from "../components/drawers/menu/ShowCaseSearchIcon";
 import bg1 from "../assets/white-paper-texture 1.png";
 import logo from "../assets/Logo Showcase-01.png";
 import CloseIcon from "../assets/icons/CloseIcon";
+import FooterBackIcon from "../assets/icons/FooterBackIcon";
 import { PostProductButton } from "./system";
 
 type ImageBoxProps = BoxProps & { bg: ImageProps["src"] };
@@ -342,7 +343,7 @@ function Footer() {
         <FooterBox3>
           <PBox3>
             Đây cũng là nơi dành cho các Nhà đầu tư đang tìm kiếm dự án đầu tư/
-            kinh doanh, thì việc hợp tác với Vaithuhay vô cùng phù hợp vì chúng
+            kinh doanh, thì việc Đầu tư với Vaithuhay vô cùng phù hợp vì chúng
             tôi tự tin về cách giải quyết vấn đề, kinh nghiệm, cách triển khai,
             nguồn vốn cũng như &quot;insight về ngành&quot; sẽ giúp anh/chị đầu
             tư hạn chế rủi ro hơn rất nhiều khi tự mình làm.
@@ -382,7 +383,7 @@ function Footer() {
         </StyleContent>
       </StyleBgrFooter>
       <Back>
-        <PBack> </PBack>
+        <PBack sx={{display:"flex", alignItems:"center"}}><a href="vaithuhay.com" style={{textDecoration:"none", color:"#000000" }}> <FooterBackIcon style={{margin: "0 6px -2px 0"}} />Quay trở về trang chủ </a></PBack>
       </Back>
       <Dialog
         open={open}

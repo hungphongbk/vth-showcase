@@ -116,7 +116,7 @@ function ShowCaseTab() {
           <StyledBoxTab2>
             <StyledTab2>
               Đây cũng là nơi dành cho các Nhà đầu tư đang tìm kiếm dự án đầu
-              tư/ kinh doanh, thì việc hợp tác với Vaithuhay vô cùng phù hợp vì
+              tư/ kinh doanh, thì việc Đầu tư với Vaithuhay vô cùng phù hợp vì
               chúng tôi tự tin về cách giải quyết vấn đề, kinh nghiệm, cách
               triển khai, nguồn vốn cũng như &quot;insight về ngành&quot; sẽ
               giúp anh/chị đầu tư hạn chế rủi ro hơn rất nhiều khi tự mình làm.

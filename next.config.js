@@ -3,6 +3,7 @@ const { withSentryConfig } = require("@sentry/nextjs");
 const withTM = require("next-transpile-modules")([
   "@mui/material",
   "@mui/system",
+  "@mui/lab",
   "@hungphongbk/vth-sdk",
 ]); // pass the modules you would like to see transpiled
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
@@ -33,6 +34,8 @@ const moduleExports = withPlugins([withBundleAnalyzer, withTM], {
   },
   experimental: {
     scrollRestoration: true,
+  },
+  compiler: {
     styledComponents: true,
   },
   staticPageGenerationTimeout: 300,

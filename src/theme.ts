@@ -136,6 +136,26 @@ const theme = createTheme({
         },
       },
     },
+    MuiSelect: {
+      defaultProps: {
+        MenuProps: {
+          PaperProps: {
+            sx: {
+              bgcolor: "#F3F3F3",
+              borderRadius: "11px",
+            },
+          },
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          minHeight: "32px",
+          fontSize: 12,
+        },
+      },
+    },
   },
 });
 

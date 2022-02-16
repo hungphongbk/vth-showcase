@@ -183,7 +183,7 @@ export default function InvestorRegDialogComponent({
             fullWidth
             style={{ border: "1px solid #ABABAB", borderRadius: "15px" }}
           >
-            <MenuItem value={"-"}>
+            <MenuItem value={"-"} sx={{ display: "none" }}>
               <Typography sx={{ color: "neutral.placeholderText" }}>
                 Mục đích đầu tư
               </Typography>
@@ -203,7 +203,7 @@ export default function InvestorRegDialogComponent({
             fullWidth
             style={{ border: "1px solid #ABABAB", borderRadius: "15px" }}
           >
-            <MenuItem value={"-"}>
+            <MenuItem value={"-"} sx={{ display: "none" }}>
               <Typography sx={{ color: "neutral.placeholderText" }}>
                 Hình thức đầu tư
               </Typography>
@@ -223,7 +223,7 @@ export default function InvestorRegDialogComponent({
             fullWidth
             style={{ border: "1px solid #ABABAB", borderRadius: "15px" }}
           >
-            <MenuItem value={"-"}>
+            <MenuItem value={"-"} sx={{ display: "none" }}>
               <Typography sx={{ color: "neutral.placeholderText" }}>
                 Số vốn có thể tham gia
               </Typography>

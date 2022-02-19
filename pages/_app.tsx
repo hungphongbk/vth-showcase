@@ -2,7 +2,6 @@ import * as React from "react";
 import { ReactElement, ReactNode } from "react";
 import { Box, CssBaseline, TextField, ThemeProvider } from "@mui/material";
 import type { AppProps } from "next/app";
-import theme from "../src/theme";
 import Header from "../src/components/Header";
 import { LayoutGroup } from "framer-motion";
 import "intersection-observer";
@@ -27,6 +26,7 @@ import { useGATrackView } from "../src/utils/hooks";
 import { apolloClient } from "../src/api";
 import "../styles/globals.css";
 import ScrollablePanel from "../src/components/scrollable-panel";
+import { appTheme } from "../src/app-theme";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -87,7 +87,7 @@ export default function MyApp(props: AppPropsWithLayout) {
                   },
                 }}
               >
-                <ThemeProvider theme={theme}>
+                <ThemeProvider theme={appTheme}>
                   <SnackbarProvider maxSnack={3}>
                     <LocalizationProvider dateAdapter={DateAdapter}>
                       <CssBaseline />

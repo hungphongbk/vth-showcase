@@ -11,16 +11,22 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { createTheme, styled, ThemeProvider } from "@mui/material/styles";
+import {
+  createTheme,
+  styled,
+  ThemeOptions,
+  ThemeProvider,
+} from "@mui/material/styles";
 import { SnackbarProvider } from "notistack";
 import theme from "../../src/theme";
 import NewPopup from "./components/new-popup";
+import { DeepPartial } from "redux";
 
 const portalTheme = createTheme(theme, {
   typography: {
     fontFamily: "Montserrat, Arial",
   },
-});
+} as DeepPartial<ThemeOptions>);
 const Title = styled(Typography)`
   &.MuiTypography-root {
     font-style: normal;

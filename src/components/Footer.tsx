@@ -1,12 +1,12 @@
 import React, { forwardRef, useState } from "react";
 import { Box, BoxProps, Button, Dialog, styled } from "@mui/material";
 import Image, { ImageProps } from "next/image";
-import ShowCaseSearchIcon from "../components/drawers/menu/ShowCaseSearchIcon";
 import bg1 from "../assets/white-paper-texture 1.png";
 import logo from "../assets/Logo Showcase-01.png";
 import CloseIcon from "../assets/icons/CloseIcon";
 import FooterBackIcon from "../assets/icons/FooterBackIcon";
 import { PostProductButton } from "./system";
+import InvestorButton from "./system/investor-button";
 
 type ImageBoxProps = BoxProps & { bg: ImageProps["src"] };
 // eslint-disable-next-line react/display-name
@@ -64,7 +64,6 @@ const LogoFooter = styled(Box)`
 `;
 const FooterBox1 = styled(Box)``;
 const PBox1 = styled(Box)`
-  font-style: normal;
   font-weight: normal;
   font-size: 12px;
   line-height: 158.4%;
@@ -133,7 +132,6 @@ const FooterBox3 = styled(Box)`
   margin: 35px 27px 0px 29px;
 `;
 const PBox2 = styled(Box)`
-  font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 155.4%;
@@ -148,31 +146,10 @@ const PBox2 = styled(Box)`
   margin: 10px 0 0;
   padding: 0 19px 30px 19px;
 `;
-const BtnPostProduct = styled(Button)`
-  /* Yellow */
-  background: #ffde50;
-  border: 3px solid #fff5cb;
-  /* Button */
-  box-shadow: inset 0px -4px 6px rgba(0, 0, 0, 0.1);
-  height: 30px;
-  border-radius: 15px;
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, 50%);
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 15px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 const PBox3 = styled(Box)`
   position: relative;
   overflow: hidden;
-  font-style: normal;
-  font-weight: normal;
+
   font-size: 12px;
   line-height: 158.9%;
   /* or 19px */
@@ -182,6 +159,8 @@ const PBox3 = styled(Box)`
   text-align: justify;
   margin: 10px 0 0 0;
   padding: 10px 19px 33px 25px;
+  color: #fff;
+  font-weight: 500;
 `;
 const Back = styled(Box)`
   position: relative;
@@ -191,7 +170,6 @@ const Back = styled(Box)`
 `;
 
 const PBack = styled(Button)`
-  font-style: normal;
   font-weight: 600;
   font-size: 15px;
   line-height: 18px;
@@ -210,7 +188,6 @@ const FooterBox4 = styled(Box)`
   color: #000000;
 `;
 const H1Box = styled(Box)`
-  font-style: normal;
   font-weight: bold;
   font-size: 20px;
   line-height: 24px;
@@ -219,7 +196,6 @@ const H1Box = styled(Box)`
   color: #3f3f3f;
 `;
 const H3Box = styled(Box)`
-  font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 198.4%;
@@ -229,7 +205,6 @@ const H3Box = styled(Box)`
   position: relative;
 `;
 const H4Box = styled(Button)`
-  font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 215.9%;
@@ -329,7 +304,13 @@ function Footer() {
             </BoxEllipse>
           </WrapperEllipse>
         </FooterBox2>
-        <FooterBox3>
+        <FooterBox3
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <PBox3>
             Đây cũng là nơi dành cho các Nhà đầu tư đang tìm kiếm dự án đầu tư/
             kinh doanh, thì việc Đầu tư với Vaithuhay vô cùng phù hợp vì chúng
@@ -340,10 +321,7 @@ function Footer() {
               style={{ left: "10%", bottom: "-8%", filter: "blur(15px)" }}
             />
           </PBox3>
-          <BtnPostProduct>
-            <ShowCaseSearchIcon style={{ marginRight: "6px" }} />
-            TÌM HIỂU THÊM
-          </BtnPostProduct>
+          <InvestorButton>TÌM HIỂU THÊM</InvestorButton>
           <WrapperEllipse
             style={{
               left: "10%",

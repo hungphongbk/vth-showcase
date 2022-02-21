@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, styled } from "@mui/material";
 import bgr1 from "../../../assets/bg-investor-1.png";
-import ShowCaseSearchIcon from "./ShowCaseSearchIcon";
-import { StyledBox, StyledBoxBase } from "../../post-page/styled";
+import { StyledBoxBase } from "../../post-page/styled";
 import { PostProductButton } from "../../system";
+import InvestorButton from "../../system/investor-button";
 
 const StyledTab1 = styled(Box)`
   font-weight: normal;
@@ -14,36 +14,6 @@ const StyledTab1 = styled(Box)`
   text-align: justify;
   padding: 11px 27px 11px 22px;
   color: #000000;
-`;
-const StyledTab2 = styled(Box)`
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 155.4%;
-  /* or 19px */
-  padding: 9px 13px 24px 14px;
-  display: flex;
-  align-items: center;
-  text-align: justify;
-
-  color: #ffffff;
-`;
-const StyledButton = styled(Box)`
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 15px;
-  color: #000000;
-  text-align: center;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-`;
-const StyledBtn = styled(Box)`
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, 50%);
 `;
 function ShowCaseTab() {
   return (
@@ -65,7 +35,7 @@ function ShowCaseTab() {
           sx={{
             bgcolor: "#707070",
             margin: "0px 24px 35px 22px",
-            pt: "1px",
+            py: "1px",
             display: "flex",
             alignItems: "center",
             flexDirection: "column",
@@ -85,38 +55,35 @@ function ShowCaseTab() {
           </Box>
           <PostProductButton />
         </StyledBoxBase>
-        <StyledBox
+        <StyledBoxBase
           bg={bgr1}
-          sx={{ bgcolor: "#707070" }}
-          style={{
-            position: "relative",
-            margin: "0px 24px 0 22px",
+          sx={{
+            bgcolor: "#707070",
+            py: "1px",
             display: "flex",
+            alignItems: "center",
             flexDirection: "column",
+            margin: "0px 24px 0 22px",
           }}
         >
-          <Box sx={{ color: "white" }}>
+          <Box
+            sx={{
+              pt: "11px",
+              pb: "32px",
+              px: "4px",
+              fontWeight: 500,
+              textAlign: "justify",
+              color: "white",
+            }}
+          >
             Đây cũng là nơi dành cho các Nhà đầu tư đang tìm kiếm dự án đầu tư/
             kinh doanh, thì việc Đầu tư với Vaithuhay vô cùng phù hợp vì chúng
             tôi tự tin về cách giải quyết vấn đề, kinh nghiệm, cách triển khai,
             nguồn vốn cũng như &quot;insight về ngành&quot; sẽ giúp anh/chị đầu
             tư hạn chế rủi ro hơn rất nhiều khi tự mình làm.
           </Box>
-          <StyledBtn>
-            <StyledButton>
-              <ShowCaseSearchIcon
-                style={{
-                  marginLeft: "4px",
-                  marginTop: "1px",
-                  position: "absolute",
-                  left: "0",
-                  top: "0",
-                }}
-              />
-              TÌM HIỂU THÊM
-            </StyledButton>
-          </StyledBtn>
-        </StyledBox>
+          <InvestorButton>TÌM HIỂU THÊM</InvestorButton>
+        </StyledBoxBase>
       </Box>
     </Box>
   );

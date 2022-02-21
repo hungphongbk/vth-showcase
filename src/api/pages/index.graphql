@@ -19,6 +19,12 @@ query IndexPage {
         }
         createdAt
         expectedSaleAt
+        expectedSalePrice {
+          regular
+          pioneer
+          preorder
+          promo
+        }
       }
     }
   }

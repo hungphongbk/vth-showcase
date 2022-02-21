@@ -1,6 +1,4 @@
 import { useShowcasePortalQuery } from "../../src/types/graphql";
-import ShowcaseItem from "./showcase-item";
-import SlickSlider from "../../src/components/slick-slider";
 import ShowcasePortalLogo from "./assets/ShowcasePortalLogo";
 import { AspectRatio } from "@hungphongbk/vth-sdk";
 import bg from "./assets/bg.webp";
@@ -21,6 +19,7 @@ import { SnackbarProvider } from "notistack";
 import theme from "../../src/theme";
 import NewPopup from "./components/new-popup";
 import { DeepPartial } from "redux";
+import ShowcaseFeaturedList from "../../src/components/showcase-featured-list";
 
 const portalTheme = createTheme(theme, {
   typography: {
@@ -83,16 +82,10 @@ export default function App() {
             {/* eslint-disable-next-line react/no-unescaped-entities */}
             <Title>DỰ ÁN CHUẨN BỊ "RỜI BỆ PHÓNG"</Title>
             {data && (
-              <SlickSlider slidesToShow={1.17} infinite={false}>
-                {data.showcases.edges.map(({ node }) => (
-                  <ShowcaseItem key={node.id} showcase={node} />
-                ))}
-                <ShowcaseItem
-                  showcase={data.showcases.edges.slice(-1)[0]!.node!}
-                  seeMoreUi
-                  key={"__see-more"}
-                />
-              </SlickSlider>
+              <ShowcaseFeaturedList
+                items={data.showcases.edges.map(({ node }) => node)}
+                hasSeeMore
+              />
             )}
           </Box>
         </AspectRatio>

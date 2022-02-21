@@ -9,7 +9,7 @@ import { styled } from "@mui/material/styles";
 import PreloadImage from "../../sdk/src/components/PreloadImage";
 import VthCountdown from "./vth-countdown";
 import PortalPreorderButton from "../../sdk/src/portal-preorder-button";
-import { useMemo } from "react";
+import { AnchorHTMLAttributes, useMemo } from "react";
 
 export type ShowcaseItemBase = Pick<
   Partial<Showcase>,
@@ -43,14 +43,23 @@ const StyledLink = styled(Link)`
 type ShowcaseItemProps<T> = {
   showcase: T;
   seeMoreUi?: boolean;
+  inPortal?: boolean;
 };
 export default function ShowcaseFeaturedItem<
   T extends ShowcaseItemBase = ShowcaseItemBase
->({ showcase, seeMoreUi }: ShowcaseItemProps<T>): JSX.Element {
+>({ showcase, seeMoreUi, inPortal }: ShowcaseItemProps<T>): JSX.Element {
   const link = useMemo(() => {
     if (seeMoreUi) return process.env.NEXT_PUBLIC_HOMEPAGE_URL;
     return `${process.env.NEXT_PUBLIC_HOMEPAGE_URL}/post/${showcase.slug}`;
   }, [seeMoreUi, showcase]);
+
+  const linkProps = useMemo<Partial<AnchorHTMLAttributes<any>>>(() => {
+    if (inPortal)
+      return {
+        target: "_blank",
+      };
+    return {};
+  }, [inPortal]);
 
   return (
     <StyledLink
@@ -62,7 +71,7 @@ export default function ShowcaseFeaturedItem<
         overflow: "hidden",
       }}
       href={link}
-      target={"_blank"}
+      {...linkProps}
     >
       <PreloadImage src={showcase.image} />
       <Stack gap={1}>

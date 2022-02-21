@@ -85,6 +85,7 @@ export default function App() {
               <ShowcaseFeaturedList
                 items={data.showcases.edges.map(({ node }) => node)}
                 hasSeeMore
+                inPortal
               />
             )}
           </Box>

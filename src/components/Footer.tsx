@@ -154,30 +154,19 @@ const BtnPostProduct = styled(Button)`
   border: 3px solid #fff5cb;
   /* Button */
   box-shadow: inset 0px -4px 6px rgba(0, 0, 0, 0.1);
-  width: 183px;
   height: 30px;
   border-radius: 15px;
   position: absolute;
   left: 50%;
   bottom: 0;
-  justify-content: space-between;
   transform: translate(-50%, 50%);
-  &:hover {
-    background-color: #ffde50;
-  }
-`;
-const BtnPost = styled(Box)`
-  font-style: normal;
   font-weight: 600;
   font-size: 12px;
   line-height: 15px;
-  color: #000000;
   text-align: center;
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
 `;
 const PBox3 = styled(Box)`
   position: relative;
@@ -352,10 +341,8 @@ function Footer() {
             />
           </PBox3>
           <BtnPostProduct>
-            <BtnPost>
-              <ShowCaseSearchIcon style={{ marginRight: "6px" }} />
-              TÌM HIỂU THÊM
-            </BtnPost>
+            <ShowCaseSearchIcon style={{ marginRight: "6px" }} />
+            TÌM HIỂU THÊM
           </BtnPostProduct>
           <WrapperEllipse
             style={{
@@ -383,7 +370,16 @@ function Footer() {
         </StyleContent>
       </StyleBgrFooter>
       <Back>
-        <PBack sx={{display:"flex", alignItems:"center"}}><a href="vaithuhay.com" style={{textDecoration:"none", color:"#000000" }}> <FooterBackIcon style={{margin: "0 6px -2px 0"}} />Quay trở về trang chủ </a></PBack>
+        <PBack sx={{ display: "flex", alignItems: "center" }}>
+          <a
+            href="vaithuhay.com"
+            style={{ textDecoration: "none", color: "#000000" }}
+          >
+            {" "}
+            <FooterBackIcon style={{ margin: "0 6px -2px 0" }} />
+            Quay trở về trang chủ{" "}
+          </a>
+        </PBack>
       </Back>
       <Dialog
         open={open}

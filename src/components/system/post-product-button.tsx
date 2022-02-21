@@ -28,7 +28,7 @@ export default function PostProductButton(): JSX.Element {
     <>
       <VthIconButton
         sx={{ mb: "-19px", mt: "-19px" }}
-        labelProps={{ sx: { mx: 2 } }}
+        labelProps={{ sx: { mx: 2, color: "black !important" } }}
         startIcon={<UploadFilledPrimaryIcon sx={{ width: 22, height: 22 }} />}
         onClick={onClick}
       >

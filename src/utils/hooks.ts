@@ -112,6 +112,7 @@ export function useGATrackView() {
 
 async function checkNotificationClientGranted() {
   let granted = false;
+  if (typeof Notification === "undefined") return false;
   if (Notification.permission === "granted") {
     granted = true;
   } else if (Notification.permission !== "denied") {

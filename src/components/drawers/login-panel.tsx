@@ -7,10 +7,11 @@ import { TextInput } from "../TextInput";
 import GoogleColoredIcon from "../../assets/icons/GoogleColoredIcon";
 import { useAppDispatch } from "../../store";
 import { FirebaseAuthService } from "../../service";
-import { afterSignInFirebase } from "../../store/auth.reducer";
 import { useCallback } from "react";
 import { UrlObject } from "url";
 import { useRouter } from "next/router";
+import * as Sentry from "@sentry/nextjs";
+import { afterSignInFirebase } from "../../store/auth.reducer";
 
 const Wrapper = styled(Box)`
   width: 100%;
@@ -33,13 +34,16 @@ export default function LoginPanel({
 
   const onClick = useCallback(
     () =>
-      FirebaseAuthService().then(({ signInWithGoogle }) =>
-        signInWithGoogle().then((payload) => {
+      FirebaseAuthService().then(async ({ signInWithGoogle }) => {
+        try {
+          const payload = await signInWithGoogle();
           dispatch(afterSignInFirebase(payload!));
-          if (redirectAfterLogin) router.replace(redirectAfterLogin);
-        })
-      ),
-    [dispatch, redirectAfterLogin]
+          if (redirectAfterLogin) await router.replace(redirectAfterLogin);
+        } catch (e) {
+          Sentry.captureException(e);
+        }
+      }),
+    [dispatch, redirectAfterLogin, router]
   );
 
   return (

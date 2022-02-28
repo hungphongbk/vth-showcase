@@ -16,29 +16,21 @@ const auth = getAuth(firebaseApp);
 
 const provider = new GoogleAuthProvider();
 export const signInWithGoogle = async () => {
-  try {
-    await setPersistence(auth, browserLocalPersistence);
-    await signInWithPopup(auth, provider);
-    return {
-      user: auth.currentUser ?? undefined,
-      token: auth.currentUser ? await auth.currentUser.getIdToken() : undefined,
-    };
-  } catch (e) {
-    console.error(e);
-  }
+  await setPersistence(auth, browserLocalPersistence);
+  await signInWithPopup(auth, provider);
+  return {
+    user: auth.currentUser ?? undefined,
+    token: auth.currentUser ? await auth.currentUser.getIdToken() : undefined,
+  };
 };
 
 export const signInWithToken = async (token: string) => {
-  try {
-    await setPersistence(auth, browserLocalPersistence);
-    await signInWithCustomToken(auth, token);
-    return {
-      user: auth.currentUser ?? undefined,
-      token: auth.currentUser ? await auth.currentUser.getIdToken() : undefined,
-    };
-  } catch (e) {
-    console.error(e);
-  }
+  await setPersistence(auth, browserLocalPersistence);
+  await signInWithCustomToken(auth, token);
+  return {
+    user: auth.currentUser ?? undefined,
+    token: auth.currentUser ? await auth.currentUser.getIdToken() : undefined,
+  };
 };
 
 export const getPersistAuth = () =>

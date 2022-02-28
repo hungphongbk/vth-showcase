@@ -90,6 +90,12 @@ module.exports = {
       NEXT_PUBLIC_API_URL: "https://api.showcase-dev.vaithuhay.com",
       NEXT_PUBLIC_HOMEPAGE_URL: "https://showcase-dev.vaithuhay.com",
     }),
+    new webpack.IgnorePlugin({
+      checkResource(resource) {
+        if (/framer-motion/.test(resource)) return true;
+        return false;
+      },
+    }),
   ],
   optimization: {
     splitChunks: {

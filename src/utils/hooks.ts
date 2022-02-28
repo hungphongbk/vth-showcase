@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAppSelector } from "../store";
 import { useRouter } from "next/router";
-import { AnalyticsService } from "../service";
+import { AnalyticsService, FcmService } from "../service";
 import { ReturnPromiseType } from "../types/util.type";
+import { useSubscribeFcmMutation } from "../types/graphql";
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -107,4 +108,31 @@ export function useGATrackView() {
       };
     }
   }, [handlerRef, load, router.events]);
+}
+
+async function checkNotificationClientGranted() {
+  let granted = false;
+  if (typeof Notification === "undefined") return false;
+  if (Notification.permission === "granted") {
+    granted = true;
+  } else if (Notification.permission !== "denied") {
+    let permission = await Notification.requestPermission();
+    granted = permission === "granted";
+  }
+  return granted;
+}
+export function useNotificationRegister(topics: string[]) {
+  const [isTokenFound, setTokenFound] = useState(false),
+    getServicePromiseRef = useRef(FcmService()),
+    [subscribe] = useSubscribeFcmMutation();
+  return useCallback(async () => {
+    const service = await getServicePromiseRef.current;
+    const isGranted = await checkNotificationClientGranted();
+    if (!isGranted) return false;
+    const token = await service.getToken(setTokenFound);
+    if (token) {
+      await subscribe({ variables: { token, topic: topics } });
+    }
+    return true;
+  }, [subscribe, topics]);
 }

@@ -10,5 +10,6 @@ query ShowcaseDetail($slug: String!) {
     }
     isPreordered
     viewCount
+    preorderCount
   }
 }

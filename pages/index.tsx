@@ -1,5 +1,5 @@
 import type { GetStaticProps } from "next";
-import { Box, Container, Fade, ImageList, Typography } from "@mui/material";
+import { Box, Container, Fade, Typography } from "@mui/material";
 import ShowcaseList from "../src/components/showcase-list";
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
@@ -19,10 +19,10 @@ import { NextSeo } from "next-seo";
 import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
 import { LoadingIndicator } from "@hungphongbk/vth-sdk";
 import { NetworkStatus } from "@apollo/client";
-import ShowcaseFeaturedItem from "../src/components/showcase-featured-item";
 import Footer from "../src/components/Footer";
 import { InfiniteScroll } from "../src/components/infinite-scroll";
 import { CreatorAndInvestorActions } from "src/components/system";
+import ShowcaseFeaturedList from "../src/components/showcase-featured-list";
 
 const FilterPanel = dynamic(() => import("../src/components/filter-panel"), {
   ssr: false,
@@ -102,11 +102,10 @@ const Home = () => {
         >
           Dự án đang chuẩn bị &quot;rời bệ phóng&quot;
         </Typography>
-        <ImageList variant={"standard"} cols={2} gap={8} component={"section"}>
-          {featured.map(({ node }, index) => (
-            <ShowcaseFeaturedItem item={node} key={node.id} />
-          ))}
-        </ImageList>
+        <ShowcaseFeaturedList
+          items={featured.map((f) => f.node)}
+          sx={{ mb: 5 }}
+        />
         <Box
           sx={{
             my: 0.7,

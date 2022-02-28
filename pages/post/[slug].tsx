@@ -1,11 +1,11 @@
 import { GetStaticProps } from "next";
-import { Box } from "@mui/material";
+import { Box, Stack, styled, Typography } from "@mui/material";
 import ShowcaseDetailed from "../../src/components/showcase-detailed";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect } from "react";
 import { apiService, withApollo } from "../../src/api";
 import HopTacIcon from "../../src/assets/icons/HopTacIcon";
-import { Showcase } from "../../src/types/graphql";
+import { Showcase, ShowcaseStatus } from "../../src/types/graphql";
 import { InvestorInformation } from "../../src/components/post-page";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
@@ -16,6 +16,9 @@ import {
   useInvestorRegDialog,
 } from "../../src/components/system";
 import VthIconButton from "../../src/components/vth-icon-button";
+import EyeRoundedGrayIcon from "../../src/assets/icons/eye-rounded-gray-icon";
+import PreorderRoundedGrayIcon from "../../src/assets/icons/preorder-rounded-gray-icon";
+import { useAuthInitialized } from "../../src/utils/hooks";
 
 const IconWrapper = (props: PropsWithChildren<unknown>) => (
   <Box
@@ -42,6 +45,12 @@ const IconWrapper = (props: PropsWithChildren<unknown>) => (
     {props.children}
   </Box>
 );
+const AfterSlotItem = styled(Box)`
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  grid-gap: 8px;
+  align-items: center;
+`;
 
 function PostDetailedPage() {
   const router = useRouter(),
@@ -51,12 +60,13 @@ function PostDetailedPage() {
     router.prefetch("/");
   }, [router]);
   const { renderDialog, open } = useInvestorRegDialog();
-  const { loading, error, data } = useAuthQuery(
+  const { data } = useAuthQuery(
     ssrShowcaseDetail.usePage(() => ({
       fetchPolicy: "cache-and-network",
       variables: { slug },
     }))
   );
+  const { isLoggedIn } = useAuthInitialized();
 
   const showcase = data?.showcase as Showcase;
 
@@ -71,7 +81,32 @@ function PostDetailedPage() {
       />
       <Box sx={{ bgcolor: "#f0f0f0" }}>
         <InvestorInformation stat={data!.showcase.investorStat as any} />
-        <ShowcaseDetailed item={showcase} onClick={() => router.push("/")} />
+        <ShowcaseDetailed
+          item={showcase}
+          slots={{
+            afterSummary: showcase.status === ShowcaseStatus.Coming &&
+              isLoggedIn && (
+                <Stack
+                  gap={1}
+                  sx={{ "& .MuiTypography-root": { fontSize: "1.1em" } }}
+                >
+                  <AfterSlotItem>
+                    <EyeRoundedGrayIcon />
+                    <Typography>
+                      Lượt xem: <strong>{showcase.viewCount}</strong>
+                    </Typography>
+                  </AfterSlotItem>
+                  <AfterSlotItem>
+                    <PreorderRoundedGrayIcon />
+                    <Typography>
+                      Lượt đăng ký đặt trước:{" "}
+                      <strong>{showcase.preorderCount}</strong>
+                    </Typography>
+                  </AfterSlotItem>
+                </Stack>
+              ),
+          }}
+        />
         <Box
           sx={{
             position: "fixed",

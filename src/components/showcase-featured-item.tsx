@@ -1,99 +1,126 @@
-import { MediaDto, Showcase } from "../types/graphql";
-import { AspectRatio, FnsDate } from "@hungphongbk/vth-sdk";
-import { Box, ImageListItem, Typography } from "@mui/material";
-import Image from "next/image";
-import { ProductInfoSecond } from "./commons";
-import { VthCountdown } from "./index";
-import React, { useEffect, useRef } from "react";
-import { useInViewport } from "react-in-viewport";
-import { useRouter } from "next/router";
+import {
+  AlertPrimaryIcon,
+  FnsDate,
+  MediaDto,
+  Showcase,
+} from "@hungphongbk/vth-sdk";
+import { Box, Button, Link, Stack, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import PreloadImage from "../../sdk/src/components/PreloadImage";
+import VthCountdown from "./vth-countdown";
+import PortalPreorderButton from "../../sdk/src/portal-preorder-button";
+import { AnchorHTMLAttributes, useMemo } from "react";
 
-type ShowcaseItem = Pick<Showcase, "name" | "slug" | "expectedSaleAt"> & {
-  image: Pick<MediaDto, "path" | "preloadUrl">;
+export type ShowcaseItemBase = Pick<
+  Partial<Showcase>,
+  "id" | "name" | "slug" | "status" | "expectedSaleAt"
+> & {
+  image: Pick<MediaDto, "path" | "preloadUrl" | "height" | "width">;
 };
-type ShowcaseFeaturedItemProps<T> = { item: T };
-export default function ShowcaseFeaturedItem<
-  T extends ShowcaseItem = ShowcaseItem
->({ item: node }: ShowcaseFeaturedItemProps<T>): JSX.Element {
-  const router = useRouter();
-  const itemRef = useRef<HTMLLIElement>(null),
-    prefetched = useRef<Promise<any>>();
-  const { inViewport } = useInViewport(itemRef);
 
-  useEffect(() => {
-    if (inViewport && !prefetched.current) {
-      prefetched.current = router.prefetch(`/preview/${node.slug}`);
+const StyledLink = styled(Link)`
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 5px;
+    &,
+    &:hover,
+    &:visited,
+    &:focus {
+      color: inherit;
+      text-decoration: none;
     }
-  }, [inViewport, node.slug, router]);
+  `,
+  StyledTitle = styled(Typography)`
+    &.MuiTypography-root {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 13.5px;
+      line-height: 117.4%;
+      padding-top: 6px;
+    }
+  `;
+
+type ShowcaseItemProps<T> = {
+  showcase: T;
+  seeMoreUi?: boolean;
+  inPortal?: boolean;
+};
+export default function ShowcaseFeaturedItem<
+  T extends ShowcaseItemBase = ShowcaseItemBase
+>({ showcase, seeMoreUi, inPortal }: ShowcaseItemProps<T>): JSX.Element {
+  const link = useMemo(() => {
+    if (seeMoreUi) return process.env.NEXT_PUBLIC_HOMEPAGE_URL;
+    return `${process.env.NEXT_PUBLIC_HOMEPAGE_URL}/post/${showcase.slug}`;
+  }, [seeMoreUi, showcase]);
+
+  const linkProps = useMemo<Partial<AnchorHTMLAttributes<any>>>(() => {
+    if (inPortal)
+      return {
+        target: "_blank",
+      };
+    return {};
+  }, [inPortal]);
 
   return (
-    <ImageListItem
-      component={"article"}
-      ref={itemRef}
+    <StyledLink
       sx={{
-        borderRadius: 3,
+        display: "grid",
+        gridTemplateColumns: "6fr 12fr",
+        gridGap: "7px",
+        position: "relative",
         overflow: "hidden",
-        cursor: "pointer",
-        mb: 2,
-        boxShadow: "4px 4px 16px rgba(0, 0, 0, 0.1)",
       }}
-      onClick={() => router.push(`/preview/${node.slug}`)}
+      href={link}
+      {...linkProps}
     >
-      <AspectRatio>
-        <Box sx={{ zIndex: -1 }}>
-          <Image
-            src={node.image.path}
-            alt={node.name}
-            layout={"fill"}
-            objectFit={"cover"}
-            sizes={"50vw"}
-            placeholder={"blur"}
-            blurDataURL={node.image.preloadUrl}
-            priority={true}
-          />
-        </Box>
-      </AspectRatio>
-      <ProductInfoSecond>
-        <Box
-          sx={{
-            height: 36,
-            width: "100%",
-            borderRadius: 18,
-            bgcolor: "yellow.main",
-            border: "3px solid white",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            mt: "-26.5px",
-          }}
-        >
-          <Typography
-            sx={{
-              color: "black",
-              fontWeight: 600,
-              fontSize: 10,
-              textAlign: "center",
-              lineHeight: "11.74px",
-            }}
-            component={"h2"}
-          >
-            {node.name}
-          </Typography>
-        </Box>
-        <Typography sx={{ fontSize: 10, my: 0.5 }}>
+      <PreloadImage src={showcase.image} />
+      <Stack gap={1}>
+        <StyledTitle sx={{ flex: 1 }}>{showcase.name}</StyledTitle>
+        <Typography sx={{ fontSize: 10 }}>
           Dự kiến ra mắt:{" "}
           <strong>
             <FnsDate
-              //TODO remove new Date
-              value={node.expectedSaleAt ?? new Date()}
               format={"dd/MM/yyyy"}
+              //TODO remove new Date
+              value={showcase.expectedSaleAt ?? new Date()}
             />
           </strong>
         </Typography>
-        <Box sx={{ width: "100%", my: 0.5 }}>
-          <VthCountdown expectedSaleAt={node.expectedSaleAt ?? new Date()} />
+        <Stack
+          gap={1.5}
+          sx={{ alignSelf: "stretch", alignItems: "center" }}
+          direction={"row"}
+        >
+          <VthCountdown
+            expectedSaleAt={showcase.expectedSaleAt ?? new Date()}
+          />
+          <PortalPreorderButton showcase={showcase as any}>
+            <AlertPrimaryIcon sx={{ width: 26, height: 26, mr: 1 }} />
+          </PortalPreorderButton>
+        </Stack>
+      </Stack>
+      {seeMoreUi && (
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            bgcolor: "rgba(0,0,0,.82)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            variant={"outlined"}
+            sx={{ borderColor: "white", color: "white", px: 3 }}
+          >
+            Xem thêm
+          </Button>
         </Box>
-      </ProductInfoSecond>
-    </ImageListItem>
+      )}
+    </StyledLink>
   );
 }

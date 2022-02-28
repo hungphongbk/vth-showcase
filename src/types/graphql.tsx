@@ -262,11 +262,14 @@ export interface DeleteOneShowcaseHighlightFeatureInput {
   id: Scalars['ID'];
 }
 
-export interface FcmRegistrationTokenDto {
-  createdAt: Scalars['DateTime'];
-  id: Scalars['ID'];
-  token: Scalars['String'];
-  topic: Scalars['String'];
+export interface FcmNotificationPayloadDto {
+  body?: InputMaybe<Scalars['String']>;
+  icon?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+}
+
+export interface FcmPayloadDto {
+  notification?: InputMaybe<FcmNotificationPayloadDto>;
 }
 
 export interface IdFilterComparison {
@@ -729,12 +732,13 @@ export interface Mutation {
   removeImageFromShowcaseHighlightFeature: ShowcaseHighlightFeature;
   removeImagesFromImageList: ImageList;
   sendEmail: MailDto;
+  sendNotification: Scalars['Boolean'];
   setAuthorOnCommentDto: CommentDto;
   setAuthorOnShowcase: Showcase;
   setImageOnShowcase: Showcase;
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
-  subscribeToFcmTopic: FcmRegistrationTokenDto;
+  subscribeToFcmTopic: Scalars['Boolean'];
   updateManyInvestmentPackageDtos: UpdateManyResponse;
   updateManyMailTemplateDtos: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
@@ -954,6 +958,12 @@ export interface MutationSendEmailArgs {
 }
 
 
+export interface MutationSendNotificationArgs {
+  payload: FcmPayloadDto;
+  topic: Scalars['String'];
+}
+
+
 export interface MutationSetAuthorOnCommentDtoArgs {
   input: SetAuthorOnCommentDtoInput;
 }
@@ -981,7 +991,7 @@ export interface MutationSetImagesOnImageListArgs {
 
 export interface MutationSubscribeToFcmTopicArgs {
   token: Scalars['String'];
-  topic: Scalars['String'];
+  topic: Array<Scalars['String']>;
 }
 
 
@@ -1284,6 +1294,11 @@ export interface QueryCalculateInventoryStatArgs {
 
 export interface QueryCommentDtoArgs {
   id: Scalars['ID'];
+}
+
+
+export interface QueryGetAllUsersArgs {
+  isAdmin?: InputMaybe<Scalars['Boolean']>;
 }
 
 
@@ -1818,6 +1833,7 @@ export interface ShowcaseSumAggregate {
 }
 
 export interface ShowcaseUpdateInputDto {
+  authorUid?: InputMaybe<Scalars['String']>;
   brand?: InputMaybe<ShowcaseBrandInput>;
   description?: InputMaybe<Scalars['String']>;
   expectedQuantity?: InputMaybe<ShowcasePriceInput>;
@@ -2062,7 +2078,7 @@ export type ShowcaseDetailFragment = { id: string, slug: string, name: string, s
 export type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type IndexPageQuery = { banner?: { value: any } | undefined, featured: { edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, expectedSaleAt?: any | undefined, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> }, showcases: { pageInfo: { hasNextPage?: boolean | undefined, startCursor?: any | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
+export type IndexPageQuery = { banner?: { value: any } | undefined, featured: { edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, expectedSaleAt?: any | undefined, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined } }> }, showcases: { pageInfo: { hasNextPage?: boolean | undefined, startCursor?: any | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
 
 export type IndexPageClientQueryVariables = Exact<{
   filter: ShowcaseFilter;
@@ -2128,7 +2144,7 @@ export type ShowcaseDetailQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { isPreordered?: boolean | undefined, viewCount: number, id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | undefined, expectedSaleEndAt?: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }>, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | undefined } };
+export type ShowcaseDetailQuery = { showcase: { isPreordered?: boolean | undefined, viewCount: number, preorderCount?: number | undefined, id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | undefined, expectedSaleEndAt?: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }>, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | undefined } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -2197,6 +2213,14 @@ export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CurrentUserQuery = { currentUser: { email: string, name: string, role: AuthRoleType, approvalStatus: UserStatusEnum } };
+
+export type SubscribeFcmMutationVariables = Exact<{
+  token: Scalars['String'];
+  topic: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type SubscribeFcmMutation = { subscribeToFcmTopic: boolean };
 
 export type SubmitPreorderMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -2508,6 +2532,12 @@ export const IndexPageDocument = gql`
         }
         createdAt
         expectedSaleAt
+        expectedSalePrice {
+          regular
+          pioneer
+          preorder
+          promo
+        }
       }
     }
   }
@@ -2993,6 +3023,7 @@ export const ShowcaseDetailDocument = gql`
     }
     isPreordered
     viewCount
+    preorderCount
   }
 }
     ${ShowcaseDetailFragmentDoc}
@@ -3455,6 +3486,38 @@ export type CurrentUserQueryResult = Apollo.QueryResult<CurrentUserQuery, Curren
 export function refetchCurrentUserQuery(variables?: CurrentUserQueryVariables) {
       return { query: CurrentUserDocument, variables: variables }
     }
+export const SubscribeFcmDocument = gql`
+    mutation SubscribeFcm($token: String!, $topic: [String!]!) {
+  subscribeToFcmTopic(token: $token, topic: $topic)
+}
+    `;
+export type SubscribeFcmMutationFn = Apollo.MutationFunction<SubscribeFcmMutation, SubscribeFcmMutationVariables>;
+
+/**
+ * __useSubscribeFcmMutation__
+ *
+ * To run a mutation, you first call `useSubscribeFcmMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSubscribeFcmMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [subscribeFcmMutation, { data, loading, error }] = useSubscribeFcmMutation({
+ *   variables: {
+ *      token: // value for 'token'
+ *      topic: // value for 'topic'
+ *   },
+ * });
+ */
+export function useSubscribeFcmMutation(baseOptions?: Apollo.MutationHookOptions<SubscribeFcmMutation, SubscribeFcmMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SubscribeFcmMutation, SubscribeFcmMutationVariables>(SubscribeFcmDocument, options);
+      }
+export type SubscribeFcmMutationHookResult = ReturnType<typeof useSubscribeFcmMutation>;
+export type SubscribeFcmMutationResult = Apollo.MutationResult<SubscribeFcmMutation>;
+export type SubscribeFcmMutationOptions = Apollo.BaseMutationOptions<SubscribeFcmMutation, SubscribeFcmMutationVariables>;
 export const SubmitPreorderDocument = gql`
     mutation SubmitPreorder($slug: String!, $input: PreorderRequestInputDto) {
   createOnePreorder(slug: $slug, input: $input) {

@@ -1,9 +1,8 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
-import { HTMLProps, useCallback, useEffect, useRef, useState } from "react";
+import { HTMLProps, ReactNode, useCallback, useEffect, useRef } from "react";
 import { MotionBox, MotionTypo, ProductInfoDetailed } from "./commons";
 import CollapseDetail from "./CollapseDetail";
 import StatusBadge from "./StatusBadge";
-import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { CollapseCard, SlickSlider } from "./index";
@@ -20,12 +19,17 @@ import ImageListDisplay from "./image-list-display";
 const testPreview = (str: string) => /^\/preview/.test(str),
   testPost = (str: string) => /^\/post/.test(str);
 
+type ShowcaseDetailedProps = {
+  item: Showcase;
+  slots?: {
+    goBackButton?: ReactNode;
+    afterSummary?: ReactNode;
+  };
+} & HTMLProps<HTMLElement>;
 export default function ShowcaseDetailed({
   item,
-  onClick,
-}: {
-  item: Showcase;
-} & HTMLProps<HTMLElement>) {
+  slots = {},
+}: ShowcaseDetailedProps) {
   const router = useRouter();
   const currentPage: "preview" | "post" | undefined = testPreview(
     router.pathname
@@ -61,7 +65,7 @@ export default function ShowcaseDetailed({
     };
   }, [routeChangeEnd, routeChangeStart, router.events]);
 
-  const [open, setOpen] = useState(false);
+  const { goBackButton = undefined, afterSummary = undefined } = slots!;
 
   // @ts-ignore
   return (
@@ -70,7 +74,6 @@ export default function ShowcaseDetailed({
         //@ts-ignore
         ref={wrapper}
         layoutId={"detail-"}
-        layout
         sx={{
           position: "relative",
           overflowY: "scroll",
@@ -80,34 +83,14 @@ export default function ShowcaseDetailed({
           zIndex: 11,
           padding: 1,
           fontSize: 13,
+          WebkitTapHighlightColor: "transparent",
         }}
-        // initial={{ x: "100%", opacity: 0 }}
-        // animate={{ x: 0, opacity: "100%" }}
-        // exit={{ x: 0, opacity: 0 }}
         transition={{ duration: 0.4 }}
       >
-        {currentPage === "preview" && (
-          <MotionBox
-            data-testid={"go-back-button"}
-            sx={{
-              position: "fixed",
-              top: 8,
-              left: 8,
-              p: 2,
-              zIndex: 99,
-              color: "white",
-            }}
-            onClick={onClick}
-          >
-            <ArrowBackIosRoundedIcon
-              sx={{
-                fontSize: 32,
-              }}
-            />
-          </MotionBox>
-        )}
+        {goBackButton}
         <MotionBox
           layoutId={"info"}
+          layout
           sx={{ borderRadius: 5, overflow: "hidden" }}
         >
           <MotionBox
@@ -178,11 +161,17 @@ export default function ShowcaseDetailed({
                 sx={{ gridArea: "user" }}
               >
                 <DetailedUserIcon />
-                <Typography sx={{ fontSize: "15px", lineHeight: "18px" }}>
+                <Typography sx={{ fontSize: "1.1em", lineHeight: "18px" }}>
                   {item.author.name}
                 </Typography>
               </Stack>
             </Box>
+            {afterSummary && (
+              <>
+                <Divider sx={{ mt: 1.2, mb: 1.2 }} />
+                {afterSummary}
+              </>
+            )}
             {currentPage === "preview" && (
               <Box
                 sx={{

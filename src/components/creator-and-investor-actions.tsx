@@ -102,7 +102,7 @@ export default function CreatorAndInvestorActionsComponent(): JSX.Element {
           <SpeedDialAction
             key={"htpt"}
             icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
-            tooltipTitle={"Hợp tác"}
+            tooltipTitle={"Đầu tư"}
             tooltipOpen
             onClick={handleCorporate}
           />

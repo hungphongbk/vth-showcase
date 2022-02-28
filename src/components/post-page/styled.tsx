@@ -13,7 +13,8 @@ const ImageBox = forwardRef(
     </Box>
   )
 );
-export const StyledBox = styled(ImageBox)`
+
+export const StyledBoxBase = styled(ImageBox)`
   padding: 11px 13px;
   border-radius: 12px;
   position: relative;
@@ -21,6 +22,8 @@ export const StyledBox = styled(ImageBox)`
   * {
     color: white;
   }
+`;
+export const StyledBox = styled(StyledBoxBase)`
   display: grid;
   grid-template-areas: "icon label" "num num";
   grid-template-columns: auto 1fr;

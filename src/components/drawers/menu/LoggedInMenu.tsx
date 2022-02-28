@@ -100,7 +100,7 @@ export default function LoggedInMenu(props: LoggedInMenuProps): JSX.Element {
                   sx={{ width: 27, height: 27, ml: "-2px", color: "black" }}
                 />
               </ListItemIcon>
-              <ListItemText primary={"Hợp tác - Investor"} />
+              <ListItemText primary={"Đầu tư - Investor"} />
             </ListItemButton>
           </ListItem>
         </StyledMenuList>

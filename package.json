@@ -28,7 +28,7 @@
     "@mui/styled-engine-sc": "^5.4.2",
     "@mui/system": "^5.4.3",
     "@reduxjs/toolkit": "^1.6.2",
-    "@sentry/nextjs": "^6.17.9",
+    "@sentry/nextjs": "^6.18.0",
     "crypto-hash": "^2.0.1",
     "currency.js": "^2.0.4",
     "date-fns": "^2.27.0",

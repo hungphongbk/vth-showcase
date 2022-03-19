@@ -34,7 +34,7 @@ const StyledLink = styled(Link)`
     &.MuiTypography-root {
       font-style: normal;
       font-weight: 600;
-      font-size: 13.5px;
+      font-size: 0.75rem;
       line-height: 117.4%;
       padding-top: 6px;
     }

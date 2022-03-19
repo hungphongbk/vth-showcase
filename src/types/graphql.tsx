@@ -50,6 +50,130 @@ export interface BooleanFieldComparison {
   isNot?: InputMaybe<Scalars['Boolean']>;
 }
 
+export interface BrandCreateInputDto {
+  description: Scalars['String'];
+  logo?: InputMaybe<Scalars['String']>;
+  metadata: Scalars['JSONObject'];
+  name: Scalars['String'];
+  slug: Scalars['String'];
+  subtitle: Scalars['String'];
+}
+
+export interface BrandDto {
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  logo?: Maybe<Scalars['String']>;
+  mediaLists: Array<MediaDto>;
+  metadata: Scalars['JSONObject'];
+  name: Scalars['String'];
+  slug: Scalars['String'];
+  subtitle: Scalars['String'];
+}
+
+
+export interface BrandDtoMediaListsArgs {
+  filter?: InputMaybe<MediaDtoFilter>;
+  sorting?: InputMaybe<Array<MediaDtoSort>>;
+}
+
+export interface BrandDtoAggregateGroupBy {
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+}
+
+export interface BrandDtoAvgAggregate {
+  id?: Maybe<Scalars['Float']>;
+}
+
+export interface BrandDtoConnection {
+  edges: Array<BrandDtoEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+}
+
+export interface BrandDtoCountAggregate {
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['Int']>;
+}
+
+export interface BrandDtoDeleteFilter {
+  and?: InputMaybe<Array<BrandDtoDeleteFilter>>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<BrandDtoDeleteFilter>>;
+  slug?: InputMaybe<StringFieldComparison>;
+}
+
+export interface BrandDtoDeleteResponse {
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  logo?: Maybe<Scalars['String']>;
+  metadata?: Maybe<Scalars['JSONObject']>;
+  name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  subtitle?: Maybe<Scalars['String']>;
+}
+
+export interface BrandDtoEdge {
+  cursor: Scalars['ConnectionCursor'];
+  node: BrandDto;
+}
+
+export interface BrandDtoFilter {
+  and?: InputMaybe<Array<BrandDtoFilter>>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<BrandDtoFilter>>;
+  slug?: InputMaybe<StringFieldComparison>;
+}
+
+export interface BrandDtoMaxAggregate {
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+}
+
+export interface BrandDtoMinAggregate {
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+}
+
+export interface BrandDtoSort {
+  direction: SortDirection;
+  field: BrandDtoSortFields;
+  nulls?: InputMaybe<SortNulls>;
+}
+
+export enum BrandDtoSortFields {
+  Id = 'id',
+  Name = 'name',
+  Slug = 'slug'
+}
+
+export interface BrandDtoSumAggregate {
+  id?: Maybe<Scalars['Float']>;
+}
+
+export interface BrandDtoUpdateFilter {
+  and?: InputMaybe<Array<BrandDtoUpdateFilter>>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<BrandDtoUpdateFilter>>;
+  slug?: InputMaybe<StringFieldComparison>;
+}
+
+export interface BrandUpdateInputDto {
+  description?: InputMaybe<Scalars['String']>;
+  logo?: InputMaybe<Scalars['String']>;
+  metadata?: InputMaybe<Scalars['JSONObject']>;
+  name?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
+  subtitle?: InputMaybe<Scalars['String']>;
+}
+
 export interface CommentCreateDto {
   content: Scalars['String'];
   isTopComment?: InputMaybe<Scalars['Boolean']>;
@@ -155,6 +279,10 @@ export interface CreateMailTemplateDto {
   templateName?: InputMaybe<Scalars['String']>;
 }
 
+export interface CreateManyBrandDtosInput {
+  brandDtos: Array<BrandCreateInputDto>;
+}
+
 export interface CreateManyInvestmentPackageDtosInput {
   investmentPackageDtos: Array<CreateInvestmentPackageDto>;
 }
@@ -165,6 +293,10 @@ export interface CreateManyMailTemplateDtosInput {
 
 export interface CreateManyMediaDtosInput {
   mediaDtos: Array<MediaInput>;
+}
+
+export interface CreateOneBrandDtoInput {
+  brandDto: BrandCreateInputDto;
 }
 
 export interface CreateOneInvestmentPackageDtoInput {
@@ -206,6 +338,10 @@ export interface DateFieldComparisonBetween {
   upper: Scalars['DateTime'];
 }
 
+export interface DeleteManyBrandDtosInput {
+  filter: BrandDtoDeleteFilter;
+}
+
 export interface DeleteManyInvestmentPackageDtosInput {
   filter: InvestmentPackageDtoDeleteFilter;
 }
@@ -228,6 +364,10 @@ export interface DeleteManyResponse {
 
 export interface DeleteManyShowcasesInput {
   filter: ShowcaseDeleteFilter;
+}
+
+export interface DeleteOneBrandDtoInput {
+  id: Scalars['ID'];
 }
 
 export interface DeleteOneCommentDtoInput {
@@ -687,6 +827,7 @@ export interface MediaInput {
 }
 
 export enum MediaType {
+  Brand = 'BRAND',
   Hf = 'HF',
   Imglist = 'IMGLIST',
   Showcase = 'SHOWCASE'
@@ -694,9 +835,11 @@ export enum MediaType {
 
 export interface Mutation {
   addImagesToImageList: ImageList;
+  createManyBrandDtos: Array<BrandDto>;
   createManyInvestmentPackageDtos: Array<InvestmentPackageDto>;
   createManyMailTemplateDtos: Array<MailTemplateDto>;
   createManyMediaDtos: Array<MediaDto>;
+  createOneBrandDto: BrandDto;
   createOneImageList: ImageList;
   createOneInvestmentPackageDto: InvestmentPackageDto;
   createOneInvestorRegistrationDto: InvestorRegistrationDto;
@@ -707,11 +850,13 @@ export interface Mutation {
   createOneShowcase: Showcase;
   createOneShowcaseHighlightFeature: ShowcaseHighlightFeature;
   createOneUserDto: User;
+  deleteManyBrandDtos: DeleteManyResponse;
   deleteManyInvestmentPackageDtos: DeleteManyResponse;
   deleteManyMailTemplateDtos: DeleteManyResponse;
   deleteManyMediaDtos: DeleteManyResponse;
   deleteManyPreorderDtos: DeleteManyResponse;
   deleteManyShowcases: DeleteManyResponse;
+  deleteOneBrandDto: BrandDtoDeleteResponse;
   deleteOneCommentDto: CommentDtoDeleteResponse;
   deleteOneImageList: ImageListDeleteResponse;
   deleteOneInvestmentPackageDto: InvestmentPackageDtoDeleteResponse;
@@ -728,6 +873,7 @@ export interface Mutation {
   postProjectUpdate: PrjUpdateDto;
   removeAuthorFromCommentDto: CommentDto;
   removeAuthorFromShowcase: Showcase;
+  removeBrandFromShowcase: Showcase;
   removeImageFromShowcase: Showcase;
   removeImageFromShowcaseHighlightFeature: ShowcaseHighlightFeature;
   removeImagesFromImageList: ImageList;
@@ -735,13 +881,16 @@ export interface Mutation {
   sendNotification: Scalars['Boolean'];
   setAuthorOnCommentDto: CommentDto;
   setAuthorOnShowcase: Showcase;
+  setBrandOnShowcase: Showcase;
   setImageOnShowcase: Showcase;
   setImageOnShowcaseHighlightFeature: ShowcaseHighlightFeature;
   setImagesOnImageList: ImageList;
   subscribeToFcmTopic: Scalars['Boolean'];
+  updateManyBrandDtos: UpdateManyResponse;
   updateManyInvestmentPackageDtos: UpdateManyResponse;
   updateManyMailTemplateDtos: UpdateManyResponse;
   updateManyMediaDtos: UpdateManyResponse;
+  updateOneBrandDto: BrandDto;
   updateOneCommentDto: CommentDto;
   updateOneImageList: ImageList;
   updateOneInvestmentPackageDto: InvestmentPackageDto;
@@ -761,6 +910,11 @@ export interface MutationAddImagesToImageListArgs {
 }
 
 
+export interface MutationCreateManyBrandDtosArgs {
+  input: CreateManyBrandDtosInput;
+}
+
+
 export interface MutationCreateManyInvestmentPackageDtosArgs {
   input: CreateManyInvestmentPackageDtosInput;
 }
@@ -773,6 +927,11 @@ export interface MutationCreateManyMailTemplateDtosArgs {
 
 export interface MutationCreateManyMediaDtosArgs {
   input: CreateManyMediaDtosInput;
+}
+
+
+export interface MutationCreateOneBrandDtoArgs {
+  input: CreateOneBrandDtoInput;
 }
 
 
@@ -828,6 +987,11 @@ export interface MutationCreateOneUserDtoArgs {
 }
 
 
+export interface MutationDeleteManyBrandDtosArgs {
+  input: DeleteManyBrandDtosInput;
+}
+
+
 export interface MutationDeleteManyInvestmentPackageDtosArgs {
   input: DeleteManyInvestmentPackageDtosInput;
 }
@@ -850,6 +1014,11 @@ export interface MutationDeleteManyPreorderDtosArgs {
 
 export interface MutationDeleteManyShowcasesArgs {
   input: DeleteManyShowcasesInput;
+}
+
+
+export interface MutationDeleteOneBrandDtoArgs {
+  input: DeleteOneBrandDtoInput;
 }
 
 
@@ -938,6 +1107,11 @@ export interface MutationRemoveAuthorFromShowcaseArgs {
 }
 
 
+export interface MutationRemoveBrandFromShowcaseArgs {
+  input: RemoveBrandFromShowcaseInput;
+}
+
+
 export interface MutationRemoveImageFromShowcaseArgs {
   input: RemoveImageFromShowcaseInput;
 }
@@ -974,6 +1148,11 @@ export interface MutationSetAuthorOnShowcaseArgs {
 }
 
 
+export interface MutationSetBrandOnShowcaseArgs {
+  input: SetBrandOnShowcaseInput;
+}
+
+
 export interface MutationSetImageOnShowcaseArgs {
   input: SetImageOnShowcaseInput;
 }
@@ -995,6 +1174,11 @@ export interface MutationSubscribeToFcmTopicArgs {
 }
 
 
+export interface MutationUpdateManyBrandDtosArgs {
+  input: UpdateManyBrandDtosInput;
+}
+
+
 export interface MutationUpdateManyInvestmentPackageDtosArgs {
   input: UpdateManyInvestmentPackageDtosInput;
 }
@@ -1007,6 +1191,11 @@ export interface MutationUpdateManyMailTemplateDtosArgs {
 
 export interface MutationUpdateManyMediaDtosArgs {
   input: UpdateManyMediaDtosInput;
+}
+
+
+export interface MutationUpdateOneBrandDtoArgs {
+  input: UpdateOneBrandDtoInput;
 }
 
 
@@ -1261,6 +1450,8 @@ export interface PublishStatusFilterComparison {
 }
 
 export interface Query {
+  brandDto?: Maybe<BrandDto>;
+  brandDtos: BrandDtoConnection;
   calculateInventoryStat: ShowcaseInvestorStatDto;
   commentDto?: Maybe<CommentDto>;
   currentUser: User;
@@ -1284,6 +1475,18 @@ export interface Query {
   showcaseHighlightFeature?: Maybe<ShowcaseHighlightFeature>;
   showcases: ShowcaseConnection;
   slugs: Array<Scalars['String']>;
+}
+
+
+export interface QueryBrandDtoArgs {
+  id: Scalars['ID'];
+}
+
+
+export interface QueryBrandDtosArgs {
+  filter?: InputMaybe<BrandDtoFilter>;
+  paging?: InputMaybe<CursorPaging>;
+  sorting?: InputMaybe<Array<BrandDtoSort>>;
 }
 
 
@@ -1415,6 +1618,11 @@ export interface RemoveAuthorFromShowcaseInput {
   relationId: Scalars['ID'];
 }
 
+export interface RemoveBrandFromShowcaseInput {
+  id: Scalars['String'];
+  relationId: Scalars['ID'];
+}
+
 export interface RemoveImageFromShowcaseHighlightFeatureInput {
   id: Scalars['ID'];
   relationId: Scalars['ID'];
@@ -1436,6 +1644,11 @@ export interface SetAuthorOnCommentDtoInput {
 }
 
 export interface SetAuthorOnShowcaseInput {
+  id: Scalars['String'];
+  relationId: Scalars['ID'];
+}
+
+export interface SetBrandOnShowcaseInput {
   id: Scalars['String'];
   relationId: Scalars['ID'];
 }
@@ -1468,7 +1681,7 @@ export interface SettingDto {
 
 export interface Showcase {
   author: User;
-  brand: ShowcaseBrand;
+  brand: BrandDto;
   commentCount?: Maybe<Scalars['Float']>;
   comments: Array<CommentDto>;
   createdAt: Scalars['DateTime'];
@@ -1540,16 +1753,6 @@ export interface ShowcaseAvgAggregate {
   viewCount?: Maybe<Scalars['Float']>;
 }
 
-export interface ShowcaseBrand {
-  description: Scalars['String'];
-  name: Scalars['String'];
-}
-
-export interface ShowcaseBrandInput {
-  description: Scalars['String'];
-  name: Scalars['String'];
-}
-
 export interface ShowcaseConnection {
   edges: Array<ShowcaseEdge>;
   pageInfo: PageInfo;
@@ -1571,7 +1774,6 @@ export interface ShowcaseCountAggregate {
 }
 
 export interface ShowcaseCreateInputDto {
-  brand: ShowcaseBrandInput;
   description: Scalars['String'];
   expectedQuantity?: InputMaybe<ShowcasePriceInput>;
   expectedSaleAt?: InputMaybe<Scalars['DateTime']>;
@@ -1834,7 +2036,6 @@ export interface ShowcaseSumAggregate {
 
 export interface ShowcaseUpdateInputDto {
   authorUid?: InputMaybe<Scalars['String']>;
-  brand?: InputMaybe<ShowcaseBrandInput>;
   description?: InputMaybe<Scalars['String']>;
   expectedQuantity?: InputMaybe<ShowcasePriceInput>;
   expectedSaleAt?: InputMaybe<Scalars['DateTime']>;
@@ -1919,6 +2120,11 @@ export interface UpdateMailTemplateDto {
   templateName?: InputMaybe<Scalars['String']>;
 }
 
+export interface UpdateManyBrandDtosInput {
+  filter: BrandDtoUpdateFilter;
+  update: BrandUpdateInputDto;
+}
+
 export interface UpdateManyInvestmentPackageDtosInput {
   filter: InvestmentPackageDtoUpdateFilter;
   update: UpdateInvestmentPackageDto;
@@ -1947,6 +2153,11 @@ export interface UpdateMediaDto {
   preloadUrl?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<MediaType>;
   width?: InputMaybe<Scalars['Float']>;
+}
+
+export interface UpdateOneBrandDtoInput {
+  id: Scalars['ID'];
+  update: BrandUpdateInputDto;
 }
 
 export interface UpdateOneCommentDtoInput {

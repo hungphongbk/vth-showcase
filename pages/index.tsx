@@ -17,16 +17,32 @@ import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
 import dynamic from "next/dynamic";
 import { NextSeo } from "next-seo";
 import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
-import { LoadingIndicator } from "@hungphongbk/vth-sdk";
+import { AspectRatio, LoadingIndicator } from "@hungphongbk/vth-sdk";
 import { NetworkStatus } from "@apollo/client";
 import Footer from "../src/components/Footer";
 import { InfiniteScroll } from "../src/components/infinite-scroll";
 import { CreatorAndInvestorActions } from "src/components/system";
 import ShowcaseFeaturedList from "../src/components/showcase-featured-list";
+import bg from "../sdk/src/assets/bg.webp";
+import ShowcasePortalLogo from "../sdk/src/assets/ShowcasePortalLogo";
+import NewPopup from "../sdk/src/components/new-popup";
+import Image from "next/image";
+import { styled } from "@mui/material/styles";
 
 const FilterPanel = dynamic(() => import("../src/components/filter-panel"), {
   ssr: false,
 });
+const Title = styled(Typography)`
+  &.MuiTypography-root {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 0.95rem;
+    line-height: 139.4%;
+    color: white;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+  }
+`;
 
 const Home = () => {
   const { data: ssrData } = ssrIndex.usePage(() => ({
@@ -90,22 +106,44 @@ const Home = () => {
       <Container sx={{ mt: 2, pl: 1, pr: 1 }}>
         <NextSeo canonical={"https://showcase.vaithuhay.com"} />
         <Banner banner={banner} />
-        <Typography
-          sx={{
-            fontSize: 15,
-            fontWeight: 600,
-            textAlign: "center",
-            width: "100%",
-            my: 2,
-            textTransform: "uppercase",
-          }}
+        <AspectRatio
+          ratio={"752/510"}
+          sx={{ my: 3, overflow: "hidden", mx: "-8px" }}
         >
-          Dự án đang chuẩn bị &quot;rời bệ phóng&quot;
-        </Typography>
-        <ShowcaseFeaturedList
-          items={featured.map((f) => f.node)}
-          sx={{ mb: 5 }}
-        />
+          <Box>
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                objectFit: "contain",
+                zIndex: -1,
+              }}
+            >
+              <Image
+                src={bg}
+                alt={"du an featured"}
+                layout={"fill"}
+                objectPosition={"bottom"}
+                objectFit={"contain"}
+              />
+            </Box>
+            <Box sx={{ p: 1, width: "100%" }}>
+              <Box sx={{ display: "flex" }}>
+                <ShowcasePortalLogo />
+                <NewPopup />
+              </Box>
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
+              <Title>DỰ ÁN CHUẨN BỊ "RỜI BỆ PHÓNG"</Title>
+              <ShowcaseFeaturedList
+                items={featured.map((f) => f.node)}
+                sx={{ mb: 5 }}
+              />
+            </Box>
+          </Box>
+        </AspectRatio>
         <Box
           sx={{
             my: 0.7,

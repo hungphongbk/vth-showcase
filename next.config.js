@@ -12,13 +12,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const moduleExports = withPlugins([withBundleAnalyzer, withTM], {
   swcMinify: true,
   reactStrictMode: true,
-  webpack: (config, { isServer }) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "@mui/styled-engine": "@mui/styled-engine-sc",
-    };
-    return config;
-  },
   images: {
     domains: [
       "localhost",

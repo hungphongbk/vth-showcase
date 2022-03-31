@@ -27,23 +27,33 @@ import { apolloClient } from "../src/api";
 import "../styles/globals.css";
 import ScrollablePanel from "../src/components/scrollable-panel";
 import { appTheme } from "../src/app-theme";
+import { CacheProvider, EmotionCache } from "@emotion/react";
+import createEmotionCache from "../src/utils/createEmotionCache";
+
+const clientSideEmotionCache = createEmotionCache();
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-type AppPropsWithLayout = AppProps & {
+type AppPropsExtended = AppProps & {
   Component: NextPageWithLayout;
+  emotionCache?: EmotionCache;
 };
 
-export default function MyApp(props: AppPropsWithLayout) {
-  const { Component, pageProps, router } = props;
+export default function MyApp(props: AppPropsExtended) {
+  const {
+    Component,
+    pageProps,
+    router,
+    emotionCache = clientSideEmotionCache,
+  } = props;
   const getLayout = Component.getLayout ?? ((page) => page);
   const persistor = persistStore(store);
   useGATrackView();
 
   return (
-    <>
+    <CacheProvider value={emotionCache}>
       <Head>
         <meta
           name="viewport"
@@ -119,6 +129,6 @@ export default function MyApp(props: AppPropsWithLayout) {
           )}
         </PersistGate>
       </Provider>
-    </>
+    </CacheProvider>
   );
 }

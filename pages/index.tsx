@@ -28,6 +28,7 @@ import ShowcasePortalLogo from "../sdk/src/assets/ShowcasePortalLogo";
 import NewPopup from "../sdk/src/components/new-popup";
 import Image from "next/image";
 import { styled } from "@mui/material/styles";
+import ShowMorePopup from "sdk/src/components/show-more-pupop";
 
 const FilterPanel = dynamic(() => import("../src/components/filter-panel"), {
   ssr: false,
@@ -130,10 +131,16 @@ const Home = () => {
                 objectFit={"contain"}
               />
             </Box>
-            <Box sx={{ p: 1, width: "100%" }}>
+            <Box sx={{ p: 1, width: "100%"}}>
+              <Box sx={{display:"flex",
+                        justifyContent:"space-between"}}>
               <Box sx={{ display: "flex" }}>
                 <ShowcasePortalLogo />
                 <NewPopup />
+              </Box>
+              <Box sx={{}}>
+              <ShowMorePopup />
+              </Box>
               </Box>
               {/* eslint-disable-next-line react/no-unescaped-entities */}
               <Title>DỰ ÁN CHUẨN BỊ "RỜI BỆ PHÓNG"</Title>

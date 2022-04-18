@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import DocumentIcon from "../assets/icons/DocumentIcon";
+import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import { useRouter } from "next/router";
 import { useInvestorRegDialog } from "./system";
 import { useState } from "react";
@@ -61,7 +62,7 @@ const StyledSpeedDial = styled(SpeedDial)(
       &-staticTooltipLabel {
         white-space: nowrap;
         position: relative;
-        right: unset;
+        right: unset !important;
         font-size: 12px;
         font-weight: 700;
         text-transform: uppercase;
@@ -77,7 +78,7 @@ export default function CreatorAndInvestorActionsComponent(): JSX.Element {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  
   const handleUploadNew = async () => {
     await router.push("/manage/create-post");
     handleClose();
@@ -87,7 +88,11 @@ export default function CreatorAndInvestorActionsComponent(): JSX.Element {
     await openDialog();
     handleClose();
   };
-
+  
+  const handleGoBack = async () =>{
+    await router.push("https://vaithuhay.com/")
+    handleClose();
+  }
   return (
     <>
       <Backdrop open={open} sx={{ zIndex: 9 }} />
@@ -112,6 +117,13 @@ export default function CreatorAndInvestorActionsComponent(): JSX.Element {
             tooltipTitle={"Đăng sản phẩm"}
             tooltipOpen
             onClick={handleUploadNew}
+          />
+           <SpeedDialAction
+            key={"qltc"}
+            icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
+            tooltipTitle={"Vaithuhay.com"}
+            tooltipOpen
+            onClick={handleGoBack}
           />
         </StyledSpeedDial>
       </Fade>

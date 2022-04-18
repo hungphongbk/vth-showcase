@@ -38,6 +38,7 @@ export default function MenuDrawer(): JSX.Element {
       )}
 
       <Portal>
+        {/* @ts-ignore */}
         <AnimatePresence exitBeforeEnter>
           {openMenu && (
             <MotionBox

@@ -30,6 +30,7 @@ export default function CartDrawer(): JSX.Element {
       )}
       <Portal>
         <Backdrop open={open} sx={{ zIndex: 13 }}>
+          {/* @ts-ignore */}
           <AnimatePresence>
             {open && (
               <MotionBox

@@ -42,7 +42,7 @@ export default function ShowcaseDetailed({
     scrollHandler = useRef<any>();
 
   const routeChangeStart = useCallback(
-      (url) => {
+      (url: string) => {
         if (
           (currentPage === "preview" && testPreview(url)) ||
           (currentPage === "post" && testPost(url))

@@ -102,6 +102,7 @@ export default function MyApp(props: AppPropsExtended) {
                     <LocalizationProvider dateAdapter={DateAdapter}>
                       <CssBaseline />
                       <Header />
+                      {/* @ts-ignore */}
                       <LayoutGroup>
                         <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
                           {/* eslint-disable-next-line jsx-a11y/alt-text */}

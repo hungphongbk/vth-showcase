@@ -205,6 +205,7 @@ const Home = () => {
         <Box
           sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 99 }}
         >
+          {/* @ts-ignore */}
           <AnimatePresence>
             {openFilter && (
               <>

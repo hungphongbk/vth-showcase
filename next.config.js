@@ -34,6 +34,9 @@ const moduleExports = withPlugins([withBundleAnalyzer, withTM], {
       "@mui/material": {
         transform: "@mui/material/{{member}}",
       },
+      "@mui/lab": {
+        transform: "@mui/lab/{{member}}",
+      },
     },
     scrollRestoration: true,
   },

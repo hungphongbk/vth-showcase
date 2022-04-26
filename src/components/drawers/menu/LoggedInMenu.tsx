@@ -4,10 +4,9 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  styled,
   Typography,
 } from "@mui/material";
-import { css } from "@mui/material/styles";
+import { css, styled } from "@mui/material/styles";
 import { useState } from "react";
 import ManageShowcaseIcon from "./ManageShowcaseIcon";
 import { StyledMenuList } from "./styled";
@@ -70,7 +69,7 @@ export default function LoggedInMenu(props: LoggedInMenuProps): JSX.Element {
           Showcase là gì?
         </StyledTab>
       </StyledTabs>
-      {tab === 0 ?   (
+      {tab === 0 ? (
         <StyledMenuList disablePadding dense sx={{ mt: 2 }}>
           <ListItem>
             <ListItemButton
@@ -104,7 +103,9 @@ export default function LoggedInMenu(props: LoggedInMenuProps): JSX.Element {
             </ListItemButton>
           </ListItem>
         </StyledMenuList>
-      ): <ShowCaseTab />}
+      ) : (
+        <ShowCaseTab />
+      )}
     </>
   );
 }

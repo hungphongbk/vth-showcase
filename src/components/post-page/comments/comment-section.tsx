@@ -1,31 +1,11 @@
 import CollapseCard from "../../CollapseCard";
 import CommentWrite from "./comment-write";
 import { useAddComment } from "../useAddComment";
-import { Box, Stack, styled } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { useMemo } from "react";
 import { chunk } from "lodash";
 import SlickSlider from "../../slick-slider";
 import CommentItem from "./comment-item";
-
-const CommentContent = styled(Box)`
-  /* Neutral/Dark White */
-  background: #f3f3f3;
-  border-radius: 10px;
-  padding: 11px 15px;
-`;
-
-const CommentChip = styled(Box)`
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9px;
-  padding-left: 9px;
-  padding-right: 9px;
-  color: white;
-  font-size: 10px;
-  line-height: 12px;
-`;
 
 type CommentSectionProps = { slug: string };
 export default function CommentSection(

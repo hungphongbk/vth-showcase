@@ -7,8 +7,7 @@ import React, {
 } from "react";
 import { ShowcaseCreateInputDto } from "../types/graphql";
 import produce from "immer";
-import { Theme, ThemeProvider } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
+import { createTheme, Theme, ThemeProvider } from "@mui/material/styles";
 
 type AnAction =
   | { type: "update"; payload: Partial<ShowcaseCreateInputDto> }

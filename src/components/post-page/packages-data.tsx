@@ -2,7 +2,8 @@ import {
   ShowcaseInvestorPackageDto,
   ShowcaseInvestorStatDto,
 } from "../../types/graphql";
-import { Box, Grid, Stack, styled, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const PercentageBadge = styled(Typography)`
   background: #0fd07f;

@@ -1,5 +1,6 @@
 import { SxProps } from "@mui/system";
-import { Box, Divider, Stack, styled, Typography } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import Image from "next/image";
 import bg from "../../assets/login-header-bg.png";
 import { AspectRatio } from "@hungphongbk/vth-sdk";

@@ -6,7 +6,6 @@ import {
   DialogContent,
   MenuItem,
   Stack,
-  styled,
   Typography,
 } from "@mui/material";
 import Image from "next/image";
@@ -27,6 +26,7 @@ import PhoneIcon from "src/assets/icons/PhoneIcon";
 import Avatar from "@mui/material/Avatar";
 import QuestionMarkIcon from "src/assets/icons/QuestionMarkIcon";
 import { InvestorRegistrationCreateDto } from "../../types/graphql";
+import { styled } from "@mui/material/styles";
 
 const SUBMIT_INVESTOR = gql`
   mutation SubmitInvestor($form: InvestorRegistrationCreateDto!) {

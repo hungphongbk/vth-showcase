@@ -1,8 +1,9 @@
-import { Box, css, List, styled } from "@mui/material";
+import { Box, List } from "@mui/material";
 import { UserStatusEnum } from "../../../types/graphql";
 import { ComponentType, useMemo } from "react";
 import CreatorConfirmedIcon from "./CreatorConfirmedIcon";
 import InvestorConfirmedIcon from "./InvestorConfirmedIcon";
+import { css, styled } from "@mui/material/styles";
 
 export const StyledUpper = styled(Box)(
   ({ theme }) => css`

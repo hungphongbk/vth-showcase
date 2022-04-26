@@ -1,5 +1,6 @@
 import { GetStaticProps } from "next";
-import { Box, Stack, styled, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import ShowcaseDetailed from "../../src/components/showcase-detailed";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect } from "react";

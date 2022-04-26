@@ -1,5 +1,6 @@
 import React, { forwardRef, useState } from "react";
-import { Box, BoxProps, Button, Dialog, styled } from "@mui/material";
+import { Box, BoxProps, Button, Dialog } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import Image, { ImageProps } from "next/image";
 import bg1 from "../assets/white-paper-texture 1.png";
 import logo from "../assets/Logo Showcase-01.png";

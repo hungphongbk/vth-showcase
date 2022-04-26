@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ReactElement, ReactNode } from "react";
-import { Box, CssBaseline, TextField, ThemeProvider } from "@mui/material";
+import { Box, CssBaseline, TextField } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 import Header from "../src/components/Header";
 import { LayoutGroup } from "framer-motion";

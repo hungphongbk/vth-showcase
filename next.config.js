@@ -31,6 +31,9 @@ const moduleExports = withPlugins([withBundleAnalyzer, withTM], {
       lodash: {
         transform: "lodash/{{member}}",
       },
+      "@mui/material": {
+        transform: "@mui/material/{{member}}",
+      },
     },
     scrollRestoration: true,
   },

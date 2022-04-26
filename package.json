@@ -82,7 +82,7 @@
     "@graphql-codegen/typescript-react-apollo": "^3.2.11",
     "@hookform/devtools": "^4.0.1",
     "@next/bundle-analyzer": "^12.1.5",
-    "@swc/core": "^1.2.139",
+    "@swc/core": "^1.2.172",
     "@types/graphql": "^14.5.0",
     "@types/lodash": "^4.14.176",
     "@types/node": "16.11.6",

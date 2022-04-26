@@ -78,7 +78,29 @@ export default function InvestorRegDialogComponent({
 
   return (
     <StyledDialog open={true} onClose={close}>
-      <DialogContent sx={{ position: "relative", zIndex: 0, pb: 0 }}>
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        <Box
+          sx={{
+            zIndex: -1,
+            overflow: "hidden",
+            borderTopLeftRadius: 25,
+            borderTopRightRadius: 25,
+          }}
+        >
+          <AspectRatio ratio={"357/180"}>
+            <Image
+              src={bg1}
+              layout={"fill"}
+              objectFit={"cover"}
+              objectPosition={"bottom"}
+            />
+          </AspectRatio>
+        </Box>
         <Box
           sx={{
             position: "absolute",
@@ -103,21 +125,17 @@ export default function InvestorRegDialogComponent({
         >
           Trở thành Investor cùng chúng tôi
         </Box>
-        <Box
-          sx={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: -1 }}
-        >
-          <AspectRatio ratio={"357/190"}>
-            <Image src={bg1} layout={"fill"} objectFit={"cover"} />
-          </AspectRatio>
-        </Box>
         <Typography
           sx={{
+            position: "absolute",
             textAlign: "justify",
-            fontSize: "0.75rem",
+            fontSize: 11.5,
             lineHeight: "18.33px",
             fontWeight: 400,
             color: "#000",
-            margin: "15px 0 65px",
+            top: 34,
+            left: 20,
+            right: 20,
           }}
         >
           Nếu bạn đang mong muốn tìm hiểu sâu hơn về việc đầu tư cùng Vaithuhay,
@@ -147,11 +165,13 @@ export default function InvestorRegDialogComponent({
             />
           </button>
         </Typography>
+      </Box>
+      <DialogContent sx={{ position: "relative", zIndex: 0, pb: 0 }}>
         <Stack
           direction={"column"}
           gap={1.5}
           alignItems={"center"}
-          sx={{ mt: 3.5 }}
+          sx={{ mt: 1 }}
         >
           <FormInput
             control={control}
@@ -247,8 +267,13 @@ export default function InvestorRegDialogComponent({
       <DialogContent
         sx={{ position: "relative", zIndex: 0, p: 0, overflow: "hidden" }}
       >
-        <AspectRatio ratio={"357/208"} sx={{ zIndex: "-1" }}>
-          <Image src={bg2} layout={"fill"} objectFit={"cover"} />
+        <AspectRatio ratio={"357/228"} sx={{ zIndex: "-1" }}>
+          <Image
+            src={bg2}
+            layout={"fill"}
+            objectFit={"cover"}
+            objectPosition={"top"}
+          />
         </AspectRatio>
         <Box
           sx={{

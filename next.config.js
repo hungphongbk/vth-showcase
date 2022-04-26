@@ -26,6 +26,12 @@ const moduleExports = withPlugins([withBundleAnalyzer, withTM], {
     ],
   },
   experimental: {
+    emotion: true,
+    modularizeImports: {
+      lodash: {
+        transform: "lodash/{{member}}",
+      },
+    },
     scrollRestoration: true,
   },
   compiler: {

@@ -78,6 +78,7 @@ export interface BrandDtoMediaListsArgs {
 
 export interface BrandDtoAggregateGroupBy {
   id?: Maybe<Scalars['ID']>;
+  logo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
 }
@@ -94,6 +95,7 @@ export interface BrandDtoConnection {
 
 export interface BrandDtoCountAggregate {
   id?: Maybe<Scalars['Int']>;
+  logo?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['Int']>;
   slug?: Maybe<Scalars['Int']>;
 }
@@ -101,6 +103,7 @@ export interface BrandDtoCountAggregate {
 export interface BrandDtoDeleteFilter {
   and?: InputMaybe<Array<BrandDtoDeleteFilter>>;
   id?: InputMaybe<IdFilterComparison>;
+  logo?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<BrandDtoDeleteFilter>>;
   slug?: InputMaybe<StringFieldComparison>;
@@ -124,6 +127,7 @@ export interface BrandDtoEdge {
 export interface BrandDtoFilter {
   and?: InputMaybe<Array<BrandDtoFilter>>;
   id?: InputMaybe<IdFilterComparison>;
+  logo?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<BrandDtoFilter>>;
   slug?: InputMaybe<StringFieldComparison>;
@@ -131,12 +135,14 @@ export interface BrandDtoFilter {
 
 export interface BrandDtoMaxAggregate {
   id?: Maybe<Scalars['ID']>;
+  logo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
 }
 
 export interface BrandDtoMinAggregate {
   id?: Maybe<Scalars['ID']>;
+  logo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
 }
@@ -149,6 +155,7 @@ export interface BrandDtoSort {
 
 export enum BrandDtoSortFields {
   Id = 'id',
+  Logo = 'logo',
   Name = 'name',
   Slug = 'slug'
 }
@@ -160,6 +167,7 @@ export interface BrandDtoSumAggregate {
 export interface BrandDtoUpdateFilter {
   and?: InputMaybe<Array<BrandDtoUpdateFilter>>;
   id?: InputMaybe<IdFilterComparison>;
+  logo?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<BrandDtoUpdateFilter>>;
   slug?: InputMaybe<StringFieldComparison>;
@@ -734,6 +742,7 @@ export interface MailTemplateSpecInputDto {
 
 export interface MediaDto extends IdInterface {
   filename: Scalars['String'];
+  formatType: MediaFormatType;
   height: Scalars['Float'];
   id: Scalars['ID'];
   mimetype: Scalars['String'];
@@ -767,6 +776,7 @@ export interface MediaDtoDeleteFilter {
 
 export interface MediaDtoDeleteResponse {
   filename?: Maybe<Scalars['String']>;
+  formatType?: Maybe<MediaFormatType>;
   height?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['ID']>;
   mimetype?: Maybe<Scalars['String']>;
@@ -816,8 +826,14 @@ export interface MediaDtoUpdateFilter {
   or?: InputMaybe<Array<MediaDtoUpdateFilter>>;
 }
 
+export enum MediaFormatType {
+  Image = 'IMAGE',
+  Youtube = 'YOUTUBE'
+}
+
 export interface MediaInput {
   filename: Scalars['String'];
+  formatType?: InputMaybe<MediaFormatType>;
   height?: InputMaybe<Scalars['Float']>;
   mimetype: Scalars['String'];
   path: Scalars['String'];
@@ -2146,6 +2162,7 @@ export interface UpdateManyResponse {
 
 export interface UpdateMediaDto {
   filename?: InputMaybe<Scalars['String']>;
+  formatType?: InputMaybe<MediaFormatType>;
   height?: InputMaybe<Scalars['Float']>;
   id?: InputMaybe<Scalars['ID']>;
   mimetype?: InputMaybe<Scalars['String']>;

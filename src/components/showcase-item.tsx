@@ -10,7 +10,7 @@ import { SystemStyleObject } from "@mui/system";
 import { usingShowcaseStatusColor } from "../utils/colors";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Showcase } from "../types/graphql";
-import NextImage from "./NextImage";
+import NextImage from "./next-image";
 import Link from "./Link";
 
 const MotionImageListItem = motion(ImageListItem);

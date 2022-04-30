@@ -53,6 +53,16 @@ const moduleExports = withPlugins([withBundleAnalyzer, withTM], {
       },
     ];
   },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "Referrer-Policy", value: "origin-when-cross-origin" },
+        ],
+      },
+    ];
+  },
 });
 
 const sentryWebpackPluginOptions = {

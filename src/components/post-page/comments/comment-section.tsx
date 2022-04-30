@@ -1,4 +1,4 @@
-import CollapseCard from "../../CollapseCard";
+import CollapseCard from "../../collapse-card";
 import CommentWrite from "./comment-write";
 import { useAddComment } from "../useAddComment";
 import { Box, Stack } from "@mui/material";

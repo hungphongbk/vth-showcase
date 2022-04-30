@@ -1,7 +1,7 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import { HTMLProps, ReactNode, useCallback, useEffect, useRef } from "react";
 import { MotionBox, MotionTypo, ProductInfoDetailed } from "./commons";
-import CollapseDetail from "./CollapseDetail";
+import CollapseDetail from "./collapse-detail";
 import StatusBadge from "./StatusBadge";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
@@ -9,7 +9,7 @@ import { CollapseCard, SlickSlider } from "./index";
 import { Showcase } from "../types/graphql";
 import { CommentSection, PrjUpdateDisplay } from "./post-page";
 import { AspectRatio, LookupFilledPrimaryIcon } from "@hungphongbk/vth-sdk";
-import NextImage from "./NextImage";
+import NextImage from "./next-image";
 import ShowcaseRelateds from "./showcase-relateds";
 import DetailedUserIcon from "../assets/icons/DetailedUserIcon";
 import VthIconButton from "./vth-icon-button";

@@ -4,7 +4,7 @@ import ShowcaseList from "../src/components/showcase-list";
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 import { MotionBox } from "../src/components/commons";
-import Banner from "../src/components/Banner";
+import Banner from "../src/components/banner";
 import { withApollo } from "../src/api";
 import {
   IndexPageQuery,
@@ -131,16 +131,15 @@ const Home = () => {
                 objectFit={"contain"}
               />
             </Box>
-            <Box sx={{ p: 1, width: "100%"}}>
-              <Box sx={{display:"flex",
-                        justifyContent:"space-between"}}>
-              <Box sx={{ display: "flex" }}>
-                <ShowcasePortalLogo />
-                <NewPopup />
-              </Box>
-              <Box sx={{}}>
-              <ShowMorePopup />
-              </Box>
+            <Box sx={{ p: 1, width: "100%" }}>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Box sx={{ display: "flex" }}>
+                  <ShowcasePortalLogo />
+                  <NewPopup />
+                </Box>
+                <Box sx={{}}>
+                  <ShowMorePopup />
+                </Box>
               </Box>
               {/* eslint-disable-next-line react/no-unescaped-entities */}
               <Title>DỰ ÁN CHUẨN BỊ "RỜI BỆ PHÓNG"</Title>

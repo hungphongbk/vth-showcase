@@ -2306,7 +2306,7 @@ export type ShowcaseDetailFragment = { id: string, slug: string, name: string, s
 export type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type IndexPageQuery = { banner?: { value: any } | undefined, featured: { edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, expectedSaleAt?: any | undefined, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined } }> }, showcases: { pageInfo: { hasNextPage?: boolean | undefined, startCursor?: any | undefined, endCursor?: any | undefined }, edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, image: { id: string, path: string, preloadUrl: string, width: number, height: number } } }> } };
+export type IndexPageQuery = { banner?: { value: any } | undefined, featured: { edges: Array<{ node: { id: string, name: string, slug: string, status: ShowcaseStatus, createdAt: any, expectedSaleAt?: any | undefined, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined } }> } };
 
 export type IndexPageClientQueryVariables = Exact<{
   filter: ShowcaseFilter;
@@ -2766,28 +2766,6 @@ export const IndexPageDocument = gql`
           preorder
           promo
         }
-      }
-    }
-  }
-  showcases(
-    paging: {first: 10}
-    filter: {and: [{}, {isFeatured: {is: false}, publishStatus: {eq: PUBLISHED}}]}
-  ) @connection(filter: {}) {
-    pageInfo {
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    edges {
-      node {
-        id
-        name
-        slug
-        status
-        image {
-          ...Media
-        }
-        createdAt
       }
     }
   }

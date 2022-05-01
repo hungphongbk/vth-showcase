@@ -28,30 +28,6 @@ query IndexPage {
       }
     }
   }
-  showcases(
-    paging: { first: 10 }
-    filter: {
-      and: [{}, { isFeatured: { is: false }, publishStatus: { eq: PUBLISHED } }]
-    }
-  ) @connection(filter: {}) {
-    pageInfo {
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    edges {
-      node {
-        id
-        name
-        slug
-        status
-        image {
-          ...Media
-        }
-        createdAt
-      }
-    }
-  }
 }
 query IndexPageClient($filter: ShowcaseFilter!, $cursor: ConnectionCursor) {
   showcases(

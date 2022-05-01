@@ -6,11 +6,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { MotionBox } from "../src/components/commons";
 import Banner from "../src/components/banner";
 import { withApollo } from "../src/api";
-import {
-  IndexPageQuery,
-  ShowcaseEdge,
-  ShowcaseStatus,
-} from "../src/types/graphql";
+import { ShowcaseEdge, ShowcaseStatus } from "../src/types/graphql";
 import SimpleFilter from "../src/components/index-page/simple-filter";
 import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
@@ -65,12 +61,12 @@ const Home = () => {
     return {
       ...ssrData,
       ...clientData,
-    } as unknown as IndexPageQuery;
+    };
   }, [ssrData, clientData]);
-  const posts = data!.showcases.edges,
-    featured = data!.featured.edges,
-    pageInfo = data!.showcases.pageInfo,
-    banner = data!.banner;
+  const posts = data.showcases?.edges,
+    featured = data.featured!.edges,
+    pageInfo = data.showcases?.pageInfo,
+    banner = data.banner;
 
   const [openFilter, setOpenFilter] = useState(false);
   const [statusFilter, setStatusFilter] = useState<
@@ -92,6 +88,7 @@ const Home = () => {
   }, [statusFilter]);
 
   const loadMore = async () => {
+    if (!pageInfo) return;
     if (!pageInfo.hasNextPage) return;
     const filter: any = statusFilter ? { status: { eq: statusFilter } } : {};
     await fetchMore({
@@ -112,17 +109,7 @@ const Home = () => {
           sx={{ my: 3, overflow: "hidden", mx: "-8px" }}
         >
           <Box>
-            <Box
-              sx={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                objectFit: "contain",
-                zIndex: -1,
-              }}
-            >
+            <Box className="absolute inset-0 z-[-1] object-contain">
               <Image
                 src={bg}
                 alt={"du an featured"}
@@ -197,16 +184,18 @@ const Home = () => {
               <LoadingIndicator />
             </Box>
           </Fade>
-          <InfiniteScroll
-            next={loadMore}
-            hasMore={pageInfo.hasNextPage!}
-            threshold={1000}
-          >
-            <ShowcaseList
-              posts={posts as unknown as ShowcaseEdge[]}
-              variant={"standard"}
-            />
-          </InfiniteScroll>
+          {pageInfo && (
+            <InfiniteScroll
+              next={loadMore}
+              hasMore={pageInfo.hasNextPage!}
+              threshold={1000}
+            >
+              <ShowcaseList
+                posts={posts as unknown as ShowcaseEdge[]}
+                variant={"standard"}
+              />
+            </InfiniteScroll>
+          )}
         </Box>
         <Box
           sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 99 }}

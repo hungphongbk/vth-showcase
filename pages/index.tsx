@@ -8,7 +8,6 @@ import Banner from "../src/components/banner";
 import { withApollo } from "../src/api";
 import { ShowcaseEdge, ShowcaseStatus } from "../src/types/graphql";
 import SimpleFilter from "../src/components/index-page/simple-filter";
-import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
 import dynamic from "next/dynamic";
 import { NextSeo } from "next-seo";
@@ -147,6 +146,7 @@ const Home = () => {
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, py: 0.7 }}>
             <Box
+              className="flex items-center justify-center"
               sx={{
                 width: 38,
                 height: 38,
@@ -154,9 +154,6 @@ const Home = () => {
                 mb: "-5px",
                 borderRadius: "50%",
                 bgcolor: "yellow.main",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
               }}
               onClick={() => setOpenFilter(true)}
             >
@@ -171,14 +168,9 @@ const Home = () => {
         <Box sx={{ minHeight: "75vh", position: "relative" }}>
           <Fade in={networkStatus !== NetworkStatus.ready}>
             <Box
+              className="absolute inset-x-0 top-0 flex justify-center"
               sx={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
                 pt: 3,
-                display: "flex",
-                justifyContent: "center",
               }}
             >
               <LoadingIndicator />
@@ -197,16 +189,14 @@ const Home = () => {
             </InfiniteScroll>
           )}
         </Box>
-        <Box
-          sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 99 }}
-        >
+        <Box className="fixed inset-0 z-[99]">
           {/* @ts-ignore */}
           <AnimatePresence>
             {openFilter && (
               <>
                 <MotionBox
+                  className="fixed inset-0"
                   sx={{
-                    ...sxFullSizeFixed,
                     bgcolor: "rgba(0,0,0,.65)",
                   }}
                   initial={{ opacity: 0 }}

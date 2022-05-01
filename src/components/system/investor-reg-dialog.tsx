@@ -46,13 +46,6 @@ const ContactBox = styled(Box)`
   color: #ffffff;
 `;
 const Avt = styled(Box)``;
-const Info = styled(Box)``;
-const InfoDetail = styled(Box)`
-  display: flex;
-`;
-const Phone = styled(Box)`
-  display: flex;
-`;
 type InvestorRegDialogProps = {
   close: () => unknown | Promise<unknown>;
 };
@@ -102,9 +95,8 @@ export default function InvestorRegDialogComponent({
           </AspectRatio>
         </Box>
         <Box
+          className="absolute z-[1] flex items-center justify-center"
           sx={{
-            position: "absolute",
-            zIndex: 1,
             top: "-20px",
             left: "50%",
             width: "263px",
@@ -118,17 +110,13 @@ export default function InvestorRegDialogComponent({
             lineHeight: "161.9%",
             color: "rgb(255, 255, 255)",
             height: "40px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
           }}
         >
           Trở thành Investor cùng chúng tôi
         </Box>
         <Typography
+          className="absolute text-center"
           sx={{
-            position: "absolute",
-            textAlign: "justify",
             fontSize: 11.5,
             lineHeight: "18.33px",
             fontWeight: 400,
@@ -312,7 +300,7 @@ export default function InvestorRegDialogComponent({
                 <Image src={avtInfo} layout={"fill"} objectFit={"cover"} />{" "}
               </Avatar>{" "}
             </Avt>
-            <Info>
+            <Box>
               <h2
                 style={{
                   fontSize: "15px",
@@ -322,7 +310,7 @@ export default function InvestorRegDialogComponent({
               >
                 BÙI SƠN TÂM
               </h2>
-              <InfoDetail>
+              <Box className={"flex"}>
                 <IconUser />{" "}
                 <a
                   href="#"
@@ -336,8 +324,9 @@ export default function InvestorRegDialogComponent({
                 >
                   Founder/CEO | Vaithuhay.com
                 </a>
-              </InfoDetail>
-              <Phone>
+              </Box>
+              {/* PHONE */}
+              <Box className={"flex"}>
                 <PhoneIcon />
                 <p
                   style={{
@@ -348,8 +337,8 @@ export default function InvestorRegDialogComponent({
                 >
                   0902905808
                 </p>
-              </Phone>
-            </Info>
+              </Box>
+            </Box>
           </ContactBox>
         </Box>
       </DialogContent>

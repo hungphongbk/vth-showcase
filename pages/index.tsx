@@ -14,7 +14,7 @@ import { NextSeo } from "next-seo";
 import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
 import { AspectRatio, LoadingIndicator } from "@hungphongbk/vth-sdk";
 import { NetworkStatus } from "@hungphongbk/apollo-client";
-import Footer from "../src/components/Footer";
+import Footer from "../src/components/footer";
 import { InfiniteScroll } from "../src/components/infinite-scroll";
 import { CreatorAndInvestorActions } from "src/components/system";
 import ShowcaseFeaturedList from "../src/components/showcase-featured-list";
@@ -118,8 +118,8 @@ const Home = () => {
               />
             </Box>
             <Box sx={{ p: 1, width: "100%" }}>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Box sx={{ display: "flex" }}>
+              <Box className="flex justify-between">
+                <Box className="flex">
                   <ShowcasePortalLogo />
                   <NewPopup />
                 </Box>
@@ -142,7 +142,7 @@ const Home = () => {
             overflowY: "visible",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1, py: 0.7 }}>
+          <Box className="flex items-center gap-2" sx={{ py: 0.7 }}>
             <Box
               className="flex items-center justify-center"
               sx={{

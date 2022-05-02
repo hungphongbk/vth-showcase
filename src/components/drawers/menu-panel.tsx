@@ -13,7 +13,7 @@ import { afterSignOut } from "../../store/auth.reducer";
 import { FirebaseAuthService } from "../../service";
 import { RoleIcon, StyledUpper } from "./menu/styled";
 import LoggedInMenu from "./menu/LoggedInMenu";
-import FooterMobile from "./menu/FooterMobile";
+import FooterMobile from "./menu/footer-mobile";
 import LoginPanel from "./login-panel";
 
 const MenuPanel = forwardRef(function MenuPanel(

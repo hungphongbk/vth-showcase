@@ -15,6 +15,7 @@ import DetailedUserIcon from "../assets/icons/DetailedUserIcon";
 import VthIconButton from "./vth-icon-button";
 import { PreorderButton } from "./system";
 import ImageListDisplay from "./image-list-display";
+import { NoSsr } from "@mui/base";
 
 const testPreview = (str: string) => /^\/preview/.test(str),
   testPost = (str: string) => /^\/post/.test(str);
@@ -283,7 +284,9 @@ export default function ShowcaseDetailed({
             <CommentSection slug={item.slug} />
           </motion.div>
         )}
-        <ShowcaseRelateds slug={item.slug} />
+        <NoSsr>
+          <ShowcaseRelateds slug={item.slug} />
+        </NoSsr>
       </MotionBox>
     </>
   );

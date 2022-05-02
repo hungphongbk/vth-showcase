@@ -1,6 +1,6 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 import { User } from "@firebase/auth";
-import { QueryResult } from "@apollo/client/react/types/types";
+import { QueryResult } from "@hungphongbk/apollo-client/react/types/types";
 import { CurrentUserQuery } from "../types/graphql";
 
 type UserInfo = Pick<
@@ -15,8 +15,10 @@ type AuthState = {
   userInfo: UserInfo;
 };
 
-export const afterSignInFirebase =
-  createAction<{ user: User | undefined; token?: string }>("@@auth/signin");
+export const afterSignInFirebase = createAction<{
+  user: User | undefined;
+  token?: string;
+}>("@@auth/signin");
 
 export const afterSignOut = createAction("@@auth/signout");
 

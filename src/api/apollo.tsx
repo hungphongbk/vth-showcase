@@ -5,15 +5,15 @@ import {
   HttpLink,
   InMemoryCache,
   NormalizedCacheObject,
-} from "@apollo/client";
+} from "@hungphongbk/apollo-client";
 import introspection from "./introspection.json";
-import { setContext } from "@apollo/client/link/context";
+import { setContext } from "@hungphongbk/apollo-client/link/context";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
 import store from "../store";
 import { NextPage } from "next";
 import { relayStylePagination } from "@hungphongbk/vth-sdk";
-import { createPersistedQueryLink } from "@apollo/client/link/persisted-queries";
+import { createPersistedQueryLink } from "@hungphongbk/apollo-client/link/persisted-queries";
 import { sha256 } from "crypto-hash";
 
 export type ApolloClientContext = unknown;
@@ -44,7 +44,7 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const apolloClient = new ApolloClient({
-  ssrMode: typeof window === "undefined",
+  ssrMode: true,
   link: from([
     createPersistedQueryLink({ sha256, useGETForHashedQueries: true }),
     authLink,

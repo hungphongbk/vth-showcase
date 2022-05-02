@@ -13,7 +13,7 @@ import dynamic from "next/dynamic";
 import { NextSeo } from "next-seo";
 import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
 import { AspectRatio, LoadingIndicator } from "@hungphongbk/vth-sdk";
-import { NetworkStatus } from "@apollo/client";
+import { NetworkStatus } from "@hungphongbk/apollo-client";
 import Footer from "../src/components/Footer";
 import { InfiniteScroll } from "../src/components/infinite-scroll";
 import { CreatorAndInvestorActions } from "src/components/system";
@@ -189,7 +189,7 @@ const Home = () => {
             </InfiniteScroll>
           )}
         </Box>
-        <Box className="fixed inset-0 z-[99]">
+        <Box className="fixed inset-x-0 bottom-0 z-[99]">
           {/* @ts-ignore */}
           <AnimatePresence>
             {openFilter && (

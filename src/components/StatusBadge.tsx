@@ -16,6 +16,7 @@ export default function StatusBadge(props: {
   filled?: boolean;
   noIcon?: boolean;
   sx?: SxProps;
+  className?: string;
 }): JSX.Element {
   const outlined = props.outlined ?? false,
     color = usingShowcaseStatusColor(props.status),
@@ -57,6 +58,7 @@ export default function StatusBadge(props: {
           ...props.sx,
         },
       ]}
+      className={props.className}
     >
       {!noIcon && usingShowcaseStatusIcon(props.status, { fontSize: "1.3em" })}
       <Typography

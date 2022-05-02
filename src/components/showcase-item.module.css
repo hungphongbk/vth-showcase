@@ -1,0 +1,9 @@
+.Icon{
+  @apply w-4 h-4;
+}
+.DetailLine{
+  @apply grid grid-cols-[auto_1fr] gap-2;
+}
+.DetailLine :global(.MuiTypography-root){
+  @apply leading-normal;
+}

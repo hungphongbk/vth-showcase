@@ -12,16 +12,16 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Showcase } from "../types/graphql";
 import NextImage from "./next-image";
 import Link from "./Link";
+import styles from "./showcase-item.module.css";
 
 const MotionImageListItem = motion(ImageListItem);
 
-const sxIcon: SystemStyleObject = { width: 16, height: 16, mr: 1 },
-  sxDetailLine: SystemStyleObject = {
-    display: "grid",
-    gridTemplateColumns: "auto 1fr",
-    gridGap: 1,
-    "& .MuiTypography-root": { lineHeight: 1.5 },
-  };
+const sxDetailLine: SystemStyleObject = {
+  display: "grid",
+  gridTemplateColumns: "auto 1fr",
+  gridGap: 1,
+  "& .MuiTypography-root": { lineHeight: 1.5 },
+};
 
 type ProductItemProps = {
   item: Showcase;
@@ -123,23 +123,22 @@ export default function ShowcaseItem({
           >
             {item.name}
           </MotionTypo>
-          <StatusBadge status={item.status} />
+          <StatusBadge status={item.status} className="mt-1" />
           <MotionBox
+            className="mt-2 grid w-full"
             sx={{
-              mt: 1,
-              display: "grid",
               gridTemplateAreas: '"count next" "date next"',
               gridTemplateColumns: "1fr auto",
               gridRowGap: 4,
               width: "100%",
             }}
           >
-            <Box sx={[sxDetailLine, { gridArea: "count" }]}>
-              <InboxIcon sx={sxIcon} />
+            <Box className={styles.DetailLine} sx={{ gridArea: "count" }}>
+              <InboxIcon className={styles.Icon} />
               <MotionTypo>1000 pcs</MotionTypo>
             </Box>
-            <Box sx={[sxDetailLine, { gridArea: "date" }]}>
-              <AccessTimeFilledIcon sx={sxIcon} />
+            <Box className={styles.DetailLine} sx={{ gridArea: "date" }}>
+              <AccessTimeFilledIcon className={styles.Icon} />
               <MotionTypo>24/12/2021</MotionTypo>
             </Box>
             <IconButton

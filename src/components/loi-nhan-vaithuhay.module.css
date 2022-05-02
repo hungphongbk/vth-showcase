@@ -1,0 +1,7 @@
+.Title{
+  @apply text-xl font-bold text-center text-[#3f3f3f] pt-4;
+}
+.Content{
+  @apply text-xs text-black font-medium relative leading-6;
+  padding: 0 15px 0 18px;
+}

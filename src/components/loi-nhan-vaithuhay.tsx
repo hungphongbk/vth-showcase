@@ -4,6 +4,7 @@ import { Box, Button, Dialog, DialogProps } from "@mui/material";
 import React from "react";
 import { styled } from "@mui/material/styles";
 import ImageBox from "./image-box";
+import styles from "./loi-nhan-vaithuhay.module.css";
 
 const PopUpContent = styled(ImageBox)`
   svg {
@@ -15,37 +16,12 @@ const PopUpContent = styled(ImageBox)`
   width: 100%;
   position: relative;
 `;
-const FooterBox4 = styled(Box)`
-  border-radius: 15px;
-  margin: 0 8px 0 9px;
-  color: #000000;
-`;
-const H1Box = styled(Box)`
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 24px;
-  width: 100%;
-  text-align: center;
-  color: #3f3f3f;
-`;
-const H3Box = styled(Box)`
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 198.4%;
-
-  color: #000000;
-  margin-top: 7px;
-  position: relative;
-`;
 const BtnClose = styled(Button)`
   max-width: 20px;
   min-width: 20px;
   height: 20px;
   border-radius: 50%;
   background-color: #000000;
-  position: absolute;
-  top: 2%;
-  right: 5%;
   color: #ffffff;
   &:hover {
     background-color: #000000;
@@ -63,10 +39,13 @@ export default function LoiNhanVaithuhay({
       onClose={onClose}
       PaperProps={{ style: { borderRadius: 15 } }}
     >
-      <PopUpContent bg={bg1}>
-        <FooterBox4>
-          <H1Box style={{ paddingTop: "40px" }}>LỜI NHẮN TỪ VAITHUHAY</H1Box>
-          <H3Box style={{ padding: "10px 15px 0 18px" }}>
+      <PopUpContent bg={bg1} className="flex flex-col">
+        <BtnClose onClick={onClose as any} className="self-end mr-4 mt-4">
+          <CloseIcon />
+        </BtnClose>
+        <Box className={styles.Title}>LỜI NHẮN TỪ VAITHUHAY</Box>
+        <Box className={styles.Content}>
+          <p className="text-justify">
             Chúng tôi biết khi chia sẻ các dự án sản phẩm mới của chính mình, dự
             án kinh doanh cho cộng đồng sẽ vô cùng rủi ro cho phía Vaithuhay.
             Tuy nhiên đội ngũ sáng lập Vaithuhay cùng thống nhất cho rằng để
@@ -78,23 +57,10 @@ export default function LoiNhanVaithuhay({
             phẩm kinh doanh tiềm năng của chính mình cho cộng đồng thay vì đó tự
             mình kiếm lợi nhuận và để làm được điều đó cần có sự đồng hành của
             các nhà đầu tư, anh em đang tìm cách khởi nghiệp.
-            <br />
-            <p style={{ paddingTop: "7px" }}>LET&apos;S SHARE TO EARN</p>
-            <p
-              className="text-right"
-              style={{
-                paddingBottom: "15px",
-                fontSize: "13px",
-                lineHeight: "28px",
-              }}
-            >
-              Bùi Sơn Tâm | Founder & CEO
-            </p>
-          </H3Box>
-        </FooterBox4>
-        <BtnClose onClick={onClose as any}>
-          <CloseIcon />
-        </BtnClose>
+          </p>
+          <p className="pt-2">LET&apos;S SHARE TO EARN</p>
+          <p className="text-right pb-4 text-xs">Bùi Sơn Tâm | Founder & CEO</p>
+        </Box>
       </PopUpContent>
     </Dialog>
   );

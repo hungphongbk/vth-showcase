@@ -123,9 +123,7 @@ const Home = () => {
                   <ShowcasePortalLogo />
                   <NewPopup />
                 </Box>
-                <Box>
-                  <ShowMorePopup />
-                </Box>
+                <ShowMorePopup />
               </Box>
               {/* eslint-disable-next-line react/no-unescaped-entities */}
               <Title>DỰ ÁN CHUẨN BỊ "RỜI BỆ PHÓNG"</Title>

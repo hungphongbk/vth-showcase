@@ -19,19 +19,18 @@ export default function ShowMorePopup() {
   return (
     <>
       <Button
+        className="px-2 py-0.5 h-6 border-black"
         style={{
           color: "#000000",
           fontFamily: "Montserrat",
           fontStyle: "normal",
           fontWeight: "600",
           fontSize: "9px",
-          lineHeight: "129.9%",
-          borderColor: "#000000",
         }}
         onClick={handleClick}
         variant="outlined"
       >
-        Tìm hiểu thêm <IconPopup style={{ marginLeft: "8px" }} />
+        Tìm hiểu thêm <IconPopup className="ml-2" />
       </Button>
       <Popover
         open={state}
@@ -41,7 +40,6 @@ export default function ShowMorePopup() {
           vertical: "bottom",
           horizontal: "right",
         }}
-        sx={{ maxWidth: "350px" }}
         PaperProps={{ className: "bg-black rounded-lg", sx: { width: "60vw" } }}
       >
         <Typography

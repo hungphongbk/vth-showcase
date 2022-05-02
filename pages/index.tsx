@@ -123,7 +123,7 @@ const Home = () => {
                   <ShowcasePortalLogo />
                   <NewPopup />
                 </Box>
-                <Box sx={{}}>
+                <Box>
                   <ShowMorePopup />
                 </Box>
               </Box>

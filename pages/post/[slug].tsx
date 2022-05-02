@@ -1,5 +1,6 @@
 import { GetStaticProps } from "next";
-import { Box, Stack, styled, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import ShowcaseDetailed from "../../src/components/showcase-detailed";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect } from "react";
@@ -10,7 +11,7 @@ import { InvestorInformation } from "../../src/components/post-page";
 import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
 import { ssrShowcaseDetail } from "../../src/types/graphql.ssr";
-import Footer from "../../src/components/Footer";
+import Footer from "../../src/components/footer";
 import {
   PreorderButton,
   useInvestorRegDialog,

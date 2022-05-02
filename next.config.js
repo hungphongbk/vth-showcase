@@ -12,13 +12,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const moduleExports = withPlugins([withBundleAnalyzer, withTM], {
   swcMinify: true,
   reactStrictMode: true,
-  webpack: (config, { isServer }) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "@mui/styled-engine": "@mui/styled-engine-sc",
-    };
-    return config;
-  },
   images: {
     domains: [
       "localhost",
@@ -33,6 +26,18 @@ const moduleExports = withPlugins([withBundleAnalyzer, withTM], {
     ],
   },
   experimental: {
+    emotion: true,
+    modularizeImports: {
+      lodash: {
+        transform: "lodash/{{member}}",
+      },
+      "@mui/material": {
+        transform: "@mui/material/{{member}}",
+      },
+      "@mui/lab": {
+        transform: "@mui/lab/{{member}}",
+      },
+    },
     scrollRestoration: true,
   },
   compiler: {
@@ -45,6 +50,16 @@ const moduleExports = withPlugins([withBundleAnalyzer, withTM], {
         source: "/manage/create-post",
         destination: "/manage/create-post/step1",
         permanent: true,
+      },
+    ];
+  },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "Referrer-Policy", value: "origin-when-cross-origin" },
+        ],
       },
     ];
   },

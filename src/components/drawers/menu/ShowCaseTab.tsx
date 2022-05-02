@@ -1,9 +1,10 @@
 import React from "react";
-import { Box, styled } from "@mui/material";
+import { Box } from "@mui/material";
 import bgr1 from "../../../assets/bg-investor-1.png";
 import { StyledBoxBase } from "../../post-page/styled";
 import { PostProductButton } from "../../system";
 import InvestorButton from "../../system/investor-button";
+import { styled } from "@mui/material/styles";
 
 const StyledTab1 = styled(Box)`
   font-weight: normal;

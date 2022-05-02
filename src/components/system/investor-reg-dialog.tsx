@@ -6,7 +6,6 @@ import {
   DialogContent,
   MenuItem,
   Stack,
-  styled,
   Typography,
 } from "@mui/material";
 import Image from "next/image";
@@ -21,12 +20,13 @@ import {
 import { TextInput } from "../TextInput";
 import { useForm } from "react-hook-form";
 import gql from "graphql-tag";
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@hungphongbk/apollo-client";
 import IconUser from "src/assets/icons/IconUser";
 import PhoneIcon from "src/assets/icons/PhoneIcon";
 import Avatar from "@mui/material/Avatar";
 import QuestionMarkIcon from "src/assets/icons/QuestionMarkIcon";
 import { InvestorRegistrationCreateDto } from "../../types/graphql";
+import { styled } from "@mui/material/styles";
 
 const SUBMIT_INVESTOR = gql`
   mutation SubmitInvestor($form: InvestorRegistrationCreateDto!) {
@@ -46,13 +46,6 @@ const ContactBox = styled(Box)`
   color: #ffffff;
 `;
 const Avt = styled(Box)``;
-const Info = styled(Box)``;
-const InfoDetail = styled(Box)`
-  display: flex;
-`;
-const Phone = styled(Box)`
-  display: flex;
-`;
 type InvestorRegDialogProps = {
   close: () => unknown | Promise<unknown>;
 };
@@ -78,11 +71,32 @@ export default function InvestorRegDialogComponent({
 
   return (
     <StyledDialog open={true} onClose={close}>
-      <DialogContent sx={{ position: "relative", zIndex: 0, pb: 0 }}>
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
         <Box
           sx={{
-            position: "absolute",
-            zIndex: 1,
+            zIndex: -1,
+            overflow: "hidden",
+            borderTopLeftRadius: 25,
+            borderTopRightRadius: 25,
+          }}
+        >
+          <AspectRatio ratio={"357/180"}>
+            <Image
+              src={bg1}
+              layout={"fill"}
+              objectFit={"cover"}
+              objectPosition={"bottom"}
+            />
+          </AspectRatio>
+        </Box>
+        <Box
+          className="absolute z-[1] flex items-center justify-center"
+          sx={{
             top: "-20px",
             left: "50%",
             width: "263px",
@@ -96,28 +110,20 @@ export default function InvestorRegDialogComponent({
             lineHeight: "161.9%",
             color: "rgb(255, 255, 255)",
             height: "40px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
           }}
         >
           Trở thành Investor cùng chúng tôi
         </Box>
-        <Box
-          sx={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: -1 }}
-        >
-          <AspectRatio ratio={"357/190"}>
-            <Image src={bg1} layout={"fill"} objectFit={"cover"} />
-          </AspectRatio>
-        </Box>
         <Typography
+          className="absolute text-center"
           sx={{
-            textAlign: "justify",
-            fontSize: "0.75rem",
+            fontSize: 11.5,
             lineHeight: "18.33px",
             fontWeight: 400,
             color: "#000",
-            margin: "15px 0 65px",
+            top: 34,
+            left: 20,
+            right: 20,
           }}
         >
           Nếu bạn đang mong muốn tìm hiểu sâu hơn về việc đầu tư cùng Vaithuhay,
@@ -147,11 +153,13 @@ export default function InvestorRegDialogComponent({
             />
           </button>
         </Typography>
+      </Box>
+      <DialogContent sx={{ position: "relative", zIndex: 0, pb: 0 }}>
         <Stack
           direction={"column"}
           gap={1.5}
           alignItems={"center"}
-          sx={{ mt: 3.5 }}
+          sx={{ mt: 1 }}
         >
           <FormInput
             control={control}
@@ -247,8 +255,13 @@ export default function InvestorRegDialogComponent({
       <DialogContent
         sx={{ position: "relative", zIndex: 0, p: 0, overflow: "hidden" }}
       >
-        <AspectRatio ratio={"357/208"} sx={{ zIndex: "-1" }}>
-          <Image src={bg2} layout={"fill"} objectFit={"cover"} />
+        <AspectRatio ratio={"357/228"} sx={{ zIndex: "-1" }}>
+          <Image
+            src={bg2}
+            layout={"fill"}
+            objectFit={"cover"}
+            objectPosition={"top"}
+          />
         </AspectRatio>
         <Box
           sx={{
@@ -287,7 +300,7 @@ export default function InvestorRegDialogComponent({
                 <Image src={avtInfo} layout={"fill"} objectFit={"cover"} />{" "}
               </Avatar>{" "}
             </Avt>
-            <Info>
+            <Box>
               <h2
                 style={{
                   fontSize: "15px",
@@ -297,7 +310,7 @@ export default function InvestorRegDialogComponent({
               >
                 BÙI SƠN TÂM
               </h2>
-              <InfoDetail>
+              <Box className={"flex"}>
                 <IconUser />{" "}
                 <a
                   href="#"
@@ -311,8 +324,9 @@ export default function InvestorRegDialogComponent({
                 >
                   Founder/CEO | Vaithuhay.com
                 </a>
-              </InfoDetail>
-              <Phone>
+              </Box>
+              {/* PHONE */}
+              <Box className={"flex"}>
                 <PhoneIcon />
                 <p
                   style={{
@@ -323,8 +337,8 @@ export default function InvestorRegDialogComponent({
                 >
                   0902905808
                 </p>
-              </Phone>
-            </Info>
+              </Box>
+            </Box>
           </ContactBox>
         </Box>
       </DialogContent>

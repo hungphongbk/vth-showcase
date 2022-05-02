@@ -5,7 +5,7 @@ import {
   SubmitPreorderMutation,
   useSubmitPreorderMutation,
 } from "../../types/graphql";
-import { MutationBaseOptions } from "@apollo/client/core/watchQueryOptions";
+import { MutationBaseOptions } from "@hungphongbk/apollo-client/core/watchQueryOptions";
 
 type WithPreorderOptions = {
   refetchQueries: (

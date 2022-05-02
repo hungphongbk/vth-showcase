@@ -1,7 +1,8 @@
-import { Box, BoxProps, css, styled } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import Image, { ImageProps } from "next/image";
 import { forwardRef } from "react";
 import { TabList, TabPanel } from "@mui/lab";
+import { css, styled } from "@mui/material/styles";
 
 type ImageBoxProps = BoxProps & { bg: ImageProps["src"] };
 // eslint-disable-next-line react/display-name

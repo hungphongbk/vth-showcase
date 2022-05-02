@@ -1,8 +1,9 @@
 import { DeepPartial } from "react-hook-form";
 import { CommentDto } from "../../../types/graphql";
-import { Avatar, Box, Stack, styled, Typography } from "@mui/material";
+import { Avatar, Box, Stack, Typography } from "@mui/material";
 import { CommentRateMaps, VaithuhayAvatar } from "@hungphongbk/vth-sdk";
 import { SxProps } from "@mui/system";
+import { styled } from "@mui/material/styles";
 
 const CommentContent = styled(Box)`
   /* Neutral/Dark White */

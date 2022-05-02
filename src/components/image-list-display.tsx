@@ -3,7 +3,7 @@ import { ImageList, Showcase } from "../types/graphql";
 import SlickSlider from "./slick-slider";
 import { AspectRatio } from "@hungphongbk/vth-sdk";
 import { Box } from "@mui/material";
-import NextImage from "./NextImage";
+import NextImage from "./next-image";
 
 type ImageListDisplayProps = {
   showcase: Pick<Showcase, "name">;

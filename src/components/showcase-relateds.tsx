@@ -13,7 +13,6 @@ export default function ShowcaseRelateds({
   const [fetchRelateds, { data: relateds, networkStatus }] =
     useShowcaseRelatedsLazyQuery({
       variables: { slug },
-      ssr: false,
       notifyOnNetworkStatusChange: true,
     });
 

@@ -1,9 +1,10 @@
 import { Showcase } from "../../types/graphql";
-import { Box, Skeleton, styled, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import ModifyShowcaseIconButton from "./ModifyShowcaseIconButton";
 import Image from "next/image";
 import { DeepPartial } from "redux";
 import { useRouter } from "next/router";
+import { styled } from "@mui/material/styles";
 
 const Wrapper = styled(Box)`
   background: #f3f3f3;

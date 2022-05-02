@@ -15,8 +15,12 @@ const PortalPreorderButton = withPreorder<PropsWithChildren<unknown>>({
 
   const submitAnonymously = useCallback(
     async (value: PreorderRequestInputDto | undefined) => {
+      if (value === undefined) {
+        setOpen(false);
+        return;
+      }
       setIsSubmitting(true);
-      const data = await doSubmitPreorder(value, true);
+      await doSubmitPreorder(value, true);
       setOpen(false);
       setIsSubmitted(true);
     },

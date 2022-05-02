@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ReactElement, ReactNode } from "react";
-import { Box, CssBaseline, TextField, ThemeProvider } from "@mui/material";
+import { Box, CssBaseline, TextField } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 import Header from "../src/components/Header";
 import { LayoutGroup } from "framer-motion";
@@ -21,29 +22,39 @@ import { UploadService } from "../src/service";
 import { VthThemeProvider } from "@hungphongbk/vth-sdk";
 import { LocalizationProvider } from "@mui/lab";
 import DateAdapter from "@mui/lab/AdapterDateFns";
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider } from "@hungphongbk/apollo-client";
 import { useGATrackView } from "../src/utils/hooks";
 import { apolloClient } from "../src/api";
 import "../styles/globals.css";
 import ScrollablePanel from "../src/components/scrollable-panel";
 import { appTheme } from "../src/app-theme";
+import { CacheProvider, EmotionCache } from "@emotion/react";
+import createEmotionCache from "../src/utils/createEmotionCache";
+
+const clientSideEmotionCache = createEmotionCache();
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-type AppPropsWithLayout = AppProps & {
+type AppPropsExtended = AppProps & {
   Component: NextPageWithLayout;
+  emotionCache?: EmotionCache;
 };
 
-export default function MyApp(props: AppPropsWithLayout) {
-  const { Component, pageProps, router } = props;
+export default function MyApp(props: AppPropsExtended) {
+  const {
+    Component,
+    pageProps,
+    router,
+    emotionCache = clientSideEmotionCache,
+  } = props;
   const getLayout = Component.getLayout ?? ((page) => page);
   const persistor = persistStore(store);
   useGATrackView();
 
   return (
-    <>
+    <CacheProvider value={emotionCache}>
       <Head>
         <meta
           name="viewport"
@@ -92,6 +103,7 @@ export default function MyApp(props: AppPropsWithLayout) {
                     <LocalizationProvider dateAdapter={DateAdapter}>
                       <CssBaseline />
                       <Header />
+                      {/* @ts-ignore */}
                       <LayoutGroup>
                         <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
                           {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -119,6 +131,6 @@ export default function MyApp(props: AppPropsWithLayout) {
           )}
         </PersistGate>
       </Provider>
-    </>
+    </CacheProvider>
   );
 }

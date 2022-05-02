@@ -160,6 +160,7 @@ export default function SecondStepPreorder(): JSX.Element {
           >
             <Stack direction={"column"} gap={1}>
               <FormInput
+                // @ts-ignore
                 name={"brand.name"}
                 control={control}
                 variant={"standard"}
@@ -167,6 +168,7 @@ export default function SecondStepPreorder(): JSX.Element {
                 component={EnhancedTextField}
               />
               <FormInput
+                // @ts-ignore
                 name={"brand.description"}
                 control={control}
                 placeholder={"Mô tả thương hiệu"}

@@ -92,6 +92,7 @@ export default function SecondStepShowcase(): JSX.Element {
           >
             <Stack direction={"column"} gap={1}>
               <FormInput
+                // @ts-ignore
                 name={"brand.name"}
                 control={control}
                 variant={"standard"}
@@ -99,6 +100,7 @@ export default function SecondStepShowcase(): JSX.Element {
                 component={EnhancedTextField}
               />
               <FormInput
+                // @ts-ignore
                 name={"brand.description"}
                 control={control}
                 placeholder={"Mô tả thương hiệu"}

@@ -1,16 +1,10 @@
-import {
-  Backdrop,
-  css,
-  Fade,
-  SpeedDial,
-  SpeedDialAction,
-  styled,
-} from "@mui/material";
+import { Backdrop, Fade, SpeedDial, SpeedDialAction } from "@mui/material";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import DocumentIcon from "../assets/icons/DocumentIcon";
 import { useRouter } from "next/router";
 import { useInvestorRegDialog } from "./system";
 import { useState } from "react";
+import { css, styled } from "@mui/material/styles";
 
 const ICON_SIZE = 30,
   ACTION_GUTTER = 4;
@@ -61,7 +55,7 @@ const StyledSpeedDial = styled(SpeedDial)(
       &-staticTooltipLabel {
         white-space: nowrap;
         position: relative;
-        right: unset;
+        right: unset !important;
         font-size: 12px;
         font-weight: 700;
         text-transform: uppercase;
@@ -88,6 +82,10 @@ export default function CreatorAndInvestorActionsComponent(): JSX.Element {
     handleClose();
   };
 
+  const handleGoBack = async () => {
+    await router.push("https://vaithuhay.com/");
+    handleClose();
+  };
   return (
     <>
       <Backdrop open={open} sx={{ zIndex: 9 }} />
@@ -112,6 +110,13 @@ export default function CreatorAndInvestorActionsComponent(): JSX.Element {
             tooltipTitle={"Đăng sản phẩm"}
             tooltipOpen
             onClick={handleUploadNew}
+          />
+          <SpeedDialAction
+            key={"qltc"}
+            icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
+            tooltipTitle={"Vaithuhay.com"}
+            tooltipOpen
+            onClick={handleGoBack}
           />
         </StyledSpeedDial>
       </Fade>

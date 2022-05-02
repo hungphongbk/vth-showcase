@@ -4,29 +4,41 @@ import ShowcaseList from "../src/components/showcase-list";
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 import { MotionBox } from "../src/components/commons";
-import Banner from "../src/components/Banner";
+import Banner from "../src/components/banner";
 import { withApollo } from "../src/api";
-import {
-  IndexPageQuery,
-  ShowcaseEdge,
-  ShowcaseStatus,
-} from "../src/types/graphql";
+import { ShowcaseEdge, ShowcaseStatus } from "../src/types/graphql";
 import SimpleFilter from "../src/components/index-page/simple-filter";
-import { sxFullSizeFixed } from "../src/utils/predefinedSx";
 import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
 import dynamic from "next/dynamic";
 import { NextSeo } from "next-seo";
 import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
-import { LoadingIndicator } from "@hungphongbk/vth-sdk";
-import { NetworkStatus } from "@apollo/client";
-import Footer from "../src/components/Footer";
+import { AspectRatio, LoadingIndicator } from "@hungphongbk/vth-sdk";
+import { NetworkStatus } from "@hungphongbk/apollo-client";
+import Footer from "../src/components/footer";
 import { InfiniteScroll } from "../src/components/infinite-scroll";
 import { CreatorAndInvestorActions } from "src/components/system";
 import ShowcaseFeaturedList from "../src/components/showcase-featured-list";
+import bg from "../sdk/src/assets/bg.webp";
+import ShowcasePortalLogo from "../sdk/src/assets/ShowcasePortalLogo";
+import NewPopup from "../sdk/src/components/new-popup";
+import Image from "next/image";
+import { styled } from "@mui/material/styles";
+import ShowMorePopup from "sdk/src/components/show-more-pupop";
 
 const FilterPanel = dynamic(() => import("../src/components/filter-panel"), {
   ssr: false,
 });
+const Title = styled(Typography)`
+  &.MuiTypography-root {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 0.95rem;
+    line-height: 139.4%;
+    color: white;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+  }
+`;
 
 const Home = () => {
   const { data: ssrData } = ssrIndex.usePage(() => ({
@@ -48,12 +60,12 @@ const Home = () => {
     return {
       ...ssrData,
       ...clientData,
-    } as unknown as IndexPageQuery;
+    };
   }, [ssrData, clientData]);
-  const posts = data!.showcases.edges,
-    featured = data!.featured.edges,
-    pageInfo = data!.showcases.pageInfo,
-    banner = data!.banner;
+  const posts = data.showcases?.edges,
+    featured = data.featured!.edges,
+    pageInfo = data.showcases?.pageInfo,
+    banner = data.banner;
 
   const [openFilter, setOpenFilter] = useState(false);
   const [statusFilter, setStatusFilter] = useState<
@@ -75,6 +87,7 @@ const Home = () => {
   }, [statusFilter]);
 
   const loadMore = async () => {
+    if (!pageInfo) return;
     if (!pageInfo.hasNextPage) return;
     const filter: any = statusFilter ? { status: { eq: statusFilter } } : {};
     await fetchMore({
@@ -90,22 +103,37 @@ const Home = () => {
       <Container sx={{ mt: 2, pl: 1, pr: 1 }}>
         <NextSeo canonical={"https://showcase.vaithuhay.com"} />
         <Banner banner={banner} />
-        <Typography
-          sx={{
-            fontSize: 15,
-            fontWeight: 600,
-            textAlign: "center",
-            width: "100%",
-            my: 2,
-            textTransform: "uppercase",
-          }}
+        <AspectRatio
+          ratio={"752/510"}
+          sx={{ my: 3, overflow: "hidden", mx: "-8px" }}
         >
-          Dự án đang chuẩn bị &quot;rời bệ phóng&quot;
-        </Typography>
-        <ShowcaseFeaturedList
-          items={featured.map((f) => f.node)}
-          sx={{ mb: 5 }}
-        />
+          <Box>
+            <Box className="absolute inset-0 z-[-1] object-contain">
+              <Image
+                src={bg}
+                alt={"du an featured"}
+                layout={"fill"}
+                objectPosition={"bottom"}
+                objectFit={"contain"}
+              />
+            </Box>
+            <Box sx={{ p: 1, width: "100%" }}>
+              <Box className="flex justify-between">
+                <Box className="flex">
+                  <ShowcasePortalLogo />
+                  <NewPopup />
+                </Box>
+                <ShowMorePopup />
+              </Box>
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
+              <Title>DỰ ÁN CHUẨN BỊ "RỜI BỆ PHÓNG"</Title>
+              <ShowcaseFeaturedList
+                items={featured.map((f) => f.node)}
+                sx={{ mb: 5 }}
+              />
+            </Box>
+          </Box>
+        </AspectRatio>
         <Box
           sx={{
             my: 0.7,
@@ -114,8 +142,9 @@ const Home = () => {
             overflowY: "visible",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1, py: 0.7 }}>
+          <Box className="flex items-center gap-2" sx={{ py: 0.7 }}>
             <Box
+              className="flex items-center justify-center"
               sx={{
                 width: 38,
                 height: 38,
@@ -123,9 +152,6 @@ const Home = () => {
                 mb: "-5px",
                 borderRadius: "50%",
                 bgcolor: "yellow.main",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
               }}
               onClick={() => setOpenFilter(true)}
             >
@@ -140,39 +166,35 @@ const Home = () => {
         <Box sx={{ minHeight: "75vh", position: "relative" }}>
           <Fade in={networkStatus !== NetworkStatus.ready}>
             <Box
+              className="absolute inset-x-0 top-0 flex justify-center"
               sx={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
                 pt: 3,
-                display: "flex",
-                justifyContent: "center",
               }}
             >
               <LoadingIndicator />
             </Box>
           </Fade>
-          <InfiniteScroll
-            next={loadMore}
-            hasMore={pageInfo.hasNextPage!}
-            threshold={1000}
-          >
-            <ShowcaseList
-              posts={posts as unknown as ShowcaseEdge[]}
-              variant={"standard"}
-            />
-          </InfiniteScroll>
+          {pageInfo && (
+            <InfiniteScroll
+              next={loadMore}
+              hasMore={pageInfo.hasNextPage!}
+              threshold={1000}
+            >
+              <ShowcaseList
+                posts={posts as unknown as ShowcaseEdge[]}
+                variant={"standard"}
+              />
+            </InfiniteScroll>
+          )}
         </Box>
-        <Box
-          sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 99 }}
-        >
+        <Box className="fixed inset-x-0 bottom-0 z-[99]">
+          {/* @ts-ignore */}
           <AnimatePresence>
             {openFilter && (
               <>
                 <MotionBox
+                  className="fixed inset-0"
                   sx={{
-                    ...sxFullSizeFixed,
                     bgcolor: "rgba(0,0,0,.65)",
                   }}
                   initial={{ opacity: 0 }}

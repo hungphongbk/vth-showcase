@@ -7,6 +7,8 @@ import StatusBadge from "../StatusBadge";
 import { ShowcaseStatus } from "../../types/graphql";
 import { useRouter } from "next/router";
 import { StyledSelect } from "../commons";
+import Image from "next/image";
+import bg1 from "../../assets/banner-dang-tai.png";
 
 export default function FirstStep(): JSX.Element {
   const { showcase, dispatch } = useShowcaseCreation();
@@ -36,16 +38,13 @@ export default function FirstStep(): JSX.Element {
 
   return (
     <>
-      <Box
-        sx={{
-          bgcolor: "yellow.main",
-          height: "25vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Typography sx={{ fontSize: 15 }}>Banner</Typography>
+      <Box>
+        <Image
+          src={bg1}
+          layout={"responsive"}
+          objectFit={"cover"}
+          style={{ width: "100%" }}
+        />
       </Box>
       <Box sx={{ mt: 1, p: 1 }}>
         <Stack direction={"column"} gap={2}>

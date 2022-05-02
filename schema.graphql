@@ -32,6 +32,146 @@ input BooleanFieldComparison {
   isNot: Boolean
 }
 
+input BrandCreateInputDto {
+  description: String!
+  logo: String
+  metadata: JSONObject!
+  name: String!
+  slug: String!
+  subtitle: String!
+}
+
+type BrandDto {
+  description: String!
+  id: ID!
+  logo: String
+  mediaLists(
+    """Specify to filter the records returned."""
+    filter: MediaDtoFilter = {}
+
+    """Specify to sort results."""
+    sorting: [MediaDtoSort!] = []
+  ): [MediaDto!]!
+  metadata: JSONObject!
+  name: String!
+  slug: String!
+  subtitle: String!
+}
+
+type BrandDtoAggregateGroupBy {
+  id: ID
+  logo: String
+  name: String
+  slug: String
+}
+
+type BrandDtoAvgAggregate {
+  id: Float
+}
+
+type BrandDtoConnection {
+  """Array of edges."""
+  edges: [BrandDtoEdge!]!
+
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type BrandDtoCountAggregate {
+  id: Int
+  logo: Int
+  name: Int
+  slug: Int
+}
+
+input BrandDtoDeleteFilter {
+  and: [BrandDtoDeleteFilter!]
+  id: IDFilterComparison
+  logo: StringFieldComparison
+  name: StringFieldComparison
+  or: [BrandDtoDeleteFilter!]
+  slug: StringFieldComparison
+}
+
+type BrandDtoDeleteResponse {
+  description: String
+  id: ID
+  logo: String
+  metadata: JSONObject
+  name: String
+  slug: String
+  subtitle: String
+}
+
+type BrandDtoEdge {
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+
+  """The node containing the BrandDto"""
+  node: BrandDto!
+}
+
+input BrandDtoFilter {
+  and: [BrandDtoFilter!]
+  id: IDFilterComparison
+  logo: StringFieldComparison
+  name: StringFieldComparison
+  or: [BrandDtoFilter!]
+  slug: StringFieldComparison
+}
+
+type BrandDtoMaxAggregate {
+  id: ID
+  logo: String
+  name: String
+  slug: String
+}
+
+type BrandDtoMinAggregate {
+  id: ID
+  logo: String
+  name: String
+  slug: String
+}
+
+input BrandDtoSort {
+  direction: SortDirection!
+  field: BrandDtoSortFields!
+  nulls: SortNulls
+}
+
+enum BrandDtoSortFields {
+  id
+  logo
+  name
+  slug
+}
+
+type BrandDtoSumAggregate {
+  id: Float
+}
+
+input BrandDtoUpdateFilter {
+  and: [BrandDtoUpdateFilter!]
+  id: IDFilterComparison
+  logo: StringFieldComparison
+  name: StringFieldComparison
+  or: [BrandDtoUpdateFilter!]
+  slug: StringFieldComparison
+}
+
+input BrandUpdateInputDto {
+  description: String
+  logo: String
+  metadata: JSONObject
+  name: String
+  slug: String
+  subtitle: String
+}
+
 input CommentCreateDto {
   content: String!
   isTopComment: Boolean
@@ -143,6 +283,11 @@ input CreateMailTemplateDto {
   templateName: String
 }
 
+input CreateManyBrandDtosInput {
+  """Array of records to create"""
+  brandDtos: [BrandCreateInputDto!]!
+}
+
 input CreateManyInvestmentPackageDtosInput {
   """Array of records to create"""
   investmentPackageDtos: [CreateInvestmentPackageDto!]!
@@ -156,6 +301,11 @@ input CreateManyMailTemplateDtosInput {
 input CreateManyMediaDtosInput {
   """Array of records to create"""
   mediaDtos: [MediaInput!]!
+}
+
+input CreateOneBrandDtoInput {
+  """The record to create"""
+  brandDto: BrandCreateInputDto!
 }
 
 input CreateOneInvestmentPackageDtoInput {
@@ -212,6 +362,11 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input DeleteManyBrandDtosInput {
+  """Filter to find records to delete"""
+  filter: BrandDtoDeleteFilter!
+}
+
 input DeleteManyInvestmentPackageDtosInput {
   """Filter to find records to delete"""
   filter: InvestmentPackageDtoDeleteFilter!
@@ -240,6 +395,11 @@ type DeleteManyResponse {
 input DeleteManyShowcasesInput {
   """Filter to find records to delete"""
   filter: ShowcaseDeleteFilter!
+}
+
+input DeleteOneBrandDtoInput {
+  """The id of the record to delete."""
+  id: ID!
 }
 
 input DeleteOneCommentDtoInput {
@@ -645,6 +805,7 @@ input MailTemplateSpecInputDto {
 
 type MediaDto implements IdInterface {
   filename: String!
+  formatType: MediaFormatType!
   height: Float!
   id: ID!
   mimetype: String!
@@ -681,6 +842,7 @@ input MediaDtoDeleteFilter {
 
 type MediaDtoDeleteResponse {
   filename: String
+  formatType: MediaFormatType
   height: Float
   id: ID
   mimetype: String
@@ -733,8 +895,14 @@ input MediaDtoUpdateFilter {
   or: [MediaDtoUpdateFilter!]
 }
 
+enum MediaFormatType {
+  IMAGE
+  YOUTUBE
+}
+
 input MediaInput {
   filename: String!
+  formatType: MediaFormatType = IMAGE
   height: Float
   mimetype: String!
   path: String!
@@ -744,6 +912,7 @@ input MediaInput {
 }
 
 enum MediaType {
+  BRAND
   HF
   IMGLIST
   SHOWCASE
@@ -751,9 +920,11 @@ enum MediaType {
 
 type Mutation {
   addImagesToImageList(input: AddImagesToImageListInput!): ImageList!
+  createManyBrandDtos(input: CreateManyBrandDtosInput!): [BrandDto!]!
   createManyInvestmentPackageDtos(input: CreateManyInvestmentPackageDtosInput!): [InvestmentPackageDto!]!
   createManyMailTemplateDtos(input: CreateManyMailTemplateDtosInput!): [MailTemplateDto!]!
   createManyMediaDtos(input: CreateManyMediaDtosInput!): [MediaDto!]!
+  createOneBrandDto(input: CreateOneBrandDtoInput!): BrandDto!
   createOneImageList(slug: String!): ImageList!
   createOneInvestmentPackageDto(input: CreateOneInvestmentPackageDtoInput!): InvestmentPackageDto!
   createOneInvestorRegistrationDto(input: InvestorRegistrationCreateDto!): InvestorRegistrationDto!
@@ -764,11 +935,13 @@ type Mutation {
   createOneShowcase(input: ShowcaseCreateInputDto!): Showcase!
   createOneShowcaseHighlightFeature(input: ShowcaseHFCreateInputDto!, slug: String!): ShowcaseHighlightFeature!
   createOneUserDto(input: UserCreateInputDto!): User!
+  deleteManyBrandDtos(input: DeleteManyBrandDtosInput!): DeleteManyResponse!
   deleteManyInvestmentPackageDtos(input: DeleteManyInvestmentPackageDtosInput!): DeleteManyResponse!
   deleteManyMailTemplateDtos(input: DeleteManyMailTemplateDtosInput!): DeleteManyResponse!
   deleteManyMediaDtos(input: DeleteManyMediaDtosInput!): DeleteManyResponse!
   deleteManyPreorderDtos(input: DeleteManyPreorderDtosInput!): DeleteManyResponse!
   deleteManyShowcases(input: DeleteManyShowcasesInput!): DeleteManyResponse!
+  deleteOneBrandDto(input: DeleteOneBrandDtoInput!): BrandDtoDeleteResponse!
   deleteOneCommentDto(input: DeleteOneCommentDtoInput!): CommentDtoDeleteResponse!
   deleteOneImageList(input: DeleteOneImageListInput!): ImageListDeleteResponse!
   deleteOneInvestmentPackageDto(input: DeleteOneInvestmentPackageDtoInput!): InvestmentPackageDtoDeleteResponse!
@@ -785,6 +958,7 @@ type Mutation {
   postProjectUpdate(input: PrjUpdateCreateDto!, slug: String!): PrjUpdateDto!
   removeAuthorFromCommentDto(input: RemoveAuthorFromCommentDtoInput!): CommentDto!
   removeAuthorFromShowcase(input: RemoveAuthorFromShowcaseInput!): Showcase!
+  removeBrandFromShowcase(input: RemoveBrandFromShowcaseInput!): Showcase!
   removeImageFromShowcase(input: RemoveImageFromShowcaseInput!): Showcase!
   removeImageFromShowcaseHighlightFeature(input: RemoveImageFromShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
   removeImagesFromImageList(input: RemoveImagesFromImageListInput!): ImageList!
@@ -792,13 +966,16 @@ type Mutation {
   sendNotification(payload: FcmPayloadDto!, topic: String!): Boolean!
   setAuthorOnCommentDto(input: SetAuthorOnCommentDtoInput!): CommentDto!
   setAuthorOnShowcase(input: SetAuthorOnShowcaseInput!): Showcase!
+  setBrandOnShowcase(input: SetBrandOnShowcaseInput!): Showcase!
   setImageOnShowcase(input: SetImageOnShowcaseInput!): Showcase!
   setImageOnShowcaseHighlightFeature(input: SetImageOnShowcaseHighlightFeatureInput!): ShowcaseHighlightFeature!
   setImagesOnImageList(input: SetImagesOnImageListInput!): ImageList!
   subscribeToFcmTopic(token: String!, topic: [String!]!): Boolean!
+  updateManyBrandDtos(input: UpdateManyBrandDtosInput!): UpdateManyResponse!
   updateManyInvestmentPackageDtos(input: UpdateManyInvestmentPackageDtosInput!): UpdateManyResponse!
   updateManyMailTemplateDtos(input: UpdateManyMailTemplateDtosInput!): UpdateManyResponse!
   updateManyMediaDtos(input: UpdateManyMediaDtosInput!): UpdateManyResponse!
+  updateOneBrandDto(input: UpdateOneBrandDtoInput!): BrandDto!
   updateOneCommentDto(input: UpdateOneCommentDtoInput!): CommentDto!
   updateOneImageList(input: UpdateOneImageListInput!): ImageList!
   updateOneInvestmentPackageDto(input: UpdateOneInvestmentPackageDtoInput!): InvestmentPackageDto!
@@ -1024,6 +1201,20 @@ input PublishStatusFilterComparison {
 }
 
 type Query {
+  brandDto(
+    """The id of the record to find."""
+    id: ID!
+  ): BrandDto
+  brandDtos(
+    """Specify to filter the records returned."""
+    filter: BrandDtoFilter = {}
+
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to sort results."""
+    sorting: [BrandDtoSort!] = []
+  ): BrandDtoConnection!
   calculateInventoryStat(showcase: ShowcaseForCalculateDto!): ShowcaseInvestorStatDto!
   commentDto(
     """The id of the record to find."""
@@ -1152,6 +1343,14 @@ input RemoveAuthorFromShowcaseInput {
   relationId: ID!
 }
 
+input RemoveBrandFromShowcaseInput {
+  """The id of the record."""
+  id: String!
+
+  """The id of relation."""
+  relationId: ID!
+}
+
 input RemoveImageFromShowcaseHighlightFeatureInput {
   """The id of the record."""
   id: ID!
@@ -1185,6 +1384,14 @@ input SetAuthorOnCommentDtoInput {
 }
 
 input SetAuthorOnShowcaseInput {
+  """The id of the record."""
+  id: String!
+
+  """The id of relation."""
+  relationId: ID!
+}
+
+input SetBrandOnShowcaseInput {
   """The id of the record."""
   id: String!
 
@@ -1229,7 +1436,7 @@ type SettingDto {
 
 type Showcase {
   author: User!
-  brand: ShowcaseBrand!
+  brand: BrandDto!
   commentCount: Float
   comments(
     """Specify to filter the records returned."""
@@ -1305,16 +1512,6 @@ type ShowcaseAvgAggregate {
   viewCount: Float
 }
 
-type ShowcaseBrand {
-  description: String!
-  name: String!
-}
-
-input ShowcaseBrandInput {
-  description: String!
-  name: String!
-}
-
 type ShowcaseConnection {
   """Array of edges."""
   edges: [ShowcaseEdge!]!
@@ -1341,7 +1538,6 @@ type ShowcaseCountAggregate {
 }
 
 input ShowcaseCreateInputDto {
-  brand: ShowcaseBrandInput!
   description: String!
   expectedQuantity: ShowcasePriceInput
   expectedSaleAt: DateTime = null
@@ -1634,7 +1830,6 @@ type ShowcaseSumAggregate {
 
 input ShowcaseUpdateInputDto {
   authorUid: String
-  brand: ShowcaseBrandInput
   description: String
   expectedQuantity: ShowcasePriceInput
   expectedSaleAt: DateTime = null
@@ -1721,6 +1916,14 @@ input UpdateMailTemplateDto {
   templateName: String
 }
 
+input UpdateManyBrandDtosInput {
+  """Filter used to find fields to update"""
+  filter: BrandDtoUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: BrandUpdateInputDto!
+}
+
 input UpdateManyInvestmentPackageDtosInput {
   """Filter used to find fields to update"""
   filter: InvestmentPackageDtoUpdateFilter!
@@ -1752,6 +1955,7 @@ type UpdateManyResponse {
 
 input UpdateMediaDto {
   filename: String
+  formatType: MediaFormatType
   height: Float
   id: ID
   mimetype: String
@@ -1759,6 +1963,14 @@ input UpdateMediaDto {
   preloadUrl: String
   type: MediaType
   width: Float
+}
+
+input UpdateOneBrandDtoInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: BrandUpdateInputDto!
 }
 
 input UpdateOneCommentDtoInput {

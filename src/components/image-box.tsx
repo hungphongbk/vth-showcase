@@ -2,7 +2,7 @@ import { Box, BoxProps } from "@mui/material";
 import Image, { ImageProps } from "next/image";
 import React, { forwardRef } from "react";
 
-type ImageBoxProps = BoxProps & { bg: ImageProps["src"] };
+export type ImageBoxProps = BoxProps & { bg: ImageProps["src"] };
 // eslint-disable-next-line react/display-name
 const ImageBox = forwardRef(
   ({ bg, children, ...props }: ImageBoxProps, ref: any) => (

@@ -1,0 +1,6 @@
+.CloseOuter{
+  @apply self-end mr-4 mt-4 flex items-center justify-center;
+}
+.CloseOuter svg{
+  @apply h-6 w-6;
+}

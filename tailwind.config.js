@@ -6,7 +6,11 @@ module.exports = {
     "./node_modules/@hungphongbk/vth-sdk/**/*.js",
   ],
   theme: {
-    extend: {},
+    extend: {
+      zIndex: {
+        1: "1",
+      },
+    },
   },
   plugins: [],
 };

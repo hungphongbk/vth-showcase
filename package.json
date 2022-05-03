@@ -18,12 +18,11 @@
     "update-sdk": "npm i @hungphongbk/vth-sdk@latest"
   },
   "dependencies": {
-    "@apollo/client": "^3.6.1",
+    "@apollo/client": "^3.6.2",
     "@emotion/react": "^11.9.0",
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.8.1",
-    "@hungphongbk/apollo-client": "^3.6.2",
-    "@hungphongbk/vth-sdk": "^1.0.6-173",
+    "@hungphongbk/vth-sdk": "^1.0.6-174",
     "@mui/icons-material": "^5.6.2",
     "@mui/lab": "^5.0.0-alpha.79",
     "@mui/material": "^5.6.3",

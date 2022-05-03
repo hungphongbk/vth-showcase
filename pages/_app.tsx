@@ -22,7 +22,7 @@ import { UploadService } from "../src/service";
 import { VthThemeProvider } from "@hungphongbk/vth-sdk";
 import { LocalizationProvider } from "@mui/lab";
 import DateAdapter from "@mui/lab/AdapterDateFns";
-import { ApolloProvider } from "@hungphongbk/apollo-client";
+import { ApolloProvider } from "@apollo/client";
 import { useGATrackView } from "../src/utils/hooks";
 import { apolloClient } from "../src/api";
 import "../styles/globals.css";

@@ -2,8 +2,8 @@ import * as Types from "./graphql";
 import * as Operations from "./graphql";
 import { NextPage } from "next";
 import { NextRouter, useRouter } from "next/router";
-import * as Apollo from "@hungphongbk/apollo-client";
-import { QueryHookOptions, useQuery } from "@hungphongbk/apollo-client";
+import * as Apollo from "@apollo/client";
+import { QueryHookOptions, useQuery } from "@apollo/client";
 import type React from "react";
 import { ApolloClientContext, getApolloClient } from "../api/apollo";
 

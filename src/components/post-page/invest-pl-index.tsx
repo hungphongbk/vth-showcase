@@ -4,8 +4,13 @@ import BudgetIncreaseIcon from "../../assets/icons/BudgetIncreaseIcon";
 import { ShowcaseInvestorStatDto } from "../../types/graphql";
 import { PLIndexWrapper, StyledBox } from "./styled";
 import BudgetTotalIcon from "../../assets/icons/budget-total-icon";
+import styles from "./invest.module.css";
 
-export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
+export function InvestPlIndex({
+  stat,
+}: {
+  stat: Partial<ShowcaseInvestorStatDto>;
+}) {
   return (
     <PLIndexWrapper>
       <Box sx={{ gridArea: "st1" }}>
@@ -14,20 +19,16 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
             sx={{ gridArea: "icon", height: 26, width: 26 }}
           />
           <Typography
+            className={styles.TitleBig}
             sx={{
-              fontWeight: 500,
-              fontSize: 13,
-              lineHeight: "133.4%",
               gridArea: "label",
             }}
           >
             Doanh thu dự kiến <br />1 năm tổng cộng
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
             }}
           >
@@ -41,10 +42,8 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
             sx={{ gridArea: "icon", height: 26, width: 26 }}
           />
           <Typography
+            className={styles.TitleBig}
             sx={{
-              fontWeight: 500,
-              fontSize: 13,
-              lineHeight: "133.4%",
               gridArea: "label",
             }}
           >
@@ -52,10 +51,8 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
             chiến dịch Pre-order
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
             }}
           >
@@ -70,26 +67,21 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
             bgcolor: "#00B66A",
             gridTemplateAreas: "'label' 'num'",
             pt: "5px",
+            gridGap: "unset",
             gridRowGap: "1px",
           }}
         >
           <Typography
+            className={styles.TitleSmall}
             sx={{
-              fontWeight: 500,
-              fontSize: 12.5,
-              lineHeight: "133.4%",
               gridArea: "label",
             }}
           >
-            Tốc độ
-            <br /> tăng truởng
-            <br /> mỗi tháng
+            Tốc độ tăng truởng mỗi tháng
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
             }}
           >
@@ -106,20 +98,16 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
         >
           <BudgetTotalIcon sx={{ gridArea: "icon" }} />
           <Typography
+            className={styles.TitleBig}
             sx={{
-              fontWeight: 500,
-              fontSize: 12.5,
-              lineHeight: "133.4%",
               gridArea: "label",
             }}
           >
             Chi phí quảng cáo trung bình <strong>({stat.adCostRate}%)</strong>
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
             }}
           >
@@ -136,10 +124,8 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
         >
           <BudgetTotalIcon sx={{ gridArea: "icon" }} />
           <Typography
+            className={styles.TitleBig}
             sx={{
-              fontWeight: 500,
-              fontSize: 12.5,
-              lineHeight: "133.4%",
               gridArea: "label",
             }}
           >
@@ -147,10 +133,8 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
             <strong>({stat.operatingCostRate}%)</strong>
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
             }}
           >
@@ -171,10 +155,8 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
           }}
         >
           <Typography
+            className={styles.TitleSmall}
             sx={{
-              fontWeight: 500,
-              fontSize: 12.5,
-              lineHeight: "133.4%",
               gridArea: "label",
             }}
           >
@@ -193,10 +175,8 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
             <br />({stat.adCostRate}%)
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
               wordBreak: "break-all",
             }}
@@ -211,10 +191,8 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
             sx={{ gridArea: "icon", height: 26, width: 26 }}
           />
           <Typography
+            className={styles.TitleBig}
             sx={{
-              fontWeight: 500,
-              fontSize: 13,
-              lineHeight: "133.4%",
               gridArea: "label",
             }}
           >
@@ -222,10 +200,8 @@ export function PLIndex({ stat }: { stat: Partial<ShowcaseInvestorStatDto> }) {
             01 năm (trước thuế)
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
             }}
           >

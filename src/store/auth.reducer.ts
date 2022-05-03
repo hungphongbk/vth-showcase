@@ -1,6 +1,6 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 import { User } from "@firebase/auth";
-import { QueryResult } from "@hungphongbk/apollo-client/react/types/types";
+import { QueryResult } from "@apollo/client/react/types/types";
 import { CurrentUserQuery } from "../types/graphql";
 
 type UserInfo = Pick<

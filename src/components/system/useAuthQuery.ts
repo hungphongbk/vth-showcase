@@ -1,5 +1,5 @@
-import { QueryResult } from "@hungphongbk/apollo-client/react/types/types";
-import { QueryHookOptions } from "@hungphongbk/apollo-client";
+import { QueryResult } from "@apollo/client/react/types/types";
+import { QueryHookOptions } from "@apollo/client";
 import { useAppSelector } from "../../store";
 import { useEffect } from "react";
 import { NextRouter } from "next/router";

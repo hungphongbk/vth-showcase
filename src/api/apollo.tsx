@@ -5,15 +5,15 @@ import {
   HttpLink,
   InMemoryCache,
   NormalizedCacheObject,
-} from "@hungphongbk/apollo-client";
+} from "@apollo/client";
 import introspection from "./introspection.json";
-import { setContext } from "@hungphongbk/apollo-client/link/context";
+import { setContext } from "@apollo/client/link/context";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
 import store from "../store";
 import { NextPage } from "next";
 import { relayStylePagination } from "@hungphongbk/vth-sdk";
-import { createPersistedQueryLink } from "@hungphongbk/apollo-client/link/persisted-queries";
+import { createPersistedQueryLink } from "@apollo/client/link/persisted-queries";
 import { sha256 } from "crypto-hash";
 
 export type ApolloClientContext = unknown;

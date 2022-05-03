@@ -13,7 +13,7 @@ import dynamic from "next/dynamic";
 import { NextSeo } from "next-seo";
 import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
 import { AspectRatio, LoadingIndicator } from "@hungphongbk/vth-sdk";
-import { NetworkStatus } from "@hungphongbk/apollo-client";
+import { NetworkStatus } from "@apollo/client";
 import Footer from "../src/components/footer";
 import { InfiniteScroll } from "../src/components/infinite-scroll";
 import { CreatorAndInvestorActions } from "src/components/system";

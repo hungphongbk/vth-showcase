@@ -1,0 +1,9 @@
+.TitleBig {
+  @apply font-medium;
+  font-size: 0.72rem;
+}
+
+.TitleSmall {
+  @apply font-medium;
+  font-size: 0.67rem;
+}

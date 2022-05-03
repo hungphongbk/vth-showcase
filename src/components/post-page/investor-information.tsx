@@ -1,10 +1,10 @@
 import { ShowcaseInvestorStatDto } from "../../types/graphql";
-import { PLIndex } from "./PLIndex";
+import { InvestPlIndex } from "./invest-pl-index";
 import { Box, Tab, Typography } from "@mui/material";
 import { useState } from "react";
 import { TabContext } from "@mui/lab";
 import { StyledTabList, StyledTabPanel } from "./styled";
-import InvestIndex from "./InvestIndex";
+import InvestIndex from "./invest-index";
 
 type InvestorInformationProps = {
   stat: Partial<ShowcaseInvestorStatDto> | null;
@@ -41,7 +41,7 @@ export default function InvestorInformation({
           </StyledTabList>
         </Box>
         <StyledTabPanel value={"1"}>
-          <PLIndex stat={stat} />
+          <InvestPlIndex stat={stat} />
         </StyledTabPanel>
         <StyledTabPanel value={"2"}>
           <InvestIndex stat={stat} />

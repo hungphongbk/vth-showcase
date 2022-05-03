@@ -27,10 +27,8 @@ export function InvestPlIndex({
             Doanh thu dự kiến <br />1 năm tổng cộng
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
             }}
           >
@@ -53,10 +51,8 @@ export function InvestPlIndex({
             chiến dịch Pre-order
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
             }}
           >
@@ -84,10 +80,8 @@ export function InvestPlIndex({
             Tốc độ tăng truởng mỗi tháng
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
             }}
           >
@@ -112,10 +106,8 @@ export function InvestPlIndex({
             Chi phí quảng cáo trung bình <strong>({stat.adCostRate}%)</strong>
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
             }}
           >
@@ -141,10 +133,8 @@ export function InvestPlIndex({
             <strong>({stat.operatingCostRate}%)</strong>
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
             }}
           >
@@ -185,10 +175,8 @@ export function InvestPlIndex({
             <br />({stat.adCostRate}%)
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
               wordBreak: "break-all",
             }}
@@ -212,10 +200,8 @@ export function InvestPlIndex({
             01 năm (trước thuế)
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
             }}
           >

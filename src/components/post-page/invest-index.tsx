@@ -5,24 +5,28 @@ import bg1 from "../../assets/bg-investor-1.png";
 import BudgetIncreaseIcon from "../../assets/icons/BudgetIncreaseIcon";
 import ClockwiseIcon from "../../assets/icons/ClockwiseIcon";
 import PackagesData from "./packages-data";
+import clsx from "clsx";
+import styles from "./invest.module.css";
 
 export default function InvestIndex({
   stat,
+  disablePackagesData = false,
+  className,
 }: {
   stat: Partial<ShowcaseInvestorStatDto>;
+  disablePackagesData?: boolean;
+  className?: string;
 }): JSX.Element {
   return (
-    <InvestIndexWrapper sx={{ overflowX: "hidden" }}>
+    <InvestIndexWrapper className={clsx("overflow-x-hidden", className)}>
       <Box sx={{ gridArea: "st1" }}>
         <StyledBox bg={bg1} sx={{ bgcolor: "#707070" }}>
           <BudgetIncreaseIcon
             sx={{ gridArea: "icon", height: 26, width: 26 }}
           />
           <Typography
+            className={styles.TitleBig}
             sx={{
-              fontWeight: 500,
-              fontSize: 13,
-              lineHeight: "133.4%",
               gridArea: "label",
             }}
           >
@@ -30,10 +34,8 @@ export default function InvestIndex({
             Tồn kho - Vận hành - Quảng cáo
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
             }}
           >
@@ -45,10 +47,8 @@ export default function InvestIndex({
         <StyledBox bg={bg1} sx={{ bgcolor: "#00B66A" }}>
           <ClockwiseIcon sx={{ gridArea: "icon", height: 26, width: 26 }} />
           <Typography
+            className={styles.TitleBig}
             sx={{
-              fontWeight: 500,
-              fontSize: 13,
-              lineHeight: "133.4%",
               gridArea: "label",
             }}
           >
@@ -57,10 +57,8 @@ export default function InvestIndex({
             an toàn tương xứng
           </Typography>
           <Typography
+            className={styles.Value}
             sx={{
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "24px",
               gridArea: "num",
             }}
           >
@@ -68,9 +66,11 @@ export default function InvestIndex({
           </Typography>
         </StyledBox>
       </Box>
-      <Box sx={{ gridArea: "rd3", overflow: "scroll", mr: -1 }}>
-        <PackagesData stat={stat} />
-      </Box>
+      {!disablePackagesData && (
+        <Box sx={{ gridArea: "rd3", overflow: "scroll", mr: -1 }}>
+          <PackagesData stat={stat} />
+        </Box>
+      )}
     </InvestIndexWrapper>
   );
 }

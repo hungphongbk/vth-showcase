@@ -3,6 +3,8 @@ import { ShowcaseCreateInputDto } from "../../types/graphql";
 import { Box } from "@mui/system";
 import { ReactElement } from "react";
 import { Tooltip, Typography } from "@mui/material";
+import styles from "./p-l-input.module.css";
+import NumericInput from "../numeric-input";
 
 type PLControl = Control<ShowcaseCreateInputDto>;
 
@@ -11,22 +13,23 @@ function PLInputRow({
   field,
   label,
   tooltip,
+  numOfMask = 2,
 }: {
   control: PLControl;
   field: FieldPath<ShowcaseCreateInputDto>;
   label: string;
   tooltip: string | ReactElement;
+  numOfMask?: number;
 }): JSX.Element {
   return (
-    <Box className="grid grid-cols-[1fr_auto] gap-2">
+    <Box className={styles.PLInputRow}>
       <Typography className="font-bold">
         {label}{" "}
         <Tooltip title={tooltip}>
-          <span className="inline-block rounded-full h-4 w-4 bg-black text-white text-center">
-            ?
-          </span>
+          <span className={styles.QuestionMark}>?</span>
         </Tooltip>
       </Typography>
+      <NumericInput value={0} onChange={() => {}} numOfMask={numOfMask} />
     </Box>
   );
 }

@@ -1,0 +1,11 @@
+.Root{
+  @apply whitespace-nowrap grid gap-1;
+}
+.Cell{
+  height:30px;
+  width:30px;
+  border-bottom: 2px solid black;
+}
+.Root:focus .Cell{
+  @apply bg-gray-100;
+}

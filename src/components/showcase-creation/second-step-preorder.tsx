@@ -24,6 +24,7 @@ import {
 } from "@hungphongbk/vth-sdk";
 import { MobileDatePicker } from "@mui/lab";
 import styles from "./second-step.module.css";
+import PLInput from "./p-l-input";
 
 type ShowcaseForm = ShowcaseCreateInputDto;
 
@@ -285,6 +286,9 @@ export default function SecondStepPreorder(): JSX.Element {
                 </tr>
               </table>
             </SimpleTableRoot>
+          </CollapseCard>
+          <CollapseCard header={"chỉ số p&l"} defaultOpen>
+            <PLInput control={control} />
           </CollapseCard>
         </Stack>
       </Box>

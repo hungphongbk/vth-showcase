@@ -3,6 +3,8 @@ import { MotionCard } from "./commons";
 import { Box, CardContent, CardHeader, Collapse } from "@mui/material";
 import { SxProps } from "@mui/system";
 import ToggleCollapseCardIcon from "../assets/icons/ToggleCollapseCardIcon";
+import styles from "./collapse-card.module.scss";
+import clsx from "clsx";
 
 type CollapseCardProps = PropsWithChildren<{
   header: ReactNode;
@@ -22,27 +24,8 @@ export default function CollapseCard({
 
   return (
     <MotionCard
-      sx={[
-        // @ts-ignore
-        sx,
-        {
-          "&.MuiCard-root": {
-            p: 1,
-          },
-        },
-        disableCardStyle
-          ? {
-              "&.MuiCard-root": {
-                bgcolor: "transparent",
-                boxShadow: "none",
-              },
-              "& .MuiCardContent-root": {
-                p: 0,
-                mx: -1,
-              },
-            }
-          : {},
-      ]}
+      className={clsx(styles.Root, disableCardStyle && styles.DisableCardStyle)}
+      sx={sx}
     >
       <CardHeader
         onClick={() => setOpen(!open)}

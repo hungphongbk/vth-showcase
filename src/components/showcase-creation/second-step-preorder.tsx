@@ -13,7 +13,7 @@ import {
   EnhancedTextField,
   useShowcaseCreationSuccess,
 } from "./utils";
-import CreationBottomBar from "./CreationBottomBar";
+import CreationBottomBar from "./creation-bottom-bar";
 import { DevTool } from "@hookform/devtools";
 import {
   FormInput,
@@ -23,6 +23,7 @@ import {
   SimpleTableRoot,
 } from "@hungphongbk/vth-sdk";
 import { MobileDatePicker } from "@mui/lab";
+import styles from "./second-step.module.css";
 
 type ShowcaseForm = ShowcaseCreateInputDto;
 
@@ -80,9 +81,7 @@ export default function SecondStepPreorder(): JSX.Element {
         <Stack direction={"column"} gap={2}>
           <FormInput name={"image"} control={control} component={ImageUploader}>
             <Stack direction={"column"} alignItems={"center"}>
-              <PlusIcon
-                sx={{ color: "black", height: 36, width: 36, mb: 0.5 }}
-              />
+              <PlusIcon className={styles.PlusIcon} />
               <Typography sx={{ fontSize: 15, fontWeight: 600 }}>
                 Banner dự án
               </Typography>
@@ -149,15 +148,7 @@ export default function SecondStepPreorder(): JSX.Element {
               type={"number"}
             />
           </Stack>
-          <Box
-            sx={{
-              borderBottomLeftRadius: "20px",
-              borderBottomRightRadius: "20px",
-              bgcolor: "white",
-              p: "20px",
-              pt: 1,
-            }}
-          >
+          <Box className={styles.BrandSection}>
             <Stack direction={"column"} gap={1}>
               <FormInput
                 // @ts-ignore

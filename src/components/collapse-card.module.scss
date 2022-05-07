@@ -1,0 +1,11 @@
+.Root:global(.MuiCard-root){
+  @apply p-2;
+}
+.DisableCardStyle{
+  &:global(.MuiCard-root){
+    @apply shadow-none bg-transparent;
+  }
+  :global(.MuiCardContent-root){
+    @apply p-0 -mx-1;
+  }
+}

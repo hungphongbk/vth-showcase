@@ -19,10 +19,11 @@ import {
   ImageUploader,
   ListEditor,
 } from "@hungphongbk/vth-sdk";
-import CreationBottomBar from "./CreationBottomBar";
+import CreationBottomBar from "./creation-bottom-bar";
 import { StyledTimeline } from "../commons";
 import PrjUpdateEditor from "./prj-update-editor";
 import HfEditor from "./hf-editor";
+import styles from "./second-step.module.css";
 
 type ShowcaseForm = ShowcaseCreateInputDto;
 
@@ -53,9 +54,7 @@ export default function SecondStepShowcase(): JSX.Element {
         <Stack direction={"column"} gap={2}>
           <FormInput name={"image"} control={control} component={ImageUploader}>
             <Stack direction={"column"} alignItems={"center"}>
-              <PlusIcon
-                sx={{ color: "black", height: 36, width: 36, mb: 0.5 }}
-              />
+              <PlusIcon className={styles.PlusIcon} />
               <Typography sx={{ fontSize: 15, fontWeight: 600 }}>
                 Banner dự án
               </Typography>
@@ -81,15 +80,7 @@ export default function SecondStepShowcase(): JSX.Element {
               placeholderColor={"#222"}
             />
           </Stack>
-          <Box
-            sx={{
-              borderBottomLeftRadius: "20px",
-              borderBottomRightRadius: "20px",
-              bgcolor: "white",
-              p: "20px",
-              pt: 1,
-            }}
-          >
+          <Box className={styles.BrandSection}>
             <Stack direction={"column"} gap={1}>
               <FormInput
                 // @ts-ignore
@@ -106,14 +97,6 @@ export default function SecondStepShowcase(): JSX.Element {
                 placeholder={"Mô tả thương hiệu"}
                 component={EnhancedMultilineTextField}
               />
-              {/*<FormInput*/}
-              {/*  name={"expectedQuantity"}*/}
-              {/*  control={control}*/}
-              {/*  variant={"standard"}*/}
-              {/*  placeholder={"Số lượng mục tiêu"}*/}
-              {/*  component={EnhancedTextField}*/}
-              {/*  type={"number"}*/}
-              {/*/>*/}
               <FormInput
                 name={"expectedSaleAt"}
                 control={control}
@@ -140,7 +123,7 @@ export default function SecondStepShowcase(): JSX.Element {
             <HfEditor control={control} />
           </CollapseCard>
           <CollapseCard header={"cập nhật dự án"} defaultOpen>
-            <StyledTimeline sx={{ px: 0 }}>
+            <StyledTimeline className="p-0">
               <PrjUpdateEditor control={control} />
             </StyledTimeline>
           </CollapseCard>

@@ -1,0 +1,15 @@
+.Root{
+  @apply whitespace-nowrap grid gap-1 items-center;
+}
+.Text{
+  @apply text-sm font-semibold text-zinc-900;
+}
+.Cell{
+  @apply text-base font-bold text-zinc-900;
+  height:30px;
+  width:30px;
+  border-bottom: 2px solid black;
+}
+.Root:focus .Cell{
+  @apply bg-gray-100 flex items-center justify-center;
+}

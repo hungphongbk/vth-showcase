@@ -3,8 +3,8 @@ import { Box } from "@mui/material";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
 import { useRouter } from "next/router";
 import { ShowcaseStatus } from "../../types/graphql";
-import SecondStepShowcase from "./SecondStepShowcase";
-import SecondStepPreorder from "./SecondStepPreorder";
+import SecondStepShowcase from "./second-step-showcase";
+import SecondStepPreorder from "./second-step-preorder";
 
 export default function SecondStep(): JSX.Element {
   const { showcase, dispatch } = useShowcaseCreation();

@@ -1,0 +1,6 @@
+.BrandSection{
+  @apply p-5 pt-2 bg-white rounded-2xl;
+}
+.PlusIcon{
+  @apply text-black h-9 w-9 mb-1;
+}

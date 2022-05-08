@@ -6,7 +6,7 @@ import {
   useShowcaseForUpdateQuery,
 } from "../../types/graphql";
 import { useEffect } from "react";
-import SecondStep from "../ShowcaseCreation/SecondStep";
+import SecondStep from "../showcase-creation/second-step";
 import { isEmpty } from "lodash";
 
 export default function ShowcaseUpdater() {

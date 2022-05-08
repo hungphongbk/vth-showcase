@@ -3,6 +3,61 @@ import { MotionCard } from "./commons";
 import { Box, CardContent, CardHeader, Collapse } from "@mui/material";
 import { SxProps } from "@mui/system";
 import ToggleCollapseCardIcon from "../assets/icons/ToggleCollapseCardIcon";
+import styles from "./collapse-card.module.scss";
+import clsx from "clsx";
+
+export type CollapseCardHeaderProps = {
+  open?: boolean;
+  onToggle?: () => void;
+  header: ReactNode;
+  sx?: SxProps;
+  className?: string;
+};
+export function CollapseCardHeader({
+  open,
+  onToggle,
+  header,
+  sx,
+  className,
+}: CollapseCardHeaderProps): JSX.Element {
+  return (
+    <CardHeader
+      onClick={onToggle}
+      disableTypography
+      sx={sx}
+      className={className}
+      title={
+        <Box
+          sx={{
+            height: 32,
+            borderRadius: "25px",
+            bgcolor: "yellow.main",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            color: "black",
+            fontSize: 15,
+            fontWeight: 600,
+            textTransform: "uppercase",
+            pl: 3,
+          }}
+        >
+          {header}
+          {onToggle && (
+            <ToggleCollapseCardIcon
+              sx={{
+                width: 24,
+                height: 24,
+                mr: 0.6,
+                transform: `scaleY(${open ? 1 : -1})`,
+              }}
+            />
+          )}
+        </Box>
+      }
+    />
+  );
+}
 
 type CollapseCardProps = PropsWithChildren<{
   header: ReactNode;
@@ -22,58 +77,13 @@ export default function CollapseCard({
 
   return (
     <MotionCard
-      sx={[
-        // @ts-ignore
-        sx,
-        {
-          "&.MuiCard-root": {
-            p: 1,
-          },
-        },
-        disableCardStyle
-          ? {
-              "&.MuiCard-root": {
-                bgcolor: "transparent",
-                boxShadow: "none",
-              },
-              "& .MuiCardContent-root": {
-                p: 0,
-                mx: -1,
-              },
-            }
-          : {},
-      ]}
+      className={clsx(styles.Root, disableCardStyle && styles.DisableCardStyle)}
+      sx={sx}
     >
-      <CardHeader
-        onClick={() => setOpen(!open)}
-        disableTypography
-        title={
-          <Box
-            sx={{
-              height: 32,
-              borderRadius: "25px",
-              bgcolor: "yellow.main",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              color: "black",
-              fontSize: 15,
-              fontWeight: 600,
-              textTransform: "uppercase",
-              pl: 3,
-            }}
-          >
-            {header}
-            <ToggleCollapseCardIcon
-              sx={{
-                width: 24,
-                height: 24,
-                mr: 0.6,
-                transform: `scaleY(${open ? 1 : -1})`,
-              }}
-            />
-          </Box>
-        }
+      <CollapseCardHeader
+        header={header}
+        open={open}
+        onToggle={() => setOpen(!open)}
       />
       <Collapse in={open} timeout={"auto"} sx={{ fontSize: 13 }}>
         <CardContent>{children}</CardContent>

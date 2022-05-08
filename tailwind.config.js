@@ -10,6 +10,9 @@ module.exports = {
       zIndex: {
         1: "1",
       },
+      colors: {
+        primary: "#FFDE50",
+      },
     },
   },
   plugins: [],

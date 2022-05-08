@@ -2,10 +2,10 @@
   @apply whitespace-nowrap grid gap-1 items-center;
 }
 .Text{
-  @apply text-base font-bold text-zinc-900;
+  @apply text-sm font-semibold text-zinc-900;
 }
 .Cell{
-  composes: Text;
+  @apply text-base font-bold text-zinc-900;
   height:30px;
   width:30px;
   border-bottom: 2px solid black;

@@ -6,6 +6,59 @@ import ToggleCollapseCardIcon from "../assets/icons/ToggleCollapseCardIcon";
 import styles from "./collapse-card.module.scss";
 import clsx from "clsx";
 
+export type CollapseCardHeaderProps = {
+  open?: boolean;
+  onToggle?: () => void;
+  header: ReactNode;
+  sx?: SxProps;
+  className?: string;
+};
+export function CollapseCardHeader({
+  open,
+  onToggle,
+  header,
+  sx,
+  className,
+}: CollapseCardHeaderProps): JSX.Element {
+  return (
+    <CardHeader
+      onClick={onToggle}
+      disableTypography
+      sx={sx}
+      className={className}
+      title={
+        <Box
+          sx={{
+            height: 32,
+            borderRadius: "25px",
+            bgcolor: "yellow.main",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            color: "black",
+            fontSize: 15,
+            fontWeight: 600,
+            textTransform: "uppercase",
+            pl: 3,
+          }}
+        >
+          {header}
+          {onToggle && (
+            <ToggleCollapseCardIcon
+              sx={{
+                width: 24,
+                height: 24,
+                mr: 0.6,
+                transform: `scaleY(${open ? 1 : -1})`,
+              }}
+            />
+          )}
+        </Box>
+      }
+    />
+  );
+}
+
 type CollapseCardProps = PropsWithChildren<{
   header: ReactNode;
   sx?: SxProps;
@@ -27,36 +80,10 @@ export default function CollapseCard({
       className={clsx(styles.Root, disableCardStyle && styles.DisableCardStyle)}
       sx={sx}
     >
-      <CardHeader
-        onClick={() => setOpen(!open)}
-        disableTypography
-        title={
-          <Box
-            sx={{
-              height: 32,
-              borderRadius: "25px",
-              bgcolor: "yellow.main",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              color: "black",
-              fontSize: 15,
-              fontWeight: 600,
-              textTransform: "uppercase",
-              pl: 3,
-            }}
-          >
-            {header}
-            <ToggleCollapseCardIcon
-              sx={{
-                width: 24,
-                height: 24,
-                mr: 0.6,
-                transform: `scaleY(${open ? 1 : -1})`,
-              }}
-            />
-          </Box>
-        }
+      <CollapseCardHeader
+        header={header}
+        open={open}
+        onToggle={() => setOpen(!open)}
       />
       <Collapse in={open} timeout={"auto"} sx={{ fontSize: 13 }}>
         <CardContent>{children}</CardContent>

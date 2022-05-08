@@ -1,6 +1,6 @@
 import { ImageProps } from "next/image";
 import { MediaFormatType } from "../types/graphql";
-import NextImage from "./next-image";
+import VthNextImage from "./vth-next-image";
 import YouTube from "react-youtube";
 import { MediaBase } from "@hungphongbk/vth-sdk";
 import { NoSsr } from "@mui/base";
@@ -17,7 +17,7 @@ export default function MediaDisplay<T extends MediaBase = MediaBase>({
 }: MediaDisplayProps<T>): JSX.Element {
   if (src.formatType === MediaFormatType.Image)
     return (
-      <NextImage
+      <VthNextImage
         src={src.path}
         placeholder={"blur"}
         blurDataURL={src.preloadUrl}

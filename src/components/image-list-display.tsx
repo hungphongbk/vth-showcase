@@ -3,7 +3,7 @@ import { ImageList, Showcase } from "../types/graphql";
 import SlickSlider from "./slick-slider";
 import { AspectRatio } from "@hungphongbk/vth-sdk";
 import { Box } from "@mui/material";
-import NextImage from "./next-image";
+import VthNextImage from "./vth-next-image";
 
 type ImageListDisplayProps = {
   showcase: Pick<Showcase, "name">;
@@ -48,7 +48,7 @@ export default class ImageListDisplay extends Component<
             >
               <Box sx={{ borderRadius: 3, overflow: "hidden" }}>
                 <Box sx={{ position: "relative" }}>
-                  <NextImage
+                  <VthNextImage
                     src={image.path}
                     alt={`${this.props.showcase.name} image list ${index + 1}`}
                     width={image.width}
@@ -77,7 +77,7 @@ export default class ImageListDisplay extends Component<
             >
               <Box sx={{ borderRadius: 1, overflow: "hidden" }}>
                 <Box sx={{ position: "relative" }}>
-                  <NextImage
+                  <VthNextImage
                     src={image.path}
                     alt={`${this.props.showcase.name} image list thumbnail ${
                       index + 1

@@ -10,7 +10,7 @@ import { SystemStyleObject } from "@mui/system";
 import { usingShowcaseStatusColor } from "../utils/colors";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Showcase } from "../types/graphql";
-import NextImage from "./next-image";
+import VthNextImage from "./vth-next-image";
 import Link from "./Link";
 import styles from "./showcase-item.module.css";
 
@@ -97,7 +97,7 @@ export default function ShowcaseItem({
             // },
           }}
         >
-          <NextImage
+          <VthNextImage
             // layoutId={getLayoutId("/thumb")}
             src={item.image.path}
             alt={item.name}

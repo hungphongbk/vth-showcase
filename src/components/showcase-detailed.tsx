@@ -9,7 +9,7 @@ import { CollapseCard, SlickSlider } from "./index";
 import { Showcase } from "../types/graphql";
 import { CommentSection, PrjUpdateDisplay } from "./post-page";
 import { AspectRatio, LookupFilledPrimaryIcon } from "@hungphongbk/vth-sdk";
-import NextImage from "./next-image";
+import VthNextImage from "./vth-next-image";
 import ShowcaseRelateds from "./showcase-relateds";
 import DetailedUserIcon from "../assets/icons/DetailedUserIcon";
 import VthIconButton from "./vth-icon-button";
@@ -100,7 +100,7 @@ export default function ShowcaseDetailed({
             }}
             layoutId={"main-image"}
           >
-            <NextImage
+            <VthNextImage
               src={item.image.path}
               alt={item.image.path}
               width={item.image.width}
@@ -241,7 +241,7 @@ export default function ShowcaseDetailed({
                       >
                         <Box sx={{ borderRadius: 2, overflow: "hidden" }}>
                           <Box sx={{ position: "relative" }}>
-                            <NextImage
+                            <VthNextImage
                               src={hf.image.path}
                               alt={hf.name}
                               width={hf.image.width}

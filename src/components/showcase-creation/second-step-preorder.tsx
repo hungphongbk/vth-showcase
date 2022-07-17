@@ -22,7 +22,8 @@ import {
   ListEditor,
   SimpleTableRoot,
 } from "@hungphongbk/vth-sdk";
-import { MobileDatePicker } from "@mui/lab";
+import { MobileDatePicker } from '@mui/x-date-pickers';
+import '@mui/lab';
 import styles from "./second-step.module.css";
 import PLInput from "./p-l-input";
 

@@ -86,41 +86,39 @@ export default function CreatorAndInvestorActionsComponent(): JSX.Element {
     await router.push("https://vaithuhay.com/");
     handleClose();
   };
-  return (
-    <>
-      <Backdrop open={open} sx={{ zIndex: 9 }} />
-      <Fade in={!/\/manage\/(create-post|update)/.test(router.asPath)}>
-        <StyledSpeedDial
-          ariaLabel="creator and investor speed dial"
-          icon={<SpeedDialIcon />}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          open={open}
-        >
-          <SpeedDialAction
-            key={"htpt"}
-            icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
-            tooltipTitle={"Đầu tư"}
-            tooltipOpen
-            onClick={handleCorporate}
-          />
-          <SpeedDialAction
-            key={"qlda"}
-            icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
-            tooltipTitle={"Đăng sản phẩm"}
-            tooltipOpen
-            onClick={handleUploadNew}
-          />
-          <SpeedDialAction
-            key={"qltc"}
-            icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
-            tooltipTitle={"Vaithuhay.com"}
-            tooltipOpen
-            onClick={handleGoBack}
-          />
-        </StyledSpeedDial>
-      </Fade>
-      {renderDialog}
-    </>
-  );
+  return <>
+    <Backdrop open={open} sx={{ zIndex: 9 }} />
+    <Fade in={!/\/manage\/(create-post|update)/.test(router.asPath)}>
+      <StyledSpeedDial
+        ariaLabel="creator and investor speed dial"
+        icon={<SpeedDialIcon />}
+        onClose={handleClose}
+        onOpen={handleOpen}
+        open={open}
+      >
+        <SpeedDialAction
+          key={"htpt"}
+          icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
+          tooltipTitle={"Đầu tư"}
+          tooltipOpen
+          onClick={handleCorporate}
+        />
+        <SpeedDialAction
+          key={"qlda"}
+          icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
+          tooltipTitle={"Đăng sản phẩm"}
+          tooltipOpen
+          onClick={handleUploadNew}
+        />
+        <SpeedDialAction
+          key={"qltc"}
+          icon={<DocumentIcon sx={{ width: ICON_SIZE, height: ICON_SIZE }} />}
+          tooltipTitle={"Vaithuhay.com"}
+          tooltipOpen
+          onClick={handleGoBack}
+        />
+      </StyledSpeedDial>
+    </Fade>
+    {renderDialog}
+  </>;
 }

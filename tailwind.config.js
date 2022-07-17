@@ -5,6 +5,7 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx}",
     "./node_modules/@hungphongbk/vth-sdk/**/*.js",
   ],
+  important: "#__next",
   theme: {
     extend: {
       zIndex: {
@@ -16,4 +17,7 @@ module.exports = {
     },
   },
   plugins: [],
+  corePlugins: {
+    preflight: false,
+  },
 };

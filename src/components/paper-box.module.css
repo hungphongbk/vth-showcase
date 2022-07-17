@@ -2,5 +2,5 @@
   @apply self-end mr-4 mt-4 flex items-center justify-center;
 }
 .CloseOuter svg{
-  @apply h-6 w-6;
+  @apply h-6 w-6 text-[#3f3f3f];
 }

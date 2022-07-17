@@ -1,13 +1,37 @@
 import { Control, FieldPath } from "react-hook-form";
 import { ShowcaseCreateInputDto } from "../../types/graphql";
 import { Box } from "@mui/system";
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 import { Stack, Tooltip, Typography } from "@mui/material";
 import styles from "./p-l-input.module.css";
 import NumericInput, { NumericInputProps } from "../numeric-input";
 import { CollapseCardHeader } from "../collapse-card";
 
 type PLControl = Control<ShowcaseCreateInputDto>;
+
+function PackageInput({ label }: { label: ReactNode }): JSX.Element {
+  return (
+    <div className={styles.PackageInput}>
+      <div className={styles.InvestLabelWrapper}>
+        <div>{label}</div>
+      </div>
+      <table className={styles.InvestTable}>
+        <tr>
+          <td width={"35%"}>Tỉ lệ góp vốn</td>
+          <td width={"30%"}>Số lượng</td>
+          <td width={"35%"} className="rounded-tr-xl">
+            Tỉ suất lợi nhuận 1 năm
+          </td>
+        </tr>
+        <tr>
+          <td>x</td>
+          <td>x</td>
+          <td className="rounded-br-xl">x</td>
+        </tr>
+      </table>
+    </div>
+  );
+}
 
 function PLInputRow({
   control,
@@ -95,6 +119,17 @@ export default function PLInput(props: PLInputProps): JSX.Element {
         />
       </Stack>
       <CollapseCardHeader header={"các gói đầu tư"} sx={{ px: 0 }} />
+      <PackageInput label={"PRIVATE"} />
+      <PackageInput label={"STANDARD"} />
+      <PackageInput
+        label={
+          <>
+            CROWD
+            <br />
+            FUNDING
+          </>
+        }
+      />
     </>
   );
 }

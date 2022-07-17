@@ -1,6 +1,61 @@
-.QuestionMark{
+.QuestionMark {
   @apply inline-block rounded-full h-4 w-4 bg-black text-white text-center align-text-top;
 }
-.PLInputRow{
+
+.PLInputRow {
   @apply grid grid-cols-[1fr_auto] gap-3 py-4 border-0;
+}
+
+.PackageInput {
+  @apply flex items-stretch -mx-3.5;
+}
+
+.PackageInput:not(:last-of-type) {
+  @apply mb-2;
+}
+
+.InvestTable {
+  @apply flex-1 border-separate;
+  border-spacing: 0;
+}
+
+.InvestTable td {
+  @apply border border-slate-400;
+}
+
+.InvestTable tr td:first-of-type {
+  @apply border-l-0;
+}
+
+.InvestTable tr td:not(:first-of-type) {
+  @apply border-l-0;
+}
+
+.InvestTable tr:last-of-type td {
+  @apply border-t-0;
+}
+
+.InvestTable tr:first-of-type {
+  @apply font-semibold;
+  font-size: 12px;
+  line-height: 106.9%;
+}
+
+.InvestTable tr:first-of-type td {
+  @apply p-1.5 text-center;
+}
+
+.InvestTable tr:nth-of-type(2) td{
+
+}
+
+.InvestLabelWrapper {
+  @apply flex items-center justify-center rounded-l-xl bg-primary text-sm font-bold;
+  width: 45px;
+}
+
+.InvestLabelWrapper > div {
+  @apply leading-none;
+  transform: rotate(180deg);
+  writing-mode: tb;
 }

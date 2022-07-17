@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useAppSelector } from "../store";
 import { useRouter } from "next/router";
 import { AnalyticsService, FcmService } from "../service";
@@ -135,4 +142,19 @@ export function useNotificationRegister(topics: string[]) {
     }
     return true;
   }, [subscribe, topics]);
+}
+
+export function usePopover() {
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [open, setOpen] = useState<boolean>(false);
+  const handleOpen = (event: MouseEvent<HTMLElement>) => {
+    setOpen(true);
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    setAnchorEl(null);
+  };
+
+  return { anchorEl, open, handleOpen, handleClose };
 }

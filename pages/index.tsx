@@ -1,5 +1,5 @@
 import type { GetStaticProps } from "next";
-import { Box, Container, Fade, Typography } from "@mui/material";
+import { Box, Container, Fade } from "@mui/material";
 import ShowcaseList from "../src/components/showcase-list";
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
@@ -12,33 +12,16 @@ import FilterTuneIcon from "../src/assets/icons/FilterTuneIcon";
 import dynamic from "next/dynamic";
 import { NextSeo } from "next-seo";
 import { ssrIndex, ssrIndexClient } from "../src/types/graphql.ssr";
-import { AspectRatio, LoadingIndicator } from "@hungphongbk/vth-sdk";
+import { LoadingIndicator } from "@hungphongbk/vth-sdk";
 import { NetworkStatus } from "@apollo/client";
 import Footer from "../src/components/footer";
 import { InfiniteScroll } from "../src/components/infinite-scroll";
 import { CreatorAndInvestorActions } from "src/components/system";
-import ShowcaseFeaturedList from "../src/components/showcase-featured-list";
-import bg from "../sdk/src/assets/bg.webp";
-import ShowcasePortalLogo from "../sdk/src/assets/ShowcasePortalLogo";
-import NewPopup from "../sdk/src/components/new-popup";
-import Image from "next/image";
-import { styled } from "@mui/material/styles";
-import ShowMorePopup from "sdk/src/components/show-more-pupop";
+import ShowcaseFeatured from "../src/components/index-page/showcase-featured";
 
 const FilterPanel = dynamic(() => import("../src/components/filter-panel"), {
   ssr: false,
 });
-const Title = styled(Typography)`
-  &.MuiTypography-root {
-    font-style: normal;
-    font-weight: bold;
-    font-size: 0.95rem;
-    line-height: 139.4%;
-    color: white;
-    margin-top: 2rem;
-    margin-bottom: 1.5rem;
-  }
-`;
 
 const Home = () => {
   const { data: ssrData } = ssrIndex.usePage(() => ({
@@ -103,37 +86,7 @@ const Home = () => {
       <Container sx={{ mt: 2, pl: 1, pr: 1 }}>
         <NextSeo canonical={"https://showcase.vaithuhay.com"} />
         <Banner banner={banner} />
-        <AspectRatio
-          ratio={"752/510"}
-          sx={{ my: 3, overflow: "hidden", mx: "-8px" }}
-        >
-          <Box>
-            <Box className="absolute inset-0 z-[-1] object-contain">
-              <Image
-                src={bg}
-                alt={"du an featured"}
-                layout={"fill"}
-                objectPosition={"bottom"}
-                objectFit={"contain"}
-              />
-            </Box>
-            <Box sx={{ p: 1, width: "100%" }}>
-              <Box className="flex justify-between">
-                <Box className="flex">
-                  <ShowcasePortalLogo />
-                  <NewPopup />
-                </Box>
-                <ShowMorePopup />
-              </Box>
-              {/* eslint-disable-next-line react/no-unescaped-entities */}
-              <Title>DỰ ÁN CHUẨN BỊ "RỜI BỆ PHÓNG"</Title>
-              <ShowcaseFeaturedList
-                items={featured.map((f) => f.node)}
-                sx={{ mb: 5 }}
-              />
-            </Box>
-          </Box>
-        </AspectRatio>
+        <ShowcaseFeatured items={featured.map((i) => i.node)} />
         <Box
           sx={{
             my: 0.7,

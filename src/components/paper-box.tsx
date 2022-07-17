@@ -15,6 +15,10 @@ const PaperBox = styled((props: Omit<ImageBoxProps, "bg">) => (
   border-radius: 15px;
   width: 100%;
   position: relative;
+  z-index: 0;
+  > span:first-of-type {
+    z-index: -1;
+  }
 `;
 
 export default PaperBox;

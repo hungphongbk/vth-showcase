@@ -1,5 +1,5 @@
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
-import { Control } from "react-hook-form";
+import { Control, FieldValues } from "react-hook-form";
 import {
   refetchAllUpdatesInShowcaseQuery,
   refetchOneUpdateInShowcaseQuery,
@@ -12,10 +12,10 @@ import PrjUpdateItemEditor from "./prj-update-item-editor";
 import React from "react";
 import { ContentCrudAdapter } from "@hungphongbk/vth-sdk";
 
-type Props = {
-  control: Control<any, any>;
+type Props<T extends FieldValues> = {
+  control: Control<T>;
 };
-export default function PrjUpdateEditor({ control }: Props): JSX.Element {
+export default function PrjUpdateEditor<T>({ control }: Props<T>): JSX.Element {
   const { showcase, mode } = useShowcaseCreation(),
     slug = (showcase as any).slug as string;
   return (

@@ -1,4 +1,4 @@
-import { Control } from "react-hook-form";
+import { Control, FieldValues } from "react-hook-form";
 import { ContentCrudAdapter, HighlightFeature } from "@hungphongbk/vth-sdk";
 import React from "react";
 import { useShowcaseCreation } from "../../layout/ShowcaseCreationLayout";
@@ -11,10 +11,13 @@ import {
   useUpdateOneHighlightFeatureMutation,
 } from "../../types/graphql";
 
-type HfEditorProps = {
-  control: Control<any, any>;
+type HfEditorProps<T> = {
+  control: Control<T>;
 };
-export default function HfEditor({ control }: HfEditorProps): JSX.Element {
+export default function HfEditor<T>({ control }: HfEditorProps<T>): JSX.Element;
+export default function HfEditor({
+  control,
+}: HfEditorProps<FieldValues>): JSX.Element {
   const { showcase, mode } = useShowcaseCreation(),
     slug = (showcase as any).slug as string;
   return (

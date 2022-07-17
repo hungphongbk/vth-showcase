@@ -28,6 +28,7 @@ import QuestionMarkIcon from "src/assets/icons/QuestionMarkIcon";
 import { InvestorRegistrationCreateDto } from "../../types/graphql";
 import { styled } from "@mui/material/styles";
 import ViDuPopup from "../vi-du-popup";
+import styles from "./investor-reg-dialog.module.scss";
 
 const SUBMIT_INVESTOR = gql`
   mutation SubmitInvestor($form: InvestorRegistrationCreateDto!) {
@@ -46,7 +47,6 @@ const ContactBox = styled(Box)`
   /* or 24px */
   color: #ffffff;
 `;
-const Avt = styled(Box)``;
 type InvestorRegDialogProps = {
   close: () => unknown | Promise<unknown>;
 };
@@ -93,7 +93,7 @@ export default function InvestorRegDialogComponent({
             </AspectRatio>
           </Box>
           <Box
-            className="absolute z-[1] flex items-center justify-center text-white font-semibold rounded-full whitespace-nowrap p-4"
+            className={styles.Title}
             sx={{
               top: "-20px",
               left: "50%",
@@ -106,7 +106,7 @@ export default function InvestorRegDialogComponent({
             Trở thành Investor cùng chúng tôi
           </Box>
           <Typography
-            className="absolute text-justify text-black font-medium leading-normal"
+            className={styles.Subtitle}
             sx={{
               fontSize: 11,
               top: 32,
@@ -270,19 +270,14 @@ export default function InvestorRegDialogComponent({
               Vaithuhay.com
             </Typography>
             <ContactBox>
-              <Avt>
+              <Box>
                 <Avatar
                   alt="Remy Sharp"
                   sx={{ width: 62, height: 62, marginRight: "11px" }}
                 >
-                  {" "}
-                  <Image
-                    src={avtInfo}
-                    layout={"fill"}
-                    objectFit={"cover"}
-                  />{" "}
-                </Avatar>{" "}
-              </Avt>
+                  <Image src={avtInfo} layout={"fill"} objectFit={"cover"} />
+                </Avatar>
+              </Box>
               <Box>
                 <h2
                   style={{

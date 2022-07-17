@@ -1,0 +1,6 @@
+.Title{
+  @apply absolute z-[1] flex items-center justify-center text-white font-semibold rounded-full whitespace-nowrap p-4;
+}
+.Subtitle{
+  @apply absolute text-justify text-black font-medium leading-normal;
+}

@@ -26,7 +26,6 @@ const moduleExports = withPlugins([withBundleAnalyzer, withTM], {
     ],
   },
   experimental: {
-    emotion: true,
     modularizeImports: {
       lodash: {
         transform: "lodash/{{member}}",
@@ -41,7 +40,7 @@ const moduleExports = withPlugins([withBundleAnalyzer, withTM], {
     scrollRestoration: true,
   },
   compiler: {
-    styledComponents: true,
+    emotion: true,
   },
   staticPageGenerationTimeout: 300,
   async redirects() {

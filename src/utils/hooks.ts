@@ -1,6 +1,7 @@
 import {
   MouseEvent,
   useCallback,
+  useDebugValue,
   useEffect,
   useMemo,
   useRef,
@@ -67,6 +68,8 @@ export function useOnClickOutside(ref: any, handler: any) {
 export function useAuthInitialized() {
   const initialized = useAppSelector((state) => state.auth.initialized),
     token = useAppSelector((state) => state.auth.token);
+
+  useDebugValue(initialized);
 
   return {
     initialized,

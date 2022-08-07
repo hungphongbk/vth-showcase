@@ -74,7 +74,10 @@ export default function CartDrawer(): JSX.Element {
                     }}
                   />
                 </Box>
-                <Box sx={{ bgcolor: "white", p: 2, flex: 1 }}>
+                <Box
+                  sx={{ bgcolor: "white", p: 2, flex: 1 }}
+                  className="relative"
+                >
                   <CartDrawerListing />
                 </Box>
               </MotionBox>

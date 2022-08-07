@@ -1,24 +1,26 @@
-import { Divider, Grid, Stack, Typography } from "@mui/material";
+import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
 import React, { ComponentType, useEffect } from "react";
 import { useAuthInitialized } from "../../../utils/hooks";
 import {
   PreorderCartQuery,
   usePreorderCartLazyQuery,
 } from "../../../types/graphql";
-import { AspectRatio } from "@hungphongbk/vth-sdk";
+import { AspectRatio, LoadingIndicator } from "@hungphongbk/vth-sdk";
 import { sxFullSize } from "../../../utils/predefinedSx";
 import StatusBadge from "../../StatusBadge";
 import { vndCurrency } from "../../../utils/string";
 
 type CartDrawerListingProps = {
-  preorders: PreorderCartQuery;
+  preorders?: PreorderCartQuery;
+  loading: boolean;
+  isLoggedIn: boolean;
 };
 const withCartDrawerListing = (
   Component: ComponentType<CartDrawerListingProps>
 ) => {
   function WithCartDrawerListing(props: unknown) {
     const { isLoggedIn } = useAuthInitialized(),
-      [fetchCart, { data }] = usePreorderCartLazyQuery();
+      [fetchCart, { data, loading }] = usePreorderCartLazyQuery();
 
     useEffect(() => {
       if (isLoggedIn) {
@@ -27,9 +29,9 @@ const withCartDrawerListing = (
       }
     }, [isLoggedIn, fetchCart]);
 
-    if (!isLoggedIn || !data) return null;
-
-    return <Component preorders={data!} />;
+    return (
+      <Component preorders={data} loading={loading} isLoggedIn={isLoggedIn} />
+    );
   }
 
   return WithCartDrawerListing;
@@ -37,10 +39,24 @@ const withCartDrawerListing = (
 
 const CartDrawerListing = withCartDrawerListing(function CartDrawerListing({
   preorders,
+  loading,
+  isLoggedIn,
 }): JSX.Element {
+  if (loading || !isLoggedIn) {
+    return (
+      <Box
+        className="absolute inset-x-0 top-0 flex justify-center"
+        sx={{
+          pt: 3,
+        }}
+      >
+        <LoadingIndicator />
+      </Box>
+    );
+  }
   return (
     <Stack direction={"column"} alignItems={"stretch"} gap={1}>
-      {preorders.preorders.edges.map(({ node: { showcase } }, index) => (
+      {preorders?.preorders.edges.map(({ node: { showcase } }, index) => (
         <Grid key={showcase.slug} container spacing={2}>
           <Grid item xs={4}>
             <AspectRatio

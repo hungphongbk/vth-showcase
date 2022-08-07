@@ -8,28 +8,21 @@ export default function AuthLoginHandler(): JSX.Element {
   const dispatch = useAppDispatch(),
     [fetchCurrentUser, { loading, data, error }] = useCurrentUserLazyQuery();
 
-  const completeHandler = useCallback(
-    async (event: DocumentEventMap["readystatechange"]) => {
-      // @ts-ignore
-      if (event.target!.readyState === "complete") {
-        const { getPersistAuth } = await FirebaseAuthService();
-        const payload = await getPersistAuth();
-        dispatch(afterSignInFirebase(payload));
-        if (payload.token) await fetchCurrentUser();
-      }
-    },
-    [dispatch, fetchCurrentUser]
-  );
+  const completeHandler = useCallback(async () => {
+    const { getPersistAuth } = await FirebaseAuthService();
+    const payload = await getPersistAuth();
+    dispatch(afterSignInFirebase(payload));
+    if (payload.token) await fetchCurrentUser();
+  }, [dispatch, fetchCurrentUser]);
 
   useEffect(() => {
     dispatch(loadUserInfo({ loading, data, error }));
   }, [loading, data, error, dispatch]);
 
   useEffect(() => {
-    document.addEventListener("readystatechange", completeHandler);
-
-    return () =>
-      document.removeEventListener("readystatechange", completeHandler);
+    // noinspection JSIgnoredPromiseFromCall
+    completeHandler();
+    // return () => window.removeEventListener("load", completeHandler);
   }, [completeHandler]);
 
   return <></>;

@@ -46,6 +46,7 @@ export default function ShowcaseFeatured<
               layout={"fill"}
               objectPosition={"bottom"}
               objectFit={"contain"}
+              priority
             />
           </Box>
           <Box sx={{ p: 1, width: "100%" }}>

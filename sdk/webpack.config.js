@@ -81,6 +81,7 @@ module.exports = {
     new webpack.EnvironmentPlugin({
       NEXT_PUBLIC_API_URL: "https://api.showcase-dev.vaithuhay.com",
       NEXT_PUBLIC_HOMEPAGE_URL: "https://showcase-dev.vaithuhay.com",
+      NEXT_PUBLIC_SDK: true,
     }),
     new webpack.IgnorePlugin({
       checkResource(resource) {

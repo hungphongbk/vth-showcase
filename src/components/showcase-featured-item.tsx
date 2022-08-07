@@ -6,7 +6,7 @@ import {
 } from "@hungphongbk/vth-sdk";
 import { Box, Button, Link, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import PreloadImage from "../../sdk/src/components/PreloadImage";
+import ShowcaseFeaturedImage from "../../sdk/src/components/showcase-featured-image";
 import VthCountdown from "./vth-countdown";
 import PortalPreorderButton from "../../sdk/src/portal-preorder-button";
 import { AnchorHTMLAttributes, useMemo } from "react";
@@ -44,10 +44,16 @@ type ShowcaseItemProps<T> = {
   showcase: T;
   seeMoreUi?: boolean;
   inPortal?: boolean;
+  priority?: boolean;
 };
 export default function ShowcaseFeaturedItem<
   T extends ShowcaseItemBase = ShowcaseItemBase
->({ showcase, seeMoreUi, inPortal }: ShowcaseItemProps<T>): JSX.Element {
+>({
+  showcase,
+  seeMoreUi,
+  inPortal,
+  priority,
+}: ShowcaseItemProps<T>): JSX.Element {
   const link = useMemo(() => {
     if (seeMoreUi) return process.env.NEXT_PUBLIC_HOMEPAGE_URL;
     return `${process.env.NEXT_PUBLIC_HOMEPAGE_URL}/post/${showcase.slug}`;
@@ -73,9 +79,11 @@ export default function ShowcaseFeaturedItem<
       href={link}
       {...linkProps}
     >
-      <PreloadImage src={showcase.image} />
+      <ShowcaseFeaturedImage src={showcase.image} alt={showcase.name!} />
       <Stack gap={1}>
-        <StyledTitle sx={{ flex: 1 }}>{showcase.name}</StyledTitle>
+        <StyledTitle sx={{ flex: 1 }} title={showcase.name}>
+          {showcase.name}
+        </StyledTitle>
         <Typography sx={{ fontSize: 10 }}>
           Dự kiến ra mắt:{" "}
           <strong>

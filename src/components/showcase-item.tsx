@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { HTMLProps, useCallback, useRef, useState } from "react";
 import { MotionBox, MotionTypo, ProductInfo } from "./commons";
 import StatusBadge from "./StatusBadge";
-import { useRouter } from "next/router";
 import InboxIcon from "@mui/icons-material/Inbox";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import { SystemStyleObject } from "@mui/system";
@@ -33,8 +32,7 @@ export default function ShowcaseItem({
   item,
   onClick,
 }: ProductItemProps) {
-  const itemRef = useRef<HTMLElement>(),
-    router = useRouter();
+  const itemRef = useRef<HTMLElement>();
   const color = usingShowcaseStatusColor(item.status);
 
   const [clicked, setClicked] = useState(false);
@@ -120,6 +118,7 @@ export default function ShowcaseItem({
               fontSize: "0.75rem",
               mb: 0.4,
             }}
+            title={item.name}
           >
             {item.name}
           </MotionTypo>

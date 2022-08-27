@@ -1,5 +1,5 @@
 import { AspectRatio, MediaDto } from "@hungphongbk/vth-sdk";
-import LazyLoad from "react-lazyload";
+import LazyLoad from "./lazyload-image";
 import VthNextImage from "../../../src/components/vth-next-image";
 
 type PreloadImageProps = {
@@ -10,7 +10,6 @@ export default function ShowcaseFeaturedImage({
   src,
   alt,
 }: PreloadImageProps): JSX.Element {
-  const height = 100;
   return (
     <AspectRatio
       ratio={`1/1`}
@@ -25,9 +24,7 @@ export default function ShowcaseFeaturedImage({
       }}
     >
       {process.env.NEXT_PUBLIC_SDK ? (
-        <LazyLoad once placeholder={<img src={src.preloadUrl} alt={alt} />}>
-          <img src={src.path} alt={alt} />
-        </LazyLoad>
+        <LazyLoad placeholder={src.preloadUrl} src={src.path} alt={alt} />
       ) : (
         <VthNextImage
           src={src.path}

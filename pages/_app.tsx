@@ -1,3 +1,4 @@
+import "../styles/globals.css";
 import * as React from "react";
 import { ReactElement, ReactNode } from "react";
 import { Box, CssBaseline, TextField } from "@mui/material";
@@ -26,7 +27,6 @@ import { AdapterDateFns as DateAdapter } from "@mui/x-date-pickers/AdapterDateFn
 import { ApolloProvider } from "@apollo/client";
 import { useGATrackView } from "../src/utils/hooks";
 import { apolloClient } from "../src/api";
-import "../styles/globals.css";
 import ScrollablePanel from "../src/components/scrollable-panel";
 import { appTheme } from "../src/app-theme";
 import { CacheProvider, EmotionCache } from "@emotion/react";

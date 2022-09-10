@@ -89,7 +89,7 @@
     "@swc/core": "1.2.249",
     "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/forms": "0.5.2",
-    "@tailwindcss/line-clamp": "0.4.0",
+    "@tailwindcss/line-clamp": "0.4.2",
     "@tailwindcss/typography": "0.5.4",
     "@types/graphql": "14.5.0",
     "@types/lodash": "4.14.176",

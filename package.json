@@ -35,7 +35,7 @@
     "core-js": "3.25.0",
     "crypto-hash": "2.0.1",
     "currency.js": "2.0.4",
-    "date-fns": "2.28.0",
+    "date-fns": "2.29.2",
     "deepmerge": "4.2.2",
     "firebase": "9.9.3",
     "framer-motion": "6.2.4",

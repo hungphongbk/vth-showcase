@@ -51,26 +51,6 @@ export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export function createAppAsyncThunk<
-  Returned,
-  ThunkArg = void,
-  ThunkApiConfig = {
-    state: RootState;
-    dispatch?: AppDispatch;
-  }
->(
-  typePrefix: string,
-  payloadCreator: AsyncThunkPayloadCreator<Returned, ThunkArg, ThunkApiConfig>,
-  options?: AsyncThunkOptions<ThunkArg, ThunkApiConfig>
-) {
-  return createAsyncThunk<Returned, ThunkArg, ThunkApiConfig>(
-    typePrefix,
-    // @ts-ignore
-    payloadCreator,
-    options
-  );
-}
-
 //@ts-ignore
 if (typeof window !== "undefined") {
   //@ts-ignore

@@ -11,13 +11,13 @@ import {
   useUpdateOneHighlightFeatureMutation,
 } from "../../types/graphql";
 
-type HfEditorProps<T> = {
+type HfEditorProps<T extends FieldValues = FieldValues> = {
   control: Control<T>;
 };
-export default function HfEditor<T>({ control }: HfEditorProps<T>): JSX.Element;
+export default function HfEditor<T extends FieldValues = FieldValues>({ control }: HfEditorProps<T>): JSX.Element;
 export default function HfEditor({
   control,
-}: HfEditorProps<FieldValues>): JSX.Element {
+}: HfEditorProps): JSX.Element {
   const { showcase, mode } = useShowcaseCreation(),
     slug = (showcase as any).slug as string;
   return (

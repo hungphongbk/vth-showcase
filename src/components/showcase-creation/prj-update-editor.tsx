@@ -12,10 +12,10 @@ import PrjUpdateItemEditor from "./prj-update-item-editor";
 import React from "react";
 import { ContentCrudAdapter } from "@hungphongbk/vth-sdk";
 
-type Props<T extends FieldValues> = {
+type Props<T extends FieldValues = FieldValues> = {
   control: Control<T>;
 };
-export default function PrjUpdateEditor<T>({ control }: Props<T>): JSX.Element {
+export default function PrjUpdateEditor<T extends FieldValues = FieldValues>({ control }: Props<T>): JSX.Element {
   const { showcase, mode } = useShowcaseCreation(),
     slug = (showcase as any).slug as string;
   return (

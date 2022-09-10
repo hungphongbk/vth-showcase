@@ -19,7 +19,7 @@
     "update-sdk": "npm i @hungphongbk/vth-sdk@latest"
   },
   "dependencies": {
-    "@apollo/client": "^3.6.2",
+    "@apollo/client": "3.6.2",
     "@emotion/react": "11.9.3",
     "@emotion/server": "11.4.0",
     "@emotion/styled": "11.8.1",
@@ -114,7 +114,7 @@
     "eslint-config-next": "12.2.5",
     "file-loader": "6.2.0",
     "graphql-codegen-apollo-next-ssr": "1.7.4",
-    "graphql-tag": "^2.12.6",
+    "graphql-tag": "2.12.6",
     "husky": "7.0.4",
     "pkg-dir": "6.0.1",
     "postcss": "8.4.16",

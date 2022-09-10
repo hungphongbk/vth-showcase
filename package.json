@@ -39,7 +39,7 @@
     "deepmerge": "4.2.2",
     "firebase": "9.9.3",
     "framer-motion": "6.2.4",
-    "graphql": "15.7.2",
+    "graphql": "15.8.0",
     "husky": "7.0.4",
     "immer": "9.0.12",
     "intersection-observer": "0.12.0",

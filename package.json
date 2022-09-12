@@ -62,7 +62,7 @@
     "react-sizeme": "3.0.2",
     "react-slick": "0.29.0",
     "react-transition-group": "4.4.5",
-    "react-youtube": "8.3.0",
+    "react-youtube": "10.0.0",
     "redux-persist": "6.0.0",
     "redux-persist-indexeddb-storage": "1.0.4",
     "regenerator-runtime": "0.13.9",

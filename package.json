@@ -38,7 +38,7 @@
     "date-fns": "2.29.2",
     "deepmerge": "4.2.2",
     "firebase": "9.9.4",
-    "framer-motion": "7.3.3",
+    "framer-motion": "7.3.4",
     "graphql": "16.6.0",
     "husky": "8.0.1",
     "immer": "9.0.15",

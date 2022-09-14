@@ -116,7 +116,7 @@
     "graphql-codegen-apollo-next-ssr": "1.7.4",
     "graphql-tag": "2.12.6",
     "husky": "8.0.1",
-    "pkg-dir": "6.0.1",
+    "pkg-dir": "7.0.0",
     "postcss": "8.4.16",
     "postcss-import": "15.0.0",
     "sass": "1.54.9",

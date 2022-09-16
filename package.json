@@ -29,7 +29,7 @@
     "@mui/material": "5.10.5",
     "@mui/styled-engine": "5.10.5",
     "@mui/system": "5.10.5",
-    "@mui/x-date-pickers": "5.0.1",
+    "@mui/x-date-pickers": "5.0.2",
     "@reduxjs/toolkit": "1.8.5",
     "@sentry/nextjs": "7.13.0",
     "core-js": "3.25.1",

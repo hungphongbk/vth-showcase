@@ -38,3 +38,4 @@ public/sdk/**
 # Sentry
 .sentryclirc
 stat.json
+/.npmrc

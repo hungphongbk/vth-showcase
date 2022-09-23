@@ -1,5 +1,5 @@
 import { GetStaticProps } from "next";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, NoSsr, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ShowcaseDetailed from "../../src/components/showcase-detailed";
 import { useRouter } from "next/router";
@@ -168,7 +168,9 @@ function PostDetailedPage() {
           />
         </Box>
       </Box>
-      <Footer />
+      <NoSsr>
+        <Footer />
+      </NoSsr>
       {renderDialog}
     </>
   );

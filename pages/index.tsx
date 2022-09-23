@@ -1,5 +1,5 @@
 import type { GetStaticProps } from "next";
-import { Box, Container, Fade } from "@mui/material";
+import { Box, Container, Fade, NoSsr } from "@mui/material";
 import ShowcaseList from "../src/components/showcase-list";
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
@@ -161,7 +161,9 @@ const Home = () => {
           </AnimatePresence>
         </Box>
       </Container>
-      <Footer />
+      <NoSsr>
+        <Footer />
+      </NoSsr>
       <CreatorAndInvestorActions />
     </>
   );

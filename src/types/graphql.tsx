@@ -1811,7 +1811,7 @@ export interface Showcase {
   expectedSaleAt?: Maybe<Scalars['DateTime']>;
   expectedSaleEndAt?: Maybe<Scalars['DateTime']>;
   expectedSalePrice?: Maybe<ShowcasePrice>;
-  highlightFeatures: Array<ShowcaseHighlightFeature>;
+  highlightFeatures?: Maybe<Array<ShowcaseHighlightFeature>>;
   id: Scalars['ID'];
   image: MediaDto;
   imageLists: Array<ImageList>;
@@ -2500,7 +2500,7 @@ export type MediaFragment = { id: string, path: string, preloadUrl: string, widt
 
 export type HighlightFeatureFragment = { id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } };
 
-export type ShowcaseHfFragment = { highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }> };
+export type ShowcaseHfFragment = { highlightFeatures?: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }> | undefined };
 
 export type ShowcaseInvestorStatFragment = { investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | undefined };
 
@@ -2575,7 +2575,7 @@ export type ShowcaseDetailQueryVariables = Exact<{
 }>;
 
 
-export type ShowcaseDetailQuery = { showcase: { isPreordered?: boolean | undefined, viewCount: number, preorderCount?: number | undefined, id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | undefined, expectedSaleEndAt?: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }>, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }>, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | undefined } };
+export type ShowcaseDetailQuery = { showcase: { isPreordered?: boolean | undefined, viewCount: number, preorderCount?: number | undefined, id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt?: any | undefined, expectedSaleEndAt?: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, updates: Array<{ id: string, content: string, createdAt: any }>, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string, width: number, height: number }, expectedSalePrice?: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity?: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string, width: number, height: number }> }>, highlightFeatures?: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }> | undefined, investorStat?: { totalRevenue: string, firstYearRevenue: string, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | undefined } };
 
 export type ShowcasePreviewQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -2603,7 +2603,7 @@ export type GetHighlightFeaturesOnShowcaseQueryVariables = Exact<{
 }>;
 
 
-export type GetHighlightFeaturesOnShowcaseQuery = { showcase: { slug: string, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }> } };
+export type GetHighlightFeaturesOnShowcaseQuery = { showcase: { slug: string, highlightFeatures?: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string, width: number, height: number } }> | undefined } };
 
 export type GetOneHighlightFeatureQueryVariables = Exact<{
   id: Scalars['ID'];

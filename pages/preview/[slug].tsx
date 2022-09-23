@@ -22,12 +22,18 @@ function PreviewPage() {
     router.prefetch(`/post/${slug}`);
   }, [slug, router]);
 
-  const { data } = useAuthQuery(
+  const { data, refetch } = useAuthQuery(
     ssrShowcasePreview.usePage(() => ({
       fetchPolicy: "cache-and-network",
       variables: { slug },
     }))
   );
+
+  useEffect(() => {
+    if (typeof window !== "undefined")
+      // noinspection JSIgnoredPromiseFromCall
+      refetch();
+  }, [refetch]);
 
   const showcase = data?.showcase as Showcase;
 

@@ -50,6 +50,7 @@ const apolloClient = new ApolloClient({
     authLink,
     httpLink,
   ]),
+  connectToDevTools: process.env.NODE_ENV === "development",
   cache: new InMemoryCache({
     ...introspection,
     // ...(typeof window !== "undefined"
@@ -67,27 +68,9 @@ const apolloClient = new ApolloClient({
     // : {}),
   }),
 });
-
-if (typeof window !== "undefined") {
-  // @ts-ignore
-  window.__APOLLO_CLIENT__ = apolloClient;
-}
-
 export { apolloClient };
 
 export const APOLLO_STATE_PROP_NAME = "apolloState";
-
-export function addApolloState(
-  client: ApolloClient<NormalizedCacheObject>,
-  pageProps: any
-) {
-  if (pageProps?.props) {
-    pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();
-  }
-
-  return pageProps;
-}
-
 /**
  * Only use for App
  * @param ctx

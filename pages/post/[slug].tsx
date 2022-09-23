@@ -61,12 +61,17 @@ function PostDetailedPage() {
     router.prefetch("/");
   }, [router]);
   const { renderDialog, open } = useInvestorRegDialog();
-  const { data } = useAuthQuery(
+  const { data, refetch } = useAuthQuery(
     ssrShowcaseDetail.usePage(() => ({
       fetchPolicy: "cache-and-network",
       variables: { slug },
     }))
   );
+  useEffect(() => {
+    if (typeof window !== "undefined")
+      // noinspection JSIgnoredPromiseFromCall
+      refetch();
+  }, [refetch]);
   const { isLoggedIn } = useAuthInitialized();
 
   const showcase = data?.showcase as Showcase;

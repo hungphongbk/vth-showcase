@@ -1,3 +1,7 @@
+directive @currency on FIELD_DEFINITION
+
+directive @ssr on FIELD_DEFINITION
+
 input AddImagesToImageListInput {
   """The id of the record."""
   id: ID!
@@ -1530,7 +1534,7 @@ type Showcase {
 
     """Specify to sort results."""
     sorting: [ShowcaseHighlightFeatureSort!] = []
-  ): [ShowcaseHighlightFeature!]!
+  ): [ShowcaseHighlightFeature!]
   id: ID!
   image: MediaDto!
   imageLists: [ImageList!]!

@@ -208,57 +208,59 @@ export default function ShowcaseDetailed({
                 <PrjUpdateDisplay updates={item.updates} />
               </CollapseCard>
             )}
-            <CollapseCard
-              header={"tính năng nổi bật"}
-              sx={{ mt: 1 }}
-              defaultOpen
-            >
-              <SlickSlider>
-                {item.highlightFeatures.map((hf, index) => (
-                  <Box
-                    key={index}
-                    sx={{
-                      px: "2px",
-                      pb: 1,
-                      display: "block !important",
-                      height: "100%",
-                    }}
-                  >
-                    <Stack
-                      gap={2}
-                      alignItems={"stretch"}
-                      sx={{ height: "100%" }}
+            {item.highlightFeatures && (
+              <CollapseCard
+                header={"tính năng nổi bật"}
+                sx={{ mt: 1 }}
+                defaultOpen
+              >
+                <SlickSlider>
+                  {item.highlightFeatures.map((hf, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        px: "2px",
+                        pb: 1,
+                        display: "block !important",
+                        height: "100%",
+                      }}
                     >
-                      <Typography sx={{ fontSize: 13 }}>
-                        <strong>{hf.name}</strong>
-                      </Typography>
-                      <Typography sx={{ fontSize: 13 }}>
-                        {hf.description}
-                      </Typography>
-                      <AspectRatio
-                        ratio={`${hf.image.width}/${hf.image.height}`}
-                        sx={{ mt: "auto" }}
+                      <Stack
+                        gap={2}
+                        alignItems={"stretch"}
+                        sx={{ height: "100%" }}
                       >
-                        <Box sx={{ borderRadius: 2, overflow: "hidden" }}>
-                          <Box sx={{ position: "relative" }}>
-                            <VthNextImage
-                              src={hf.image.path}
-                              alt={hf.name}
-                              width={hf.image.width}
-                              height={hf.image.height}
-                              objectFit={"cover"}
-                              sizes={"100vw"}
-                              placeholder={"blur"}
-                              blurDataURL={hf.image.preloadUrl}
-                            />
+                        <Typography sx={{ fontSize: 13 }}>
+                          <strong>{hf.name}</strong>
+                        </Typography>
+                        <Typography sx={{ fontSize: 13 }}>
+                          {hf.description}
+                        </Typography>
+                        <AspectRatio
+                          ratio={`${hf.image.width}/${hf.image.height}`}
+                          sx={{ mt: "auto" }}
+                        >
+                          <Box sx={{ borderRadius: 2, overflow: "hidden" }}>
+                            <Box sx={{ position: "relative" }}>
+                              <VthNextImage
+                                src={hf.image.path}
+                                alt={hf.name}
+                                width={hf.image.width}
+                                height={hf.image.height}
+                                objectFit={"cover"}
+                                sizes={"100vw"}
+                                placeholder={"blur"}
+                                blurDataURL={hf.image.preloadUrl}
+                              />
+                            </Box>
                           </Box>
-                        </Box>
-                      </AspectRatio>
-                    </Stack>
-                  </Box>
-                ))}
-              </SlickSlider>
-            </CollapseCard>
+                        </AspectRatio>
+                      </Stack>
+                    </Box>
+                  ))}
+                </SlickSlider>
+              </CollapseCard>
+            )}
             {(item.imageLists?.[0]?.images.length ?? 0) > 0 && (
               <CollapseCard
                 header={"Video / hình ảnh"}

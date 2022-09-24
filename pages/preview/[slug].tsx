@@ -2,7 +2,7 @@ import { GetStaticProps } from "next";
 import ShowcaseDetailed from "../../src/components/showcase-detailed";
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { MotionBox } from "../../src/components/commons";
 import { apiService, withApollo } from "../../src/api";
 import { Showcase } from "../../src/types/graphql";
@@ -10,10 +10,12 @@ import { useAuthQuery } from "../../src/components/system/useAuthQuery";
 import { NextSeo } from "next-seo";
 import { ssrShowcasePreview } from "../../src/types/graphql.ssr";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
+import { ShowcaseLayoutContext } from "../../src/utils/hooks/useShowcaseLayout";
 
 function PreviewPage() {
   const router = useRouter(),
     slug = router.query.slug as string;
+  const { toggleTopBar } = useContext(ShowcaseLayoutContext);
 
   useEffect(() => {
     // noinspection JSIgnoredPromiseFromCall
@@ -21,6 +23,13 @@ function PreviewPage() {
     // noinspection JSIgnoredPromiseFromCall
     router.prefetch(`/post/${slug}`);
   }, [slug, router]);
+
+  useEffect(() => {
+    toggleTopBar(true);
+    return () => {
+      toggleTopBar(false);
+    };
+  }, [toggleTopBar]);
 
   const { data, refetch } = useAuthQuery(
     ssrShowcasePreview.usePage(() => ({
@@ -40,17 +49,7 @@ function PreviewPage() {
   if (!showcase) return null;
 
   return (
-    <Box
-      sx={{
-        position: "fixed",
-        zIndex: 9,
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
-        overflowY: "scroll",
-      }}
-    >
+    <>
       <NextSeo canonical={"https://showcase.vaithuhay.com"} />
       <ShowcaseDetailed
         item={showcase}
@@ -94,7 +93,7 @@ function PreviewPage() {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
       />
-    </Box>
+    </>
   );
 }
 

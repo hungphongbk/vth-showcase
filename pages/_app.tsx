@@ -31,6 +31,7 @@ import ScrollablePanel from "../src/components/scrollable-panel";
 import { appTheme } from "../src/app-theme";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import createEmotionCache from "../src/utils/createEmotionCache";
+import { ShowcaseLayoutProvider } from "../src/utils/hooks/useShowcaseLayout";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -87,47 +88,49 @@ export default function MyApp(props: AppPropsExtended) {
         <PersistGate persistor={persistor}>
           {() => (
             <ApolloProvider client={apolloClient}>
-              <VthThemeProvider
-                config={{
-                  components: {
-                    Dialog: StyledDialog,
-                    TextField: TextField,
-                    MultilineTextField: TextField,
-                  },
-                  services: {
-                    uploadService: UploadService.upload,
-                  },
-                }}
-              >
-                <ThemeProvider theme={appTheme}>
-                  <SnackbarProvider maxSnack={3}>
-                    <LocalizationProvider dateAdapter={DateAdapter}>
-                      <CssBaseline />
-                      <Header />
-                      {/* @ts-ignore */}
-                      <LayoutGroup>
-                        <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
-                          {/* eslint-disable-next-line jsx-a11y/alt-text */}
-                          <Image
-                            src={"/background.png"}
-                            layout="fill"
-                            objectFit="cover"
-                            quality={70}
-                            priority
-                          />
-                        </Box>
-                        {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
-                        <ScrollablePanel>
-                          {getLayout(
-                            <Component {...pageProps} key={router.route} />
-                          )}
-                        </ScrollablePanel>
-                      </LayoutGroup>
-                    </LocalizationProvider>
-                  </SnackbarProvider>
-                </ThemeProvider>
-              </VthThemeProvider>
-              <AuthLoginHandler />
+              <ShowcaseLayoutProvider>
+                <VthThemeProvider
+                  config={{
+                    components: {
+                      Dialog: StyledDialog,
+                      TextField: TextField,
+                      MultilineTextField: TextField,
+                    },
+                    services: {
+                      uploadService: UploadService.upload,
+                    },
+                  }}
+                >
+                  <ThemeProvider theme={appTheme}>
+                    <SnackbarProvider maxSnack={3}>
+                      <LocalizationProvider dateAdapter={DateAdapter}>
+                        <CssBaseline />
+                        <Header />
+                        {/* @ts-ignore */}
+                        <LayoutGroup>
+                          <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
+                            {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                            <Image
+                              src={"/background.png"}
+                              layout="fill"
+                              objectFit="cover"
+                              quality={70}
+                              priority
+                            />
+                          </Box>
+                          {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
+                          <ScrollablePanel>
+                            {getLayout(
+                              <Component {...pageProps} key={router.route} />
+                            )}
+                          </ScrollablePanel>
+                        </LayoutGroup>
+                      </LocalizationProvider>
+                    </SnackbarProvider>
+                  </ThemeProvider>
+                </VthThemeProvider>
+                <AuthLoginHandler />
+              </ShowcaseLayoutProvider>
             </ApolloProvider>
           )}
         </PersistGate>

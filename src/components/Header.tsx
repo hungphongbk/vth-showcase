@@ -4,12 +4,14 @@ import logo from "../assets/logo.png";
 import Link from "./Link";
 import { useRouter } from "next/router";
 import { CartDrawer, MenuDrawer } from "./drawers";
+import { useContext } from "react";
+import { ShowcaseLayoutContext } from "../utils/hooks/useShowcaseLayout";
 
-export default function Header(): JSX.Element {
+export default function Header(): JSX.Element | null {
   const router = useRouter();
   const currentPage = /^\/preview/.test(router.pathname) ? "preview" : "post";
-
-  return (
+  const { isTopBarHidden } = useContext(ShowcaseLayoutContext);
+  return isTopBarHidden ? null : (
     <Box
       sx={{
         position: "fixed",

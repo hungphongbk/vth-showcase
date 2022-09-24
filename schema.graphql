@@ -1,6 +1,6 @@
 directive @currency on FIELD_DEFINITION
 
-directive @ssr on FIELD_DEFINITION
+directive @ssrIgnore on FIELD_DEFINITION
 
 input AddImagesToImageListInput {
   """The id of the record."""
@@ -1537,7 +1537,7 @@ type Showcase {
   ): [ShowcaseHighlightFeature!]
   id: ID!
   image: MediaDto!
-  imageLists: [ImageList!]!
+  imageLists: [ImageList!]
   inventory: ShowcaseInventoryDto
   investorStat: ShowcaseInvestorStatDto
   isFeatured: Boolean

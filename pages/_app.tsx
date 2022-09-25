@@ -1,7 +1,12 @@
 import "../styles/globals.css";
 import * as React from "react";
 import { ReactElement, ReactNode } from "react";
-import { Box, CssBaseline, TextField } from "@mui/material";
+import {
+  Box,
+  CssBaseline,
+  StyledEngineProvider,
+  TextField,
+} from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 import Header from "../src/components/Header";
@@ -56,85 +61,87 @@ export default function MyApp(props: AppPropsExtended) {
   useGATrackView();
 
   return (
-    <CacheProvider value={emotionCache}>
-      <Head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+    <StyledEngineProvider injectFirst>
+      <CacheProvider value={emotionCache}>
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+          />
+        </Head>
+        <DefaultSeo
+          {...(process.env.NEXT_PUBLIC_SEO_OFF_INDEX === "true"
+            ? {
+                dangerouslyDisableGooglebot: true,
+                dangerouslySetAllPagesToNoIndex: true,
+                dangerouslySetAllPagesToNoFollow: true,
+              }
+            : {})}
+          defaultTitle={"Dự án showcase sản phẩm mới tại Vaithuhay"}
+          titleTemplate={"%s | Dự án showcase sản phẩm mới tại Vaithuhay"}
+          description={
+            "Chuyên trang giới thiệu sản phẩm mới showcase, chạy pre-order campaign & phát triển dự án gọi vốn sản phẩm do người Việt tạo nên"
+          }
+          openGraph={{
+            type: "website",
+            locale: "vi_VN",
+            url: "https://showcase.vaithuhay.com/",
+            site_name: "Showcase Vài Thứ Hay",
+            title: "Dự án showcase sản phẩm mới tại Vaithuhay",
+          }}
         />
-      </Head>
-      <DefaultSeo
-        {...(process.env.NEXT_PUBLIC_SEO_OFF_INDEX === "true"
-          ? {
-              dangerouslyDisableGooglebot: true,
-              dangerouslySetAllPagesToNoIndex: true,
-              dangerouslySetAllPagesToNoFollow: true,
-            }
-          : {})}
-        defaultTitle={"Dự án showcase sản phẩm mới tại Vaithuhay"}
-        titleTemplate={"%s | Dự án showcase sản phẩm mới tại Vaithuhay"}
-        description={
-          "Chuyên trang giới thiệu sản phẩm mới showcase, chạy pre-order campaign & phát triển dự án gọi vốn sản phẩm do người Việt tạo nên"
-        }
-        openGraph={{
-          type: "website",
-          locale: "vi_VN",
-          url: "https://showcase.vaithuhay.com/",
-          site_name: "Showcase Vài Thứ Hay",
-          title: "Dự án showcase sản phẩm mới tại Vaithuhay",
-        }}
-      />
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          {() => (
-            <ApolloProvider client={apolloClient}>
-              <ShowcaseLayoutProvider>
-                <VthThemeProvider
-                  config={{
-                    components: {
-                      Dialog: StyledDialog,
-                      TextField: TextField,
-                      MultilineTextField: TextField,
-                    },
-                    services: {
-                      uploadService: UploadService.upload,
-                    },
-                  }}
-                >
-                  <ThemeProvider theme={appTheme}>
-                    <SnackbarProvider maxSnack={3}>
-                      <LocalizationProvider dateAdapter={DateAdapter}>
-                        <CssBaseline />
-                        <Header />
-                        {/* @ts-ignore */}
-                        <LayoutGroup>
-                          <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
-                            {/* eslint-disable-next-line jsx-a11y/alt-text */}
-                            <Image
-                              src={"/background.png"}
-                              layout="fill"
-                              objectFit="cover"
-                              quality={70}
-                              priority
-                            />
-                          </Box>
-                          {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
-                          <ScrollablePanel>
-                            {getLayout(
-                              <Component {...pageProps} key={router.route} />
-                            )}
-                          </ScrollablePanel>
-                        </LayoutGroup>
-                      </LocalizationProvider>
-                    </SnackbarProvider>
-                  </ThemeProvider>
-                </VthThemeProvider>
-                <AuthLoginHandler />
-              </ShowcaseLayoutProvider>
-            </ApolloProvider>
-          )}
-        </PersistGate>
-      </Provider>
-    </CacheProvider>
+        <Provider store={store}>
+          <PersistGate persistor={persistor}>
+            {() => (
+              <ApolloProvider client={apolloClient}>
+                <ShowcaseLayoutProvider>
+                  <VthThemeProvider
+                    config={{
+                      components: {
+                        Dialog: StyledDialog,
+                        TextField: TextField,
+                        MultilineTextField: TextField,
+                      },
+                      services: {
+                        uploadService: UploadService.upload,
+                      },
+                    }}
+                  >
+                    <ThemeProvider theme={appTheme}>
+                      <SnackbarProvider maxSnack={3}>
+                        <LocalizationProvider dateAdapter={DateAdapter}>
+                          <CssBaseline />
+                          <Header />
+                          {/* @ts-ignore */}
+                          <LayoutGroup>
+                            <Box sx={[sxFullSizeFixed, { zIndex: -2 }]}>
+                              {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                              <Image
+                                src={"/background.png"}
+                                layout="fill"
+                                objectFit="cover"
+                                quality={70}
+                                priority
+                              />
+                            </Box>
+                            {/*<AnimatePresence exitBeforeEnter={false} initial={false}>*/}
+                            <ScrollablePanel>
+                              {getLayout(
+                                <Component {...pageProps} key={router.route} />
+                              )}
+                            </ScrollablePanel>
+                          </LayoutGroup>
+                        </LocalizationProvider>
+                      </SnackbarProvider>
+                    </ThemeProvider>
+                  </VthThemeProvider>
+                  <AuthLoginHandler />
+                </ShowcaseLayoutProvider>
+              </ApolloProvider>
+            )}
+          </PersistGate>
+        </Provider>
+      </CacheProvider>
+    </StyledEngineProvider>
   );
 }

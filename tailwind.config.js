@@ -5,7 +5,7 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx}",
     "./node_modules/@hungphongbk/vth-sdk/**/*.js",
   ],
-  // important: "#__next",
+  important: "#__next",
   theme: {
     extend: {
       zIndex: {

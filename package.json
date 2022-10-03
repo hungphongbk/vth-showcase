@@ -19,7 +19,7 @@
     "update-sdk": "npm i @hungphongbk/vth-sdk@latest"
   },
   "dependencies": {
-    "@apollo/client": "3.6.10",
+    "@apollo/client": "3.7.0",
     "@emotion/react": "11.10.4",
     "@emotion/server": "11.10.0",
     "@emotion/styled": "11.10.4",

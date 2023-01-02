@@ -110,7 +110,7 @@
     "css-minimizer-webpack-plugin": "4.2.0",
     "dotenv-flow": "3.2.0",
     "eslint": "8.24.0",
-    "eslint-config-next": "12.3.1",
+    "eslint-config-next": "13.1.1",
     "file-loader": "6.2.0",
     "graphql-codegen-apollo-next-ssr": "1.7.4",
     "graphql-tag": "2.12.6",

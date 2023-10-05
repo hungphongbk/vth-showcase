@@ -30,7 +30,7 @@
     "@mui/styled-engine": "5.10.8",
     "@mui/system": "5.10.8",
     "@mui/x-date-pickers": "5.0.4",
-    "@reduxjs/toolkit": "1.8.5",
+    "@reduxjs/toolkit": "1.9.7",
     "@sentry/nextjs": "7.13.0",
     "core-js": "3.25.5",
     "crypto-hash": "2.0.1",

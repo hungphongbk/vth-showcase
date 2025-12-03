@@ -37,7 +37,7 @@
     "currency.js": "2.0.4",
     "date-fns": "2.29.3",
     "deepmerge": "4.2.2",
-    "firebase": "9.10.0",
+    "firebase": "10.9.0",
     "framer-motion": "7.5.0",
     "graphql": "16.6.0",
     "husky": "8.0.1",
